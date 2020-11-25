@@ -5,9 +5,9 @@
 
 [java_link]: https://github.com/19920731/Interview/blob/main/Java.md
 
-* [DataBase][db_link]
+* [Database][db_link]
 
-[db_link]: https://github.com/19920731/Interview/blob/main/DataBase.md
+[db_link]: https://github.com/19920731/Interview/blob/main/Database.md
 
 * [Web][web_link]
 
