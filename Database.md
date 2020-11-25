@@ -1,4 +1,4 @@
-# DataBase
+# Database
 
 ### 제목
 > 내용<br>
