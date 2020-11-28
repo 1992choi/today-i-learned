@@ -8,48 +8,48 @@
 
 ### Thread
 > - **프로세스(Process)와 쓰레드(Thread)**   
->   -프로세스란 실행 중인 프로그램을 지칭
->   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭
+>   -프로세스란 실행 중인 프로그램을 지칭   
+>   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭   
 > - **Thread 클래스와 Runnable 인터페이스**   
 >    ```java
->	  static class MyThread1 extends Thread {
->		// Thread 클래스의 run()을 오버라이딩
->	    public void run() {
->	        for (int i = 0; i < 10; i++) {
->	        	try {
->	        		Thread.sleep(1000);
->        	    } catch(InterruptedException e) {
->        	    	// ingore
->       	    }
+>    static class MyThread1 extends Thread {
+>        // Thread 클래스의 run()을 오버라이딩
+>        public void run() {
+>	           for (int i = 0; i < 10; i++) {
+>	               try {
+>	        	         Thread.sleep(1000);
+>        	       } catch(InterruptedException e) {
+>        	           // ingore
+>       	       }
 >	        	
->	        	System.out.println("MyThread1 run : " + i);
->	        }
->	    }
->	 }
+>	        	     System.out.println("MyThread1 run : " + i);
+>	           }
+>	       }
+>    }
 >
->	 // 2. Runnable 인터페이스를 구현
->	 static class MyThread2 implements Runnable {
->		// Runnable 인터페이스의 run()을 구현
->	    public void run() {
->	    	for (int i = 0; i < 10; i++) {
->	    		try {
->	        		Thread.sleep(1000);
->        	    } catch(InterruptedException e) {
->      	    	// ingore
->       	    }
+>    // 2. Runnable 인터페이스를 구현
+>	   static class MyThread2 implements Runnable {
+>		 // Runnable 인터페이스의 run()을 구현
+>	       public void run() {
+>	    	     for (int i = 0; i < 10; i++) {
+>	    		       try {
+>	        		       Thread.sleep(1000);
+>        	       } catch(InterruptedException e) {
+>      	    	       // ingore
+>       	       }
 >	    		
->	    		System.out.println("MyThread2 run : " + i);
->	        }
->	     }
->	 }
+>	    		       System.out.println("MyThread2 run : " + i);
+>	           }
+>	       }
+>    }
 >	 
->	 public static void main(String[] args) {
->		MyThread1 t1 = new MyThread1();
->		Thread t2 = new Thread(new MyThread2());
+>    public static void main(String[] args) {
+>		     MyThread1 t1 = new MyThread1();
+>		     Thread t2 = new Thread(new MyThread2());
 >		
->		t1.start();
->		t2.start();
->	}
+>		     t1.start();
+>		     t2.start();
+>	   }
 >    ```
 
 ### OOP의 특징
@@ -124,8 +124,12 @@
 > - **Overriding**      
 >   -상속 관계에 있는 클래스 간에 같은 이름의 메서드를 재정의하는 것   
 
-### Interface vs Abstract
-> 내용<br>
+### Abstract Class vs Interface
+> - **Abstract Class**   
+>   -상속을 통해서 자손 클래스에서 완성하도록 유도하는 클래스   
+> - **Interface**      
+>   -다른 클래스를 작성하는데 도움을 주는 목적   
+>   -다중상속 가능   
 
 ### Reflection
 > 내용<br>
