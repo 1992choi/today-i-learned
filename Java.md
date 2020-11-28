@@ -140,7 +140,7 @@
 >            this.num = num;
 >        }
 >        
->	       // Abstract Method 	
+>        // Abstract Method 	
 >        public abstract void calc();
 >    }
 >    ```
