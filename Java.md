@@ -169,7 +169,10 @@
 > -이미 로딩이 완료된 클래스에서 또 다른 클래스를 동적으로 로딩하여 생성자, 멤버 필드, 멤버 메서드 등을 사용하는 기법   
 > -스프링 DI와 유사하게 구현 가능   
 
-### 객체 직렬화(Serialization)와 역직렬화(Deserialization)
-> 내용<br>
-
-
+### 직렬화(Serialize)와 역직렬화(Deserialize)
+> - **직렬화(Serialize)**   
+>   -자바 시스템 내부에서 사용되는 Object 또는 Data를 외부의 자바 시스템에서도 사용할 수 있도록 byte 형태로 데이터를 변환하는 기술      
+>   -JVM(Java Virtual Machine 이하 JVM)의 메모리에 상주(힙 또는 스택)되어 있는 객체 데이터를 바이트 형태로 변환하는 기술   
+> - **역직렬화(Deserialize)**      
+>   -byte로 변환된 Data를 원래대로 Object나 Data로 변환하는 기술     
+>   -직렬화된 바이트 형태의 데이터를 객체로 변환해서 JVM으로 상주시키는 형태    
