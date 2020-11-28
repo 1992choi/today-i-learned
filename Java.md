@@ -127,9 +127,35 @@
 ### Abstract Class vs Interface
 > - **Abstract Class**   
 >   -상속을 통해서 자손 클래스에서 완성하도록 유도하는 클래스   
+>   -추상 메서드를 하나라도 가지는 클래스는 추상 클래스가 되어야 함   
+>   -추상 클래스는 추상메서드를 가지지 않아도 상관없음   
+>   -필드, 생성자, 추상메서드를 가질 수 있음. 생성자를 가지기 때문에 객체화 가능   
+>    ```java
+>    abstract class AbstractSample {
+>        // Field
+>        private int num;
+>        
+>        // Constructor 
+>        public AbstractSample(int num){
+>            this.num = num;
+>        }
+>        
+>	       // Abstract Method 	
+>        public abstract void calc();
+>    }
+>    ```
 > - **Interface**      
+>   -상수(static final)와 추상 메서드(abstract method)의 집합   
+>   -생성자를 가질 수 없어서 객체화 불가능   
 >   -다른 클래스를 작성하는데 도움을 주는 목적   
 >   -다중상속 가능   
+>   -자바8부터 디폴트 메서드 지원   
+>    ```java
+>    interface InterfaceSample {
+>        public static final int NUM = 10; // public static final 생략 가능. 컴파일 시에 자동 생성
+>        public abstract void calc(); // public abstract 생략 가능. 컴파일 시에 자동 생성
+>    }
+>    ```
 
 ### Reflection
 > 내용<br>
