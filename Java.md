@@ -18,7 +18,7 @@
 >            for (int i = 0; i < 10; i++) {
 >                try {
 >                    Thread.sleep(1000);
->                } catch(InterruptedException e) {
+>                } catch (InterruptedException e) {
 >                    // ingore
 >                }
 >	        	
@@ -34,7 +34,7 @@
 >            for (int i = 0; i < 10; i++) {
 >                try {
 >                    Thread.sleep(1000);
->                } catch(InterruptedException e) {
+>                } catch (InterruptedException e) {
 >                    // ingore
 >                }
 >	    		
@@ -136,7 +136,7 @@
 >        private int num;
 >        
 >        // Constructor 
->        public AbstractSample(int num){
+>        public AbstractSample(int num) {
 >            this.num = num;
 >        }
 >        
@@ -158,7 +158,8 @@
 >    ```
 
 ### Reflection
-> 내용<br>
+> -이미 로딩이 완료된 클래스에서 또 다른 클래스를 동적으로 로딩하여 생성자, 멤버 필드, 멤버 메서드 등을 사용하는 기법   
+> -스프링 DI와 유사하게 구현 가능   
 
 ### 객체 직렬화(Serialization)와 역직렬화(Deserialization)
 > 내용<br>
