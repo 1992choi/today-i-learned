@@ -7,7 +7,27 @@
 > 내용   
 
 ### Thread
-> 내용<br>
+> - **프로세스(Process)와 쓰레드(Thread)**   
+>   -프로세스란 실행 중인 프로그램을 지칭
+>   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭
+> - **Thread 클래스와 Runnable 인터페이스**   
+>    ```java
+>     // 1. Thread 클래스를 상속
+>     class MyThread extends Thread {
+>        // Thread 클래스의 run()을 오버라이딩
+>        public void run() {
+>            /* 작업내용 */
+>        }
+>     }
+> 
+>     // 2. Runnable 인터페이스를 구현
+>     class MyThread implements Runnable {
+>         // Runnable 인터페이스의 run()을 구현
+>         public void run() {
+>             /* 작업내용 */
+>         }
+>     }
+>    ```
 
 ### OOP의 특징
 > - **캡슐화**   
