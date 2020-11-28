@@ -12,21 +12,44 @@
 >   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭
 > - **Thread 클래스와 Runnable 인터페이스**   
 >    ```java
->     // 1. Thread 클래스를 상속
->     class MyThread extends Thread {
->        // Thread 클래스의 run()을 오버라이딩
->        public void run() {
->            /* 작업내용 */
->        }
->     }
-> 
->     // 2. Runnable 인터페이스를 구현
->     class MyThread implements Runnable {
->         // Runnable 인터페이스의 run()을 구현
->         public void run() {
->             /* 작업내용 */
->         }
->     }
+>	  static class MyThread1 extends Thread {
+>		// Thread 클래스의 run()을 오버라이딩
+>	    public void run() {
+>	        for (int i = 0; i < 10; i++) {
+>	        	try {
+>	        		Thread.sleep(1000);
+>        	    } catch(InterruptedException e) {
+>        	    	// ingore
+>       	    }
+>	        	
+>	        	System.out.println("MyThread1 run : " + i);
+>	        }
+>	    }
+>	 }
+>
+>	 // 2. Runnable 인터페이스를 구현
+>	 static class MyThread2 implements Runnable {
+>		// Runnable 인터페이스의 run()을 구현
+>	    public void run() {
+>	    	for (int i = 0; i < 10; i++) {
+>	    		try {
+>	        		Thread.sleep(1000);
+>        	    } catch(InterruptedException e) {
+>      	    	// ingore
+>       	    }
+>	    		
+>	    		System.out.println("MyThread2 run : " + i);
+>	        }
+>	     }
+>	 }
+>	 
+>	 public static void main(String[] args) {
+>		MyThread1 t1 = new MyThread1();
+>		Thread t2 = new Thread(new MyThread2());
+>		
+>		t1.start();
+>		t2.start();
+>	}
 >    ```
 
 ### OOP의 특징
