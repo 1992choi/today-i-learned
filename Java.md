@@ -28,8 +28,8 @@
 >    }
 >
 >    // 2. Runnable 인터페이스를 구현
->	   static class MyThread2 implements Runnable {
->		 // Runnable 인터페이스의 run()을 구현
+>    static class MyThread2 implements Runnable {
+>        // Runnable 인터페이스의 run()을 구현
 >	       public void run() {
 >	    	     for (int i = 0; i < 10; i++) {
 >	    		       try {
@@ -49,7 +49,7 @@
 >		
 >		     t1.start();
 >		     t2.start();
->	   }
+>    }
 >    ```
 
 ### OOP의 특징
@@ -137,15 +137,4 @@
 ### 객체 직렬화(Serialization)와 역직렬화(Deserialization)
 > 내용<br>
 
-### 제목
-> 내용<br>
->  ```java
-> public class Test {
-> 
->	  public static void main(String[] args) {
->		    System.out.println("Hello");
->     }
->
-> }
-> ```
 
