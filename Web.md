@@ -23,7 +23,7 @@
 ### AJAX
 > -JavaScript의 라이브러리중 하나이며 전체 페이지를 새로 고치지 않고도 페이지의 일부만을 위한 데이터를 로드하는 기법  
 
-### MVC1 VS MVC2
+### MVC1 vs MVC2
 > - **MVC1**   
 >   -모든 요청과 응답을 JSP가 담당하는 구조      
 >   -JSP페이지 안에서 모든 정보를 표현(View), 저장(Model), 처리(Control)   
