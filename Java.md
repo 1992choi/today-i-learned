@@ -20,7 +20,7 @@
 >   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭   
 > - **Thread 클래스와 Runnable 인터페이스**   
 >    ```java
->    // 1. Thread 클래스를  구현       
+>    // 1. Thread 클래스를 상속받아 구현       
 >    static class MyThread1 extends Thread {
 >        // Thread 클래스의 run()을 오버라이딩
 >        public void run() {
