@@ -8,60 +8,13 @@
 >   -Garbage Collector가 자동으로 메모리를 관리   
 >   -멀티쓰레드 지원     
 
-### JVM
-> -내용   
+### 객체지향 프로그래밍(Object-Oriented Programming, OOP)이란?
+> -객체를 기반으로 프로그래밍을 하는 프로그래밍스타일 혹은 패러다임   
+> -코드의 재사용성이 높음   
+> -코드의 변경이 용이   
+> -
 
-### Garbage Collection
-> -내용   
-
-### Thread
-> - **프로세스(Process)와 쓰레드(Thread)**   
->   -프로세스란 실행 중인 프로그램을 지칭   
->   -쓰레드란 프로세스의 자원을 이용해서 실제로 작업을 수행하는 것을 지칭   
-> - **Thread 클래스와 Runnable 인터페이스**   
->    ```java
->    // 1. Thread 클래스를 상속받아 구현       
->    static class MyThread1 extends Thread {
->        // Thread 클래스의 run()을 오버라이딩
->        public void run() {
->            for (int i = 0; i < 10; i++) {
->                try {
->                    Thread.sleep(1000);
->                } catch (InterruptedException e) {
->                    // ingore
->                }
->	        	
->                System.out.println("MyThread1 run : " + i);
->            }
->        }
->    }
->
->    // 2. Runnable 인터페이스를 구현
->    static class MyThread2 implements Runnable {
->        // Runnable 인터페이스의 run()을 구현
->        public void run() {
->            for (int i = 0; i < 10; i++) {
->                try {
->                    Thread.sleep(1000);
->                } catch (InterruptedException e) {
->                    // ingore
->                }
->	    		
->                System.out.println("MyThread2 run : " + i);
->            }
->        }
->    }
->	 
->    public static void main(String[] args) {
->        MyThread1 t1 = new MyThread1();
->        Thread t2 = new Thread(new MyThread2());
->		
->        t1.start();
->        t2.start();
->    }
->    ```
-
-### OOP의 특징
+### 객체지향 프로그래밍의 특징
 > - **캡슐화**   
 >   -객체의 변수, 메서드 등 실제 구현 내용을 보이지 않게 감싸는 개념   
 > - **추상화**   
@@ -71,7 +24,7 @@
 > - **상속성**   
 >   -클래스로부터 속성과 메서드를 물려받는 것   
 
-### OOP의 5대 원칙 (SOLID)
+### 객체지향 프로그래밍의 5대 원칙(SOLID)
 > - **단일 책임 원칙(Single Responsiblity Principle)**   
 >   -소프트웨어의 설계 부품(클래스, 함수 등)은 하나의 책임만 가짐   
 >   -응집도는 높고 결합도는 낮음을 뜻함   
@@ -185,3 +138,59 @@
 > - **역직렬화(Deserialize)**      
 >   -byte로 변환된 Data를 원래대로 Object나 Data로 변환하는 기술     
 >   -직렬화된 바이트 형태의 데이터를 객체로 변환해서 JVM으로 상주시키는 형태    
+
+### JDBC(Java Data Base Connection)
+> -JAVA언어를 통하여 데이터베이스에 접근할 수 있는 프로그래밍을 의미   
+
+### JVM
+> -내용   
+
+### Garbage Collection
+> -시스템에서 더 이상 사용하지 않는 동적 할당된 메모리 블럭을 찾아 자동으로 회수하는 것   
+
+### Thread
+> - **프로세스(Process)와 쓰레드(Thread)**   
+>   -프로세스란 실행 중인 프로그램을 지칭   
+>   -쓰레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위   
+> - **Thread 클래스와 Runnable 인터페이스**   
+>    ```java
+>    // 1. Thread 클래스를 상속받아 구현       
+>    static class MyThread1 extends Thread {
+>        // Thread 클래스의 run()을 오버라이딩
+>        public void run() {
+>            for (int i = 0; i < 10; i++) {
+>                try {
+>                    Thread.sleep(1000);
+>                } catch (InterruptedException e) {
+>                    // ingore
+>                }
+>	        	
+>                System.out.println("MyThread1 run : " + i);
+>            }
+>        }
+>    }
+>
+>    // 2. Runnable 인터페이스를 구현
+>    static class MyThread2 implements Runnable {
+>        // Runnable 인터페이스의 run()을 구현
+>        public void run() {
+>            for (int i = 0; i < 10; i++) {
+>                try {
+>                    Thread.sleep(1000);
+>                } catch (InterruptedException e) {
+>                    // ingore
+>                }
+>	    		
+>                System.out.println("MyThread2 run : " + i);
+>            }
+>        }
+>    }
+>	 
+>    public static void main(String[] args) {
+>        MyThread1 t1 = new MyThread1();
+>        Thread t2 = new Thread(new MyThread2());
+>		
+>        t1.start();
+>        t2.start();
+>    }
+>    ```
