@@ -34,6 +34,17 @@
 ### AJAX
 > -JavaScript의 라이브러리중 하나이며 전체 페이지를 새로 고치지 않고도 페이지의 일부만을 위한 데이터를 로드하는 기법  
 
+### TCP(Transmission Control Protocol) vs UDP(User Datagram Protoco)
+> - **TCP**   
+>   -연결형 서비스를 제공         
+>   -높은 신뢰성을 보장      
+>   -3-way handshaking(연결의 설정), 4-way handshaking(연결의 해제)   
+> - **UDP**   
+>   -비연결형 서비스를 제공            
+>   -신뢰성이 낮음      
+>   -데이터의 전송 순서를 보장하지 않음
+>   -TCP보다 전송속도가 빠름   
+
 ### MVC1 vs MVC2
 > - **MVC1**   
 >   -모든 요청과 응답을 JSP가 담당하는 구조      
