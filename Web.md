@@ -79,18 +79,17 @@
 > 7. 모델과 같이 뷰를 그린 후에 dispatch-servlet으로 보냄   
 > 8. 최종적으로 컨텐츠를 클라이언트에게 전달    
 
-### POJO
+### POJO(Plain Old Java Object)
 > -객체지향 원리에 충실하면서, 특정 환경이나 규약에 종속되지 않는 방식으로 설계된 객체   
 
-### IoC
+### IoC(Inversion of Control)
 > -객체에 대한 제어권이 개발자가 아닌 스프링 컨테이너에게 있는 것   
 > -객체의 생성부터 소멸까지의 라이프 사이클을 컨테이너가 관리   
 
-### DI
+### DI(Dependency Injection)
 > -각 객체 간의 의존관계를 빈 설정 정보를 바탕으로 컨테이너가 자동으로 연결해주는 것   
 
-### AOP
-> -관점 지향 프로그래밍(Aspect Oriented Programming)   
+### AOP(Aspect-Oriented Programming)
 > -애플리케이션의 핵심적인 기능과 부가적인 기능을 분리해 Aspect라는 모듈로 만들어 설계하고 개발하는 방법   
 > - **Aspect**   
 >   -위에서 설명한 흩어진 관심사를 모듈화 한 것   
