@@ -11,7 +11,7 @@
 >   -GET과 달리 전송해야될 데이터를 HTTP 메세지의 Body에 담아서 전송   
 
 ### Session과 Cookie
-> -HTTP의 비연결성(Connectionless)과 비상태성(Stateless)이라는 특징을 보완하기 위해서 사용   
+> -HTTP의 비연결성(Connectionless)과 무상태(Stateless)이라는 특징을 보완하기 위해서 사용   
 > - **Session**   
 >   -저장위치 : 웹 서버   
 >   -브라우저를 종료하거나, 서버에서 세션을 삭제했을 때만 삭제가 됨   
@@ -39,7 +39,7 @@
 > - **UDP**   
 >   -비연결형 서비스를 제공            
 >   -신뢰성이 낮음      
->   -데이터의 전송 순서를 보장하지 않음
+>   -데이터의 전송 순서를 보장하지 않음   
 >   -TCP보다 전송속도가 빠름   
 
 ### MVC1 vs MVC2
@@ -119,8 +119,8 @@
 > - **Session**   
 >   -HTTP 세션이 만들어질 때마다 생성   
 
-### REST
-> -Representational State Transfer : 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미   
+### REST(Representational State Transfer)
+> -자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미   
 > -HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행   
 
 
