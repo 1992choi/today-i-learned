@@ -1,5 +1,18 @@
 # Database
 
+### 데이터베이스 언어
+> - **DDL(Data Definition Language)**  
+>   -데이터베이스 구조를 정의,수정,삭제하는 언어  
+>   -CREATE, ALTER, DROP   
+> - **DML(Data Manipulation Language)**   
+>   -데이터베이스 내의 자료 검색, 삽입, 갱신, 삭제를 위한 언어   
+>   -SELECT, INSERT, UPDATE, DELETE   
+> - **DCL(Data Control Language)**   
+>   -데이터에 대해 무결성 유지, 병행 수행 제어, 보호와 관리를 위한 언어   
+>   -COMMIT, ROLLBACK, GRANT, REVOKE   
+    
+
+
 ### 정규화
 > -관계형 데이터베이스의 설계에서 중복을 최소화하게 데이터를 구조화하는 프로세스   
 > -삽입, 삭제, 갱신 이상이 있는 관계를 재구성함으로써 바람직한 스키마를 만들기 위함   
@@ -11,6 +24,21 @@
 >   -이행 함수 종속성 제거   
 > - **BCNF**   
 >   -결정자이면서 후보키가 아닌 것 제거   
+
+### JOIN
+> -두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 행위   
+> -일반적으로 Primary key 혹은 Foreign key로 두 테이블을 연결   
+> -연결하려면 적어도 하나의 칼럼은 서로 공유되고 있어야함   
+> - **INNER JOIN**   
+>   -기존테이블과 조인한 테이블의 중복값을 보여주는데 결과값은 교집합만 검색        
+> - **LEFT / RIGHT OUTER JOIN**   
+>   -기존 테이블 값 + 교집합   
+> - **FULL OUTER JOIN**  
+>   -합집합      
+> - **CROSS JOIN**   
+>   -모든 경우의 수 (N * M)    
+> - **SELF JOIN**   
+>   -하나의 테이블을 여러번 복사해서 조인   
 
 ### Index
 > -데이터베이스 분야에 있어서 테이블에 대한 동작의 속도를 높여주는 자료 구조      
