@@ -119,8 +119,7 @@
 > - **Library**   
 >   -자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합    
 
-### Spring Filter vs Interceptor
-> -Filter는 Dispatcher servlet의 앞단에서 정보를 처리하고, Interceptor는 Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리   
+### Spring Filter vs Interceptor  
 > - **Filter**   
 >   -DispatcherServlet 이전에 실행   
 >   -보통 web.xml에 등록   
