@@ -105,8 +105,29 @@
 >   -JointPoint의 상세한 스펙을 정의한 것   
 >   -더욱 구체적(특정 메서드의 진입 시점에 호출)으로 Advice가 실행될 지점을 지정   
 
-### 스프링 필터와 인터셉터의 차이
+### JSP vs Servlet
+> - **JSP**   
+>   -html 내에 자바코드를 블록화하여 삽입한 것      
+>   -JAVA in Html   
+> - **Servlet**   
+>   -Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것   
+>   -Html in JAVA   
+
+### Framework vs Library
+> - **Framework**   
+>   -뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 모음     
+> - **Library**   
+>   -자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합    
+
+### Spring Filter vs Interceptor
 > -Filter는 Dispatcher servlet의 앞단에서 정보를 처리하고, Interceptor는 Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리   
+> - **Filter**   
+>   -DispatcherServlet 이전에 실행   
+>   -보통 web.xml에 등록   
+>   -일반적으로 인코딩 변환 처리, XSS방어 등의 요청에 대한 처리로 사용   
+> - **Interceptor**   
+>   -Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리   
+>   -로그인 체크, 권한체크, 프로그램 실행시간 계산작업 로그확인 등에 대한 처리로 사용   
 
 ### 빈 스코프(Bean Scope)
 > -스프링이 관리하는 빈이 생성되고, 존재하고, 적용되는 범위   
