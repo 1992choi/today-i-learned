@@ -18,4 +18,4 @@
 
 * [Algorithm][algorithm_link]
 
-[algorithm_link]: https://github.com/19920731/Java/tree/master/algorithm
+[algorithm_link]: https://github.com/19920731/Java/tree/master/src/algorithm
