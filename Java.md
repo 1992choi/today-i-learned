@@ -140,9 +140,13 @@
 ### 래퍼 클래스(Wrapper Class)
 > -기본 자료타입(primitive type)을 객체로 다루기 위해서 사용하는 클래스   
 > - **박싱(Boxing)**   
->   -기본 타입을 래퍼 클래스로 변환하는 것     
+>   -기본 자료형을 Wrapper 클래스의 객체로 변경하는 과정   
+>   -Boxing : Integer age = new Integer(30);   
+>   -AutoBoxing : Integer age = 30;
 > - **언박싱(UnBoxing)**      
->   -래퍼 클래스를 기본 타입으로 변환하는 것   
+>   -각각의 객체를 기본 자료형으로 변경하여 사용하는 과정   
+>   -UnBoxing : int age = age.intValue();  
+>   -AutoUnBoxing : Integer obj = new Integer(30); int age = obj;  
 
 ### Reactive Programing
 > -데이터의 흐름과 전달에 관한 프로그래밍 패러다임   
