@@ -1,7 +1,5 @@
-- - -
-Interview
-===
-- - -
+# Interview
+
 * [Java](#java)
 
 * [Web](#web)
@@ -15,8 +13,7 @@ Interview
 
 <br><br><br><br><br>
 
-- - -
-## Java
+# Java
 
 ### Java의 특징
 > -객체지향 프로그래밍 언어   
@@ -243,8 +240,7 @@ Interview
 
 <br><br><br><br><br>
 
-- - -
-## Web
+# Web
 
 ### GET과 POST
 > - **GET**   
@@ -392,8 +388,7 @@ Interview
 
 <br><br><br><br><br>
 
-- - -
-## Database
+# Database
 
 ### 데이터베이스 언어
 > - **DDL(Data Definition Language)**  
