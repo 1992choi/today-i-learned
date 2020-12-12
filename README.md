@@ -1,3 +1,4 @@
+- - -
 # Interview
 
 * [Java](#java)
@@ -9,12 +10,11 @@
 * [Algorithm][algorithm_link]
 
 [algorithm_link]: https://github.com/19920731/Java/tree/master/src/algorithm
-
-
-
 - - -
+
+
+
 <br><br><br><br><br>
-- - -
 ## Java
 
 ### Java의 특징
@@ -243,7 +243,6 @@
 
 - - -
 <br><br><br><br><br>
-- - -
 ## Web
 
 ### GET과 POST
@@ -393,7 +392,6 @@
 
 - - -
 <br><br><br><br><br>
-- - -
 ## Database
 
 ### 데이터베이스 언어
