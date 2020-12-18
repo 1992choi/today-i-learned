@@ -13,7 +13,7 @@
 
 * [Algorithm][algorithm_link]
 
-[algorithm_link]: https://github.com/19920731/Java/tree/master/src/algorithm
+[algorithm_link]: https://github.com/Young-Geun/Java/tree/master/src/algorithm
 
 
 
@@ -329,7 +329,7 @@
 >   \- 트랜잭션이나 로깅, 보안과 같이 여러 모듈에서 공통적으로 사용하는 기능을 분리하여 관리한다.   
 
 ### Spring 처리 과정
-> <img src="https://github.com/19920731/Interview/blob/main/images/SpringMVC.jpg"  width="600" height="350" /><br>
+> <img src="https://github.com/Young-Geun/Interview/blob/main/images/SpringMVC.jpg"  width="600" height="350" /><br>
 > 1. 요청받은 URL을 dispatcher-servlet으로 전달한다.   
 > 2. 핸들러 매핑은 해당 URL에 매핑된 컨트롤러가 있는지 검사 후 컨트롤러에 전달한다.   
 > 3. 해당 컨트롤러가 로직을 처리한다.   
