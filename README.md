@@ -192,10 +192,22 @@
 ### JDBC(Java Data Base Connection)
 > \- JAVA언어를 통하여 데이터베이스에 접근할 수 있는 프로그래밍을 의미한다.   
 
-### JVM
-> \- .java 파일을 컴파일한 결과물(.class)을 실행시키는 프로그램이다.   
-> \- 메모리 관리 및 Garbage Collection 수행한다.   
-> \- Stack 기반의 가상머신이다.   
+### JVM(Java Virtual Machine)
+> - **JVM이란?**   
+>   \- Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.   
+>   \- Java와 OS사이에서 중개자 역할을 하여, OS의 종류와 무관하게 동일한 동작을 보장한다.   
+>   \- 메모리 관리 및 Garbage Collection 수행한다.   
+>   \- Stack 기반의 가상머신이다.   
+> - **JVM 구성**   
+>   \- 클래스 로더(Class Loader)   
+>   \- 실행 엔진(Excution Engine)   
+>   \- Garbage Collector   
+> - **실행과정**   
+>   \- 1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.   
+>   \- 2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.   
+>   \- 3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.   
+>   \- 4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.   
+>   \- 5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다.   
 
 ### Garbage Collection
 > \- 메모리 관리 기법 중의 하나로, 프로그램이 동적으로 할당했던 메모리 영역 중에서 필요없게 된 영역을 해제한다.   
