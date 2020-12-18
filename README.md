@@ -208,6 +208,7 @@
 >   \- 3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.   
 >   \- 4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.   
 >   \- 5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다.   
+> <img src="https://github.com/Young-Geun/Interview/blob/main/images/JVM.png"  width="600" height="350" />
 
 ### Garbage Collection
 > \- 메모리 관리 기법 중의 하나로, 프로그램이 동적으로 할당했던 메모리 영역 중에서 필요없게 된 영역을 해제한다.   
