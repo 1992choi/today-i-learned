@@ -260,6 +260,7 @@
 >		
 >        t1.start();
 >        t2.start();
+>        new Thread(new MyThread2()).start();
 >    }
 >    ```
 
