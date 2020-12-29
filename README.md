@@ -212,6 +212,7 @@
 
 ### Garbage Collection
 > \- 메모리 관리 기법 중의 하나로, 프로그램이 동적으로 할당했던 메모리 영역 중에서 필요없게 된 영역을 해제한다.   
+> \- 상세내용 : https://d2.naver.com/helloworld/1329   
 
 ### Thread
 > - **프로세스(Process)와 스레드(Thread)**   
