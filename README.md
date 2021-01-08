@@ -93,15 +93,21 @@
 >   \- 같은 클래스 내에서의 접근만 허용한다.   
 
 ### Java Collection
-> - **Set**   
->   \- HashSet, TreeSet   
->   \- 순서를 유지하지 않는 데이터의 집합으로 데이터의 중복을 허용하지 않는다.   
 > - **List**   
->   \- LinkedList, Vector, ArrayList   
 >   \- 순서가 있는 데이터의 집합으로 데이터의 중복을 허용한다.   
+>   \- Vector : ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.   
+>   \- ArrayList : 단방향 포인터 구조로 인덱스로 접근하므로 조회할 때 유리하지만, 데이터의 삽입이나 삭제가 발생할 경우 인덱스를 조정하는 추가 작업이 필요하다.   
+>   \- LinkedList : 양방향 포인터 구조로 데이터의 삽입, 삭제에 유리하다.   
+> - **Set**   
+>   \- 순서를 유지하지 않는 데이터의 집합으로 데이터의 중복을 허용하지 않는다.   
+>   \- HashSet : 가장 빠르게 접근할 수 있으나 순서를 보장하지 않는다.   
+>   \- TreeSet : 입력한 순서대로 값을 저장하지 않지만, 기본적으로 오름차순으로 정렬한다.   
+>   \- LinkedHashSet : 입력한 순서대로 값을 저장한다.   
 > - **Map**   
->   \- Hashtable, HashMap, TreeMap   
 >   \- Key와 Value의 쌍으로 이루어진 데이터 집합으로, 순서는 유지되지 않으며 Key의 중복을 허용하지 않으나 Value의 중복은 허용한다.   
+>   \- TreeMap : 데이터를 이진 검색 트리(binary search tree)의 형태로 저장하므로 데이터의 삽입이나 삭제가 빠르다.   
+>   \- HashMap : 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘(hash algorithm)을 사용하여 검색 속도가 매우 빠르다.      
+>   \- Hashtable : HashMap과 다르게 동기화를 보장한다.   
 
 ### Call by Value vs Call by Reference   
 > - **Call by Value**   
