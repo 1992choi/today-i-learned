@@ -395,6 +395,10 @@
 >   \- 필터링된 JointPoint.   
 >   \- 정규표현식을 사용하여 Advice를 적용할 타겟의 메서드를 선별.   
 
+### PSA(Portable Service Abstraction)
+> \- 환경의 변화와 관계없이 일관된 방식의 기술 접근 환경을 제공하려는 추상화 구조를 뜻한다.   
+> \- 트랜잭션 처리를 위해 Platform TransactionManager의 구현체들인 JpaTransactionManager, DatasourceTransactionManager, HibernateTransactionManager을 사용하는데 구현체가 바뀌어도 트랜잭션을 처리하는 코드는 변경되지 않는다.   
+
 ### JSP vs Servlet
 > - **JSP**   
 >   \- html 내에 자바코드를 블록화하여 삽입한 것.      
