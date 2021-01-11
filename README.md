@@ -85,11 +85,11 @@
 >   \- 실행 엔진(Excution Engine)   
 >   \- Garbage Collector   
 > - **실행과정**   
->   \- 1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.   
->   \- 2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.   
->   \- 3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.   
->   \- 4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.   
->   \- 5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다.   
+>      1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.   
+>      2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.   
+>      3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.   
+>      4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.   
+>      5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다.   
 > <img src="https://github.com/Young-Geun/Interview/blob/main/images/JVM.png"  width="600" height="350" />
 
 ### Garbage Collection
@@ -115,7 +115,7 @@
 >   \- 같은 클래스 내에서의 접근만 허용한다.   
 
 ### 컬렉션 프레임워크(Collection Framework)
-> \- 다수의 데이터를 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.   
+> \- 다수의 데이터를 처리할 수 있도록 표준화된 방법을 제공하는 클래스의 집합을 의미한다.   
 > - **List**   
 >   \- 순서가 있는 데이터의 집합으로 데이터의 중복을 허용한다.   
 >   \- Vector : ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.   
@@ -253,8 +253,7 @@
 >        Thread t2 = new Thread(new MyThread2());
 >		
 >        t1.start();
->        t2.start();
->        new Thread(new MyThread2()).start(); // 한 줄 표기법
+>        t2.start(); // 또는 new Thread(new MyThread2()).start();
 >    }
 >    ```
 
