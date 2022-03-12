@@ -332,6 +332,12 @@
 >   \- 데이터의 전송 순서를 보장하지 않는다.   
 >   \- TCP보다 전송속도가 빠르다.   
 
+### SSR(Server Side Rendering) vs CSR(Client Side Rendering)
+> - **SSR**   
+>   \- 서버에서 렌더링 후, Data가 결합된 HTML파일을 클라이언트에 전달하는 방식이다.    
+> - **CSR**   
+>   \- SSR과 반대로 클라이언트에서 렌더링을 하는 방식이다.    
+
 ### MVC1 vs MVC2
 > - **MVC1**   
 >   \- 모든 요청과 응답을 JSP가 담당하는 구조이다.      
