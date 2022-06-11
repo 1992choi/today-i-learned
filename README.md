@@ -291,6 +291,13 @@
 > \- 기능별로 철저한 모듈화가 이루어져 종속성과 의존성이 낮아 기능이 추가되거나 제거되어도 전체 구조에 영향을 미치지 않게 된다.   
 > \- 자동화된 유닛테스팅을 전제로 하므로 특정 버그를 손쉽게 찾아낼 수 있어서 디버깅 시간이 단축된다.   
 
+### Checked Exception VS Unchecked Exception   
+> <img src="https://github.com/Young-Geun/Interview/blob/main/images/Types-of-exception.png"  width="600" height="350" />      
+>   
+> - **Checked Exception**   
+>   \- 반드시 에러를 처리해야한다.   
+> - **Unchecked Exception**   
+>   \- 에러 처리를 강제하지 않는다.   
 
 
 <br><br><br>
