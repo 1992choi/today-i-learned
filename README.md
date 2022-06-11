@@ -292,12 +292,16 @@
 > \- 자동화된 유닛테스팅을 전제로 하므로 특정 버그를 손쉽게 찾아낼 수 있어서 디버깅 시간이 단축된다.   
 
 ### Checked Exception VS Unchecked Exception   
-> <img src="https://github.com/Young-Geun/Interview/blob/main/images/Types-of-exception.png"  width="600" height="350" />      
+> <img src="https://github.com/Young-Geun/Interview/blob/main/images/Types_of_exception.png"  width="600" height="350" />      
 >   
 > - **Checked Exception**   
->   \- 반드시 에러를 처리해야한다.   
+>   \- 처리여부 : 반드시 에러를 처리해야한다.   
+>   \- 확인시점 : 컴파일 단계   
+>   \- 트랜잭션 처리 : ROLLBACK 하지 않는다.   
 > - **Unchecked Exception**   
->   \- 에러 처리를 강제하지 않는다.   
+>   \- 처리여부 : 명시적인 처리를 강제하지 않는다.   
+>   \- 확인시점 : 실행 단계   
+>   \- 트랜잭션 처리 : ROLLBACK 한다.   
 
 
 <br><br><br>
