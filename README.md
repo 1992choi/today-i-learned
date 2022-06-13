@@ -465,6 +465,17 @@
 > \- 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.   
 > \- HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행한다.   
 
+### @Value VS @ConfigurationProperties
+> \- 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.     
+> - **@Value**   
+>   \- 단일 값 주입만 할 수 있다.   
+>   \- RelaxedBinding이 불가능하다.   
+>   \- spEL 적용이 가능하다.   
+> - **@ConfigurationProperties**   
+>   \- 복수의 값을 바인딩할 수 있다.   
+>   \- RelaxedBinding이 가능하다.   
+>   \- spEL 적용이 불가능하다. 
+
 
 
 <br><br><br>
