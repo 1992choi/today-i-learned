@@ -303,6 +303,19 @@
 >   \- 확인시점 : 실행 단계   
 >   \- 트랜잭션 처리 : ROLLBACK 한다.   
 
+### Annotation
+> - **표준 Annotation**   
+>   \- @Override : 컴파일러에게 오버라이딩하는 메서드라는 것을 알린다.   
+>   \- @Deprecated : 해당 메서드가 더 이상 사용되지 않음을 표시한다.   
+>   \- @SuppressWarnings : 컴파일 경고를 무시하도록 한다.   
+>   \- @SafeVarargs : Java7부터 지원하며, 제너릭 같은 가변인자의 매개변수를 사용할 때의 경고를 무시한다.   
+>   \- @FunctionalInterface : 함수형 인터페이스라고 정의하는 어노테이션으로, 만약 메서드가 존재하지 않거나 1개 이상의 메서드(default 메서드 제외)가 존재할 경우 컴파일 오류를 발생시킨다.   
+> - **메타 Annotation**      
+>   \- @Target : 어노테이션이 적용가능한 대상을 지정하는데 사용한다.   
+>   \- @Documented : 해당 어노테이션을 Javadoc에 포함시킨다.   
+>   \- @Inherited : 어노테이션이 상속되도록 한다.   
+>   \- @Retention : 어노테이션이 유지되는 범위를 지정한다.   
+>   \- @Repeatable : Java8부터 지원하며, 연속적으로 어노테이션을 선언할 수 있게 해준다.   
 
 <br><br><br>
 - - -
