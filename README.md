@@ -501,6 +501,7 @@
 ### @Transactional
 > \- 트랜잭션 처리를 위한 어노테이션이다.   
 > \- 선언적 트랜잭션이라 부른다.   
+> \- 예제코드 : https://github.com/Young-Geun/SpringBoot/tree/master/src/test/java/choi/web/springboot/tx   
 > - **적용 대상**   
 >   \- 클래스  
 >   \- 메서드 (단, public에서만 적용된다. public이 아닌 메서드에 적용할 경우, 예외는 발생하지 않으나 트랜잭션 적용이 무시된다.)   
