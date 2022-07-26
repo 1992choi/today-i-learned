@@ -475,6 +475,18 @@
 >   \- 필터링된 JointPoint.   
 >   \- 정규표현식을 사용하여 Advice를 적용할 타겟의 메서드를 선별.   
 
+### 스프링 AOP Advice 종류
+> - **@Around**   
+>   \- 메서드 호출 전후에 실행된다.   
+> - **@Before**   
+>   \- JointPoint가 실행되기 이전 시점에 실행된다.   
+> - **@AfterRetruning**   
+>   \- JointPoint가 정상 완료된 후 실행된다.   
+> - **@AfterThrowing**   
+>   \- 메서드가 예외를 던지는 경우 실행된다.   
+> - **@After**   
+>   \- JointPoint의 정상 완료 여부에 상관없이 항상 실행된다.   
+
 ### PSA(Portable Service Abstraction)
 > \- 환경의 변화와 관계없이 일관된 방식의 기술 접근 환경을 제공하려는 추상화 구조를 뜻한다.   
 > \- 트랜잭션 처리를 위해 Platform TransactionManager의 구현체들인 JpaTransactionManager, DatasourceTransactionManager, HibernateTransactionManager을 사용하는데 구현체가 바뀌어도 트랜잭션을 처리하는 코드는 변경되지 않는다.   
