@@ -477,7 +477,7 @@
 >   \- 필터링된 JointPoint.   
 >   \- 정규표현식을 사용하여 Advice를 적용할 타겟의 메서드를 선별.   
 
-### 스프링 AOP Advice 종류
+### Spring AOP Advice 종류
 > - **@Around**   
 >   \- 메서드 호출 전후에 실행된다.   
 > - **@Before**   
@@ -488,6 +488,15 @@
 >   \- 메서드가 예외를 던지는 경우 실행된다.   
 > - **@After**   
 >   \- JointPoint의 정상 완료 여부에 상관없이 항상 실행된다.   
+
+### Spring AOP VS AspectJ
+> - **Spring AOP**   
+>   \- 런타임 위빙(다이나믹 프록시)을 사용한다.   
+> - **AspectJ**   
+>   \- AspectJ는 위빙 시점에 따라 Compile Time Weaving(CTW), Post Compile Weaving(PCW), Load Time Weaving(LTW) 로 분류된다.   
+>   \- Compile Time Weaving(CTW) : AJC(AspectJ Compiler)를 이용해서, 소스 코드가 컴파일할 때 위빙   
+>   \- Post Compile Weaving(PCW) : 이미 컴파일된 바이너리 클래스에 위빙   
+>   \- Load Time Weaving(LTW) : Class Loader가 클래스를 로딩할 때 위빙   
 
 ### PSA(Portable Service Abstraction)
 > \- 환경의 변화와 관계없이 일관된 방식의 기술 접근 환경을 제공하려는 추상화 구조를 뜻한다.   
