@@ -536,9 +536,18 @@
 > - **Session**   
 >   \- HTTP 세션이 만들어질 때마다 생성된다.   
 
-### REST(Representational State Transfer)
+### REST(Rep`resentational State Transfer)
 > \- 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.   
 > \- HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행한다.   
+> - **구성 요소**   
+>   \- 자원(Resource) : HTTP URI   
+>   \- 자원에 대한 행위(Verb) : HTTP Method   
+>   \- 자원에 대한 행위의 내용 (Representations) : HTTP Message Pay Load   
+> - **REST에서의 CRUD Operation**   
+>   \- Create : 데이터 생성(POST)   
+>   \- Read : 데이터 조회(GET)   
+>   \- Update : 데이터 수정(PUT)   
+>   \- Delete : 데이터 삭제(DELETE)  
 
 ### @Value VS @ConfigurationProperties
 > \- 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.     
