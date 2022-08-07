@@ -536,7 +536,7 @@
 > - **Session**   
 >   \- HTTP 세션이 만들어질 때마다 생성된다.   
 
-### REST(Rep`resentational State Transfer)
+### REST(Representational State Transfer)
 > \- 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.   
 > \- HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행한다.   
 > - **구성 요소**   
@@ -548,6 +548,22 @@
 >   \- Read : 데이터 조회(GET)   
 >   \- Update : 데이터 수정(PUT)   
 >   \- Delete : 데이터 삭제(DELETE)  
+
+### RESTful
+> \- REST의 원리를 따르는 시스템을 의미한다.   
+> - **제약조건**   
+>   \- 클라이언트-서버(Client-Server)   
+&nbsp;&nbsp;&nbsp;: 관심사의 명확한 분리가 선행되면 서버의 구성요소가 단순화되고, 확장성이 향상되어 여러 플랫폼을 지원할 수 있다.   
+>   \- 무상태성(Stateless)   
+&nbsp;&nbsp;&nbsp;: 서버에 클라이언트의 상태 정보를 저장하지 않는 것을 말한다. 단순히 들어오는 요청만 처리하여 구현을 더 단순화시킨다.   
+>   \- 캐시 가능(Cacheable)   
+&nbsp;&nbsp;&nbsp;: 클라이언트의 응답을 캐시할 수 있어야한다.   
+>   \- 계층화 시스템(Layered System)   
+&nbsp;&nbsp;&nbsp;: 서버는 중개서버나 로드 밸런싱, 공유 캐시 등의 기능을 사용하여 확장성 있는 시스템을 구성할 수 있다.   
+>   \- 코드 온 디맨드(Code on demand)   
+&nbsp;&nbsp;&nbsp;: 클라이언트 서버에서 자바 애플릿, 자바스크립트 실행 코드를 전송받아 기능을 일시적으로 확장할 수 있다.   
+>   \- 인터페이스 일관성(Uniform interface)   
+&nbsp;&nbsp;&nbsp;: URI로 지정된 리소스에 균일하고 통일된 인터페이스를 제공한다. 아키텍처를 단순하게 분리하여 독립적으로 만들 수 있다.   
 
 ### @Value VS @ConfigurationProperties
 > \- 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.     
