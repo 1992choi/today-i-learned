@@ -565,6 +565,15 @@
 >   \- 인터페이스 일관성(Uniform interface)   
 &nbsp;&nbsp;&nbsp;: URI로 지정된 리소스에 균일하고 통일된 인터페이스를 제공한다. 아키텍처를 단순하게 분리하여 독립적으로 만들 수 있다.   
 
+### Hateoas(Hypermedia As The Engine Of Application State)
+> \- 클라이언트의 요청으로부터 응답을 할 때, 요청 이외의 관련된 URI를 응답에 추가적으로 포함시켜 반환하는 개념이다.   
+> - **장점**   
+>   \- 요청 URI가 변경되더라도 클라이언트는 이에 대응하여 코드를 변경하지 않아도 된다.   
+>   \- Resource가 포함된 URI를 보여주기 때문에, Resource에 대한 신뢰도를 높일 수 있다.   
+> - **단점**   
+>   \- 전달되는 data의 크기가 커져서 네트워크 오버헤드가 생길 수 있다.   
+>   \- 링크가 복잡해질 수 있다.   
+
 ### @Value VS @ConfigurationProperties
 > \- 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.     
 > - **@Value**   
