@@ -596,6 +596,11 @@
 > - **트랜잭션 AOP 주의사항**   
 >   \- 내부호출(프록시를 거치지 않고 호출)의 경우 트랜잭션이 적용되지 않는다.   
 >   \- 초기화 시점에는 적용되지 않는다.(예시로 @PostConstruct를 사용한 메서드에서 트랜잭션을 시작할 경우, 올바르게 동작하지 않는다.)   
+> - **TransactionlManager 옵션**   
+>   \- Transaction Manager가 다수일 경우, 설정한 Bean의 id 혹은 qualifier 값을 아래와 같이 옵션 값으로 사용하여 트랜잭션 매니저를 설정할 수 있다.   
+>   \- Ex) @Transactional("subDbTx")   
+>   \- Ex) @Transactional(value = "subDbTx")   
+>   \- Ex) @Transactional(transactionManager = "subDbTx")   
 > - **전파 설정 옵션**   
 >   \- REQUIRED(기본값) : 기존 트랜잭션이 존재한다면 기존 트랜잭션으로 참여하고, 없다면 새로 생성한다.   
 >   \- REQUIRES_NEW : 항상 새로운 트랜잭션을 생성한다.   
