@@ -11,10 +11,6 @@
 
 * [Database](#database)
 
-* [Algorithm][algorithm_link]
-
-[algorithm_link]: https://github.com/Young-Geun/Java/tree/master/src/algorithm
-
 
 
 <br><br><br>
