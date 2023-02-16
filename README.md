@@ -9,6 +9,7 @@
 >   \- [ 스프링 DI ](https://caffeineoverflow.tistory.com/13)   
 >   \- [ 스프링 IoC ](https://caffeineoverflow.tistory.com/14)   
 >   \- [ 스프링 AOP ](https://caffeineoverflow.tistory.com/17)   
+> - **인증/인가**   
 >   \- [ JWT 소개 ](https://caffeineoverflow.tistory.com/18)  
 > - **Tools**   
 >   \- [ [IntelliJ] Find in Files 검색 결과 늘리기 ](https://caffeineoverflow.tistory.com/4)   
