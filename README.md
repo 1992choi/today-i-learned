@@ -10,6 +10,7 @@
 >   \- [ 스프링 IoC ](https://caffeineoverflow.tistory.com/14)   
 >   \- [ 스프링 AOP ](https://caffeineoverflow.tistory.com/17)   
 >   \- [ REST Docs ](https://caffeineoverflow.tistory.com/20)   
+>   \- [ Bucket4j를 이용한 트래픽 제한 ](https://caffeineoverflow.tistory.com/21)   
 >   \- [ [모니터링 환경 구축] Spring Actuator ](https://caffeineoverflow.tistory.com/22)   
 >   \- [ [모니터링 환경 구축] Prometheus ](https://caffeineoverflow.tistory.com/24)   
 > - **인증/인가**   
