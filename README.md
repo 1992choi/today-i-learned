@@ -14,6 +14,7 @@
 >   \- [ [모니터링 환경 구축] Spring Actuator ](https://caffeineoverflow.tistory.com/22)   
 >   \- [ [모니터링 환경 구축] Prometheus ](https://caffeineoverflow.tistory.com/24)   
 >   \- [ [모니터링 환경 구축] Grafana ](https://caffeineoverflow.tistory.com/25)   
+>   \- [ REST API ](https://caffeineoverflow.tistory.com/26)   
 > - **인증/인가**   
 >   \- [ JWT 소개 ](https://caffeineoverflow.tistory.com/18)  
 >   \- [ JWT 구현 ](https://caffeineoverflow.tistory.com/19)  
