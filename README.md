@@ -15,6 +15,7 @@
 >   \- [ 모니터링 환경 구축#2 - Prometheus ](https://caffeineoverflow.tistory.com/24)   
 >   \- [ 모니터링 환경 구축#3 - Grafana ](https://caffeineoverflow.tistory.com/25)   
 >   \- [ REST API ](https://caffeineoverflow.tistory.com/26)   
+>   \- [ HATEOAS ](https://caffeineoverflow.tistory.com/28)   
 >   \- [ 스프링부트 콘솔 배너 변경 ](https://caffeineoverflow.tistory.com/12)   
 > - **인증/인가**   
 >   \- [ JWT 소개 ](https://caffeineoverflow.tistory.com/18)  
