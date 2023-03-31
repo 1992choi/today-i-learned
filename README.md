@@ -123,6 +123,14 @@
 > - **클래스에 사용**   
 >   \- final 키워드를 클래스에 붙이면 상속 불가능 클래스가 된다.   
 
+### String, StringBuffer, StringBuilder
+> - **String**   
+>   \- 불변(immutable)의 속성을 갖는다.   
+> - **StringBuffer**   
+>   \- 동기화 키워드를 지원하여 멀티쓰레드 환경에서 안전하다.   
+> - **StringBuilder**   
+>   \- 동기화를 지원하지 않기때문에 멀티쓰레드 환경에서 사용하는 것은 적합하지 않지만, 단일쓰레드에서의 성능은 StringBuffer 보다 뛰어나다.   
+
 ### 컬렉션 프레임워크(Collection Framework)
 > \- 다수의 데이터를 처리할 수 있도록 표준화된 방법을 제공하는 클래스의 집합을 의미한다.   
 > - **List**   
