@@ -69,6 +69,22 @@
 >   \- 클래스로 구현할 모든 대상을 뜻한다.     
 > - **인스턴스**   
 >   \- 객체가 메모리에 할당되어 실제 사용될 때를 지칭한다.      
+> - **Ex**   
+>    ```java
+>    public class Animal { // 클래스
+>        ...
+>    }
+>     
+>    public class Main {
+>         public static void main(String[] args) {
+>             Animal cat, dog; // 객체
+>    
+>             // 인스턴스화
+>             cat = new Animal();
+>             dog = new Animal();
+>         }
+>    }
+>    ```
 
 ### JVM(Java Virtual Machine)
 > - **JVM이란?**   
