@@ -206,6 +206,26 @@
 ### 스트림 API
 > \- 자바8부터 추가된 반복자이며, 컬렉션에 저장된 요소를 하나씩 참조하여 람다식으로 처리할 수 있도록 해주는 기능이다.   
 > \- Iterator와 비슷한 역할을 하지만 내부 반복자를 통해 병렬 처리가 가능하다는 장점이 있다.   
+> - **스트림의 작업 흐름 순서**   
+>   \- 생성 > 중개 연산(Intermediate Operation) > 최종 연산(Terminal Operation)   
+
+### 스트림 연산
+> - **중개 연산(Intermediate Operation)**   
+>   \- 스트림 필터링 : filter(), distinct()   
+>   \- 스트림 변환 : map(), flatMap()   
+>   \- 스트림 제한 : limit(), skip()   
+>   \- 스트림 정렬 : sorted()   
+>   \- 스트림 연산 결과 확인 : peek()   
+>   https://github.com/Young-Geun/Java/blob/master/src/basic/stream/IntermediateOperation.java   
+> - **최종 연산(Terminal Operation)**   
+>   \- 출력 : forEach()   
+>   \- 소모 : reduce()   
+>   \- 검색 : findFirst(), findAny()   
+>   \- 검사 : anyMatch(), allMatch(), noneMatch()   
+>   \- 통계 : count(), min(), max()   
+>   \- 연산 : sum(), average()   
+>   \- 수집 : collect()   
+>   https://github.com/Young-Geun/Java/blob/master/src/basic/stream/TerminalOperation.java   
 
 ### Call by Value vs Call by Reference   
 > - **Call by Value**   
