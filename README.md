@@ -189,6 +189,16 @@
 >   \- HashMap : 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘(hash algorithm)을 사용하여 검색 속도가 매우 빠르다.      
 >   \- Hashtable : HashMap과 다르게 동기화를 보장한다.   
 
+### HashMap 동작원리
+> \- HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.    
+> \- 위와 같은 특성으로 인하여 삽입, 삭제, 검색이 평균적으로 O(1) 시간복잡도를 갖는다.   
+> \- HashMap의 내부구조는 배열로 되어있으며 배열의 인덱스는 hashcode() % M로 산출한다. 하지만 동일 값이 발생하여 해시충돌이 일어날 수 있으며, 이를 방지하기 위한 방법에는 Open Addressing 방식과 Separate Chaining 방식이 있는데 자바에서는 Separate Chaining 방식을 채택했다.   
+> - **Open Addressing**   
+>   \- Open addressing 방식에도 여러가지 구현 방식이 있는데, 가장 간단한 Linear probing 방식을 예로 들자면 충돌이 일어났을 경우, 빈 버킷이 나올 때까지 순차적으로 다음 인덱스를 탐색한다.   
+> - **Separate Chaining**   
+>   \- 동일  index로 인해서 충돌이 발생하면 그 index가 가리키고 있는 Linked list에 노드를 추가하여 값을 추가한다.   
+>   \- JDK 1.8의 경우에는 index에 노드가 8개 이하일 경우에는 Linked List를 사용하며, 8개 이상으로 늘어날때는 Tree 구조로 데이타 저장 구조를 바꾸도록 되어 있다.   
+
 ### 람다식(Lambda Expression)
 > \- 람다식(Lambda Expression)이란 함수를 하나의 식(expression)으로 표현한 것이다.   
 > \- 함수를 람다식으로 표현하면 메소드의 이름이 필요 없기 때문에, 람다식은 익명 함수(Anonymous Function)의 한 종류라고 볼 수 있다.   
