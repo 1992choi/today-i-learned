@@ -736,6 +736,10 @@
 >   \- 배포 자동화 과정을 뜻한다.   
 >   \- CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.   
 
+### ORM(Object Relation Mapping)
+> \- 객체(Object)와 DB의 테이블을 Mapping 시켜 RDB 테이블을 객체지향적으로 사용하게 해주는 기술을 뜻한다.   
+> \- Java에서 사용하는 대표적인 ORM으로는 JPA와 그의 구현체 Hiberante가 있다.   
+> \- JPA(Java Persistent API)가 등장하기 이전에는 MyBatis라는 Object Mapping 기술을 이용하였는데, MyBatis는 Java 클래스 코드와 직접 작성한 SQL 코드를 Mapping 시켜주어야 했다. 반면 JPA와 같은 ORM 기술은 객체가 DB에 연결되기 때문에, SQL을 직접 작성하지 않고 표준 인터페이스 기반으로 처리한다는 점에서 차이가 있다.   
 
 <br><br><br>
 - - -
