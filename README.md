@@ -30,6 +30,9 @@
 >   \- [ Mybatis - 조회쿼리 성능 향상 ](https://caffeineoverflow.tistory.com/32)   
 >   \- [ 스프링부트 콘솔 배너 변경 ](https://caffeineoverflow.tistory.com/12)   
 <br><br>
+> - **Design Patterns**   
+>   \- [ [GoF] 디자인 패턴이란? ](https://caffeineoverflow.tistory.com/41)   
+<br><br>
 > - **인증/인가**   
 >   \- [ JWT 소개 ](https://caffeineoverflow.tistory.com/18)  
 >   \- [ JWT 구현 ](https://caffeineoverflow.tistory.com/19)  
