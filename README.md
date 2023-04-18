@@ -20,7 +20,7 @@
 >   \- 스레드   
 >   \- 제네릭   
 >   \- 컬렉션 프레임워크(Collection Framework)   
->   \- Checked Exception VS Unchecked Exception
+>   \- Checked Exception과 Unchecked Exception
 <br><br>
 > - **Spring**   
 >   \- [ 스프링 개요 ](https://caffeineoverflow.tistory.com/5)   
@@ -41,7 +41,7 @@
 >   \- [ Mybatis - 조회쿼리 성능 향상 ](https://caffeineoverflow.tistory.com/32)   
 >   \- [ 스프링부트 콘솔 배너 변경 ](https://caffeineoverflow.tistory.com/12)   
 >   \- Session과 Cookie   
->   \- Filter vs Interceptor   
+>   \- Filter와 Interceptor   
 >   \- @Transactional   
 >   \- ORM(Object Relation Mapping)   
 <br><br>
