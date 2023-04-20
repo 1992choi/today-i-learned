@@ -61,3 +61,6 @@
 > - **Error**   
 >   \- [ [JPA] Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "start_value" not found ](https://caffeineoverflow.tistory.com/27)   
 >   \- [ [Mybatis] Oracle java.sql.SQLException: 부적합한 열 유형: 1111 ](https://caffeineoverflow.tistory.com/43)   
+<br><br>
+> - **Issue**   
+>   \- [ [Nginx] 오류 페이지 설정 ](https://caffeineoverflow.tistory.com/45)   
