@@ -54,6 +54,9 @@
 >   \- [ Keycloak 소개 ](https://caffeineoverflow.tistory.com/30)  
 >   \- [ Keycloak 설치 및 설정 ](https://caffeineoverflow.tistory.com/31)   
 <br><br>
+> - **Server**   
+>   \- [ [macOS] Oracle 설치 ](https://caffeineoverflow.tistory.com/47)   
+<br><br>
 > - **Tools**   
 >   \- [ [IntelliJ] Find in Files 검색 결과 늘리기 ](https://caffeineoverflow.tistory.com/4)   
 >   \- [ [IntelliJ] 인텔리제이 세로줄 제거 ](https://caffeineoverflow.tistory.com/3)   
