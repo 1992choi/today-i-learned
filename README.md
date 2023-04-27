@@ -47,6 +47,7 @@
 <br><br>
 > - **Design Patterns**   
 >   \- [ [GoF] 디자인 패턴이란? ](https://caffeineoverflow.tistory.com/41)   
+>   \- [ [GoF] 싱글톤 패턴(Singleton Pattern) ](https://caffeineoverflow.tistory.com/50)   
 <br><br>
 > - **인증/인가**   
 >   \- [ JWT 소개 ](https://caffeineoverflow.tistory.com/18)  
