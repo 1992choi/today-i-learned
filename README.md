@@ -68,3 +68,4 @@
 <br><br>
 > - **Issue**   
 >   \- [ [Nginx] 오류 페이지 설정 ](https://caffeineoverflow.tistory.com/45)   
+>   \- [ [MySQL / MariaDB] Table Lock(테이블 락) 해제 ](https://caffeineoverflow.tistory.com/51)   
