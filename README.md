@@ -45,6 +45,9 @@
 >   \- @Transactional   
 >   \- ORM(Object Relation Mapping)   
 <br><br>
+> - **Database**   
+>   \- [ [SQL] DELETE, TRUNCATE, DROP 차이점 ](https://caffeineoverflow.tistory.com/104)   
+<br><br>
 > - **Design Patterns**   
 >   \- [ [GoF] 디자인 패턴이란? ](https://caffeineoverflow.tistory.com/41)   
 >   \- [ [GoF] 싱글톤 패턴(Singleton Pattern) ](https://caffeineoverflow.tistory.com/50)   
