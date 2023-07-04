@@ -61,6 +61,7 @@
 > - **Server**   
 >   \- [ [macOS] Oracle 설치 ](https://caffeineoverflow.tistory.com/47)   
 >   \- [ 도메인주소로 IP주소 찾기 ](https://caffeineoverflow.tistory.com/114)   
+>   \- [ [Linux] alias ](https://caffeineoverflow.tistory.com/115)   
 <br><br>
 > - **Tools**   
 >   \- [ [IntelliJ] Find in Files 검색 결과 늘리기 ](https://caffeineoverflow.tistory.com/4)   
