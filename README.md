@@ -47,6 +47,7 @@
 <br><br>
 > - **Database**   
 >   \- [ [SQL] DELETE, TRUNCATE, DROP 차이점 ](https://caffeineoverflow.tistory.com/104)   
+>   \- [ [SQL] COUNT(1), COUNT(*), COUNT(column) 차이점 ](https://caffeineoverflow.tistory.com/116)   
 <br><br>
 > - **Design Patterns**   
 >   \- [ [GoF] 디자인 패턴이란? ](https://caffeineoverflow.tistory.com/41)   
