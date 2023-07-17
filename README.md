@@ -58,7 +58,7 @@
 >   \- Session과 Cookie   
 >   \- Filter와 Interceptor   
 >   \- @Transactional   
->   \- ORM(Object Relation Mapping)
+>   \- ORM(Object Relation Mapping)   
 >   \- 테스트코드 작성   
 >   \- Maven과 Gradle   
 >   \- CI/CD   
