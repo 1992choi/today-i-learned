@@ -70,7 +70,7 @@
 > - **Database**   
 >   \- [ [SQL] DELETE, TRUNCATE, DROP 차이점 ](https://caffeineoverflow.tistory.com/104)   
 >   \- [ [SQL] COUNT(1), COUNT(*), COUNT(column) 차이점 ](https://caffeineoverflow.tistory.com/116)   
->   \- DDL, DML, DCL   
+>   \- [ [SQL] DDL, DML, DCL, TCL ](https://caffeineoverflow.tistory.com/121)   
 >   \- Key   
 >   \- 이상(Anomaly)      
 >   \- 정규화   
