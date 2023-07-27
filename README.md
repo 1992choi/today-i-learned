@@ -21,7 +21,7 @@
 >   \- [ final 제어자 ](https://caffeineoverflow.tistory.com/44)   
 >   \- [ 래퍼 클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing) ](https://caffeineoverflow.tistory.com/123)   
 >   \- [ 추상 클래스(Abstract Class) ](https://caffeineoverflow.tistory.com/124)   
->   \- 인터페이스   
+>   \- [ 인터페이스(Interface) ](https://caffeineoverflow.tistory.com/125)   
 >   \- 추상클래스와 인터페이스의 차이     
 >   \- 스레드   
 >   \- 제네릭   
