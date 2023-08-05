@@ -24,7 +24,7 @@
 >   \- [ 인터페이스(Interface) ](https://caffeineoverflow.tistory.com/125)   
 >   \- [ 추상클래스와 인터페이스의 차이 ](https://caffeineoverflow.tistory.com/126)   
 >   \- 스레드   
->   \- 제네릭   
+>   \- [ 제네릭(Generic) ](https://caffeineoverflow.tistory.com/128)   
 >   \- 컬렉션 프레임워크(Collection Framework)   
 >   \- Checked Exception과 Unchecked Exception   
 >   \- JVM   
