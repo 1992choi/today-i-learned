@@ -26,9 +26,10 @@
 >   \- [ Overloading vs Overriding ](https://caffeineoverflow.tistory.com/127)   
 >   \- [ 제네릭(Generic) ](https://caffeineoverflow.tistory.com/128)   
 >   \- [ 컬렉션 프레임워크 (Collection Framework) ](https://caffeineoverflow.tistory.com/129)   
+>   \- [ Set과 equals() 및 hashCode()의 관계 ](https://caffeineoverflow.tistory.com/131)   
 >   \- [ 람다식(Lambda Expression) ](https://caffeineoverflow.tistory.com/130)   
 >   \- 스트림 API   
->   \- Checked Exception과 Unchecked Exception
+>   \- Checked Exception과 Unchecked Exception   
 >   \- 스레드   
 >   \- JVM   
 >   \- 직렬화(Serialize)와 역직렬화(Deserialize)   
