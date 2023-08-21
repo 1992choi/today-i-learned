@@ -30,7 +30,7 @@
 >   \- [ 람다식(Lambda Expression) ](https://caffeineoverflow.tistory.com/130)   
 >   \- [ 함수형 인터페이스(Functional Interface) ](https://caffeineoverflow.tistory.com/132)   
 >   \- [ 메서드 참조(Method Reference) ](https://caffeineoverflow.tistory.com/133)   
->   \- 스트림 API   
+>   \- [ 스트림 API(Stream API) ](https://caffeineoverflow.tistory.com/135)   
 >   \- Checked Exception과 Unchecked Exception   
 >   \- 스레드   
 >   \- JVM   
