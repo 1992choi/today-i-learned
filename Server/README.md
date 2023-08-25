@@ -80,31 +80,6 @@
 > - **Table 확인**   
 >   \- show tables;  
 
-### MacOS 자바 설치 및 환경변수 설정
-> - **설치**   
->   \- 생략   
-> - **경로 복사**   
->   \- /Library/Java/JavaVirtualMachines/설치된 JDK버전/Contents/Home   
-> - **경로 설정**   
->   \- vi ~/.bash_profile 입력 후  
->   \- export JAVA_HOME=/Library/Java/JavaVirtualMachines/설치된 JDK버전/Contents/Home   
-> - **변경한 환경변수 적용**   
->   \- source ~/.bash_profile   
-> - **확인**   
->   \- java -version   
-
-### MacOS에서 SSH접속
-> - **keygen 추가 생성**   
->   \- ssh-keygen -b 2048 -t rsa      
-> - **생성된 키젠 추가**   
->   \- 생성된 키젠 중 xxx.pub파일의 내용을 클라우드 서버에 존재하는 .ssh/authorized_keys에 키 추가   
-> - **개인키 권한 변경**   
->   \- chmod 600 [키경로]/[키이름]         
->   \- Ex) chmod 600 .ssh/id_rsa   
-> - **접속**   
->   \- ssh -i [키경로]/[키이름] [유저명]@IP   
->   \- Ex) ssh -i /Users/choi/.ssh/id_rsa opc@123.123.123.123
-
 ### 실행 중인 포트 확인
 > lsof -i :포트번호   
 > Ex) lsof -i :8084  
@@ -207,9 +182,33 @@
 > - **인코딩 변경 후 다른이름으로 저장**   
 >   \- iconv -c -f utf-8 -t euc-kr test.log > test2.log
 
-### Window에서 Tail 명령어
->   \- 명령어 : Get-Content 파일경로 -Wait -Tail 10   
->   \- 단, Window PowerShell을 사용해야 한다.   
+<br><br><br><br><br><br><br>
+
+# macOS
+### MacOS 자바 설치 및 환경변수 설정
+> - **설치**   
+>   \- 생략   
+> - **경로 복사**   
+>   \- /Library/Java/JavaVirtualMachines/설치된 JDK버전/Contents/Home   
+> - **경로 설정**   
+>   \- vi ~/.bash_profile 입력 후  
+>   \- export JAVA_HOME=/Library/Java/JavaVirtualMachines/설치된 JDK버전/Contents/Home   
+> - **변경한 환경변수 적용**   
+>   \- source ~/.bash_profile   
+> - **확인**   
+>   \- java -version   
+
+### MacOS에서 SSH접속
+> - **keygen 추가 생성**   
+>   \- ssh-keygen -b 2048 -t rsa      
+> - **생성된 키젠 추가**   
+>   \- 생성된 키젠 중 xxx.pub파일의 내용을 클라우드 서버에 존재하는 .ssh/authorized_keys에 키 추가   
+> - **개인키 권한 변경**   
+>   \- chmod 600 [키경로]/[키이름]         
+>   \- Ex) chmod 600 .ssh/id_rsa   
+> - **접속**   
+>   \- ssh -i [키경로]/[키이름] [유저명]@IP   
+>   \- Ex) ssh -i /Users/choi/.ssh/id_rsa opc@123.123.123.123
 
 ### Homebrew
 >   \- 홈브류(Homebrew)란, 맥OS 용 패키지 관리자이다.   
@@ -244,3 +243,10 @@
 >   \- 1. 터미널에 'brew install grafana'를 입력하여 다운로드한다.   
 >   \- 2. 터미널에 'brew services start grafana'를 입력하여 실행한다.   
 >   \- 3. 브라우저에서 'localhost:3000'으로 접속하여 정상 실행되는지 확인한다.   
+
+<br><br><br><br><br><br><br>
+
+# Windows
+### Window에서 Tail 명령어
+>   \- 명령어 : Get-Content 파일경로 -Wait -Tail 10   
+>   \- 단, Window PowerShell을 사용해야 한다.  
