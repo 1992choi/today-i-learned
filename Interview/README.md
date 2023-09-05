@@ -23,7 +23,7 @@
 <details>
 <summary><h4>Java의 특징</h4></summary>
 
-[[자세히➚]](https://caffeineoverflow.tistory.com/37)
+[[More+]](https://caffeineoverflow.tistory.com/37)
 > 1. 객체 지향 언어로써 캡슐화, 상속, 다형성 기능을 완벽하게 지원한다.   
 > 2. 운영체제에 상관없이 독립적으로 작동(JVM에서 동작하기 때문)하여 이식성이 높다.   
 > 3. Garbage Collector에 의해 메모리가 관리된다.   
@@ -38,7 +38,7 @@
 <details>
 <summary><h4>객체지향의 4대 특징</h4></summary>
 
-[[자세히➚]](https://caffeineoverflow.tistory.com/38)
+[[More+]](https://caffeineoverflow.tistory.com/38)
 > - **캡슐화**   
 >   \- 객체의 필드와 메서드를 하나로 묶는 것이며, 이를 통해 정보은닉 효과를 얻을 수 있다.      
 > - **추상화**   
@@ -57,7 +57,7 @@
 <details>
 <summary><h4>객체지향의 5대 원칙(SOLID)</h4></summary>
 
-[[자세히➚]](https://caffeineoverflow.tistory.com/39)  
+[[More+]](https://caffeineoverflow.tistory.com/39)  
 > - **단일 책임 원칙(Single Responsiblity Principle)**   
 >   \- 소프트웨어의 설계 부품(클래스, 함수 등)은 하나의 책임만 가진다.   
 >   \- 클래스의 기능(책임)이 많아지면 내부 함수끼리 강한 결합이 발생할 가능성이 높으므로 응집도는 높이고 결합도는 낮춰야 한다.   
@@ -89,8 +89,29 @@
 <details>
 <summary><h4>클래스, 객체, 인스턴스 비교</h4></summary>
 
-[[자세히➚]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/40)  
+> - **클래스**   
+>   \- 객체를 만들어 내기 위한 설계도로써 객체의 상태를 나타내는 필드(field)와 객체의 행동을 나타내는 메서드(method)로 구성된다.   
+> - **객체**   
+>   \- 클래스로 구현할 모든 대상을 뜻한다.     
+> - **인스턴스**   
+>   \- 객체가 메모리에 할당되어 실제 사용될 때를 지칭한다.      
+> - **Ex**   
+>    ```java
+>    public class Animal { // 클래스
+>        ...
+>    }
+>     
+>    public class Main {
+>         public static void main(String[] args) {
+>             Animal cat, dog; // 객체
+>    
+>             // 인스턴스화
+>             cat = new Animal();
+>             dog = new Animal();
+>         }
+>    }
+>    ```
 
 </details>
 
@@ -99,7 +120,7 @@
 <details>
 <summary><h4>String, StringBuffer, StringBuilder 비교</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -109,7 +130,7 @@
 <details>
 <summary><h4>접근 제어자</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -119,7 +140,7 @@
 <details>
 <summary><h4>final 제어자</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -129,7 +150,7 @@
 <details>
 <summary><h4>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -139,7 +160,7 @@
 <details>
 <summary><h4>추상클래스와 인터페이스의 차이</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -149,7 +170,7 @@
 <details>
 <summary><h4>Overloading vs Overriding</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -159,7 +180,7 @@
 <details>
 <summary><h4>제네릭(Generic)</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -169,7 +190,7 @@
 <details>
 <summary><h4>컬렉션 프레임워크(Collection Framework)</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -179,7 +200,7 @@
 <details>
 <summary><h4>람다식(Lambda Expression)</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -189,7 +210,7 @@
 <details>
 <summary><h4>스트림 API(Stream API)</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -199,7 +220,7 @@
 <details>
 <summary><h4>Checked Exception과 Unchecked Exception</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -209,7 +230,7 @@
 <details>
 <summary><h4>스레드</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -219,7 +240,7 @@
 <details>
 <summary><h4>JVM</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -229,7 +250,7 @@
 <details>
 <summary><h4>Annotation</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -250,7 +271,7 @@
 <details>
 <summary><h4>스프링 개요</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -260,7 +281,7 @@
 <details>
 <summary><h4>스프링 MVC</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -281,7 +302,7 @@
 <details>
 <summary><h4>DDL, DML, DCL, TCL</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
@@ -291,7 +312,7 @@
 <details>
 <summary><h4>Key의 종류와 특징</h4></summary>
 
-[[자세히➚]]()  
+[[More+]]()  
 > ...
 
 </details>
