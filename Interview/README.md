@@ -33,6 +33,8 @@
 
 </details>
 
+
+
 <details>
 <summary><h4>객체지향의 4대 특징</h4></summary>
 
@@ -49,6 +51,8 @@
 >   \- 상위 객체의 필드와 메서드를 하위 객체에게 물려주어 하위 객체에서 사용할 수 있도록 해준다.  
 
 </details>
+
+
 
 <details>
 <summary><h4>객체지향의 5대 원칙(SOLID)</h4></summary>
@@ -81,14 +85,186 @@
 </details>
 
 
+
+<details>
+<summary><h4>클래스, 객체, 인스턴스 비교</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>String, StringBuffer, StringBuilder 비교</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>접근 제어자</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>final 제어자</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>추상클래스와 인터페이스의 차이</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Overloading vs Overriding</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>제네릭(Generic)</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>컬렉션 프레임워크(Collection Framework)</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>람다식(Lambda Expression)</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>스트림 API(Stream API)</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Checked Exception과 Unchecked Exception</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>스레드</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>JVM</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Annotation</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+
+
 <br><br><br>
 - - -
 <br><br><br>
+
 
 
 
 
 # Web
+<details>
+<summary><h4>스프링 개요</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>스프링 MVC</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
 
 
 
@@ -100,4 +276,22 @@
 
 
 
+
 # Database
+<details>
+<summary><h4>DDL, DML, DCL, TCL</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Key의 종류와 특징</h4></summary>
+
+[[자세히➚]]()  
+> ...
+
+</details>
