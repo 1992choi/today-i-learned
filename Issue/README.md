@@ -112,3 +112,23 @@
 >   \- 2) \<form> 태그에 onsubmit 속성 추가 : onsubmit="검증함수();"   
 >   \- 3) \<form> 태그의 method를 post로 지정   
 >   \- 4) 자바스크립트에서 엔터키 입력 시, 제어하는 로직 추가   
+
+### URI에 %5c 입력
+> - **이슈사항**   
+>   \- URL에 %5c가 입력될 경우(Ex. http://localhost:8080/%5c.jsp), 유효하지 않는 URL로 판단되어 WEB 또는 WAS의 Default 400 페이지가 호출된다.    
+> - **원인**   
+>   \- %5c는 역슬래시 문자로 해당 문자가 URI에 있을 경우, 설정된 오류페이지가 아닌 Default 400 페이지를 보여준다.   
+>   \- 응답코드가 400임에도 해당 오류코드에 해당하는 오류 페이지가 보여지지 않으며, REST API에서는 ExceptHandler와 필터 등에서도 잡히지 않는다.
+> - **해결방안**   
+>  ```
+>  RewriteBase /
+>  RewriteCond %{QUERY_STRING} ^(.*)(\\|%5C)$ [NC,OR]
+>  RewriteCond %{THE_REQUEST} ^(.*)(\\|%5C)$ [NC]
+>  RewriteRule .* $1 [R,L]
+>  ```
+>  OR
+>  ```
+>  <VirtualHost *:80>
+>      AllowEncodedSlashes On
+>  </VirtualHost>
+>  ```
