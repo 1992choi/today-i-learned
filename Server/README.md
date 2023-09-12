@@ -83,6 +83,9 @@
 ### 실행 중인 포트 확인
 > lsof -i :포트번호   
 > Ex) lsof -i :8084  
+>
+> netstat -lntp | grep 포트번호   
+> Ex) netstat -lntp | grep 8084   
 
 ### ls(파일 조회) 명령어 옵션   
 >   \- l : 상세 조회   
