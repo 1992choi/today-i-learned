@@ -121,14 +121,6 @@
 >   \- 응답코드가 400임에도 해당 오류코드에 해당하는 오류 페이지가 보여지지 않으며, REST API에서는 ExceptHandler와 필터 등에서도 잡히지 않는다.
 > - **해결방안**   
 >  ```
->  RewriteBase /
->  RewriteCond %{QUERY_STRING} ^(.*)(\\|%5C)$ [NC,OR]
->  RewriteCond %{THE_REQUEST} ^(.*)(\\|%5C)$ [NC]
->  RewriteRule .* $1 [R,L]
->  ```
->  OR
->  ```
->  <VirtualHost *:80>
->      AllowEncodedSlashes On
->  </VirtualHost>
+>  ### catalina.properties 파일 수정
+>  org.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=true
 >  ```
