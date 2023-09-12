@@ -120,8 +120,17 @@
 <details>
 <summary><h4>String, StringBuffer, StringBuilder 비교</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/42)  
+> - **String**   
+>   \- 불변(immutable)의 속성을 갖는다.   
+>   \- 변경 연산을 자주 사용할 경우, 힙 메모리에 많은 가비지(Garbage)가 생성되어 힙 메모리 부족으로 이어질 수 있다.   
+>   \- 불변성을 가지기 때문에 멀티스레드 환경에서의 thread-safe 하다.      
+> - **StringBuffer**   
+>   \- String 클래스와 다르게 가변성을 갖는다.   
+>   \- 동기화를 지원하여 멀티 스레드 환경에서도 안전하게 동작할 수 있다.   
+> - **StringBuilder**   
+>   \- String 클래스와 다르게 가변성을 갖는다.   
+>   \- 동기화를 지원하지 않는다.
 
 </details>
 
