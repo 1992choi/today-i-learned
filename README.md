@@ -33,7 +33,7 @@
 >   \- [ 스트림 API(Stream API) ](https://caffeineoverflow.tistory.com/135)   
 >   \- [ Optional ](https://caffeineoverflow.tistory.com/136)   
 >   \- [ java.time 패키지 ](https://caffeineoverflow.tistory.com/137)   
->   \- Checked Exception과 Unchecked Exception   
+>   \- [ Checked Exception과 Unchecked Exception ](https://caffeineoverflow.tistory.com/138)   
 >   \- 스레드   
 >   \- JVM   
 >   \- 직렬화(Serialize)와 역직렬화(Deserialize)   
