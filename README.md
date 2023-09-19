@@ -66,7 +66,7 @@
 >   \- Annotation   
 >   \- @Configuration   
 >   \- @Bean VS @Component   
->   \- @Transactional   
+>   \- [ @Transactional ](https://caffeineoverflow.tistory.com/139)   
 >   \- ORM(Object Relation Mapping)   
 >   \- 테스트코드 작성   
 >   \- Maven과 Gradle   
