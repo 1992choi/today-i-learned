@@ -160,8 +160,15 @@
 <details>
 <summary><h4>final 제어자</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/44)
+> \- Java에서는 불변성을 확보할 수 있도록 final 키워드를 제공하고 있다.   
+> \- final 키워드는 변수(variable), 메서드(method), 클래스(class)에 사용될 수 있다.   
+> - **변수에 사용**   
+>   \- 변수에 final 키워드를 사용할 경우, 더 이상 값을 변경하지 못하도록 제한을 할 수 있다.   
+> - **메서드에 사용**   
+>   \- 메서드에 final 키워드를 사용할 경우, 재정의를 제한할 수 있다.   
+> - **클래스에 사용**   
+>   \- 클래스에 final 키워드를 사용할 경우, 상속을 제한할 수 있다.   
 
 </details>
 
