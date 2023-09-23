@@ -177,8 +177,35 @@
 <details>
 <summary><h4>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/123) 
+> \- Boxing은 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미하며,
+Unboxing은 래퍼 클래스를 원시 타입으로 변환하는 것을 의미한다.      
+> - **박싱(Boxing) / 언박싱(UnBoxing)**   
+>   \- 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미한다.   
+>   ```java
+>   int n = 10;
+>   
+>   // 박싱
+>   Integer boxingNum = new Integer(n);
+>   System.out.println("boxingNum = " + boxingNum); // 10
+>   
+>   // 언박싱
+>   int unbonxingNum = boxingNum.intValue();
+>   System.out.println("unbonxingNum = " + unbonxingNum); // 10
+>   ```
+> - **오토 박싱(Auto Boxing) / 오토 언박싱(Auto UnBoxing)**      
+>   \- JDK 1.5부터 지원하는 기능으로, 명시적으로 표현하지 않아도 컴파일러가 자동으로 박싱과 언박싱을 처리를 해준다.      
+>   ```java
+>   int n = 10;
+>   
+>   // 오토 박싱
+>   Integer autoBoxingNum = n;
+>   System.out.println("autoBoxingNum = " + autoBoxingNum); // 10
+>   
+>   // 오토 언박싱
+>   int autoUnbonxingNum = autoBoxingNum;
+>   System.out.println("autoUnbonxingNum = " + autoUnbonxingNum); // 10
+>   ```
 
 </details>
 
