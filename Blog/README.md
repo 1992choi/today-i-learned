@@ -68,7 +68,7 @@
 >   \- @Bean VS @Component   
 >   \- [ @Transactional ](https://caffeineoverflow.tistory.com/139)   
 >   \- JDK Dynamic Proxy VS CGLIB Proxy   
->   \- ORM(Object Relation Mapping)   
+>   \- [ ORM과 JPA ](https://caffeineoverflow.tistory.com/140)   
 >   \- 테스트코드 작성   
 >   \- Maven과 Gradle   
 >   \- CI/CD   
