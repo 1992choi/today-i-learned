@@ -69,7 +69,7 @@
 >   \- [ @Transactional ](https://caffeineoverflow.tistory.com/139)   
 >   \- JDK Dynamic Proxy VS CGLIB Proxy   
 >   \- [ ORM, JPA, Hibernate, Spring Data JPA 개념 ](https://caffeineoverflow.tistory.com/140)   
->   \- 테스트코드 작성   
+>   \- [ Test Code 개념과 종류 ](https://caffeineoverflow.tistory.com/141)   
 >   \- Maven과 Gradle   
 >   \- CI/CD   
 
