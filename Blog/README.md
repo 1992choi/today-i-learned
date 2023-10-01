@@ -70,7 +70,7 @@
 >   \- JDK Dynamic Proxy VS CGLIB Proxy   
 >   \- [ ORM, JPA, Hibernate, Spring Data JPA 개념 ](https://caffeineoverflow.tistory.com/140)   
 >   \- [ Test Code 개념과 종류 ](https://caffeineoverflow.tistory.com/141)   
->   \- 단위 테스트(Unit Test)      
+>   \- [ 단위테스트와 JUnit ](https://caffeineoverflow.tistory.com/142)   
 >   \- 통합 테스트(Integration Test)   
 >   \- Maven과 Gradle   
 >   \- CI/CD   
