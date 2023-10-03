@@ -1,5 +1,6 @@
 # ALL
 - [ 기술면접 대비 Repo ](https://github.com/NKLCWDT/cs) by NKLCWDT
+- [ Today-I-Learn ](https://github.com/wjdrbs96/Today-I-Learn/tree/master) by Gyunny
 
 
 
