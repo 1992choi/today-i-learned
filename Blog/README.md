@@ -96,6 +96,10 @@
 > - **Design Patterns**   
 >   \- [ [GoF] 디자인 패턴이란? ](https://caffeineoverflow.tistory.com/41)   
 >   \- [ [GoF] 싱글톤 패턴(Singleton Pattern) ](https://caffeineoverflow.tistory.com/50)   
+>   \- [GoF] 팩토리 메서드 패턴(Factory Method Pattern)   
+>   \- [GoF] 프록시 패턴(Proxy Pattern)   
+>   \- [GoF] 템플릿 메서드 패턴(Template Method Pattern)   
+>   \- [GoF] 전략 패턴(Strategy Pattern)   
 
 
 <br><br>
