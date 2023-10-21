@@ -253,7 +253,8 @@
 >   \- 2. brew install rabbitmq  
 > - **실행**   
 >   \- 1. brew services start rabbitmq   
->   \- 2. guest / guest 입력 후 로그인   
+>   \- 2. http://localhost:15672 접속   
+>   \- 3. guest / guest 입력 후 로그인   
 
 <br><br><br><br><br><br><br>
 
