@@ -247,6 +247,14 @@
 >   \- 2. 터미널에 'brew services start grafana'를 입력하여 실행한다.   
 >   \- 3. 브라우저에서 'localhost:3000'으로 접속하여 정상 실행되는지 확인한다.   
 
+### RabbitMQ 설치
+> - **설치**   
+>   \- 1. brew update   
+>   \- 2. brew install rabbitmq  
+> - **실행**   
+>   \- 1. brew services start rabbitmq   
+>   \- 2. guest / guest 입력 후 로그인   
+
 <br><br><br><br><br><br><br>
 
 # Windows
