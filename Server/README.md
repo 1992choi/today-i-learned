@@ -256,6 +256,17 @@
 >   \- 2. http://localhost:15672 접속   
 >   \- 3. guest / guest 입력 후 로그인   
 
+### Kafka 서버기동
+> - **Zookeeper 및 Kafka 기동**   
+>   \- ./zookeeper-server-start.sh ../config/zookeeper.properties   
+>   \- ./kafka-server-start.sh ../config/server.properties   
+> - **Topic 생성**   
+>   \- ./kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092 --partitions 1   
+> - **Topic 목록 확인**   
+>   \- ./kafka-topics.sh --bootstrap-server localhost:9092 --list   
+> - **Topic 생성**   
+>   \- ./kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092 
+
 <br><br><br><br><br><br><br>
 
 # Windows
