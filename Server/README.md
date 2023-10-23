@@ -271,6 +271,17 @@
 > - **메시지 소비**   
 >   \- ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic quickstart-events --from-beginning
 
+### MariaDB 설치
+> - **설치**   
+>   \- brew install mariadb
+> - **시작, 종료, 상태확인**   
+>   \- mysql.server start   
+>   \- mysql.server stop   
+>   \- mysql.server status      
+> - **접속**   
+>   \- sudo mysql -u root
+> - **데이터베이스 생성**   
+>   \- create database mydb;
 
 <br><br><br><br><br><br><br>
 
