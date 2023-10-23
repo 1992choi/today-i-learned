@@ -266,6 +266,11 @@
 >   \- ./kafka-topics.sh --bootstrap-server localhost:9092 --list   
 > - **Topic 생성**   
 >   \- ./kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092 
+> - **메시지 생산**   
+>   \- ./kafka-console-producer.sh --broker-list localhost:9092 --topic quickstart-events
+> - **메시지 소비**   
+>   \- ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic quickstart-events --from-beginning
+
 
 <br><br><br><br><br><br><br>
 
