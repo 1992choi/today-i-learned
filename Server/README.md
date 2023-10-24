@@ -264,12 +264,17 @@
 >   \- ./kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092 --partitions 1   
 > - **Topic 목록 확인**   
 >   \- ./kafka-topics.sh --bootstrap-server localhost:9092 --list   
-> - **Topic 생성**   
+> - **Topic 정보 확인**   
 >   \- ./kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092 
 > - **메시지 생산**   
 >   \- ./kafka-console-producer.sh --broker-list localhost:9092 --topic quickstart-events
 > - **메시지 소비**   
 >   \- ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic quickstart-events --from-beginning
+
+### Kafka Connect
+> - **실행**   
+>   \- ./bin/connect-distributed ./etc/kafka/connect-distributed.properties   
+>   \- 단, Kafka 서버기동된 상태여야 한다.   
 
 ### MariaDB 설치
 > - **설치**   
