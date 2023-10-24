@@ -275,6 +275,11 @@
 > - **실행**   
 >   \- ./bin/connect-distributed ./etc/kafka/connect-distributed.properties   
 >   \- 단, Kafka 서버기동된 상태여야 한다.   
+> - **JDBC Connector 설치**   
+>   \- 1. confluentinc-kafka-connect-jdbc-10.0.1.zip 다운로드   
+>   \- 2. ./etc/kafka/connect-distributed.properties 파일 내 plugin.path에 압축을 푼 'confluentinc-kafka-connect-jdbc-10.0.1.zip'의 lib경로 명시   
+>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ex) plugin.path=/Users/choi/dev/confluentinc-kafka-connect-jdbc-10.7.4/lib   
+>   \- 3. JdbcSourceConnector에서 MariaDB를 사용하기 위해 드라이버 복사 ./share/java/kafka 하위에 mariadb-java-client-2.7.2.jar 복사
 
 ### MariaDB 설치
 > - **설치**   
