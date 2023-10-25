@@ -277,9 +277,44 @@
 >   \- 단, Kafka 서버기동된 상태여야 한다.   
 > - **JDBC Connector 설치**   
 >   \- 1. confluentinc-kafka-connect-jdbc-10.0.1.zip 다운로드   
->   \- 2. ./etc/kafka/connect-distributed.properties 파일 내 plugin.path에 압축을 푼 'confluentinc-kafka-connect-jdbc-10.0.1.zip'의 lib경로 명시   
->   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ex) plugin.path=/Users/choi/dev/confluentinc-kafka-connect-jdbc-10.7.4/lib   
->   \- 3. JdbcSourceConnector에서 MariaDB를 사용하기 위해 드라이버 복사 ./share/java/kafka 하위에 mariadb-java-client-2.7.2.jar 복사
+>   \- 2. ./etc/kafka/connect-distributed.properties 파일 내 plugin.path에 파일 경로 명시   
+>         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ex) plugin.path=/Users/choi/dev/confluentinc-kafka-connect-jdbc-10.7.4/lib   
+>   \- 3. JdbcSourceConnector에서 MariaDB를 사용하기 위해 드라이버 복사   
+>         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ./share/java/kafka 하위에 mariadb-java-client-2.7.2.jar 복사
+> - **Source Connect 사용**   
+>   \- 1. Kafka Source Connect 추가 (포스트맨 이용)   
+>         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 단, Zookeeper, Kafka, Kafka Connect가 모두 실행되어 있어야한다.   
+>   ```
+>   [POST] localhost:8083/connectors
+>   {
+>       "name" : "my-source-connect",
+>       "config" : {
+>           "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+>           "connection.url":"jdbc:mysql://localhost:3306/mydb",
+>           "connection.user":"root",
+>           "connection.password":"test1357",
+>           "mode":"incrementing",
+>           "incrementing.column.name":"id",
+>           "table.whitelist":"users",
+>           "topic.prefix":"my_topic_",
+>           "tasks.max":"1"
+>       }
+>   }
+>   ```
+>   \- 2. Kafka Source Connect 목록 확인 (포스트맨 이용)   
+>   ```
+>   [GET] localhost:8083/connectors
+>   ```
+>   \- 3. Kafka Source Connect 상태 확인 (포스트맨 이용)      
+>   ```
+>   [GET] localhost:8083/connectors/my-source-connect/status
+>   * my-source-connect는 커넥트 추가 시에 설정한 name값
+>   ```
+>   \- 4. Kafka Source Connect 테스트   
+>      - 4.1. 설정한 DB의 테이블에 값 INSERT   
+>      - 4.2. Topic 메시지 확인
+>        - 4.2.1. ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my_topic_users --from-beginning   
+>                  (* my_topic_users는 topic.prefix와 table.whitelist의 값)
 
 ### MariaDB 설치
 > - **설치**   
