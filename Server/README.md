@@ -315,6 +315,33 @@
 >      - 4.2. Topic 메시지 확인
 >        - 4.2.1. ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic my_topic_users --from-beginning   
 >                  (* my_topic_users는 topic.prefix와 table.whitelist의 값)
+> - **Sink Connect 사용**   
+>   \- 1. Kafka Sink Connect 추가 (포스트맨 이용)   
+>         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 단, Zookeeper, Kafka, Kafka Connect가 모두 실행되어 있어야한다.   
+>   ```
+>   [POST] localhost:8083/connectors
+>   {
+>       "name" : "my-sink-connect",
+>       "config" : {
+>           "connector.class":"io.confluent.connect.jdbc.JdbcSinkConnector",
+>           "connection.url":"jdbc:mysql://localhost:3306/mydb",
+>           "connection.user":"root",
+>           "connection.password":"test1357",
+>           "auto.create":"true",
+>           "auto.evolve":"true",
+>           "delete.enabled":"false",
+>           "task.max":"1",
+>           "topics":"my_topic_users"
+>       }
+>   }
+>   ```
+>   \- 2. Kafka Sink Connect 목록 확인 (포스트맨 이용)   
+>   ```
+>   [GET] localhost:8083/connectors
+>   ```
+>   \- 3. 테이블 생성 확인
+>      - 3.1. show tables; 쿼리를 수행하면, my_topic_users 추가된 것을 확인할 수 있다.    
+>      - 3.2. select * from my_topic_users; 쿼리를 수행하면, Kafka를 통해 생성된 데이터들을 확인할 수 있다.
 
 ### MariaDB 설치
 > - **설치**   
