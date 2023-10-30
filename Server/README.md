@@ -355,6 +355,12 @@
 > - **데이터베이스 생성**   
 >   \- create database mydb;
 
+### Zipkin
+> - **설치**   
+>   \- curl -sSL https://zipkin.io/quickstart.sh | bash -s
+> - **실행**   
+>   \- java -jar zipkin.jar
+
 <br><br><br><br><br><br><br>
 
 # Windows
