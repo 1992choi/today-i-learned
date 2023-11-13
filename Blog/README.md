@@ -72,7 +72,7 @@
 >   \- [ Test Code 개념과 종류 ](https://caffeineoverflow.tistory.com/141)   
 >   \- [ 단위테스트와 JUnit ](https://caffeineoverflow.tistory.com/142)   
 >   \- [ 계층별 단위테스트 ](https://caffeineoverflow.tistory.com/143)   
->   \- 통합 테스트(Integration Test)   
+>   \- [ 통합 테스트(Integration Test) ](https://caffeineoverflow.tistory.com/144)   
 >   \- Maven과 Gradle   
 >   \- CI/CD   
 
