@@ -309,8 +309,65 @@
 <details>
 <summary><h4>Overloading vs Overriding</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/127)  
+> - **오버로딩(Overloading)**
+>   - 매개변수의 개수나 자료형을 다르게하여 같은 이름의 메서드를 사용하는 것
+>   - ``` java
+>     int sum(int num1, int num2) {
+>         return num1 + num2;
+>     }
+>
+>     // 새로 추가된 sum() 메서드 - OverLoading이 적용되었다.
+>     double sum(double num1, double num2) {
+>         return num1 + num2;
+>     }
+>     ```
+> - **오버라이딩(Overriding)**
+>   - 오버라이딩이란 부모클래스로부터 상속받은 메서드의 내용을 변경(재정의)하여 사용하는 것
+>   - 오버라이딩 X
+>      ``` java
+>      class ParentClass {
+>          void sayName(String name) {
+>              System.out.println("[부모클래스] name=" + name);
+>          }
+>      }
+>      
+>      class ChildClass extends ParentClass {
+>      }
+>      
+>      public class OverridingTest {
+>      
+>          public static void main(String[] args) {
+>              ChildClass child = new ChildClass();
+>              child.sayName("choi"); // [부모클래스] name=choi
+>          }
+>      
+>      }
+>     ```
+>   - 오버라이딩 O
+>      ``` java
+>      class ParentClass {
+>          void sayName(String name) {
+>              System.out.println("[부모클래스] name=" + name);
+>          }
+>      }
+>      
+>      class ChildClass extends ParentClass {
+>          @Override
+>          void sayName(String name) {
+>              System.out.println("[자식클래스] name=" + name);
+>          }
+>      }
+>      
+>      public class OverridingTest {
+>      
+>          public static void main(String[] args) {
+>              ChildClass child = new ChildClass();
+>              child.sayName("choi"); // [자식클래스] name=choi
+>          }
+>      
+>      }
+>     ```
 
 </details>
 
