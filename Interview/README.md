@@ -376,9 +376,20 @@
 <details>
 <summary><h4>제네릭(Generic)</h4></summary>
 
-[[More+]]()  
-> ...
-
+[[More+]](https://caffeineoverflow.tistory.com/128)  
+> - **제네릭(Generic)이란**
+>   - 제네릭이란 클래스 내부에서 사용할 데이터 타입을 외부에서 지정하는 기법을 의미한다.
+>   - Ex)
+>      ``` java
+>      // String 타입으로 선언 및 생성
+>      List<String> stringList = new ArrayList<>();
+>      
+>      // Integer 타입으로 선언 및 생성
+>      List<Integer> integerList = new ArrayList<>();
+>     ```
+> - **제네릭(Generic)의 장점**
+>   - 컴파일 시점에 타입 검사를 통한 예외 방지
+>   - 불필요한 캐스팅을 제거
 </details>
 
 
