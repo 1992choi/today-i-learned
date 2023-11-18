@@ -437,8 +437,70 @@
 <details>
 <summary><h4>람다식(Lambda Expression)</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/130)  
+> - **람다식(Lambda Expressions) 이란?**
+>   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
+>   - 함수를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
+>   - 람다식은 자바 8부터 사용 가능하며 이로 인하여 자바에서도 함수형 프로그래밍이 가능하게 되었다.
+> - **장점**
+>   - 코드를 간결하게 만들 수 있다.
+>   - 식에 개발자의 의도가 명확히 드러나 가독성이 높아진다.
+>   - 함수를 만드는 과정없이 한번에 처리할 수 있어 생산성이 높아진다.
+>   - 병렬프로그래밍이 용이하다.
+> - **단점**
+>   - 람다를 사용하면서 만든 무명함수는 재사용이 불가능하다.
+>   - 디버깅이 어렵다.
+>   - 람다를 무분별하게 사용할 경우, 비슷한 함수가 중복 생성될 수 있다.
+> - **기본 문법**
+>   - ``` java
+>     interface SquareIF {
+>         int square(int num);
+>     }
+>     
+>     public class LambdaSample {
+>     
+>         public static void main(String[] args) {
+>     
+>             /*
+>              *  추상 메서드를 하나만 갖는 인터페이스를 자바 8부터는 함수형 인터페이스라고 하며,
+>              *  이런 함수형 인터페이스만을 람다식으로 표현 가능하다.
+>              */
+>             SquareIF sif1 = (int a) -> {
+>                 return a * a;
+>             };
+>             System.out.println(sif1.square(1)); // 1
+>     
+>     
+>             /*
+>              *  1. 매개변수의 타입을 추론할 수 있는 경우에는 타입을 생략할 수 있다.
+>              *     - Square(int num)를 통해 a가 int일 수 밖에 없으므로 int를 생략할 수 있다.
+>              *     - (int a)가 (a)로 변경되었다.
+>              */
+>             SquareIF sif2 = (a) -> {
+>                return a * a;
+>             };
+>             System.out.println(sif2.square(2)); // 4
+>     
+>     
+>             /*
+>              *  2. 매개변수가 하나인 경우는 소괄호를 생략할 수 있다.
+>              *     - 1번 규칙에 의해 (a)로 변경되었으며, 매개변수가 1개이기 때문에 소괄호도 생략 가능하여 a가 되었다.
+>              */
+>             SquareIF sif3 = a -> {
+>                 return a * a;
+>             };
+>             System.out.println(sif3.square(3)); // 9
+>     
+>     
+>             /*
+>              *  3. 함수의 몸체가 하나의 명령문만 있을 경우, 중괄호도 생략가능하다. 단, return구문은 생략해야한다.
+>              */
+>             SquareIF sif4 = a -> a * a;
+>             System.out.println(sif4.square(4)); // 16
+>     
+>         }
+>     }
+>     ```
 
 </details>
 
