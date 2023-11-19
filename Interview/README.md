@@ -567,8 +567,54 @@
 <details>
 <summary><h4>Checked Exception과 Unchecked Exception</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/138)  
+> - **Checked Exception과 Unchecked Exception**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
+>   - Checked Exception
+>     - 확인시점 : Compile 시점
+>     - 처리여부 : 반드시 예외 처리 필요
+>     - 롤백여부 : 예외 발생 시, Rollback 수행 안함
+>   - Unchecked Exception
+>     - 확인시점 : Runtime 시점
+>     - 처리여부 : 명시적으로 하지 않아도 무관
+>     - 롤백여부 : 예외 발생 시, Rollback 수행
+> - **Checked Exception 문제점**
+>   - Checked Exception은 반드시 예외를 처리한다는 특성 때문에 Exception을 던지게(throw)되면, 계층 간 종속이 발생할 수 있다.
+>   - 만약 아래의 그림과 같이 사용중인 JDBC를 JPA로 변경한다고 가정했을 때, 종속된 모든 계층을 수정해야 하는 상황이 발생한다.
+>     - ![image](https://github.com/Young-Geun/TIL/assets/27760576/afeccd8d-ee1d-4c9b-8d00-ca099595cb17)
+>     - ![image](https://github.com/Young-Geun/TIL/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
+>   - 해결방안
+>     - Checked Exception을 Unchecked Exception으로 전환한다.
+>     -  ```java
+>        static class Repository {
+>            public void call() {
+>                try {
+>                    runSQL();
+>                } catch (SQLException e) {
+>                    /*
+>                        Checked Exception인 SQLException 대신에 
+>                        Unchecked Exception인 RuntimeSQLException 던진다.
+>                     */    
+>                    throw new RuntimeSQLException(e);
+>                }
+>            }
+>        
+>            private void runSQL() throws SQLException {
+>                // SQL 수행 중 오류가 발생했다고 가정.
+>                throw new SQLException("ex");
+>            }
+>        
+>        }
+>        
+>        // RuntimeSQLException은 RuntimeException을 상속받았으므로 Unchecked Exception이 된다.
+>        static class RuntimeSQLException extends RuntimeException {
+>            public RuntimeSQLException(Throwable cause) {
+>                super(cause);
+>            }
+>        }
+>        ```
+
+
 
 </details>
 
