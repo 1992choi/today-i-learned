@@ -694,7 +694,7 @@
 <details>
 <summary><h4>스프링 개념</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/5)  
+[[More+]](https://caffeineoverflow.tistory.com/5)
 > - **스프링이란?**
 >   - 자바 엔터프라이즈 개발을 편하게 해주는 오픈소스 경량급 애플리케이션 프레임워크
 > - **특징**
@@ -720,8 +720,47 @@
 <details>
 <summary><h4>스프링 MVC</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/6)
+> - **스프링 MVC란?**
+>   - MVC 패턴에 기반을 둔 웹 프레임워크이다.
+> - **MVC 패턴**
+>   - Mode, View, Controller의 약자이며, 클라이언트와 상호작용하는 소프트웨어를 설계함에 있어서 세 가지 요소로 나누어 설계하는 것을 뜻한다.
+>     - Model
+>       - Model은 애플리케이션의 정보, 데이터의 가공을 책임지며 데이터베이스와 상호작용하여 비즈니스 로직을 처리하는 모듈.
+>       - 즉, 컴포넌트를 뜻한다.
+>     - View
+>       - View는 클라이언트 단에서 보여지는 결과화면을 반환하는 모듈.
+>       - 즉, 사용자 인터페이스 요소를 뜻한다.
+>     - Controller
+>       - Controller는 클라이언트로부터 요청이 들어왔을 때, 어떤 로직을 실행시킬 것인지 판단하며 Model(모델)과 View(뷰)를 연결해주며 제어하는 모듈.
+> - **스프링 MVC의 구성요소와 동작순서**
+>   ![image](https://github.com/Young-Geun/TIL/assets/27760576/e675f1ab-e106-415c-a02a-df22a2bf5112)
+>   - 구성요소
+>     - Dispatcher Servlet
+>       - 클라이언트의 요청을 받아 컨트롤러에게 전달한다.
+>       - 컨트롤러가 리턴한 결과값을 View에 전달한다.
+>     - Handler Mapping
+>       - 클라이언트의 요청 URL을 확인하여 요청을 처리할 컨트롤러를 결정한다.
+>     - Handler Adapter
+>       - DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달한다.
+>     - Controller
+>       - 클라이언트의 요청에 대한 처리를 하고 결과를 리턴한다.
+>     - ModelAndView
+>       - 컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보를 담고 있다.
+>     - View Resolver
+>       - 컨트롤러의 처리 결과를 생성할 뷰를 결정한다.
+>     - View
+>       - 컨트롤러의 처리 결과를 보여줄 화면을 생성한다.
+>   - 동작순서
+>     - 1.클라이언트로부터 요청이 발생하면 모든 요청은 Dispatcher Servlet으로 전달된다.
+>     - 2.요청에 대하여 Handler Mapping은 처리를 할 Controller가 있는지 탐색한다. 
+>     - 3.Controller가 결정되면 Dispatcher Servlet은 Handler Adaptor에게 요청 처리를 위임한다.
+>     - 4.Handler Adaptor에 의해서 컨트롤러가 호출되고 비즈니스 로직이 수행된다. 
+>     - 5.Controller는 비즈니스 로직을 처리하고 그 결과를 Model객체에 저장하여 View 페이지명과 함께 응답한다. 
+>     - 6.Dispatcher Servlet은 view name을 View Resolver에게 전달하여 View 객체를 얻는다.
+>     - 7.View를 호출하면 템플릿 엔진이 동작하여 HTML을 구성한다.
+>     - 8.최종적으로 View의 내용이 클라이언트에게 전달된다.
+
 
 </details>
 
