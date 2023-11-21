@@ -789,8 +789,34 @@
 <details>
 <summary><h4>스프링 IoC</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/14)
+> - **IoC (Inversion of Control)란?**
+>   - Bean의 생성과 의존 관계 설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 스프링 컨테이너가 담당한 관리하는 것을 뜻한다.
+>   - 즉, 객체를 제어하고 관리하는 역할이 개발자로부터 스프링 컨테이너로 역전된다는 뜻이다.
+> - **Bean과 스프링 컨테이너**
+>   - Bean
+>     - 스프링 컨테이너가 관리하는 자바 객체를 뜻한다.
+>   - 스프링 컨테이너
+>     - 스프링에서 빈(Bean)을 관리하는 공간을 뜻한다.
+>     - 스프링 컨테이너는 IoC 컨테이너 혹은 DI 컨테이너라고도 불리는데, 이는 스프링 컨테이너가 IoC 혹은 DI를 도맡아 진행하기 때문이다.
+>     - 스프링 컨테이너는 크게 두 종류(BeanFactory, ApplicationContext)로 나눌 수 있다.
+>     - ApplicationContext 컨테이너가 BeanFactory의 기능을 포괄하면서 추가적인 기능을 제공하기 때문에 대부분의 경우에는 ApplicationContext를 사용한다.
+>       - BeanFactory와 ApplicationContext 관계
+>         ![image](https://github.com/Young-Geun/TIL/assets/27760576/846e9d7f-aa86-464f-8628-560cc2ac2b8a)
+>       - BeanFactory
+>         - 스프링 컨테이너의 최상위 인터페이스이다.
+>         - 스프링 빈을 관리하고 조회하는 역할을 담당한다.
+>       - ApplicationContext
+>         - BeanFactory 기능을 모두 상속받아서 제공한다.
+>         - 다음과 같은 부가기능들을 제공한다.
+>           1. 메시지 소스를 활용한 국제화 기능
+>           2. 환경변수 - 로컬, 개발, 운영 등을 구분해서 처리
+>           3. 애플리케이션 이벤트 관리
+>           4. 편리한 리소스 조회
+> - **IoC 사용 이점**
+>   - 의존성 관리를 IoC 컨테이너가 하므로 개발자는 비즈니스 로직에만 신경을 쓰면 된다.
+>   - 객체의 생성과 소멸 등 생명주기를 관리해주므로 메모리를 효율적으로 사용할 수 있다.
+>   - 라이프사이클 인터페이스를 이용하여 원하는 작업을 할 수 있다.
 
 </details>
 
