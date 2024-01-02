@@ -1060,19 +1060,26 @@
 
 
 # TODO
-- TCP/IP 5 Layer
-- OSI 7 Layer
-- 블락킹과 논블락킹, 동기식과 비동기식
-- 교착상태
 - HashMap 충돌
+- non-static 멤버와 static 멤버 차이
 - 직렬화
 - 리플렉션
 - 자바에서 멀티스레드 동기화 방법
 - equals & hashCode
+- Call by value ve Call by Reference
+- GC
+- String 메모리 관점
 - GET, PUT, POST, PATCH 차이
 - CORS
+- 웹 브라우저에 URL 입력 시 일어나는 일련의 과정
+- TCP/IP 5 Layer
+- OSI 7 Layer
+- 3-Way handshake & 4-Way hadnshake
+- 블락킹과 논블락킹, 동기식과 비동기식
+- 교착상태
 - CPU 스케줄링 알고리즘
 - 프로세스와 스레드의 차이
 - Thread-safe
 - 뮤텍스와 세마포어
-- 웹 브라우저에 URL 입력 시 일어나는 일련의 과정
+
+
