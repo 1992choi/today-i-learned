@@ -1007,8 +1007,35 @@
 <details>
 <summary><h4>DDL, DML, DCL, TCL</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/121) 
+> - **DDL (Data Definition Language)**
+>   - 데이터베이스의 구조를 정의할 때 사용하는 언어이다.
+>   - DDL은 명령어를 입력하는 순간 작업이 즉시 반영(Auto Commit)되기 때문에 사용할 때 주의해야 한다.
+>   - 종류
+>     - CREATE : 테이블, 뷰 또는 인덱스와 같은 새 데이터베이스 개체를 생성
+>     - ALTER : 기존 데이터베이스 개체를 수정
+>     - DROP : 테이블, 뷰 또는 인덱스와 같은 데이터베이스 개체 삭제
+>     - TRUNCATE : 테이블의 모든 행을 삭제(DROP과 달리 테이블의 구조와 인덱스는 그대로 유지)
+>     - RENAME : 기존 데이터베이스 개체의 이름을 변경
+> - **DML (Data Manipulation Language)**
+>   - 데이터베이스 내의 데이터를 조작하는 데 사용하는 언어이다.
+>   - 종류
+>     - SELECT : 데이터를 조회하는 명령어
+>     - INSERT : 데이터를 생성하는 명령어
+>     - UPDATE : 데이터를 수정하는 명령어
+>     - DELETE : 데이터를 삭제하는 명령어
+> - **DCL (Data Control Language)**
+>   - 데이터베이스에 접근하고 객체들을 사용하도록 권한을 주고 회수하는 데 사용되는 언어이다.
+>   - 종류
+>     - GRANT : 권한 부여
+>     - REVOKE : 권한을 제한하거나 회수
+> - **TCL (Transaction Control Language)**
+>   - 데이터베이스의 구조를 정의할 때 사용하는 언어이다.
+>   - DDL은 명령어를 입력하는 순간 작업이 즉시 반영(Auto Commit)되기 때문에 사용할 때 주의해야 한다.
+>   - 종류
+>     - COMMIT : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 영구적으로 반영
+>     - ROLLBACK : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 작업 이전의 상태로 복구
+>     - SAVEPOINT : 저장점을 정의하면 롤백할 때 트랜잭션에 포함된 전체 작업을 롤백하는 것이 아니라 현시점에서 SAVEPOINT까지 트랜잭션의 일부만 롤백
 
 </details>
 
