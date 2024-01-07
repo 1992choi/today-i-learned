@@ -1029,8 +1029,17 @@
 <details>
 <summary><h4>Spring Filter vs Interceptor</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://mangkyu.tistory.com/173)  
+> - **Filter vs Interceptor**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
+>   - Filter
+>     - 관리 컨테이너 : 웹 컨테이너
+>     - DispatcherServlet 이전에 실행된다.
+>     - 일반적으로 인코딩 변환 처리, XSS방어 등에 대한 처리로 사용된다.
+>   - Interceptor
+>     - 관리 컨테이너 : 스프링 컨테이너
+>     - Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리한다.
+>     - 로그인 체크, 권한 체크, 프로그램 실행시간 계산, 로그 확인 등에 대한 처리로 사용된다.
 
 </details>
 
