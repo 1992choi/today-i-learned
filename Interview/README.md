@@ -916,8 +916,19 @@
 <details>
 <summary><h4>스프링 PSA</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://sabarada.tistory.com/127)  
+> - **PSA(Portable Service Abstraction)란?**
+>   - 일관성 있는 서비스 추상화를 뜻한다.
+>   - 추상화를 통해 하위 시스템을 알지 못하거나 변경이 있더라도 일관된 방식으로 접근할 수 있게 한다.
+>   - 스프링에서의 대표적 PSA 예로는 트랜잭션이 있다.
+> - **스프링의 트랜잭션 추상화 계층**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2b9889f3-3921-44b7-9243-1ae3763c576e)
+>   - 스프링에서는 위의 그림과 같이 'JDBC/Connection', 'JTA/UserTransaction', 'Hibernate/Transaction' 등 다양한 트랜잭션 기능을 제공하고 있다.   
+>   - 개발자는 DB와 관련된 기능 개발 시, DB접근 기술에 따라 알맞은 트랜잭션 기술을 선택해야한다.   
+만약 DB접근 기술이 바뀐다면 변경된 기술에 맞는 트랜잭션으로 변경이 필요하다.   
+하지만 PSA가 접목되어 있다면 DB접근 기술과 관계없이 일관된 방식으로 트랜잭션을 제어할 수 있다.
+>   - Ex) @Transactional은 각 각의 TransactionManager를 구현하고 있는 것이 아니라 최상위 PlatformTransactionManager를 사용하여 필요한 TransactionManager를 DI로 주입받아 사용한다. 이 때문에 @Transactional을 사용하여 트랜잭션을 관리할 경우, DB접근 기술이 JDBC에서 JPA로 변경되어도 트랜잭션에 대한 수정없이 트랜잭션 처리를 보장 받을 수 있는 것이다.
+
 
 </details>
 
