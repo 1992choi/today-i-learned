@@ -1082,8 +1082,32 @@
 <details>
 <summary><h4>ORM, JPA, Hibernate, Spring Data JPA 개념</h4></summary>
 
-[[More+]]()  
-> ...
+[[More+]](https://caffeineoverflow.tistory.com/140)  
+> - **ORM이란?**
+>   - ORM이란 Object-Relational Mapping의 약자로, 객체(Object)와 관계형 데이터(Relational data)를 매핑하기 위한 기술이다.
+> - **ORM과 SQL Mapper의 차이점**
+>   - ORM
+>     - Object와 DB테이블을 매핑하여 데이터를 객체화하는 기술이다.
+>     - SQL 문을 직접 작성하지 않아도 메서드로 데이터를 조작할 수 있다. (객체 간 관계를 바탕으로 SQL문을 자동으로 생성한다.)
+>     - DBMS에 종속적이지 않다.
+>     - 관련기술 : JPA, Hibernate
+>   - SQL Mapper
+>     - Object와 SQL의 필드를 매핑하여 데이터를 객체화하는 기술이다.
+>     - SQL 문으로 직접 디비를 조작한다.
+>     - DBMS에 종속적이다.
+>     - 관련기술 : Mybatis, jdbcTemplate
+> - **JPA란?**
+>   - JPA는 Java Persistence API의 약자로, 자바 애플리케이션에서 관계형 데이터베이스를 사용하는 방식을 정의한 인터페이스이다.
+>   - 여기서 중요하게 여겨야 할 부분은 JPA는 특정 기능을 가지고 있는 라이브러리가 아니고 말 그대로 인터페이스라는 점이다.
+>   - 따라서 JPA를 사용하기 위해서는 JPA를 구현한 Hibernate, EclipseLink, DataNucleus와 같은 ORM 프레임워크를 사용해야 한다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/27a0e8c2-59de-42fc-bda0-d76fa1957350)
+> - **Hibernate란?**
+>   - JPA 구현체의 한 종류이다. 
+>   - JPA와 Hibernate는 마치 자바의 interface와 해당 interface를 구현한 class와 같은 관계이다.
+> - **Spring Data JPA란?**
+>   - Spring Data JPA는 Spring Framework에서 제공하는 모듈 중 하나로, 개발자가 JPA를 더 쉽고 편하게 사용할 수 있도록 도와주는 기술이다.
+> - **JPA, Hibernate, Spring Data JPA 관계**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/86508652-90c4-4618-9353-0fe473fcc54b)
 
 </details>
 
