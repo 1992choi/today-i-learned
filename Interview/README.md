@@ -1114,7 +1114,7 @@
 
 
 <details>
-<summary><h4>Test</h4></summary>
+<summary><h4>단위테스트와 통합테스트</h4></summary>
 
 [[More+]](https://caffeineoverflow.tistory.com/141)  
 > - **테스트의 개념**
@@ -1143,6 +1143,64 @@
 >     - 장점 2. 전체적인 Flow를 쉽게 테스트할 수 있다.
 >     - 단점 1. 애플리케이션의 설정, 모든 Bean을 로드하기 때문에 시간이 오래 걸리고 무겁다.
 >     - 단점 2. 테스트 단위가 커 디버깅이 어렵다.
+
+</details>
+
+
+
+<details>
+<summary><h4>단위테스트</h4></summary>
+
+[[More+]](https://caffeineoverflow.tistory.com/142)   
+> - **F.I.R.S.T 원칙**
+>   - F.I.R.S.T 원칙이란 좋은 단위 테스트를 하기 위한 5가지 요소를 뜻한다.
+>     - Fast
+>       - 빠르게 실행되고 빠르게 결과를 알아야 한다. 이를 위해서는 하는 일의 단위가 최대한 작아야 한다.
+>       - 빠른 테스트를 위해 실제 서버나 데이터베이스를 이용하지 않고 가짜 데이터(모의 데이터)를 만들어서 테스트를 진행해야 한다.
+>     - Independent
+>       - 독립적이어야 하고 다른 테스트에 의존하거나 영향을 주어선 안된다.
+>     - Repeatable
+>       - 유닛 테스트는 반복 가능해야 하며, 몇 번을 진행하든 똑같은 결과가 나와야 한다.
+>     - Self-Validating
+>       - 자체 검증 가능해야 한다.
+>       - 테스트 자체로 통과인지 실패인지 결과가 나와야 하며 이것은 자동적으로 이뤄져야 한다.
+>     - Thorough / Timely
+>       - 유닛 테스트는 철저하고 적절한 때에 작성되어야 한다.
+>       - 철저하다는 것은 모든 데이터를 검사해야 하므로 최소에서 최대까지 범위를 포함하고, 역할(사용자일 때 혹은 관리자일 때)에 따라서 바뀌는 데이터를 모두 테스트가 가능해야하며 어떤 케이스가 실패(예외나 오류)하는지도 테스트해야 한다.
+> - **단위테스트와 JUnit**
+>   - JUnit
+>     - 자바에는 JUnit이라는 단위 테스트를 위한 테스팅 프레임워크가 존재한다.
+>     - JUnit을 활용하여 단위테스트를 진행한다면, 테스트 결과를 문서로 남기는 것이 아니라 Test Class 자체를 남기기 때문에 코드에 대한 History를 남길 수 있다는 장점이 있다.
+> - **JUnit 주요 단언(Assertion) 메서드**
+>   - assertEquals(expected, actual) / assertNotEquals(unexpected, actual)
+>     - 실제 값(actual)이 기대하는 값(expected)과 같은지 / 같지 않은지 검사한다.
+>   - assertSame(Object expected, Object actual) / assertNotSame(Object unexpected, Object actual)
+>     - 두 객체가 동일한 / 동일하지 않은 객체인지 검사한다.
+>   - assertTrue(boolean condition) / assertFalse(boolean condition)
+>     - 값이 true / false인지 검사한다.
+>   - assertNull(Object actual) / assertNotNull(Object actual)
+>     - 값이 null인지 / null이 아닌지 검사한다.
+>   - assertThrows(Class<T> expectedType, Executable executable)
+>     - executable을 실행한 결과로 지정한 타입의 익셉션이 발생하는지 검사한다.
+> - **JUnit 주요 어노테이션**
+>   - @Test
+>     - 해당 메서드를 테스트 대상으로 지정한다.
+>   - @BeforeAll
+>     - 모든 테스트 시작 전에 수행되는 로직에 붙는 어노테이션으로 static을 붙여줘야 하며 접근 제어자는 default 이상이어야 한다.
+>   - @AfterAll
+>     - 모든 테스트 종료 후에 수행되는 로직에 붙는 어노테이션으로 static을 붙여줘야 하며 접근 제어자는 default 이상이어야 한다.
+>   - @BeforeEach
+>     - 모든 @Test 어노테이션이 붙은 테스트 대상 메서드 수행 전마다 수행된다.
+>   - @AfterEach
+>     - 모든 @Test 어노테이션이 붙은 테스트 대상 메서드 수행 종료시마다 수행된다.
+> - **Mockito**
+>   - Mock이란 실제 객체를 만들어 사용하기에 시간, 비용 등의 Cost가 높거나 혹은 객체 서로 간의 의존성이 강해 구현하기 힘들 경우 가짜 객체를 만들어 사용하는 방법이다.
+>   - 이러한 가짜(Mock) 객체를 만들 수 있도록 지원하는 프레임워크 중 Mockito라는 테스트 프레임워크가 있다.
+> - **Mockito 주요 어노테이션**
+>   - @ExtendWith
+>   - @Mock
+>   - @Spy
+>   - @InjectMocks
 
 </details>
 
