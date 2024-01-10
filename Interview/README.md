@@ -3,6 +3,8 @@
 
 
 
+
+
 # INDEX
 
 * [Java](#java)
@@ -11,11 +13,17 @@
 
 * [Database](#database)
 
+* [CS](#cs)
+
+
+
 
 
 <br><br><br>
 - - -
 <br><br><br>
+
+
 
 
 
@@ -390,6 +398,7 @@
 > - **제네릭(Generic)의 장점**
 >   - 컴파일 시점에 타입 검사를 통한 예외 방지
 >   - 불필요한 캐스팅을 제거
+
 </details>
 
 
@@ -614,8 +623,6 @@
 >        }
 >        ```
 
-
-
 </details>
 
 
@@ -644,6 +651,116 @@
 <summary><h4>Annotation</h4></summary>
 
 [[More+]]()  
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>HashMap 충돌</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>non-static 멤버와 static 멤버 차이</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>직렬화</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>리플렉션</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>자바에서 멀티스레드 동기화 방법</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>equals & hashCode</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Call by value ve Call by Reference</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>GC</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>String 메모리 관점</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>블락킹과 논블락킹, 동기식과 비동기식</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>Thread-safe</h4></summary>
+
+[[More+]]()
 > ...
 
 </details>
@@ -736,8 +853,6 @@
 > - **스프링 구조**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
 
-
-
 </details>
 
 
@@ -785,7 +900,6 @@
 >     - 6.Dispatcher Servlet은 view name을 View Resolver에게 전달하여 View 객체를 얻는다.
 >     - 7.View를 호출하면 템플릿 엔진이 동작하여 HTML을 구성한다.
 >     - 8.최종적으로 View의 내용이 클라이언트에게 전달된다.
-
 
 </details>
 
@@ -929,7 +1043,6 @@
 하지만 PSA가 접목되어 있다면 DB접근 기술과 관계없이 일관된 방식으로 트랜잭션을 제어할 수 있다.
 >   - Ex) @Transactional은 각 각의 TransactionManager를 구현하고 있는 것이 아니라 최상위 PlatformTransactionManager를 사용하여 필요한 TransactionManager를 DI로 주입받아 사용한다. 이 때문에 @Transactional을 사용하여 트랜잭션을 관리할 경우, DB접근 기술이 JDBC에서 JPA로 변경되어도 트랜잭션에 대한 수정없이 트랜잭션 처리를 보장 받을 수 있는 것이다.
 
-
 </details>
 
 
@@ -971,7 +1084,6 @@
 >   - Websocket (* 웹 스코프)
 >     - 웹 소켓과 동일한 생명주기를 가지는 스코프   
 >   - `* 웹 스코프 : 웹 스코프는 웹 환경에서만 동작한다.`
-
 
 </details>
 
@@ -1206,6 +1318,36 @@
 
 
 
+<details>
+<summary><h4>GET, PUT, POST, PATCH 차이</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>CORS</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>웹 브라우저에 URL 입력 시 일어나는 일련의 과정</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
 
 
 <br><br><br>
@@ -1324,27 +1466,78 @@
 
 
 
-# TODO
-- HashMap 충돌
-- non-static 멤버와 static 멤버 차이
-- 직렬화
-- 리플렉션
-- 자바에서 멀티스레드 동기화 방법
-- equals & hashCode
-- Call by value ve Call by Reference
-- GC
-- String 메모리 관점
-- GET, PUT, POST, PATCH 차이
-- CORS
-- 웹 브라우저에 URL 입력 시 일어나는 일련의 과정
-- TCP/IP 5 Layer
-- OSI 7 Layer
-- 3-Way handshake & 4-Way hadnshake
-- 블락킹과 논블락킹, 동기식과 비동기식
-- 교착상태
-- CPU 스케줄링 알고리즘
-- 프로세스와 스레드의 차이
-- Thread-safe
-- 뮤텍스와 세마포어
+# CS
+<details>
+<summary><h4>OSI 7 Layer</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
 
 
+
+<details>
+<summary><h4>TCP/IP 5 Layer</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>3-Way handshake & 4-Way hadnshake</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>교착상태</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>뮤텍스와 세마포어</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>CPU 스케줄링 알고리즘</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>프로세스와 스레드의 차이</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+
+
+<br><br><br>
+- - -
