@@ -648,16 +648,6 @@
 
 
 <details>
-<summary><h4>Annotation</h4></summary>
-
-[[More+]]()  
-> ...
-
-</details>
-
-
-
-<details>
 <summary><h4>HashMap 충돌</h4></summary>
 
 [[More+]]()
@@ -1313,6 +1303,57 @@
 >   - @Mock
 >   - @Spy
 >   - @InjectMocks
+
+</details>
+
+
+
+<details>
+<summary><h4>어노테이션(Annotation)</h4></summary>
+
+[[More+]](https://caffeineoverflow.tistory.com/145)  
+> - **어노테이션(Annotation)이란?**
+>   - Annotation(@)은 사전적 의미로는 주석이라는 뜻이다.
+>   - 자바에서 Annotation은 코드 사이에 주석처럼 쓰이며 특별한 의미, 기능을 수행하도록 하는 기술이다.
+>   - 프로그램에게 추가적인 정보를 제공해 주는 메타데이터라고 볼 수 있다.
+> - **스프링의 주요 어노테이션**
+>   - @ComponentScan
+>     - 빈으로 등록될 준비를 마친 클래스들을 스캔하여, 빈으로 등록해 주는 어노테이션이다.
+>     - @Component, @Service, @Repository, @Controller, @Configuration가 그 대상이 된다.
+>   - @Component
+>     - 개발자가 생성한 Class를 Spring의 Bean으로 등록할 때 사용하는 어노테이션이다.
+>   - @Bean
+>     - 개발자가 직접 제어가 불가능한 외부 라이브러리 등을 Bean으로 만들려 할 때 사용하는 어노테이션이다.
+>   - @Configuration
+>     - 설정 클래스임을 명시하거나 Bean을 등록하고자 할 때 사용하는 어노테이션이다.
+>     - @Configuration을 클래스에 적용하고 @Bean을 해당 Class의 method에 적용하면 @Autowired로 Bean을 부를 수 있다.
+>   - @Autowired
+>     - 속성(field), setter method, constructor(생성자)에서 사용하며 Type에 따라 알아서 Bean을 주입해 준다.
+>   - @Controller
+>     - Presentation Layer의 MVC Controller에 사용한다.
+>     - 스프링 웹 서블릿에 의해 웹 요청을 처리하는 컨트롤러 빈으로 선정한다.
+>   - @RestController
+>     - @Controller와 유사하나 컨트롤러가 Rest 방식을 처리하기 위한 것임을 명시한다.
+>     - View로 응답하는 것이 아니라 반환 결과를 JSON 형태로 반환한다.
+>   - @Service
+>     - Service Class에서 쓰인다.
+>     - 비즈니스 로직을 수행하는 Class라는 것을 나타내는 용도이다.
+>   - @Repository
+>     - DAO 또는 Repository 클래스에 사용한다.
+>     - DataAccessException 자동변환과 같은 AOP 적용대상을 선정하기 위해 사용한다.
+>   - @Value
+>     - properties와 같은 설정파일에서 값을 가져와 적용할 때 사용한다.
+>   - @Valid
+>     - 유효성 검증이 필요한 객체임을 지정한다.
+>   - @RequestBody
+>     - 요청 데이터(JSON이나 XML형식)를 바로 Class나 model로 매핑하기 위한 Annotation이다.
+>   - @ResponseBody
+>     - HttpMessageConverter를 이용하여 JSON 혹은 xml로 요청에 응답할 수 있게 해주는 Annotation이다.
+>     - view가 아닌 JSON 형식의 값을 응답할 때 사용하는 Annotation으로, 문자열을 리턴하면 그 값을 http response header가 아닌 response body에 들어간다.
+>   - @Transactional
+>     - 데이터베이스 트랜잭션을 설정하고 싶은 method에 Annotation을 적용하면 method 내부에서 일어나는 데이터베이스 로직이 전부 성공하게 되거나 데이터베이스 접근 중 하나라도 실패하면 다시 롤백할 수 있게 해주는 Annotation이다.
+>   - @Cacheable
+>     - method 앞에 지정하면 해당 method를 최초에 호출하면 캐시에 적재하고 다음부터는 동일한 method 호출이 있을 때 캐시에서 결과를 가져와서 return 하므로 method 호출 횟수를 줄여주는 Annotation이다.
 
 </details>
 
