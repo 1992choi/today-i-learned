@@ -1360,10 +1360,25 @@
 
 
 <details>
-<summary><h4>GET, PUT, POST, PATCH 차이</h4></summary>
+<summary><h4>주요 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)</h4></summary>
 
-[[More+]]()
-> ...
+[[More+]](https://velog.io/@woply/HTTP-%EC%A3%BC%EC%9A%94-%EB%A9%94%EC%84%9C%EB%93%9C-5%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%ACGET-POST-PUT-PATCH-DELETE)
+> - **GET**
+>   - GET 메서드는 리소스의 조회를 위해 사용한다.
+>   - 서버에 전달하고 싶은 데이터가 있다면 query(쿼리 파라미터, 쿼리 스트링)에 담아 보낸다.
+> - **POST**
+>   - POST 메서드는 요청 데이터의 처리를 목적으로 사용한다.
+>   - 메시지 바디를 통해 서버로 요청 데이터를 전달하면, 서버는 정해진 로직에 따라 요청 데이터를 처리한다.
+>   - 주로, 전달된 데이터를 이용하여 신규 리소스를 등록하거나 프로세스를 처리한다.
+> - **PUT**
+>   - PUT 메서드는 리소스 전체를 대체한다.
+>   - 기존 리소스가 없을 경우 새로 생성한다. 즉, 덮어쓰기를 수행한다고 볼 수 있다.
+>   - POST와 차이점은 클라이언트가 리소스의 위치를 알고 URI를 명시해야 한다는 점이다.
+> - **PATCH**
+>   - PATCH 메서드는 리소스를 부분 변경한다.
+>   - 부분 변경이 필요한 상황에서 PATCH를 사용할 수 없다면 POST를 사용한다.
+> - **DELETE**
+>   - DELETE 메서드는 리소스를 제거한다.
 
 </details>
 
