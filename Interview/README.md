@@ -1387,8 +1387,15 @@
 <details>
 <summary><h4>CORS</h4></summary>
 
-[[More+]]()
-> ...
+[[More+]](https://beomy.github.io/tech/browser/cors/)
+> - **CORS란?**
+>   - 교차 출처 리소스 공유(Cross-origin Resource Sharing)는 추가 HTTP헤더를 사용하여, 한 출처에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제이다.
+> - **출처(Origin)란?**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/ab8e57b2-8ff9-454c-9f3e-d62489c8fe3a)
+>   - 출처(Origin)란 위의 URL 구조에서 Protocol, Host, Port를 합친 것을 의미한다.
+>   - 즉, 다른 출처란 Protocol, Host, Port 중 한 개라도 다른 것을 의미한다.
+> - **동일 출처 정책(Same-Origin Policy)이란?**
+>   - CORS policy 오류가 발생하는 이유는 브라우저가 동일 출처 정책(Same-Origin Policy, SOP)을 지켜서 다른 출처의 리소스 접근을 금지하기 때문이다.
 
 </details>
 
