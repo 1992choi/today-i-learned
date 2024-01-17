@@ -1446,8 +1446,50 @@
 <details>
 <summary><h4>[GoF] 디자인 패턴이란?</h4></summary>
 
-[[More+]]()
-> - 
+[[More+]](https://caffeineoverflow.tistory.com/41)
+> - **GoF(Gang of Four)란?**
+>   - 이 분야의 4인방(Gang of Four, 줄여 GoF)의 의미로 소프트웨어 설계에 있어 공통된 문제들에 대한 표준적인 해법과 작명법을 제안한 "Design Patterns" 책의 저자들을 지칭한다.
+>   - 여러 가지 문제에 대한 설계 사례를 분석하여 서로 비슷한 문제를 해결하기 위한 설계들을 분류하고, 각 문제 유형별로 가장 적합한 설계를 일반화해 패턴으로 정립하였다.
+> - **GoF 디자인 패턴의 유형**
+>   - GoF(Gang of Four)에서는 23가지 디자인 패턴을 다음의 3가지 유형으로 분류한다.
+>     - 생성 패턴(Creational Pattern)
+>       - 객체를 생성하는데 관련된 패턴
+>       - 객체가 생성되는 과정의 유연성을 높이고 손쉬운 코드의 유지
+>       - 종류
+>         - 싱글톤 (Singleton)
+>         - 추상 팩토리 (Abstract Factory)
+>         - 빌더 (Builder)
+>         - 팩토리 메소드 (Factory Method)
+>         - 프로토타입 (Prototype)
+>     - 구조 패턴(Structural Pattern)
+>       - 프로그램 구조에 관련된 패턴
+>       - 프로그램 내의 자료구조 또는 인터페이스 구조 등 프로그램의 구조를 설계하는 데 활용 가능한 패턴
+>       - 클래스나 객체를 조합해 더 큰 구조를 만드는 패턴
+>       - 종류
+>         - 어댑터 (Adapter)
+>         - 브릿지 (Bridge)
+>         - 합성 (Composite)
+>         - 데코레이터 (Decorator)
+>         - 파사드 (Facade)
+>         - 플라이웨이트 (Flyweight)
+>         - 프록시 (Proxy)
+>     - 구조 패턴(Structural Pattern)
+>     - 행동 패턴(Behavioral Pattern)
+>       - 반복적으로 사용되는 객체들의 상호작용을 패턴화
+>       - 결합도를 최소화하는 것에 중점
+>       - 객체(클래스) 사이에 알고리즘이나 책임 분배에 관련 패턴
+>       - 종류
+>         - 책임연쇄 (Chain of Responsibility)
+>         - 커맨드 (Command)
+>         - 인터프리터 (Interpreter)
+>         - 반복자 (Iterator)
+>         - 중재자 (Mediator)
+>         - 메멘토 (Memento)
+>         - 옵저버 (Observer)
+>         - 상태 (State)
+>         - 전략 (Strategy)
+>         - 템플릿 메소드 (Template Method)
+>         - 방문자 (Visitor)
 
 </details>
 
