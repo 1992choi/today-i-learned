@@ -1442,7 +1442,7 @@
 
 
 
-# Design Patterns
+# DesignPatterns
 <details>
 <summary><h4>[GoF] 디자인 패턴이란?</h4></summary>
 
