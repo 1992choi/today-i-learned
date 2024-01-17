@@ -11,6 +11,8 @@
 
 * [Web](#web)
 
+* [Design Patterns](#designpatterns)
+
 * [Database](#database)
 
 * [CS](#cs)
@@ -1425,6 +1427,27 @@
 > 6. 서버가 요청을 처리하고 응답(response)을 보낸다.
 > 7. 서버가 HTTP 응답을 보낸다.
 > 8. 브라우저가 HTML 컨텐츠를 보여준다.
+
+</details>
+
+
+
+
+
+<br><br><br>
+- - -
+<br><br><br>
+
+
+
+
+
+# Design Patterns
+<details>
+<summary><h4>[GoF] 디자인 패턴이란?</h4></summary>
+
+[[More+]]()
+> - 
 
 </details>
 
