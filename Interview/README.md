@@ -1495,6 +1495,52 @@
 
 
 
+<details>
+<summary><h4>[GoF] 싱글톤(Singleton) 패턴</h4></summary>
+
+[[More+]]([https://caffeineoverflow.tistory.com/41](https://caffeineoverflow.tistory.com/50))
+> - **싱글톤(Singleton) 패턴**
+>   - 싱글톤 패턴은 '하나'의 인스턴스만 생성하여 사용하는 디자인 패턴이다.
+> - **싱글톤 패턴의 장점**
+>   - 한 개의 인스턴스만을 생성하고 공유하기 때문에 메모리 낭비를 방지할 수 있다.
+>   - 인스턴스를 매번 생성하는 것이 아니므로 속도 측면에서 이점이 있다.
+>   - 전역으로 사용하는 인스턴스이기 때문에 다른 여러 클래스에서 데이터를 공유하며 사용할 수 있다.
+> - **싱글톤 패턴의 단점**
+>   - 의존성이 높아진다.
+>   - 멀티스레딩 환경에서 동시성 문제가 발생할 수 있다.
+> - **구현 예시**
+>   - 싱글톤 패턴의 구현 방법은 매우 다양하지만 다음과 같은 공통사항을 가지고 있다.
+>     - private 생성자만을 정의하여 외부 클래스로부터 인스턴스 생성을 막는다.
+>     - 싱글톤을 구현하고자 하는 클래스 내부에 멤버 변수로써 private static 객체 변수를 만든다.
+>     - public static 메서드를 통해 외부에서 싱글톤 인스턴스에 접근할 수 있도록 접점을 제공한다.
+>   - ```
+>     public class Singleton {
+>     
+>         private static Singleton instance;
+>         
+>         // 생성자를 private으로 하여 다른 클래스에서는 인스턴스를 만들지 못하게 한다. 
+>         private Singleton() {}
+>     
+>         public static Singleton getInstance() {
+>             /* 
+>                 인스턴스를 사용하기 위하여 getInstance()를 호출하는데,
+>                 최초 접근으로 아직 만들어지지 않았다면 인스턴스를 만들고
+>                 그렇지 않다면 만들어진 인스턴스를 반환한다.            
+>             */
+>             if (instance == null) {
+>                 instance = new Singleton();
+>             }
+>     
+>             return instance;
+>         }
+>         
+>     }
+>     ```
+
+</details>
+
+
+
 
 
 <br><br><br>
