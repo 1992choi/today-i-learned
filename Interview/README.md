@@ -633,7 +633,54 @@
 <summary><h4>스레드</h4></summary>
 
 [[More+]]()  
-> ...
+> - **프로세스(Process)와 스레드(Thread)**
+>   - 프로세스란 실행 중인 프로그램을 뜻한다.
+>   - 스레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위를 뜻한다.
+> - **스레드의 장점**
+>   - Context Switching이 빠르기 때문에 시스템 처리량이 증가한다.
+>   - 프로세스 내의 Stack영역을 제외한 모든 메모리를 공유하기 때문에 통신 부담이 적어 프로그램 응답 시간이 단축된다.
+> - **Thread 클래스와 Runnable 인터페이스**
+>    ```java
+>    // 1. Thread 클래스를 상속받아 구현       
+>    static class MyThread1 extends Thread {
+>        // Thread 클래스의 run()을 오버라이딩
+>        public void run() {
+>            for (int i = 0; i < 10; i++) {
+>                try {
+>                    Thread.sleep(1000);
+>                } catch (InterruptedException e) {
+>                    // ingore
+>                }
+>	        	
+>                System.out.println("MyThread1 run : " + i);
+>            }
+>        }
+>    }
+>
+>    // 2. Runnable 인터페이스를 구현
+>    static class MyThread2 implements Runnable {
+>        // Runnable 인터페이스의 run()을 구현
+>        public void run() {
+>            for (int i = 0; i < 10; i++) {
+>                try {
+>                    Thread.sleep(1000);
+>                } catch (InterruptedException e) {
+>                    // ingore
+>                }
+>	    		
+>                System.out.println("MyThread2 run : " + i);
+>            }
+>        }
+>    }
+>	 
+>    public static void main(String[] args) {
+>        MyThread1 t1 = new MyThread1();
+>        Thread t2 = new Thread(new MyThread2());
+>		
+>        t1.start();
+>        t2.start(); // 또는 new Thread(new MyThread2()).start();
+>    }
+>    ```
 
 </details>
 
@@ -816,6 +863,16 @@
 
 <details>
 <summary><h4>Thread-safe</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>어노테이션</h4></summary>
 
 [[More+]]()
 > ...
@@ -1808,6 +1865,24 @@
 
 [[More+]]()
 > ...
+
+</details>
+
+
+
+<details>
+<summary><h4>TCP vs UDP</h4></summary>
+
+[[More+]]()
+> - **TCP(Transmission Control Protocol)**
+>   - 연결형 서비스를 제공한다.
+>   - 높은 신뢰성을 보장한다.
+>   - 3-way handshaking(연결의 설정), 4-way handshaking(연결의 해제)
+> - **UDP(User Datagram Protoco)**
+>   - 비연결형 서비스를 제공한다.
+>   - 신뢰성이 낮다.
+>   - 데이터의 전송 순서를 보장하지 않는다.
+>   - TCP보다 전송속도가 빠르다.
 
 </details>
 
