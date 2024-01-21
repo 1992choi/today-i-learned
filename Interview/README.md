@@ -1528,6 +1528,57 @@
 
 
 <details>
+<summary><h4>REST(Representational State Transfer)와 RESTful</h4></summary>
+
+[[More+]]()
+> - **REST(Representational State Transfer)란?**
+>   - 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.
+>   - HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행한다.
+> - **REST의 구성 요소**
+>   - 자원(Resource) : HTTP URI
+>   - 자원에 대한 행위(Verb) : HTTP Method
+>   - 자원에 대한 행위의 내용 (Representations) : HTTP Message Pay Load
+> - **RESTful이란?**
+>   - REST의 원리를 따르는 시스템을 의미한다.
+> - **RESTful의 제약조건**
+>   - 클라이언트-서버(Client-Server)
+>     - 관심사의 명확한 분리가 선행되면 서버의 구성요소가 단순화되고, 확장성이 향상되어 여러 플랫폼을 지원할 수 있다.
+>   - 무상태성(Stateless)
+>     - 서버에 클라이언트의 상태 정보를 저장하지 않는 것을 말한다.
+>     - 단순히 들어오는 요청만 처리하여 구현을 더 단순화시킨다.
+>   - 캐시 가능(Cacheable)
+>     - 클라이언트의 요청에 대한 응답을 캐시할 수 있어야 한다.
+>   - 계층화 시스템(Layered System)
+>     - 서버는 중개서버나 로드 밸런싱, 공유 캐시 등의 기능을 사용하여 확장성 있는 시스템을 구성할 수 있다.
+>   - 코드 온 디맨드(Code on demand)
+>     - 클라이언트 서버에서 자바 애플릿, 자바스크립트 실행 코드를 전송받아 기능을 일시적으로 확장할 수 있다.
+>   - 인터페이스 일관성(Uniform interface)
+>     - URI로 지정된 리소스에 균일하고 통일된 인터페이스를 제공한다.
+>     - 아키텍처를 단순하게 분리하여 독립적으로 만들 수 있다.
+
+</details>
+
+
+
+<details>
+<summary><h4>Hateoas(Hypermedia As The Engine Of Application State)</h4></summary>
+
+[[More+]](https://caffeineoverflow.tistory.com/28)
+> - **Hateoas란?**
+>   - 클라이언트의 요청으로부터 응답을 할 때, 요청 이외의 관련된 URI를 응답에 추가적으로 포함시켜 반환하는 개념이다.
+>   - 예를 들어, 클라이언트가 사용자를 조회했을 때 사용자 정보만 응답하는 것이 아니라 '사용자 수정', '사용자 삭제' 등을 처리할 수 있는 링크를 같이 포함하여 응답하는 것을 예시로 들 수 있다.
+> - **장점**
+>   - 요청 URI가 변경되더라도 클라이언트는 이에 대응하여 코드를 변경하지 않아도 된다.
+>   - Resource가 포함된 URI를 보여주기 때문에, Resource에 대한 신뢰도를 높일 수 있다.
+> - **단점**
+>   - 전달되는 data의 크기가 커져서 네트워크 오버헤드가 생길 수 있다.
+>   - 링크가 복잡해질 수 있다.
+
+</details>
+
+
+
+<details>
 <summary><h4>CORS</h4></summary>
 
 [[More+]](https://beomy.github.io/tech/browser/cors/)
