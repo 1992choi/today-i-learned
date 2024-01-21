@@ -665,6 +665,36 @@
 
 
 <details>
+<summary><h4>자바의 메모리 구조</h4></summary>
+
+[[More+]]()  
+> - **메서드 영역**
+>   - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
+>   - 모든 스레드에서 정보가 공유된다.
+> - **힙 영역**
+>   - new 키워드를 통해 생성된 인스턴스의 정보, Array와 같이 동적으로 생성된 데이터가 저장되는 영역이다.
+>   - Reference Type 의 데이터가 저장되는 공간이다.
+>   - 모든 스레드에서 정보가 공유된다.
+> - **스택 영역**
+>   - 메서드가 호출되면, 메서드의 지역 변수와 매개변수가 저장되는 영역이다.
+>   - 만약, 지역변수이지만 Reference Type일 경우에는 Heap에 저장된 데이터의 주소값을 Stack에 저장해서 사용하게 된다.
+>   - 스레드마다 하나씩 존재한다.
+
+</details>
+
+
+
+<details>
+<summary><h4>GC</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
 <summary><h4>HashMap 충돌</h4></summary>
 
 [[More+]]()
@@ -726,16 +756,6 @@
 
 <details>
 <summary><h4>Call by value ve Call by Reference</h4></summary>
-
-[[More+]]()
-> ...
-
-</details>
-
-
-
-<details>
-<summary><h4>GC</h4></summary>
 
 [[More+]]()
 > ...
