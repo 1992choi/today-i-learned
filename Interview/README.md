@@ -643,7 +643,22 @@
 <summary><h4>JVM</h4></summary>
 
 [[More+]]()  
-> ...
+> - **JVM이란?**
+>   - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
+>   - Java와 OS사이에서 중개자 역할을 하여, OS의 종류와 무관하게 동일한 동작을 보장한다.
+>   - 메모리 관리 및 Garbage Collection 수행한다.
+>   - Stack 기반의 가상머신이다.
+> - **JVM 구성**
+>   - 클래스 로더(Class Loader)
+>   - 실행 엔진(Excution Engine)
+>   - Garbage Collector
+> - **실행과정**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
+>     1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
+>     2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
+>     3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
+>     4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
+>     5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
 
 </details>
 
