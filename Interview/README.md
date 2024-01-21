@@ -1484,6 +1484,25 @@
 
 
 <details>
+<summary><h4>@Value VS @ConfigurationProperties</h4></summary>
+
+[[More+]]()
+> - **용도**
+>   - 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.
+> - **@Value**
+>   - 단일 값 주입만 할 수 있다.
+>   - RelaxedBinding이 불가능하다.
+>   - spEL 적용이 가능하다.
+> - **@ConfigurationProperties**
+>   - 복수의 값을 바인딩할 수 있다.
+>   - RelaxedBinding이 가능하다.
+>   - spEL 적용이 불가능하다.
+
+</details>
+
+
+
+<details>
 <summary><h4>주요 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)</h4></summary>
 
 [[More+]](https://velog.io/@woply/HTTP-%EC%A3%BC%EC%9A%94-%EB%A9%94%EC%84%9C%EB%93%9C-5%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%ACGET-POST-PUT-PATCH-DELETE)
@@ -1520,6 +1539,50 @@
 >   - 즉, 다른 출처란 Protocol, Host, Port 중 한 개라도 다른 것을 의미한다.
 > - **동일 출처 정책(Same-Origin Policy)이란?**
 >   - CORS policy 오류가 발생하는 이유는 브라우저가 동일 출처 정책(Same-Origin Policy, SOP)을 지켜서 다른 출처의 리소스 접근을 금지하기 때문이다.
+
+</details>
+
+
+
+<details>
+<summary><h4>CI/CD</h4></summary>
+
+[[More+]]()
+> - **CI/CD란?**
+>   - CI/CD란 지속적 통합과 지속적 배포가 통합된 방식을 일컫는다.
+> - **CI(Continuous Integration)**
+>   - 어플리케이션에 대한 새로운 코드 변경사항이 주기적으로 빌드 및 테스트되어 공통 저장소에 통합되는 개념이다.
+>   - 다수의 개발자가 형상관리 툴을 공유하는 경우라면, 자동화된 빌드 및 테스트는 원천 소스코드의 충돌을 방어할 수 있는 장점을 가지고 있다.
+> - **CD(Continuous Delivery 또는 Continuous Deployment)**
+>   - 배포 자동화 과정을 뜻한다.
+>   - CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.
+
+</details>
+
+
+
+<details>
+<summary><h4>PRG(POST-Redirect-GET) 패턴</h4></summary>
+
+[[More+]]()
+> - **PRG 패턴이란?**
+>   - 웹 디자인 패턴 중 하나로 POST요청에 대한 응답으로 리다이렉트를 통해 GET요청을 할 수 있도록 처리하는 패턴이다.
+> - **상세 순서**
+>   - 클라이언트는 HTTP POST 요청을 한다.
+>   - 서버는 클라이언트에게 'URL'과 'GET요청으로 Redirect 할 수 있는 응답코드(302)'를 응답한다.
+>   - Redirection을 통해 서버에게 응답받은 URL로 GET 요청을 한다.
+> - **적용하지 않았을 시 문제점**
+>   - 데이터를 POST요청으로 보낸 후 클라이언트가 새로고침을 할 경우, 중복 요청이 발생하여 예기치않은 문제점이 발생할 수 있다.
+
+</details>
+
+
+
+<details>
+<summary><h4>Maven과 Gradle</h4></summary>
+
+[[More+]]()
+> -
 
 </details>
 
