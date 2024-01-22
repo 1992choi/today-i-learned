@@ -1762,7 +1762,7 @@
 <details>
 <summary><h4>[GoF] 싱글톤(Singleton) 패턴</h4></summary>
 
-[[More+]]([https://caffeineoverflow.tistory.com/41](https://caffeineoverflow.tistory.com/50))
+[[More+]](https://caffeineoverflow.tistory.com/50)
 > - **싱글톤(Singleton) 패턴**
 >   - 싱글톤 패턴은 '하나'의 인스턴스만 생성하여 사용하는 디자인 패턴이다.
 > - **싱글톤 패턴의 장점**
@@ -1800,6 +1800,45 @@
 >         
 >     }
 >     ```
+
+</details>
+
+
+<details>
+<summary><h4>[GoF] 팩토리 메서드 패턴</h4></summary>
+
+[[More+]]()
+> -
+
+</details>
+
+
+
+<details>
+<summary><h4>[GoF] 프록시 패턴</h4></summary>
+
+[[More+]]()
+> -
+
+</details>
+
+
+
+<details>
+<summary><h4>[GoF] 템플릿 메서드 패턴</h4></summary>
+
+[[More+]]()
+> -
+
+</details>
+
+
+
+<details>
+<summary><h4>[GoF] 전략 패턴</h4></summary>
+
+[[More+]]()
+> -
 
 </details>
 
