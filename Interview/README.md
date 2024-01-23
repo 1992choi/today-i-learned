@@ -1660,8 +1660,52 @@
 <details>
 <summary><h4>Maven과 Gradle</h4></summary>
 
-[[More+]]()
-> -
+[[More+]](https://velog.io/@leesomyoung/Maven%EA%B3%BC-Gradle%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EB%B0%8F-%EB%B9%84%EA%B5%90)
+> - **빌드와 빌드 관리 도구**
+>   - Maven과 Gradle은 모두 빌드 관리 도구이다.
+>   - 빌드(Build)
+>     - 빌드는 소스코드 파일을 컴퓨터에서 실행할 수 있는 독립적인 형태로 변환하는 과정과 결과를 말한다.
+>     - 개발자가 작성한 소스코드(.java), 프로젝트에서 쓰인 각 각의 파일 및 자원(.xml, .jpa, .jpg, properties)을 jvm이나 톰캣 같은 WAS가 인식할 수 있도록 패키징하는 과정 및 결과물을 일컫는다.
+>   - 빌드 관리 도구(Build Tool)
+>     - 빌드 도구란, 소스코드에서 애플리케이션을 생성하면서 여러가지 외부 라이브러리를 사용하는데, 빌드 관리 도구를 사용하게 되면 사용자가 이를 관리하지 않아도 된다.
+>     - 필드 관리 도구는 다음과 같은 작업을 수행한다.
+>       1. 종속성 다운로드 - 전처리(Preprocessing)
+>       2. 소스코드를 바이너리 코드로 컴파일(Compile)
+>       3. 바이너리 코드를 패키징(Packaging)
+>       4. 테스트 실행(Testing)
+>       5. 프로덕션 시스템에 배포(distribution)
+>     - 빌드 툴로는 Ant, Maven, Gradle 등이 있다.
+> - **Maven**
+>   - Maven은 Java 전용 프로젝트 관리 도구로써 Lifecycle 관리 목적 빌드 도구이며, Apache Ant의 대안으로 만들어졌다.
+>   - 정해진 Lifecycle에 의하여 작업을 수행하며, 전반적인 프로젝트 관리 기능을 포함하고 있다.
+>   - clean - validate - compile - test - package - verify - install - site - deploy의 라이프 사이클을 가진다.
+>     - clean : 빌드 시 생성되어있었던 파일들을 삭제한다.
+>     - validate : 프로젝트가 올바른지 확인하고 필요한 모든 정보를 사용할 수 있는지 확인하는 단계
+>     - compile : 프로젝트 소스코드를 컴파일 하는 단계
+>     - test : 단위 테스트를 수행하는 단계. 테스트 실패 시 빌드 실패로 처리하며, 스킵이 가능하다.
+>     - package : 실제 컴파일된 소스 코드와 리소스들을 jar, war 등의 파일의 배포를 위한 패키지로 만든다.
+>     - verify : 통합 테스트 결과에 대한 검사를 실행하여 품질 기준을 충족하는지 확인한다.
+>     - site : 프로젝트 문서와 사이트 작성, 생성하는 단계
+>     - deploy : 만들어진 package를 원격 저장소에 release하는 단계
+> - **Gradle**
+>   - Maven을 대체할 수 있는 프로젝트 구성 관리 및 범용 빌드 툴이며, Ant Builder와 Groovy script를 기반으로 구축되어 기존 Ant의 역할과 배포 스크립의 기능을 모두 사용가능하며 스프링부트와 안드로이드에서 사용된다.
+>   - 빌드 속도가 Maven에 비해 10~100배 가량 빠르며, Java, C/C++, Python 등을 지원한다.
+> - **Gradle의 장점**
+>   - 가독성
+>     - 코딩에 의한 간결한 정의가 가능하므로 가독성이 좋다.
+>   - 재사용 용이
+>     - 설정 주입 방식(Configuration Injection)을 사용하므로 재사용에 용이하다.
+>   - 구조적인 장점
+>     - Build Script를 Groovy기반의 DSL(Domail Specific Language)을 사용하여 코드로서 설정 정보를 구성하므로 구조적인 장점이 있다.
+>   - 편리함
+>     - Gradle 설치 없이 Gradle wrapper를 이용하여 빌드를 지원한다.
+>   - 멀티 프로젝트
+>     - Gradle은 멀티 프로젝트 빌드를 지원하기 위해 설계된 빌드 관리 도구이다.
+>   - Maven 지원
+>     - Maven을 완전 지원한다.
+>   - 빌드와 테스트 실행 속도
+>     - 빌드와 테스트 실행 결과 Gradle이 더 빠르다
+>     - 캐시를 사용하므로 테스트 반복 시 실행 결과 시간의 차이가 더 커진다.
 
 </details>
 
