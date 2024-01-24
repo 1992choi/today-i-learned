@@ -2185,8 +2185,34 @@
 <details>
 <summary><h4>3-Way handshake & 4-Way hadnshake</h4></summary>
 
-[[More+]]()
-> ...
+[[More+]](https://jeongkyun-it.tistory.com/180)
+> - **3-Way Handshake란?**
+>   - TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정을 뜻한다.
+> - **3-Way Handshake의 동작 순서**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/205cb3fd-340a-43d3-be51-5acaacb663d6)
+>   - Step1. SYN
+>     - Client가 Server에게 접속을 요청하는 SYN플래그를 보낸다.
+>   - Step2. SYN + ACK
+>     - Server는 Listen상태에서 SYN이 들어온 것을 확인하고 SYN_RECV상태로 바뀌어 SYN + ACK플래그를 Client에게 전송한다.
+>     - 그 후 Server는 다시 ACK 플래그를 받기 위해 대기상태로 변경된다.
+>   - Step3. ACKSYN + ACK
+>     - SYN + ACK 상태를 확인한 Client는 서버에게 ACK를 보내고 연결 성립(Established)이 된다.
+> - **4-Way Handshake란?**
+>   - 3-Way handshake가 연결확립을 위해 진행했다면 4way handshake는 세션을 종료하기 위해 수행되는 절차를 뜻한다.
+> - **4-Way Handshake의 동작 순서**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/41c81252-70d4-4856-a598-bb5ce59aa11d)
+>   - Step1. FIN
+>     - Client가 연결을 종료하겠다는 FIN플래그를 전송한다.
+>     - 보낸 후에 FIN-WAIT-1 상태로 변한다.
+>   - Step2. ACK
+>     - FIN 플래그를 받은 Server는 확인메세지인 ACK를 Client에게 보내준다.
+>     - 그 후 CLOSE-WAIT상태로 변한다.
+>     - Client도 마찬가지로 Server에서 종료될 준비가 됐다는 FIN을 받기위해  FIN-WAIT-2 상태가 된다.
+>   - Step3. FIN
+>     - Close준비가 다 된 후 Server는 Client에게 FIN 플래그를 전송한다.
+>   - Step4. ACK
+>     - Client는 해지 준비가 되었다는 정상응답인 ACK를 Server에게 보내준다. 이 때, Client는 TIME-WAIT 상태로 변경된다.
+>     - 여기서 TIME-WAIT 상태는 의도치않은 에러로 인해 연결이 데드락으로 빠지는 것을 방지하기 위해 변경 되는 것인데, 만약 에러로 인해 종료가 지연되다가 타임이 초과되면 CLOSED 상태로 변경된다.
 
 </details>
 
