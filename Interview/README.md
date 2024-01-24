@@ -1740,6 +1740,35 @@
 
 
 
+<details>
+<summary><h4>[JPA] 영속성 관리</h4></summary>
+
+[[More+]](https://steady-coding.tistory.com/519)
+> ...
+
+</details>
+
+
+<details>
+<summary><h4>[JPA] N+1문제</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
+<details>
+<summary><h4>[JPA] 즉시 로딩과 지연 로딩</h4></summary>
+
+[[More+]]()
+> ...
+
+</details>
+
+
+
 
 
 <br><br><br>
