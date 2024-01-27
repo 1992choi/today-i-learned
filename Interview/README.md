@@ -2237,6 +2237,28 @@
 
 
 <details>
+<summary><h4>TCP vs UDP</h4></summary>
+
+[[More+]](https://cocoon1787.tistory.com/757)
+> - **TCP(Transmission Control Protocol)**
+>   - TCP는 신뢰성 있는 데이터 전송을 지원하는 연결 지향형 프로토콜이다.
+>   - 일반적으로 TCP와 IP가 함께 사용되는데, IP가 데이터의 전송을 처리한다면 TCP는 패킷을 추적하고 관리하는 역할을 한다.
+>   - 연결 지향형인 TCP는 3-way handshaking이라는 과정을 통해 연결 후 통신을 시작하는데, 흐름 제어와 혼잡 제어를 지원하며 데이터의 순서를 보장한다.
+>   - UDP에 비하여 전송속도가 느리다.
+>   - 신뢰성이 높다.
+> - **UDP(User Datagram Protocol)**
+>   - UDP는 비연결형 프로토콜이다.
+>   - 인터넷상에서 서로 정보를 주고받을 때, 신호 절차를 거치지 않고 보내는 쪽에서 일방적으로 데이터를 전달하는 통신 프로토콜이다.
+>   - TCP와는 다르게 연결 설정이 없으며, 혼잡 제어를 하지 않기 때문에 TCP보다 전송 속도가 빠르다.
+>   - 데이터 전송에 대한 보장을 하지 않기 때문에 패킷 손실이 발생할 수 있다.
+>   - 패킷 오버헤드가 적어 네트워크 부하가 감소한다.
+>   - 신뢰성이 낮다.
+
+</details>
+
+
+
+<details>
 <summary><h4>3-Way handshake & 4-Way hadnshake</h4></summary>
 
 [[More+]](https://jeongkyun-it.tistory.com/180)
@@ -2267,24 +2289,6 @@
 >   - Step4. ACK
 >     - Client는 해지 준비가 되었다는 정상응답인 ACK를 Server에게 보내준다. 이 때, Client는 TIME-WAIT 상태로 변경된다.
 >     - 여기서 TIME-WAIT 상태는 의도치않은 에러로 인해 연결이 데드락으로 빠지는 것을 방지하기 위해 변경 되는 것인데, 만약 에러로 인해 종료가 지연되다가 타임이 초과되면 CLOSED 상태로 변경된다.
-
-</details>
-
-
-
-<details>
-<summary><h4>TCP vs UDP</h4></summary>
-
-[[More+]]()
-> - **TCP(Transmission Control Protocol)**
->   - 연결형 서비스를 제공한다.
->   - 높은 신뢰성을 보장한다.
->   - 3-way handshaking(연결의 설정), 4-way handshaking(연결의 해제)
-> - **UDP(User Datagram Protoco)**
->   - 비연결형 서비스를 제공한다.
->   - 신뢰성이 낮다.
->   - 데이터의 전송 순서를 보장하지 않는다.
->   - TCP보다 전송속도가 빠르다.
 
 </details>
 
