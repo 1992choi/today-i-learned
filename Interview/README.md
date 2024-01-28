@@ -836,7 +836,43 @@
 프레임워크나 라이브러리에서는 들어오는 클래스의 정보를 모르기 때문이다.   
 코드를 작성한 개발자는 당연히 내가 작성한 클래스의 정보를 알 수 있지만, 프레임워크 입장에서 보면 모르는게 당연하다.   
 이때, 리플렉션을 통해 런타임 시 클래스의 정보를 얻고 이를 기반으로 하여 프레임워크나 라이브러리가 지원하는 기능을 수행하는 것이다.   
-스프링의 주요 기능인 DI도 리플렉션의 원리가 들어있다.   
+스프링의 주요 기능인 DI도 리플렉션의 원리가 들어있다.
+> - **리플렉션의 사용예시**
+>   - 메서드를 직접 호출할 경우, 기능이 추가되면 조건식을 추가하기 위해 매번 코드를 변경해야한다는 단점이 있지만, 리플렉션을 사용할 경우 이러한 단점을 극복할 수 있다.
+>   - ```java
+>     import java.lang.reflect.Method;
+>     
+>     public class ReflectionEx {
+>     
+>         public static void main(String[] args) throws Exception {
+>             Theme theme = new Theme();
+>             String userSelectTheme = "Blue";
+>     
+>             // 직접 호출하는 경우 : 항목이 추가될 때마다 코드 변경이 필요하다.
+>             if ("Blue".equals(userSelectTheme)) {
+>                 theme.changeBlue(); // 파란 테마로 변경
+>             } else if ("Red".equals(userSelectTheme)) {
+>                 theme.changeRed(); // 빨간 테마로 변경
+>             }
+>     
+>             // Reflection을 사용하는 경우 : 클래스나 메서드 정보를 동적으로 변경할 수 있다는 장점이 있다.
+>             //                          '직접 호출하는 경우'와 다르게 메서드를 실행하는 로직을 공통으로 만들 수 있다.
+>             Class clazz = Class.forName("basic.reflection.Theme");
+>             Method method = clazz.getMethod("change" + userSelectTheme);
+>             method.invoke(theme); // 파란 테마로 변경
+>         }
+>     
+>     }
+>     
+>     class Theme {
+>         public void changeBlue() {
+>             System.out.println("파란 테마로 변경");
+>         }
+>     
+>         public void changeRed() {
+>             System.out.println("빨간 테마로 변경");
+>         }
+>     }
 > - **리플렉션의 장단점**
 >   - 장점
 >     - 유연성과 확장성
