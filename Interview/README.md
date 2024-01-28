@@ -33,13 +33,14 @@
 <details>
 <summary><h4>Java의 특징</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/37)
 > - 객체 지향 언어로써 캡슐화, 상속, 다형성 기능을 완벽하게 지원한다.
 > - 운영체제에 상관없이 독립적으로 작동(JVM에서 동작하기 때문)하여 이식성이 높다.
 > - Garbage Collector에 의해 메모리가 관리된다.
 > - 스레드 생성 및 제어와 관련된 라이브러리를 제공하기 때문에 운영체제에 상관없이 멀티 스레드를 쉽게 구현할 수 있다.
 > - 애플리케이션이 실행될 때 모든 객체가 생성되지 않고, 각 객체가 필요한 시점에 클래스를 동적 로딩해서 생성한다. 또한 유지보수 시 해당 클래스만 수정하면 되기 때문에 전체 애플리케이션을 다시 컴파일 할 필요가 없기 때문에 유지보수가 쉽고 빠르다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/37)
 </details>
 
 
@@ -47,7 +48,6 @@
 <details>
 <summary><h4>객체지향의 4대 특징</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/38)
 > - **캡슐화**
 >   - 객체의 필드와 메서드를 하나로 묶는 것이며, 이를 통해 정보은닉 효과를 얻을 수 있다.
 > - **추상화**
@@ -59,6 +59,8 @@
 > - **상속성**
 >   - 상위 객체의 필드와 메서드를 하위 객체에게 물려주어 하위 객체에서 사용할 수 있도록 해준다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/38)
 </details>
 
 
@@ -66,7 +68,6 @@
 <details>
 <summary><h4>객체지향의 5대 원칙(SOLID)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/39)  
 > - **단일 책임 원칙(Single Responsiblity Principle)**
 >   - 소프트웨어의 설계 부품(클래스, 함수 등)은 하나의 책임만 가진다.
 >   - 클래스의 기능(책임)이 많아지면 내부 함수끼리 강한 결합이 발생할 가능성이 높으므로 응집도는 높이고 결합도는 낮춰야 한다.
@@ -85,6 +86,8 @@
 >   - 상위 모듈은 하위 모듈에 종속되어서는 안된다.
 >   - 의존 관계를 맺을 때, 구체적인 클래스보다는 인터페이스나 추상 클래스와 관계를 맺어야 한다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/39)
 </details>
 
 
@@ -92,7 +95,6 @@
 <details>
 <summary><h4>클래스, 객체, 인스턴스 비교</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/40)  
 > - **클래스**
 >   - 객체를 만들어 내기 위한 설계도로써 객체의 상태를 나타내는 필드(field)와 객체의 행동을 나타내는 메서드(method)로 구성된다.
 > - **객체**
@@ -116,6 +118,8 @@
 >    }
 >    ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/40)
 </details>
 
 
@@ -123,7 +127,6 @@
 <details>
 <summary><h4>String, StringBuffer, StringBuilder 비교</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/42)  
 > - **String**
 >   - 불변(immutable)의 속성을 갖는다.
 >   - 변경 연산을 자주 사용할 경우, 힙 메모리에 많은 가비지(Garbage)가 생성되어 힙 메모리 부족으로 이어질 수 있다.
@@ -135,6 +138,8 @@
 >   - String 클래스와 다르게 가변성을 갖는다.
 >   - 동기화를 지원하지 않는다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/42)
 </details>
 
 
@@ -142,7 +147,6 @@
 <details>
 <summary><h4>접근 제어자</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/46)
 > - **public**
 >   - 적용대상 : 필드, 생성자, 메서드, 클래스
 >   - 모든 접근을 허용한다.
@@ -156,6 +160,8 @@
 >   - 적용대상 : 필드, 생성자, 메서드
 >   - 같은 클래스 내에서의 접근만 허용한다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/46)
 </details>
 
 
@@ -163,7 +169,6 @@
 <details>
 <summary><h4>final 제어자</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/44)
 > - **final 이란?**
 >   - Java에서는 불변성을 확보하거나 동작을 제한할 수 있는 final 키워드를 제공한다.
 >   - final 키워드는 변수(variable), 메서드(method), 클래스(class)에 사용할 수 있다.
@@ -174,6 +179,8 @@
 > - **final 클래스**
 >   - 클래스에 final 키워드를 사용할 경우, 상속을 제한할 수 있다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/44)
 </details>
 
 
@@ -181,7 +188,6 @@
 <details>
 <summary><h4>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/123) 
 > - **박싱(Boxing) / 언박싱(UnBoxing)**
 >   - Boxing은 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미한다.
 >   - Unboxing은 래퍼 클래스를 원시 타입으로 변환하는 것을 의미한다.
@@ -212,14 +218,15 @@
 >     System.out.println("autoUnbonxingNum = " + autoUnbonxingNum); // 10
 >     ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/123)
 </details>
 
 
 
 <details>
 <summary><h4>추상클래스</h4></summary>
-
-[[More+]](https://caffeineoverflow.tistory.com/124)  
+ 
 > - **추상클래스란?**
 >   - 추상 메서드를 선언해 놓고 상속을 통해 자식 클래스에서 메서드를 완성하도록 유도하는 클래스이다.
 >   - 반드시 사용되어야 하는 메서드를 추상 클래스에 추상 메서드로 선언해 놓으면, 이 클래스를 상속받는 모든 클래스에서는 이 추상 메서드를 반드시 재정의해야 한다.
@@ -262,6 +269,8 @@
 >   - 추상클래스를 만든 후 상속을 받는다면 중복코드 제거 및 코드 재사용성 증대 효과를 얻을 수 있다.
 >   - 추상클래스를 사용하여 상속을 통해 자식클래스를 구현한다면, 각 각의 클래스들을 그룹화하여 제어할 수 있다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/124)
 </details>
 
 
@@ -269,7 +278,6 @@
 <details>
 <summary><h4>인터페이스</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/125)  
 > - **인터페이스란?**
 >   - 자바에서 클래스들이 구현해야 하는 동작을 지정하는 용도로 사용되는 추상 자료형이다.
 >   - 인터페이스는 interface 키워드를 붙여 선언할 수 있으며, 기본적으로는 상수와 추상메서드로 구성된다. 하지만 자바8부터는 default 메서드와  static 메서드를 지원한다.
@@ -299,6 +307,8 @@
 >   - 인터페이스는 다른 인터페이스를 extends 키워드로 상속받을 수 있으며, 다중 상속이 가능하다.
 >   - 클래스에서 인터페이스의 구현은 implements 키워드를 사용하여 구현할 인터페이스를 지정 후, 추상메서드를 모두 오버라이드하여 내용을 완성해야 한다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/125)
 </details>
 
 
@@ -306,20 +316,20 @@
 <details>
 <summary><h4>추상클래스와 인터페이스의 차이</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/126)  
 > - **추상클래스와 인터페이스의 차이점**
 >   - 추상클래스 : 자식클래스 is kind of 부모클래스
 >   - 인터페이스 : 자식클래스 is able to 부모인터페이스
 >   - 추상클래스는 계층 구조에서 공통된 속성들을 뽑아서 하나의 클래스로 만들고 자신의 기능들을 하위로 확장시키는 것으로 볼 수 있으며, 인터페이스는 계층 구조는 아니지만 같은 기능이 필요한 경우 사용하는 것으로 볼 수 있다.
 >   ![image](https://github.com/Young-Geun/TIL/assets/27760576/960f18b5-d588-4ddc-ac10-c1998b383bb1)
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/126)
 </details>
 
 
 <details>
 <summary><h4>Overloading vs Overriding</h4></summary>
-
-[[More+]](https://caffeineoverflow.tistory.com/127)  
+ 
 > - **오버로딩(Overloading)**
 >   - 매개변수의 개수나 자료형을 다르게하여 같은 이름의 메서드를 사용하는 것
 >   - ``` java
@@ -379,6 +389,8 @@
 >      }
 >     ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/127)
 </details>
 
 
@@ -386,7 +398,6 @@
 <details>
 <summary><h4>제네릭(Generic)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/128)  
 > - **제네릭(Generic)이란**
 >   - 제네릭이란 클래스 내부에서 사용할 데이터 타입을 외부에서 지정하는 기법을 의미한다.
 >   - Ex)
@@ -401,6 +412,8 @@
 >   - 컴파일 시점에 타입 검사를 통한 예외 방지
 >   - 불필요한 캐스팅을 제거
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/128)
 </details>
 
 
@@ -408,7 +421,6 @@
 <details>
 <summary><h4>컬렉션 프레임워크(Collection Framework)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/129)  
 > - **컬렉션 프레임워크(Collection Framework)란?**
 >   - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
 >   - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각 각의 인터페이스들은 구현체를 가지고 있다.
@@ -441,6 +453,8 @@
 >     - Hashtable
 >       - HashMap과 다르게 동기화를 보장한다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/129)
 </details>
 
 
@@ -448,7 +462,6 @@
 <details>
 <summary><h4>람다식(Lambda Expression)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/130)  
 > - **람다식(Lambda Expressions) 이란?**
 >   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
 >   - 함수를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
@@ -513,14 +526,15 @@
 >     }
 >     ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/130)
 </details>
 
 
 
 <details>
 <summary><h4>스트림 API(Stream API)</h4></summary>
-
-[[More+]](https://caffeineoverflow.tistory.com/135)  
+ 
 > - **스트림 API(Stream API) 란?**
 >   - Java 8에서 추가된 기능으로써 배열 또는 컬렉션 등을 함수형 프로그래밍 기법으로 처리할 수 있도록 도와주는 API이다.
 > - **스트림 API(Stream API)의 특징**
@@ -571,6 +585,8 @@
 >     - collect()
 >       - 스트림의 결과를 모으기 위한 메서드
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/135)
 </details>
 
 
@@ -578,7 +594,6 @@
 <details>
 <summary><h4>Checked Exception과 Unchecked Exception</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/138)  
 > - **Checked Exception과 Unchecked Exception**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
 >   - Checked Exception
@@ -625,6 +640,8 @@
 >        }
 >        ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/138)
 </details>
 
 
@@ -632,7 +649,6 @@
 <details>
 <summary><h4>스레드</h4></summary>
 
-[[More+]]()  
 > - **프로세스(Process)와 스레드(Thread)**
 >   - 프로세스란 실행 중인 프로그램을 뜻한다.
 >   - 스레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위를 뜻한다.
@@ -682,6 +698,7 @@
 >    }
 >    ```
 
+Ref.
 </details>
 
 
@@ -689,7 +706,6 @@
 <details>
 <summary><h4>JVM</h4></summary>
 
-[[More+]]()  
 > - **JVM이란?**
 >   - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
 >   - Java와 OS사이에서 중개자 역할을 하여, OS의 종류와 무관하게 동일한 동작을 보장한다.
@@ -707,6 +723,7 @@
 >     4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
 >     5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
 
+Ref.
 </details>
 
 
@@ -714,7 +731,6 @@
 <details>
 <summary><h4>자바의 메모리 구조</h4></summary>
 
-[[More+]]()  
 > - **메서드 영역**
 >   - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
 >   - 모든 스레드에서 정보가 공유된다.
@@ -727,6 +743,7 @@
 >   - 만약, 지역변수이지만 Reference Type일 경우에는 Heap에 저장된 데이터의 주소값을 Stack에 저장해서 사용하게 된다.
 >   - 스레드마다 하나씩 존재한다.
 
+Ref.
 </details>
 
 
@@ -734,9 +751,10 @@
 <details>
 <summary><h4>GC</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -744,7 +762,6 @@
 <details>
 <summary><h4>HashMap 충돌</h4></summary>
 
-[[More+]]()
 > - **HashMap 특징 및 동작원리**
 >   - HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.
 >   - 위와 같은 특성으로 인하여 삽입, 삭제, 검색이 평균적으로 O(1) 시간복잡도를 갖는다.
@@ -756,6 +773,7 @@
 >   - 동일 index로 인해서 충돌이 발생하면 그 index가 가리키고 있는 Linked list에 노드를 추가하여 값을 추가한다.
 >   - JDK 1.8의 경우에는 index에 노드가 8개 이하일 경우에는 Linked List를 사용하며, 8개 이상으로 늘어날때는 Tree 구조로 데이타 저장 구조를 바꾸도록 되어 있다.
 
+Ref.
 </details>
 
 
@@ -763,7 +781,6 @@
 <details>
 <summary><h4>non-static 멤버와 static 멤버 차이</h4></summary>
 
-[[More+]]()
 > - **non-static 멤버**
 >   - 멤버는 객체마다 별도로 존재한다.
 >   - 인스턴스 멤버라고 부른다.
@@ -782,6 +799,7 @@
 >   - 멤버는 프로그램이 종료될 때 사라진다.
 >   - 동일한 클래스의 모든 객체들에 의해 공유된다.
 
+Ref.
 </details>
 
 
@@ -789,7 +807,6 @@
 <details>
 <summary><h4>직렬화와 역직렬화</h4></summary>
 
-[[More+]](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EC%A7%81%EB%A0%AC%ED%99%94Serializable-%EC%99%84%EB%B2%BD-%EB%A7%88%EC%8A%A4%ED%84%B0%ED%95%98%EA%B8%B0)
 > - **직렬화와 역직렬화**
 >   - 직렬화(serialize)란 자바 언어에서 사용되는 Object 또는 Data를 다른 컴퓨터의 자바 시스템에서도 사용 할수 있도록 바이트 스트림(stream of bytes) 형태로 연속전인(serial) 데이터로 변환하는 포맷 변환 기술을 일컫는다.
 >   - 그 반대 개념인 역직렬화는(Deserialize)는 바이트로 변환된 데이터를 원래대로 자바 시스템의 Object 또는 Data로 변환하는 기술이다.
@@ -820,6 +837,8 @@
 >     - 클래스 내부 구성이 수정될 경우, 기존에 직렬화한 SUID와 현재 클래스의 SUID 버전이 다르기 때문에 이를 인지하고 InvalidClassException 예외가 발생시켜 값 불일치 되는 현상을 미연에 방지할 수 있다.
 >     - 위와 같은 특징으로 인해 클래스에 조그만한 변경사항이라도 있으면, 모든 사용자에게 재배포를 해야하는 애로사항이 있지만, serialVersionUID를 직접 명시해주어 클래스 버전을 수동으로 관리하게되면 이를 해결할 수 있다.
 
+Ref.
+[인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EC%A7%81%EB%A0%AC%ED%99%94Serializable-%EC%99%84%EB%B2%BD-%EB%A7%88%EC%8A%A4%ED%84%B0%ED%95%98%EA%B8%B0)
 </details>
 
 
@@ -827,7 +846,6 @@
 <details>
 <summary><h4>리플렉션(Reflection)</h4></summary>
 
-[[More+]](https://tlatmsrud.tistory.com/112)
 > - **리플렉션이란?**
 >   - 구체적인 클래스 타입을 알지 못하더라도 그 클래스의 메서드, 타입, 변수들에 접근할 수 있도록 해주는 자바 API이다.
 >   - 컴파일 시간이 아닌 실행시간에 동적으로 클래스의 정보를 추출할 수 있는 프로그래밍 기법이다.
@@ -888,6 +906,8 @@
 >     - 컴파일 시 타입 체크가 불가능
 >       - 컴파일 시점이 아닌 런타임 시점에 에러가 발생하기 때문에 주의가 필요하다.
 
+Ref.
+[영암사는 승경이네](https://tlatmsrud.tistory.com/112)
 </details>
 
 
@@ -895,9 +915,10 @@
 <details>
 <summary><h4>자바에서 멀티스레드 동기화 방법</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -905,9 +926,10 @@
 <details>
 <summary><h4>equals & hashCode</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -915,7 +937,6 @@
 <details>
 <summary><h4>Call by value ve Call by Reference</h4></summary>
 
-[[More+]]()
 > - **Call by Value**
 >   - 값에 의한 호출을 의미한다.
 >   - 전달받은 값을 복사하여 처리하기 때문에 전달받은 값을 변경하여도 원본의 값은 변경되지 않는다.
@@ -923,6 +944,7 @@
 >   - 참조에 의한 호출을 의미한다.
 >   - 전달받은 값을 직접 참조하기 때문에 전달받은 값을 변경하면 원본도 같이 변경된다.
 
+Ref.
 </details>
 
 
@@ -930,9 +952,10 @@
 <details>
 <summary><h4>String 메모리 관점</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -940,9 +963,10 @@
 <details>
 <summary><h4>블락킹과 논블락킹, 동기식과 비동기식</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -950,9 +974,10 @@
 <details>
 <summary><h4>Thread-safe</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -960,9 +985,10 @@
 <details>
 <summary><h4>어노테이션</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -981,7 +1007,6 @@
 <details>
 <summary><h4>JSP vs Servlet</h4></summary>
 
-[[More+]]()  
 > - **JSP**
 >   - html 내에 자바코드를 블록화하여 삽입한 것.
 >   - JAVA in Html.
@@ -989,14 +1014,14 @@
 >   - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
 >   - Html in JAVA.
 
+Ref.
 </details>
 
 
 
 <details>
 <summary><h4>Session과 Cookie</h4></summary>
-
-[[More+]]()  
+ 
 > - **Session**
 >   - 저장위치 : 웹 서버
 >   - 브라우저를 종료하거나, 서버에서 세션을 삭제했을 때 삭제된다.
@@ -1016,6 +1041,7 @@
 >     3. 클라이언트가 이후 서버에 요청할 때 요청과 함께 쿠키를 전송한다.
 >     4. 동일 사이트 재방문 시, 클라이언트의 PC에 해당 쿠키가 있을 경우 요청 페이지와 함께 쿠키를 전송한다.
 
+Ref.
 </details>
 
 
@@ -1023,12 +1049,12 @@
 <details>
 <summary><h4>Framework vs Library</h4></summary>
 
-[[More+]]()  
 > - **Framework**
 >   - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
 > - **Library**
 >   - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
 
+Ref.
 </details>
 
 
@@ -1036,7 +1062,6 @@
 <details>
 <summary><h4>스프링 개념</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/5)
 > - **스프링이란?**
 >   - 자바 엔터프라이즈 개발을 편하게 해주는 오픈소스 경량급 애플리케이션 프레임워크
 > - **특징**
@@ -1053,6 +1078,8 @@
 > - **스프링 구조**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/5)
 </details>
 
 
@@ -1060,7 +1087,6 @@
 <details>
 <summary><h4>스프링 MVC</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/6)
 > - **스프링 MVC란?**
 >   - MVC 패턴에 기반을 둔 웹 프레임워크이다.
 > - **MVC 패턴**
@@ -1101,6 +1127,8 @@
 >     - 7.View를 호출하면 템플릿 엔진이 동작하여 HTML을 구성한다.
 >     - 8.최종적으로 View의 내용이 클라이언트에게 전달된다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/6)
 </details>
 
 
@@ -1108,7 +1136,6 @@
 <details>
 <summary><h4>스프링 DI</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/13)
 > - **DI란?**
 >   - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
 > - **의존관계 주입 방법**
@@ -1121,6 +1148,8 @@
 >   - 유지보수가 쉬워지며, 테스트가 용이해진다.
 >   - 확장성을 가진다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/13)
 </details>
 
 
@@ -1128,7 +1157,6 @@
 <details>
 <summary><h4>스프링 IoC</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/14)
 > - **IoC (Inversion of Control)란?**
 >   - Bean의 생성과 의존 관계 설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 스프링 컨테이너가 담당한 관리하는 것을 뜻한다.
 >   - 즉, 객체를 제어하고 관리하는 역할이 개발자로부터 스프링 컨테이너로 역전된다는 뜻이다.
@@ -1157,6 +1185,8 @@
 >   - 객체의 생성과 소멸 등 생명주기를 관리해주므로 메모리를 효율적으로 사용할 수 있다.
 >   - 라이프사이클 인터페이스를 이용하여 원하는 작업을 할 수 있다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/14)
 </details>
 
 
@@ -1164,7 +1194,6 @@
 <details>
 <summary><h4>스프링 AOP</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/17)
 > - **AOP(Aspect Oriented Programming)란?**
 >   - Aspect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다.
 >   - 흩어진 관심사(Crosscutting Concerns)를 모듈화하여 제공하는 프로그래밍 기법이다.
@@ -1223,6 +1252,8 @@
 >   - 애플리케이션 전체에 흩어진 공통 기능이 하나의 장소에서 관리되어 보다 유지보수가 수월하다.
 >   - 핵심 로직과 부가 기능의 명확한 분리로, 개발자는 핵심 로직에 집중할 수 있게 된다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/17)
 </details>
 
 
@@ -1230,7 +1261,6 @@
 <details>
 <summary><h4>스프링 PSA</h4></summary>
 
-[[More+]](https://sabarada.tistory.com/127)  
 > - **PSA(Portable Service Abstraction)란?**
 >   - 일관성 있는 서비스 추상화를 뜻한다.
 >   - 추상화를 통해 하위 시스템을 알지 못하거나 변경이 있더라도 일관된 방식으로 접근할 수 있게 한다.
@@ -1243,6 +1273,8 @@
 하지만 PSA가 접목되어 있다면 DB접근 기술과 관계없이 일관된 방식으로 트랜잭션을 제어할 수 있다.
 >   - Ex) @Transactional은 각 각의 TransactionManager를 구현하고 있는 것이 아니라 최상위 PlatformTransactionManager를 사용하여 필요한 TransactionManager를 DI로 주입받아 사용한다. 이 때문에 @Transactional을 사용하여 트랜잭션을 관리할 경우, DB접근 기술이 JDBC에서 JPA로 변경되어도 트랜잭션에 대한 수정없이 트랜잭션 처리를 보장 받을 수 있는 것이다.
 
+Ref.
+[사바라다는 차곡차곡](https://sabarada.tistory.com/127)
 </details>
 
 
@@ -1250,7 +1282,6 @@
 <details>
 <summary><h4>스프링 POJO</h4></summary>
 
-[[More+]](https://onpups.pe.kr/386)  
 > - **POJO (Plain Old Java Object)란?**
 >   - '오래된 방식의 간단한 자바 객체' = '단순한 자바 오브젝트' 라는 뜻이다.
 >   - 객체 지향적인 원리에 충실하면서 환경과 기술에 종속되지 않고 필요에 따라 재활용될 수 있는 방식으로 설계된 객체를 말한다.
@@ -1259,6 +1290,8 @@
 >   - 특정 환경에 종속되면 안된다.
 >   - 객체 지향적 원리를 지켜야 한다.
 
+Ref.
+[미노드로그](https://onpups.pe.kr/386)
 </details>
 
 
@@ -1266,7 +1299,6 @@
 <details>
 <summary><h4>빈 스코프(Bean Scope)</h4></summary>
 
-[[More+]](https://code-lab1.tistory.com/186)  
 > - **빈 스코프(Bean Scope) 란?**
 >   - 스프링이 관리하는 빈이 생성되고, 존재하고, 적용되는 범위를 뜻한다.
 > - **종류**
@@ -1285,14 +1317,15 @@
 >     - 웹 소켓과 동일한 생명주기를 가지는 스코프   
 >   - `* 웹 스코프 : 웹 스코프는 웹 환경에서만 동작한다.`
 
+Ref.
+[코드 연구소](https://code-lab1.tistory.com/186)
 </details>
 
 
 
 <details>
 <summary><h4>@Transactional</h4></summary>
-
-[[More+]](https://caffeineoverflow.tistory.com/139)  
+  
 > - **트랜잭션이란?**
 >   - 트랜잭션은 데이터베이스의 상태를 변환시키는 하나의 논리적 기능을 수행하기 위한 작업의 단위 또는 한꺼번에 수행되어야 할 일련의 연산을 의미한다.
 > - **트랜잭션 특징(ACID)**
@@ -1358,6 +1391,8 @@
 >   - noRollbackFor
 >     - 특정 예외가 발생하더라도 Rollback 하지 않는다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/139)
 </details>
 
 
@@ -1365,17 +1400,17 @@
 <details>
 <summary><h4>JDK Dynamic Proxy VS CGLIB Proxy</h4></summary>
 
-[[More+]]()  
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
 
 <details>
 <summary><h4>Spring Filter vs Interceptor</h4></summary>
-
-[[More+]](https://mangkyu.tistory.com/173)  
+ 
 > - **Filter vs Interceptor**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
 >   - Filter
@@ -1387,6 +1422,8 @@
 >     - Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리한다.
 >     - 로그인 체크, 권한 체크, 프로그램 실행시간 계산, 로그 확인 등에 대한 처리로 사용된다.
 
+Ref.
+[망나니개발자](https://mangkyu.tistory.com/173)
 </details>
 
 
@@ -1394,7 +1431,6 @@
 <details>
 <summary><h4>ORM, JPA, Hibernate, Spring Data JPA 개념</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/140)  
 > - **ORM이란?**
 >   - ORM이란 Object-Relational Mapping의 약자로, 객체(Object)와 관계형 데이터(Relational data)를 매핑하기 위한 기술이다.
 > - **ORM과 SQL Mapper의 차이점**
@@ -1421,6 +1457,8 @@
 > - **JPA, Hibernate, Spring Data JPA 관계**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/86508652-90c4-4618-9353-0fe473fcc54b)
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/140)
 </details>
 
 
@@ -1428,7 +1466,6 @@
 <details>
 <summary><h4>단위테스트와 통합테스트</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/141)  
 > - **테스트의 개념**
 >   - 테스트란?
 >     - 테스트란 개발자가 작성한 코드가 의도된 대로 정확히 작동하는지 검증하는 절차이다.
@@ -1456,6 +1493,8 @@
 >     - 단점 1. 애플리케이션의 설정, 모든 Bean을 로드하기 때문에 시간이 오래 걸리고 무겁다.
 >     - 단점 2. 테스트 단위가 커 디버깅이 어렵다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/141)
 </details>
 
 
@@ -1463,7 +1502,6 @@
 <details>
 <summary><h4>단위테스트</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/142)   
 > - **F.I.R.S.T 원칙**
 >   - F.I.R.S.T 원칙이란 좋은 단위 테스트를 하기 위한 5가지 요소를 뜻한다.
 >     - Fast
@@ -1514,6 +1552,9 @@
 >   - @Spy
 >   - @InjectMocks
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/142),
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/143)
 </details>
 
 
@@ -1521,7 +1562,6 @@
 <details>
 <summary><h4>어노테이션(Annotation)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/145)  
 > - **어노테이션(Annotation)이란?**
 >   - Annotation(@)은 사전적 의미로는 주석이라는 뜻이다.
 >   - 자바에서 Annotation은 코드 사이에 주석처럼 쓰이며 특별한 의미, 기능을 수행하도록 하는 기술이다.
@@ -1565,6 +1605,8 @@
 >   - @Cacheable
 >     - method 앞에 지정하면 해당 method를 최초에 호출하면 캐시에 적재하고 다음부터는 동일한 method 호출이 있을 때 캐시에서 결과를 가져와서 return 하므로 method 호출 횟수를 줄여주는 Annotation이다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/145)
 </details>
 
 
@@ -1572,7 +1614,6 @@
 <details>
 <summary><h4>@Value VS @ConfigurationProperties</h4></summary>
 
-[[More+]]()
 > - **용도**
 >   - 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.
 > - **@Value**
@@ -1584,6 +1625,7 @@
 >   - RelaxedBinding이 가능하다.
 >   - spEL 적용이 불가능하다.
 
+Ref.
 </details>
 
 
@@ -1591,7 +1633,6 @@
 <details>
 <summary><h4>주요 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)</h4></summary>
 
-[[More+]](https://velog.io/@woply/HTTP-%EC%A3%BC%EC%9A%94-%EB%A9%94%EC%84%9C%EB%93%9C-5%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%ACGET-POST-PUT-PATCH-DELETE)
 > - **GET**
 >   - GET 메서드는 리소스의 조회를 위해 사용한다.
 >   - 서버에 전달하고 싶은 데이터가 있다면 query(쿼리 파라미터, 쿼리 스트링)에 담아 보낸다.
@@ -1609,6 +1650,8 @@
 > - **DELETE**
 >   - DELETE 메서드는 리소스를 제거한다.
 
+Ref.
+[woply](https://velog.io/@woply/HTTP-%EC%A3%BC%EC%9A%94-%EB%A9%94%EC%84%9C%EB%93%9C-5%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%ACGET-POST-PUT-PATCH-DELETE)
 </details>
 
 
@@ -1616,7 +1659,6 @@
 <details>
 <summary><h4>REST(Representational State Transfer)와 RESTful</h4></summary>
 
-[[More+]]()
 > - **REST(Representational State Transfer)란?**
 >   - 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.
 >   - HTTP URI를 통해 자원을 명시하고, HTTP Method(POST, GET, PUT, DELETE)를 통해 해당 자원에 대한 CRUD 수행한다.
@@ -1642,6 +1684,7 @@
 >     - URI로 지정된 리소스에 균일하고 통일된 인터페이스를 제공한다.
 >     - 아키텍처를 단순하게 분리하여 독립적으로 만들 수 있다.
 
+Ref.
 </details>
 
 
@@ -1649,7 +1692,6 @@
 <details>
 <summary><h4>Hateoas(Hypermedia As The Engine Of Application State)</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/28)
 > - **Hateoas란?**
 >   - 클라이언트의 요청으로부터 응답을 할 때, 요청 이외의 관련된 URI를 응답에 추가적으로 포함시켜 반환하는 개념이다.
 >   - 예를 들어, 클라이언트가 사용자를 조회했을 때 사용자 정보만 응답하는 것이 아니라 '사용자 수정', '사용자 삭제' 등을 처리할 수 있는 링크를 같이 포함하여 응답하는 것을 예시로 들 수 있다.
@@ -1660,6 +1702,8 @@
 >   - 전달되는 data의 크기가 커져서 네트워크 오버헤드가 생길 수 있다.
 >   - 링크가 복잡해질 수 있다.
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/28)
 </details>
 
 
@@ -1667,7 +1711,6 @@
 <details>
 <summary><h4>CORS</h4></summary>
 
-[[More+]](https://beomy.github.io/tech/browser/cors/)
 > - **CORS란?**
 >   - 교차 출처 리소스 공유(Cross-origin Resource Sharing)는 추가 HTTP헤더를 사용하여, 한 출처에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제이다.
 > - **출처(Origin)란?**
@@ -1677,6 +1720,8 @@
 > - **동일 출처 정책(Same-Origin Policy)이란?**
 >   - CORS policy 오류가 발생하는 이유는 브라우저가 동일 출처 정책(Same-Origin Policy, SOP)을 지켜서 다른 출처의 리소스 접근을 금지하기 때문이다.
 
+Ref.
+[Beomy](https://beomy.github.io/tech/browser/cors/)
 </details>
 
 
@@ -1684,7 +1729,6 @@
 <details>
 <summary><h4>CI/CD</h4></summary>
 
-[[More+]]()
 > - **CI/CD란?**
 >   - CI/CD란 지속적 통합과 지속적 배포가 통합된 방식을 일컫는다.
 > - **CI(Continuous Integration)**
@@ -1694,6 +1738,7 @@
 >   - 배포 자동화 과정을 뜻한다.
 >   - CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.
 
+Ref.
 </details>
 
 
@@ -1701,7 +1746,6 @@
 <details>
 <summary><h4>PRG(POST-Redirect-GET) 패턴</h4></summary>
 
-[[More+]]()
 > - **PRG 패턴이란?**
 >   - 웹 디자인 패턴 중 하나로 POST요청에 대한 응답으로 리다이렉트를 통해 GET요청을 할 수 있도록 처리하는 패턴이다.
 > - **상세 순서**
@@ -1711,6 +1755,7 @@
 > - **적용하지 않았을 시 문제점**
 >   - 데이터를 POST요청으로 보낸 후 클라이언트가 새로고침을 할 경우, 중복 요청이 발생하여 예기치않은 문제점이 발생할 수 있다.
 
+Ref.
 </details>
 
 
@@ -1718,7 +1763,6 @@
 <details>
 <summary><h4>Maven과 Gradle</h4></summary>
 
-[[More+]](https://velog.io/@leesomyoung/Maven%EA%B3%BC-Gradle%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EB%B0%8F-%EB%B9%84%EA%B5%90)
 > - **빌드와 빌드 관리 도구**
 >   - Maven과 Gradle은 모두 빌드 관리 도구이다.
 >   - 빌드(Build)
@@ -1765,6 +1809,8 @@
 >     - 빌드와 테스트 실행 결과 Gradle이 더 빠르다
 >     - 캐시를 사용하므로 테스트 반복 시 실행 결과 시간의 차이가 더 커진다.
 
+Ref.
+[smlee](https://velog.io/@leesomyoung/Maven%EA%B3%BC-Gradle%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EB%B0%8F-%EB%B9%84%EA%B5%90)
 </details>
 
 
@@ -1772,7 +1818,6 @@
 <details>
 <summary><h4>웹 브라우저에 URL 입력 시 일어나는 일련의 과정</h4></summary>
 
-[[More+]](https://velog.io/@khy226/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90-url%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4-%EC%96%B4%EB%96%A4%EC%9D%BC%EC%9D%B4-%EB%B2%8C%EC%96%B4%EC%A7%88%EA%B9%8C)
 > 1. 브라우저 주소창에 maps.google.com을 입력한다.
 > 2. 브라우저가 maps.google.com의 IP 주소를 찾기 위해 캐시에서 DNS 기록을 확인한다.
 >     - DNS 기록을 찾기 위해서, 브라우저는 네 개의 캐시를 확인한다.
@@ -1794,6 +1839,8 @@
 > 7. 서버가 HTTP 응답을 보낸다.
 > 8. 브라우저가 HTML 컨텐츠를 보여준다.
 
+Ref.
+[khy__.log](https://velog.io/@khy226/%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90-url%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%98%EB%A9%B4-%EC%96%B4%EB%96%A4%EC%9D%BC%EC%9D%B4-%EB%B2%8C%EC%96%B4%EC%A7%88%EA%B9%8C)
 </details>
 
 
@@ -1801,7 +1848,6 @@
 <details>
 <summary><h4>[JPA] 영속성 관리</h4></summary>
 
-[[More+]](https://velog.io/@suk13574/JPA-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%A0%84%EB%B0%98%EC%A0%81%EC%9D%B8-%EC%9D%B4%ED%95%B4%EA%B0%9C%EB%85%90-%EC%9E%A5%EC%A0%90-%EB%8F%99%EC%9E%91-%EB%B0%A9)
 > - **영속성 컨텍스트란?**
 >   - 영속성 컨텍스트는 엔티티를 영구 저장하는 환경이다.
 >   - 엔티티 매니저를 통해서 영속성 컨텍스트에 접근할 수 있고, 영속성 컨텍스트를 관리할 수 있다.
@@ -1829,15 +1875,18 @@
 >   - 지연 로딩
 >     - 연관된 객체를 바로 조회하지 않고, 값이 사용되는 시점에 DB에서 가져온다.
 
+Ref.
+[공부기록](https://velog.io/@suk13574/JPA-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%A0%84%EB%B0%98%EC%A0%81%EC%9D%B8-%EC%9D%B4%ED%95%B4%EA%B0%9C%EB%85%90-%EC%9E%A5%EC%A0%90-%EB%8F%99%EC%9E%91-%EB%B0%A9)
 </details>
 
 
 <details>
 <summary><h4>[JPA] N+1문제</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -1845,9 +1894,10 @@
 <details>
 <summary><h4>[JPA] 즉시 로딩과 지연 로딩</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -1866,7 +1916,6 @@
 <details>
 <summary><h4>[GoF] 디자인 패턴이란?</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/41)
 > - **GoF(Gang of Four)란?**
 >   - 이 분야의 4인방(Gang of Four, 줄여 GoF)의 의미로 소프트웨어 설계에 있어 공통된 문제들에 대한 표준적인 해법과 작명법을 제안한 "Design Patterns" 책의 저자들을 지칭한다.
 >   - 여러 가지 문제에 대한 설계 사례를 분석하여 서로 비슷한 문제를 해결하기 위한 설계들을 분류하고, 각 문제 유형별로 가장 적합한 설계를 일반화해 패턴으로 정립하였다.
@@ -1911,6 +1960,8 @@
 >         - 템플릿 메소드 (Template Method)
 >         - 방문자 (Visitor)
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/41)
 </details>
 
 
@@ -1918,7 +1969,6 @@
 <details>
 <summary><h4>[GoF] 싱글톤(Singleton) 패턴</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/50)
 > - **싱글톤(Singleton) 패턴**
 >   - 싱글톤 패턴은 '하나'의 인스턴스만 생성하여 사용하는 디자인 패턴이다.
 > - **싱글톤 패턴의 장점**
@@ -1957,15 +2007,18 @@
 >     }
 >     ```
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/50)
 </details>
 
 
 <details>
 <summary><h4>[GoF] 팩토리 메서드 패턴</h4></summary>
 
-[[More+]]()
-> -
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -1973,9 +2026,10 @@
 <details>
 <summary><h4>[GoF] 프록시 패턴</h4></summary>
 
-[[More+]]()
-> -
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -1983,9 +2037,10 @@
 <details>
 <summary><h4>[GoF] 템플릿 메서드 패턴</h4></summary>
 
-[[More+]]()
-> -
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -1993,9 +2048,10 @@
 <details>
 <summary><h4>[GoF] 전략 패턴</h4></summary>
 
-[[More+]]()
-> -
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -2014,7 +2070,6 @@
 <details>
 <summary><h4>DDL, DML, DCL, TCL</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/121) 
 > - **DDL (Data Definition Language)**
 >   - 데이터베이스의 구조를 정의할 때 사용하는 언어이다.
 >   - DDL은 명령어를 입력하는 순간 작업이 즉시 반영(Auto Commit)되기 때문에 사용할 때 주의해야 한다.
@@ -2044,6 +2099,8 @@
 >     - ROLLBACK : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 작업 이전의 상태로 복구
 >     - SAVEPOINT : 저장점을 정의하면 롤백할 때 트랜잭션에 포함된 전체 작업을 롤백하는 것이 아니라 현시점에서 SAVEPOINT까지 트랜잭션의 일부만 롤백
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/121)
 </details>
 
 
@@ -2051,7 +2108,6 @@
 <details>
 <summary><h4>Key의 종류와 특징</h4></summary>
 
-[[More+]](https://caffeineoverflow.tistory.com/122)  
 > - **Key란?**
 >   - 데이터베이스에서 조건에 만족하는 튜플을 찾거나 순서대로 정렬할 때 다른 튜플들과 구별할 수 있는 유일한 기준이 되는 Attribute(속성)이다.
 > - **Key의 종류**
@@ -2073,14 +2129,15 @@
 >     - 외래키는 참조되는 릴레이션의 기본키와 대응되어 릴레이션 간에 참조 관계를 표현하는데 중요한 도구로 사용된다.
 >     - 외래키로 지정되면 참조 테이블의 기본키에 없는 값은 입력할 수 없다. (참조 무결성 조건)
 
+Ref.
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/122)
 </details>
 
 
 
 <details>
 <summary><h4>이상(Anomaly)</h4></summary>
-
-[[More+]]()  
+ 
 > - **이상(Anomaly)이란?**
 >   - 릴레이션에서 일부 속성들의 종속이나 데이터의 중복으로 인해 데이터 조작시 불일치가 발생하는 것을 의미한다.
 >   - 이상 현상은 정규화(Normalization)을 통해 방지할 수 있다.
@@ -2092,6 +2149,7 @@
 >   - 삭제 이상(Deletion Anomaly)
 >     - 튜플 삭제로 인하여 꼭 필요한 데이터까지 함께 삭제되는 현상.
 
+Ref.
 </details>
 
 
@@ -2099,7 +2157,6 @@
 <details>
 <summary><h4>정규화</h4></summary>
 
-[[More+]](https://star7sss.tistory.com/822)  
 > - **정규화란?**
 >   - 관계형 데이터베이스의 설계에서 중복을 최소화하기 위하여 데이터를 구조화하는 프로세스를 뜻한다.
 >   - 삽입, 삭제, 갱신 이상이 있는 관계를 재구성함으로써 바람직한 스키마를 만들수 있다.
@@ -2117,14 +2174,15 @@
 >   - 5NF
 >     - 모든 조인 종속이 후보키를 통해서만 성립한다. 
 
+Ref.
+[star가 되고나서](https://star7sss.tistory.com/822)
 </details>
 
 
 
 <details>
 <summary><h4>JOIN</h4></summary>
-
-[[More+]]()  
+ 
 > - **JOIN이란?**
 >   - 두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 행위를 뜻한다.
 >   - 일반적으로 Primary key 혹은 Foreign key로 두 테이블을 연결한다.
@@ -2141,14 +2199,14 @@
 >   - SELF JOIN
 >     - 하나의 테이블을 여러번 복사해서 조인
 
+Ref.
 </details>
 
 
 
 <details>
 <summary><h4>Transaction</h4></summary>
-
-[[More+]]()  
+ 
 > - **트랜잭션이란?**
 >   - 데이터베이스의 상태를 변화시키기 해서 수행하는 작업의 단위를 뜻한다.
 > - **트랜잭션 특징**
@@ -2161,6 +2219,7 @@
 >   - 지속성(Durability)
 >     - 트랜잭션이 성공적으로 완료됬었을 경우, 결과는 영구적으로 반영되어야 한다.
 
+Ref.
 </details>
 
 
@@ -2168,11 +2227,11 @@
 <details>
 <summary><h4>Index</h4></summary>
 
-[[More+]]()  
 > - **Index란?**
 >   - 테이블에 대한 동작의 속도를 높여주는 자료 구조를 일컫는다.
 >   - 테이블 내의 1개의 컬럼 혹은 여러 개의 컬럼을 이용하여 생성될 수 있다.
 
+Ref.
 </details>
 
 
@@ -2180,7 +2239,6 @@
 <details>
 <summary><h4>SQL vs NoSQL</h4></summary>
 
-[[More+]]()  
 > - **SQL**
 >   - 관계형 데이터베이스.
 >   - 데이터는 정해진 스키마에 따라 테이블에 저장된다.
@@ -2189,16 +2247,17 @@
 >   - 반정형화, 비정형화된 데이터에 적합하다.
 >   - 대용량의 데이터 저장에 유리하다.
 
+Ref.
 </details>
 
 
 
 <details>
 <summary><h4>Sharding</h4></summary>
-
-[[More+]]()  
+ 
 > - 같은 테이블 스키마를 가진 데이터를 다수의 데이터베이스에 분산하여 저장하는 방법
 
+Ref.
 </details>
 
 
@@ -2206,12 +2265,12 @@
 <details>
 <summary><h4>SID vs Service Name</h4></summary>
 
-[[More+]]()  
 > - **SID**
 >   - 인스턴스의 유니크한 이름으로 단 하나의 인스턴스를 지칭한다.
 > - **Service Name**
 >   - 여러 개의 인스턴스를 모아 하나의 시스템을 구성할 때 사용되는 TNS alias이다.
 
+Ref.
 </details>
 
 
@@ -2230,7 +2289,6 @@
 <details>
 <summary><h4>OSI 7계층과 TCP/IP 4계층</h4></summary>
 
-[[More+]](https://devowen.com/344)
 > - **OSI 7계층과 TCP/IP 4계층**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/8f74cf13-703e-43a9-89d2-bd9543525acd)
 > - **OSI 7계층이란?**
@@ -2290,6 +2348,7 @@
 >     - 어플리케이션들이 데이터를 교환하기 위해 사용하는 프로토콜을 정의한다.
 >     - TCP/IP 네트워크를 사용하거나 관리하는 것을 도와주는 프로토콜이다.
 
+[DevOwen](https://devowen.com/344)
 </details>
 
 
@@ -2297,7 +2356,6 @@
 <details>
 <summary><h4>TCP vs UDP</h4></summary>
 
-[[More+]](https://cocoon1787.tistory.com/757)
 > - **TCP(Transmission Control Protocol)**
 >   - TCP는 신뢰성 있는 데이터 전송을 지원하는 연결 지향형 프로토콜이다.
 >   - 일반적으로 TCP와 IP가 함께 사용되는데, IP가 데이터의 전송을 처리한다면 TCP는 패킷을 추적하고 관리하는 역할을 한다.
@@ -2312,6 +2370,8 @@
 >   - 패킷 오버헤드가 적어 네트워크 부하가 감소한다.
 >   - 신뢰성이 낮다.
 
+Ref.
+[코딩 공부 일지](https://cocoon1787.tistory.com/757)
 </details>
 
 
@@ -2319,7 +2379,6 @@
 <details>
 <summary><h4>3-Way handshake & 4-Way hadnshake</h4></summary>
 
-[[More+]](https://jeongkyun-it.tistory.com/180)
 > - **3-Way Handshake란?**
 >   - TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정을 뜻한다.
 > - **3-Way Handshake의 동작 순서**
@@ -2348,6 +2407,8 @@
 >     - Client는 해지 준비가 되었다는 정상응답인 ACK를 Server에게 보내준다. 이 때, Client는 TIME-WAIT 상태로 변경된다.
 >     - 여기서 TIME-WAIT 상태는 의도치않은 에러로 인해 연결이 데드락으로 빠지는 것을 방지하기 위해 변경 되는 것인데, 만약 에러로 인해 종료가 지연되다가 타임이 초과되면 CLOSED 상태로 변경된다.
 
+Ref.
+[나의 과거일지](https://jeongkyun-it.tistory.com/180)
 </details>
 
 
@@ -2355,9 +2416,10 @@
 <details>
 <summary><h4>교착상태</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -2365,9 +2427,10 @@
 <details>
 <summary><h4>뮤텍스와 세마포어</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -2375,9 +2438,10 @@
 <details>
 <summary><h4>CPU 스케줄링 알고리즘</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
@@ -2385,9 +2449,10 @@
 <details>
 <summary><h4>프로세스와 스레드의 차이</h4></summary>
 
-[[More+]]()
-> ...
+> - Title
+>   - Content
 
+Ref.
 </details>
 
 
