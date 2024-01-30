@@ -926,10 +926,25 @@ Ref.
 <details>
 <summary><h4>equals & hashCode</h4></summary>
 
-> - Title
->   - Content
+> - **equals()**
+>   - 두 참조 변수의 값이 같은지 다른지 동등 여부를 비교할 때 사용하는 메서드이다.
+>   - 객체 비교에 있어서 equals() 메서드는 기본적으로 == 비교인 객체 주소를 비교한다.
+>   - 즉, 값이 같은 두 개의 객체를 equals()로 비교하면, 값이 같더라도 주소 비교이기 때문에 false를 반환한다.
+>   - 객체의 값을 기준으로 동등 비교를 하기 원한다면 equals()를 오버라이딩하여 주소 비교가 아닌 필드값을 비교하도록 변경해야한다.
+>   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsEx.java)
+> - **hashCode()**
+>   - 객체의 주소 값을 이용해서 해싱(hashing) 기법을 통해 해시 코드를 만든 후 반환한다.
+>   - 해시코드는 주소값으로 기반으로 만든 고유한 숫자값이다. 이렇기 때문에 서로 다른 객체는 같은 해시 코드를 가질 수 없다.
+>   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/HashCodeEx.java)
+> - **equals()와 hashCode() 재정의의 필요성**
+>   - 앞서 equals()를 재정의하면 값이 같은 객체는 동등한 객체로 판단되는 것을 확인할 수 있었다.
+>   - 하지만 equals() 재정의로는 부족하며, hashCode()도 같이 재정의가 필요하다.
+>   - 그 이유는 Collection은 객체가 논리적으로 같은지 비교할 때 아래 그림과 같은 과정을 거치기 때문이다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
+>   - 위의 과정을 기반으로 볼 때 equals()만 재정의하게 된다면, 값이 동일한 두 객체를 Set에 담을 경우, 중복제거가 되어 1개만 적재되기를 기대하겠지만 실제로는 2개의 객체가 모두 적재되는 상황이 발생할 것이다. 이는 hashCode가 다르기 때문에 서로 다른 객체로 판단되기 때문이다.
 
 Ref.
+[인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-equals-hashCode-%EB%A9%94%EC%84%9C%EB%93%9C-%EA%B0%9C%EB%85%90-%ED%99%9C%EC%9A%A9-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
 </details>
 
 
