@@ -942,6 +942,7 @@ Ref.
 >   - 그 이유는 Collection은 객체가 논리적으로 같은지 비교할 때 아래 그림과 같은 과정을 거치기 때문이다.
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
 >   - 위의 과정을 기반으로 볼 때 equals()만 재정의하게 된다면, 값이 동일한 두 객체를 Set에 담을 경우, 중복제거가 되어 1개만 적재되기를 기대하겠지만 실제로는 2개의 객체가 모두 적재되는 상황이 발생할 것이다. 이는 hashCode가 다르기 때문에 서로 다른 객체로 판단되기 때문이다.
+>   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsAndHashCodeEx.java)
 
 Ref.
 [인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-equals-hashCode-%EB%A9%94%EC%84%9C%EB%93%9C-%EA%B0%9C%EB%85%90-%ED%99%9C%EC%9A%A9-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
