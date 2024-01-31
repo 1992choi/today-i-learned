@@ -1044,6 +1044,7 @@ Ref.
 >   - Html in JAVA.
 
 Ref.
+[effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
 </details>
 
 
@@ -1071,6 +1072,7 @@ Ref.
 >     4. 동일 사이트 재방문 시, 클라이언트의 PC에 해당 쿠키가 있을 경우 요청 페이지와 함께 쿠키를 전송한다.
 
 Ref.
+[bolee](https://velog.io/@octo__/%EC%BF%A0%ED%82%A4Cookie-%EC%84%B8%EC%85%98Session)
 </details>
 
 
@@ -1084,6 +1086,7 @@ Ref.
 >   - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
 
 Ref.
+[Coding Planet](https://sharonprogress.tistory.com/169)
 </details>
 
 
@@ -1433,6 +1436,7 @@ Ref.
 >   - Content
 
 Ref.
+[펲로그](https://suyeonchoi.tistory.com/81)
 </details>
 
 
@@ -1655,6 +1659,8 @@ Ref.
 >   - spEL 적용이 불가능하다.
 
 Ref.
+[dhkim's development blog](https://velog.io/@dhkim1522/SpringBoot-%EC%99%B8%EB%B6%80-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%EC%A0%81%EC%9A%A9-Value-ConfigurationProperties),
+[호준송](https://hojunking.tistory.com/125)
 </details>
 
 
@@ -1714,6 +1720,8 @@ Ref.
 >     - 아키텍처를 단순하게 분리하여 독립적으로 만들 수 있다.
 
 Ref.
+[soom](https://velog.io/@soom/REST-Representational-State-Transfer),
+[슬기로운 개발생활](https://dev-coco.tistory.com/m/97?category=1009704)
 </details>
 
 
@@ -1768,6 +1776,7 @@ Ref.
 >   - CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.
 
 Ref.
+[jung_ho9 개발일지](https://velog.io/@leejungho9/CICD-%EB%9E%80)
 </details>
 
 
@@ -1785,6 +1794,7 @@ Ref.
 >   - 데이터를 POST요청으로 보낸 후 클라이언트가 새로고침을 할 경우, 중복 요청이 발생하여 예기치않은 문제점이 발생할 수 있다.
 
 Ref.
+[Gofo](https://gofo-coding.tistory.com/entry/PRG-%ED%8C%A8%ED%84%B4-Post-%E2%86%92-Redirect-%E2%86%92-Get)
 </details>
 
 
