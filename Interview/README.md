@@ -981,6 +981,7 @@ Ref.
 >   - Content
 
 Ref.
+[2JINISHAPPY](https://2jinishappy.tistory.com/293)
 </details>
 
 
@@ -992,6 +993,7 @@ Ref.
 >   - Content
 
 Ref.
+[유진](https://velog.io/@nittre/%EB%B8%94%EB%A1%9C%ED%82%B9-Vs.-%EB%85%BC%EB%B8%94%EB%A1%9C%ED%82%B9-%EB%8F%99%EA%B8%B0-Vs.-%EB%B9%84%EB%8F%99%EA%B8%B0)
 </details>
 
 
@@ -1003,6 +1005,7 @@ Ref.
 >   - Content
 
 Ref.
+[mangoo.log](https://velog.io/@mangoo/java-thread-safety)
 </details>
 
 
@@ -1014,6 +1017,7 @@ Ref.
 >   - Content
 
 Ref.
+[algml070](https://mihee0703.tistory.com/207)
 </details>
 
 
