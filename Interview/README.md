@@ -699,6 +699,7 @@ Ref.
 >    ```
 
 Ref.
+[wnajsldkf.log](https://velog.io/@wnajsldkf/Java%EC%9D%98-Thread%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)
 </details>
 
 
@@ -724,6 +725,8 @@ Ref.
 >     5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
 
 Ref.
+[jomminii](https://doozi0316.tistory.com/entry/1%EC%A3%BC%EC%B0%A8-JVM%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EA%B2%83%EC%9D%B8%EA%B0%80),
+[doozi](https://velog.io/@jomminii/whiteship-java-01-what-is-jvm)
 </details>
 
 
@@ -744,6 +747,7 @@ Ref.
 >   - 스레드마다 하나씩 존재한다.
 
 Ref.
+[내가 보려고 만든 개발 (Tech) blog](https://lucas-owner.tistory.com/38)
 </details>
 
 
@@ -755,6 +759,8 @@ Ref.
 >   - Content
 
 Ref.
+[오리엔탈킴의 대충 IT 지식과 일상](https://kim-oriental.tistory.com/48),
+[DannyJae](https://jhyonhyon.tistory.com/20)
 </details>
 
 
@@ -774,6 +780,7 @@ Ref.
 >   - JDK 1.8의 경우에는 index에 노드가 8개 이하일 경우에는 Linked List를 사용하며, 8개 이상으로 늘어날때는 Tree 구조로 데이타 저장 구조를 바꾸도록 되어 있다.
 
 Ref.
+[JuHyeong.dev](https://dkswnkk.tistory.com/679)
 </details>
 
 
@@ -800,6 +807,7 @@ Ref.
 >   - 동일한 클래스의 모든 객체들에 의해 공유된다.
 
 Ref.
+[Break Out of Your Comfort Zone](https://sujinhope.github.io/2021/03/03/Java-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%B3%80%EC%88%98,-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EB%B3%80%EC%88%98-%EC%B0%A8%EC%9D%B4(Static%EB%B3%80%EC%88%98%EC%99%80-Non-Static%EB%B3%80%EC%88%98).html)
 </details>
 
 
@@ -961,6 +969,7 @@ Ref.
 >   - 전달받은 값을 직접 참조하기 때문에 전달받은 값을 변경하면 원본도 같이 변경된다.
 
 Ref.
+[그릿 속의 해빗](https://loosie.tistory.com/486)
 </details>
 
 
