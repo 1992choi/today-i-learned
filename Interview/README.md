@@ -1926,6 +1926,8 @@ Ref.
 >   - Content
 
 Ref.
+[말 랑](https://ttl-blog.tistory.com/1135),
+[하얀종이개발자](https://jh2021.tistory.com/21)
 </details>
 
 
@@ -1937,6 +1939,8 @@ Ref.
 >   - Content
 
 Ref.
+[땡글이](https://velog.io/@ddangle/%EC%A6%89%EC%8B%9C-%EB%A1%9C%EB%94%A9%EA%B3%BC-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9-%EB%B9%84%EA%B5%90),
+[dev john](https://study-easy-coding.tistory.com/137)
 </details>
 
 
