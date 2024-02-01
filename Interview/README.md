@@ -2193,6 +2193,7 @@ Ref.
 >     - 튜플 삭제로 인하여 꼭 필요한 데이터까지 함께 삭제되는 현상.
 
 Ref.
+[TTOII](https://nice-engineer.tistory.com/entry/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-Anomaly-%EC%9D%B4%EC%83%81-%ED%98%84%EC%83%81)
 </details>
 
 
@@ -2243,6 +2244,7 @@ Ref.
 >     - 하나의 테이블을 여러번 복사해서 조인
 
 Ref.
+[나눔코딩](https://theheydaze.tistory.com/584)
 </details>
 
 
@@ -2263,6 +2265,7 @@ Ref.
 >     - 트랜잭션이 성공적으로 완료됬었을 경우, 결과는 영구적으로 반영되어야 한다.
 
 Ref.
+[Wonit](https://wonit.tistory.com/462)
 </details>
 
 
@@ -2275,6 +2278,7 @@ Ref.
 >   - 테이블 내의 1개의 컬럼 혹은 여러 개의 컬럼을 이용하여 생성될 수 있다.
 
 Ref.
+[망나니개발자](https://mangkyu.tistory.com/96)
 </details>
 
 
@@ -2291,6 +2295,7 @@ Ref.
 >   - 대용량의 데이터 저장에 유리하다.
 
 Ref.
+[bolee](https://velog.io/@octo__/SQL-vs-NoSQL)
 </details>
 
 
@@ -2301,19 +2306,7 @@ Ref.
 > - 같은 테이블 스키마를 가진 데이터를 다수의 데이터베이스에 분산하여 저장하는 방법
 
 Ref.
-</details>
-
-
-
-<details>
-<summary><h4>SID vs Service Name</h4></summary>
-
-> - **SID**
->   - 인스턴스의 유니크한 이름으로 단 하나의 인스턴스를 지칭한다.
-> - **Service Name**
->   - 여러 개의 인스턴스를 모아 하나의 시스템을 구성할 때 사용되는 TNS alias이다.
-
-Ref.
+[James](https://velog.io/@kyeun95/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%83%A4%EB%94%A9Sharding%EC%9D%B4%EB%9E%80)
 </details>
 
 
