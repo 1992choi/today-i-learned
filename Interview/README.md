@@ -2062,6 +2062,8 @@ Ref.
 >   - Content
 
 Ref.
+[뱀귤 블로그](https://bcp0109.tistory.com/367),
+[da-in](https://github.com/da-in/tech-interview-study/blob/main/CS%20Deep%20Dive/Design%20Pattern/Factory%20Method%20Pattern.md)
 </details>
 
 
@@ -2073,6 +2075,8 @@ Ref.
 >   - Content
 
 Ref.
+[장쫄깃](https://jangjjolkit.tistory.com/59),
+[잇트루](https://ittrue.tistory.com/555)
 </details>
 
 
@@ -2084,6 +2088,7 @@ Ref.
 >   - Content
 
 Ref.
+[Hudi](https://hudi.blog/template-method-pattern/)
 </details>
 
 
@@ -2095,6 +2100,8 @@ Ref.
 >   - Content
 
 Ref.
+[DevSeoRex](https://velog.io/@ch4570/%EC%A0%84%EB%9E%B5-%ED%8C%A8%ED%84%B4Strategy-Pattern-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%A0%81%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%9E%88%EC%9D%84%EA%B9%8C),
+[카일](https://velog.io/@kyle/%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80)
 </details>
 
 
