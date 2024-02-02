@@ -2456,6 +2456,8 @@ Ref.
 >   - Content
 
 Ref.
+[zioo](https://velog.io/@zioo/Deadlock%EA%B5%90%EC%B0%A9-%EC%83%81%ED%83%9C%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EB%B0%9C%EC%83%9D-%EC%9B%90%EC%9D%B8), 
+[ChanBLOG](https://chanhuiseok.github.io/posts/cs-2/)
 </details>
 
 
@@ -2467,6 +2469,7 @@ Ref.
 >   - Content
 
 Ref.
+[굳세게 코딩하는 단발머리 첼씨✨](https://chelseashin.tistory.com/40)
 </details>
 
 
@@ -2478,6 +2481,7 @@ Ref.
 >   - Content
 
 Ref.
+[걸어가는 신사](https://choiyeonho903.tistory.com/49)
 </details>
 
 
@@ -2489,6 +2493,7 @@ Ref.
 >   - Content
 
 Ref.
+[윤개승발](https://yuniday2.tistory.com/85)
 </details>
 
 
