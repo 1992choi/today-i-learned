@@ -2563,7 +2563,8 @@ Ref.
 >   - 프로세스는 각각의 독립적인 메모리 공간을 할당받아 실행되므로, 하나의 프로세스가 비정상적으로 종료되더라도 다른 프로세스에는 영향을 주지 않지만 스레드는 같은 프로세스 내에서 실행되기 때문에, 한 스레드에서 예외가 발생하면 다른 스레드에도 영향을 줄 수 있다.
 
 Ref.
-[윤개승발](https://yuniday2.tistory.com/85)
+[윤개승발](https://yuniday2.tistory.com/85),
+[aeong98](https://velog.io/@aeong98/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9COS-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%99%80-%EC%8A%A4%EB%A0%88%EB%93%9C)
 </details>
 
 
