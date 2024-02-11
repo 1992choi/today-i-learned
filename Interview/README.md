@@ -1945,6 +1945,19 @@ Ref.
 
 
 
+<details>
+<summary><h4>lombok</h4></summary>
+
+> - **@Data, @Setter, @AllArgsConstructor 지양**
+>   - 내용
+> - **@Tostring 순환 참조**
+>   - 내용
+
+Ref.
+</details>
+
+
+
 
 
 <br><br><br>
