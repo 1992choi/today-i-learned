@@ -1946,6 +1946,30 @@ Ref.
 
 
 <details>
+<summary><h4>[JPA] 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)</h4></summary>
+
+> - Title
+>   - Content
+
+Ref.
+[우당탕탕](https://mozzi-devlog.tistory.com/37)
+</details>
+
+
+
+<details>
+<summary><h4>CQRS</h4></summary>
+
+> - Title
+>   - Content
+
+Ref.
+[Wonit](https://wonit.tistory.com/628)
+</details>
+
+
+
+<details>
 <summary><h4>lombok</h4></summary>
 
 > - **@Data, @Setter, @AllArgsConstructor 지양**
