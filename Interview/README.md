@@ -1974,11 +1974,30 @@ Ref.
 <details>
 <summary><h4>CQRS</h4></summary>
 
-> - Title
->   - Content
+> - **CQRS란?**
+>   - Command Query Responsibility Segregation의 약자로 도메인 모델을 다음의 두 가지 모델로 분리하는 패턴이다.
+>     - 상태를 변경하는 명령(Command)을 위한 모델
+>     - 상태를 제공하는 조회(Query)를 위한 모델
+>   - 명령을 처리하는 책임과 조회를 처리하는 책임을 분리하는 것이 CQRS의 핵심이다.
+> - **장점**
+>   - 도메인 로직에만 집중할 수 있게 된다.
+>     - Command와 Query를 분리했기 때문에 OCP 를 준수하는 도메인 모델을 만들 수 있다.
+>     - 이를 통해 결국 도메인 로직에 비즈니스 로직을 집중시킬 수 있다.
+>   - 데이터소스의 독립적인 크기 조정이 가능하다.
+>     - 보통 Read와 Write의 비율은 1000 : 1 이다.
+>     - 그러므로 Write DB가 물리적으로 나뉘어져 있다면, 해당 DB 인스턴스는 작게 유지하고 Read DB 인스턴스에 더 높은 투자를 할 수 있다.
+>   - 단순한 쿼리
+>     - Query side에서는 Materialized View를 이용할 수 있는데, 이를 통해서 복잡한 조인 쿼리 없이 단순한 쿼리를 이용해서 원하는 정보를 얻어 올 수 있다.
+> - **단점**
+>   - 복잡성이 올라간다.
+>     - Command side와 Query side를 명시적으로 분리하기 때문에 복잡성이 올라간다.
+>   - 즉시적인 일관성이 보장되지 않는다.
+>     - Command에 따른 데이터의 무결성이 잠시동안 깨질 수 있다.
+>     - 이 말은 데이터의 일관성이 항상 보장되지 않을 수 있다. (하지만 최종적으로는 데이터가 맞춰질 것이니 Eventual Consistency라고 할 수 있다.)
 
 Ref.
-[Wonit](https://wonit.tistory.com/628)
+[Wonit](https://wonit.tistory.com/628),
+[JaeHoney](https://jaehoney.tistory.com/255)
 </details>
 
 
