@@ -2080,9 +2080,9 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 싱글톤(Singleton) 패턴</h4></summary>
+<summary><h4>[GoF] 싱글톤 패턴</h4></summary>
 
-> - **싱글톤(Singleton) 패턴**
+> - **싱글톤 패턴이란?**
 >   - 싱글톤 패턴은 '하나'의 인스턴스만 생성하여 사용하는 디자인 패턴이다.
 > - **싱글톤 패턴의 장점**
 >   - 한 개의 인스턴스만을 생성하고 공유하기 때문에 메모리 낭비를 방지할 수 있다.
@@ -2128,10 +2128,81 @@ Ref.
 <details>
 <summary><h4>[GoF] 팩토리 메서드 패턴</h4></summary>
 
-> - Title
->   - Content
+> - **팩토리 메서드 패턴이란?**
+>   - 팩토리 메서드 패턴은 객체의 생성 과정을 서브 클래스에 위임하는 디자인 패턴이다.
+>   - 이를 통해 클라이언트 코드는 구체적인 클래스의 인스턴스화 과정을 알 필요 없이 객체를 생성할 수 있다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/1abff890-6371-41a2-8d87-8b760a6d39ab)
+> - **팩토리 메서드 패턴의 장점**
+>   - 객체 생성 과정의 캡슐화
+>     - 클라이언트는 객체 생성 방법을 몰라도 된다.
+>   - 유연성과 확장성
+>     - 객체 생성 방법을 변경하거나 확장하기 쉽다.
+>   - 의존성 관리
+>     - 스프링과 같은 프레임워크에서 의존성 주입을 통해 더 깔끔한 코드 관리가 가능하다.
+> - **팩토리 메서드 패턴의 단점**
+>   - 코드 복잡성 증가
+>     - 추가적인 코드와 추상화 레이어가 필요하다.
+>   - 디자인의 오버헤드
+>     - 간단한 객체 생성에는 오버엔지니어링일 수 있다.
+> - **구현 예시**
+>     ``` java
+>     public class Client {
+>         public static void main(String[] args) {
+>             LaptopFactory normalLaptopFactory = new NormalLaptopFactory();
+>             Laptop normalLaptop = normalLaptopFactory.newInstance();
+>     
+>             LaptopFactory gamingLaptopFactory = new GamingLaptopFactory();
+>             Laptop gamingLaptop = gamingLaptopFactory.newInstance();
+>             myLaptop.runTests();
+>         }
+>     }
+>     ```
+>     ``` java
+>     public interface Laptop {
+>         void runTests();
+>     }
+>     
+>     public class NormalLaptop implements Laptop {
+>         @Override
+>         public void runTests() {
+>            System.out.println("Running tests on a NormalLaptop...");
+>         }
+>     }
+>     
+>     public class GamingLaptop implements Laptop {
+>         @Override
+>         public void runTests() {
+>            System.out.println("Running tests on a GamingLaptop...");
+>         }
+>     }
+>     ```
+>     ``` java
+>     public abstract class LaptopFactory {
+>         public Laptop newInstance(){
+>             Laptop laptop = createLaptop();
+>             laptop.runTests();
+>             return laptop;
+>         }
+>         protected abstract Laptop createLaptop();
+>     }
+>     
+>     public class NormalLaptopFactory extends LaptopFactory {
+>         @Override
+>         protected User createLaptop() {
+>             return new NormalLaptop();
+>         }
+>     }
+>     
+>     public class GamingLaptopFactory extends LaptopFactory {
+>         @Override
+>         protected User createLaptop() {
+>             return new GamingLaptop();
+>         }
+>     }
+>     ```
 
 Ref.
+[멋쟁이코더](https://curiousjinan.tistory.com/entry/factory-method-pattern-spring),
 [뱀귤 블로그](https://bcp0109.tistory.com/367),
 [da-in](https://github.com/da-in/tech-interview-study/blob/main/CS%20Deep%20Dive/Design%20Pattern/Factory%20Method%20Pattern.md)
 </details>
