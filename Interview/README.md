@@ -2149,12 +2149,13 @@ Ref.
 >     ``` java
 >     public class Client {
 >         public static void main(String[] args) {
->             LaptopFactory normalLaptopFactory = new NormalLaptopFactory();
->             Laptop normalLaptop = normalLaptopFactory.newInstance();
+>             LaptopFactory myLaptopFactory1 = new NormalLaptopFactory();
+>             Laptop myLaptop1 = myLaptopFactory1.newInstance();
+>             myLaptop1.runTests(); // Running tests on a NormalLaptop...
 >     
->             LaptopFactory gamingLaptopFactory = new GamingLaptopFactory();
->             Laptop gamingLaptop = gamingLaptopFactory.newInstance();
->             myLaptop.runTests();
+>             LaptopFactory myLaptopFactory2 = new GamingLaptopFactory();
+>             Laptop myLaptop2 = myLaptopFactory2.newInstance();
+>             myLaptop2.runTests(); // Running tests on a GamingLaptop...
 >         }
 >     }
 >     ```
@@ -2180,23 +2181,21 @@ Ref.
 >     ``` java
 >     public abstract class LaptopFactory {
 >         public Laptop newInstance(){
->             Laptop laptop = createLaptop();
->             laptop.runTests();
->             return laptop;
+>             return createLaptop();
 >         }
 >         protected abstract Laptop createLaptop();
 >     }
 >     
 >     public class NormalLaptopFactory extends LaptopFactory {
 >         @Override
->         protected User createLaptop() {
+>         protected Laptop createLaptop() {
 >             return new NormalLaptop();
 >         }
 >     }
 >     
 >     public class GamingLaptopFactory extends LaptopFactory {
 >         @Override
->         protected User createLaptop() {
+>         protected Laptop createLaptop() {
 >             return new GamingLaptop();
 >         }
 >     }
