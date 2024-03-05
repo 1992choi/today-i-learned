@@ -2262,7 +2262,9 @@ Ref.
 >   - Content
 
 Ref.
-[Hudi](https://hudi.blog/template-method-pattern/)
+[Hudi](https://hudi.blog/template-method-pattern/),
+[장쫄깃](https://jangjjolkit.tistory.com/59),
+[뱀귤 블로그](https://bcp0109.tistory.com/369)
 </details>
 
 
