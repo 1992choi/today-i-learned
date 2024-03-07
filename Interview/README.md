@@ -31,7 +31,7 @@
 
 # Java
 <details>
-<summary><h4>Java의 특징</h4></summary>
+<summary><b>Java의 특징</b></summary>
 
 > - 객체 지향 언어로써 캡슐화, 상속, 다형성 기능을 완벽하게 지원한다.
 > - 운영체제에 상관없이 독립적으로 작동(JVM에서 동작하기 때문)하여 이식성이 높다.
@@ -46,7 +46,7 @@ Ref.
 
 
 <details>
-<summary><h4>객체지향의 4대 특징</h4></summary>
+<summary><b>객체지향의 4대 특징</b></summary>
 
 > - **캡슐화**
 >   - 객체의 필드와 메서드를 하나로 묶는 것이며, 이를 통해 정보은닉 효과를 얻을 수 있다.
@@ -66,7 +66,7 @@ Ref.
 
 
 <details>
-<summary><h4>객체지향의 5대 원칙(SOLID)</h4></summary>
+<summary><b>객체지향의 5대 원칙(SOLID)</b></summary>
 
 > - **단일 책임 원칙(Single Responsiblity Principle)**
 >   - 소프트웨어의 설계 부품(클래스, 함수 등)은 하나의 책임만 가진다.
@@ -93,7 +93,7 @@ Ref.
 
 
 <details>
-<summary><h4>클래스, 객체, 인스턴스 비교</h4></summary>
+<summary><b>클래스, 객체, 인스턴스 비교</b></summary>
 
 > - **클래스**
 >   - 객체를 만들어 내기 위한 설계도로써 객체의 상태를 나타내는 필드(field)와 객체의 행동을 나타내는 메서드(method)로 구성된다.
@@ -125,7 +125,7 @@ Ref.
 
 
 <details>
-<summary><h4>String, StringBuffer, StringBuilder 비교</h4></summary>
+<summary><b>String, StringBuffer, StringBuilder 비교</b></summary>
 
 > - **String**
 >   - 불변(immutable)의 속성을 갖는다.
@@ -145,7 +145,7 @@ Ref.
 
 
 <details>
-<summary><h4>접근 제어자</h4></summary>
+<summary><b>접근 제어자</b></summary>
 
 > - **public**
 >   - 적용대상 : 필드, 생성자, 메서드, 클래스
@@ -167,7 +167,7 @@ Ref.
 
 
 <details>
-<summary><h4>final 제어자</h4></summary>
+<summary><b>final 제어자</b></summary>
 
 > - **final 이란?**
 >   - Java에서는 불변성을 확보하거나 동작을 제한할 수 있는 final 키워드를 제공한다.
@@ -186,7 +186,7 @@ Ref.
 
 
 <details>
-<summary><h4>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</h4></summary>
+<summary><b>래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)</b></summary>
 
 > - **박싱(Boxing) / 언박싱(UnBoxing)**
 >   - Boxing은 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미한다.
@@ -225,7 +225,7 @@ Ref.
 
 
 <details>
-<summary><h4>추상클래스</h4></summary>
+<summary><b>추상클래스</b></summary>
  
 > - **추상클래스란?**
 >   - 추상 메서드를 선언해 놓고 상속을 통해 자식 클래스에서 메서드를 완성하도록 유도하는 클래스이다.
@@ -276,7 +276,7 @@ Ref.
 
 
 <details>
-<summary><h4>인터페이스</h4></summary>
+<summary><b>인터페이스</b></summary>
 
 > - **인터페이스란?**
 >   - 자바에서 클래스들이 구현해야 하는 동작을 지정하는 용도로 사용되는 추상 자료형이다.
@@ -314,7 +314,7 @@ Ref.
 
 
 <details>
-<summary><h4>추상클래스와 인터페이스의 차이</h4></summary>
+<summary><b>추상클래스와 인터페이스의 차이</b></summary>
 
 > - **추상클래스와 인터페이스의 차이점**
 >   - 추상클래스 : 자식클래스 is kind of 부모클래스
@@ -328,7 +328,7 @@ Ref.
 
 
 <details>
-<summary><h4>Overloading vs Overriding</h4></summary>
+<summary><b>Overloading vs Overriding</b></summary>
  
 > - **오버로딩(Overloading)**
 >   - 매개변수의 개수나 자료형을 다르게하여 같은 이름의 메서드를 사용하는 것
@@ -396,7 +396,7 @@ Ref.
 
 
 <details>
-<summary><h4>제네릭(Generic)</h4></summary>
+<summary><b>제네릭(Generic)</b></summary>
 
 > - **제네릭(Generic)이란**
 >   - 제네릭이란 클래스 내부에서 사용할 데이터 타입을 외부에서 지정하는 기법을 의미한다.
@@ -419,7 +419,7 @@ Ref.
 
 
 <details>
-<summary><h4>컬렉션 프레임워크(Collection Framework)</h4></summary>
+<summary><b>컬렉션 프레임워크(Collection Framework)</b></summary>
 
 > - **컬렉션 프레임워크(Collection Framework)란?**
 >   - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
@@ -460,7 +460,7 @@ Ref.
 
 
 <details>
-<summary><h4>람다식(Lambda Expression)</h4></summary>
+<summary><b>람다식(Lambda Expression)</b></summary>
 
 > - **람다식(Lambda Expressions) 이란?**
 >   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
@@ -533,7 +533,7 @@ Ref.
 
 
 <details>
-<summary><h4>스트림 API(Stream API)</h4></summary>
+<summary><b>스트림 API(Stream API)</b></summary>
  
 > - **스트림 API(Stream API) 란?**
 >   - Java 8에서 추가된 기능으로써 배열 또는 컬렉션 등을 함수형 프로그래밍 기법으로 처리할 수 있도록 도와주는 API이다.
@@ -592,7 +592,7 @@ Ref.
 
 
 <details>
-<summary><h4>Checked Exception과 Unchecked Exception</h4></summary>
+<summary><b>Checked Exception과 Unchecked Exception</b></summary>
 
 > - **Checked Exception과 Unchecked Exception**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
@@ -647,7 +647,7 @@ Ref.
 
 
 <details>
-<summary><h4>스레드</h4></summary>
+<summary><b>스레드</b></summary>
 
 > - **프로세스(Process)와 스레드(Thread)**
 >   - 프로세스란 실행 중인 프로그램을 뜻한다.
@@ -705,7 +705,7 @@ Ref.
 
 
 <details>
-<summary><h4>JVM</h4></summary>
+<summary><b>JVM</b></summary>
 
 > - **JVM이란?**
 >   - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
@@ -732,7 +732,7 @@ Ref.
 
 
 <details>
-<summary><h4>자바의 메모리 구조</h4></summary>
+<summary><b>자바의 메모리 구조</b></summary>
 
 > - **메서드 영역**
 >   - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
@@ -753,7 +753,7 @@ Ref.
 
 
 <details>
-<summary><h4>GC</h4></summary>
+<summary><b>GC</b></summary>
 
 > - Title
 >   - Content
@@ -766,7 +766,7 @@ Ref.
 
 
 <details>
-<summary><h4>HashMap 충돌</h4></summary>
+<summary><b>HashMap 충돌</b></summary>
 
 > - **HashMap 특징 및 동작원리**
 >   - HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.
@@ -786,7 +786,7 @@ Ref.
 
 
 <details>
-<summary><h4>non-static 멤버와 static 멤버 차이</h4></summary>
+<summary><b>non-static 멤버와 static 멤버 차이</b></summary>
 
 > - **non-static 멤버**
 >   - 멤버는 객체마다 별도로 존재한다.
@@ -813,7 +813,7 @@ Ref.
 
 
 <details>
-<summary><h4>직렬화와 역직렬화</h4></summary>
+<summary><b>직렬화와 역직렬화</b></summary>
 
 > - **직렬화와 역직렬화**
 >   - 직렬화(serialize)란 자바 언어에서 사용되는 Object 또는 Data를 다른 컴퓨터의 자바 시스템에서도 사용 할수 있도록 바이트 스트림(stream of bytes) 형태로 연속전인(serial) 데이터로 변환하는 포맷 변환 기술을 일컫는다.
@@ -852,7 +852,7 @@ Ref.
 
 
 <details>
-<summary><h4>리플렉션(Reflection)</h4></summary>
+<summary><b>리플렉션(Reflection)</b></summary>
 
 > - **리플렉션이란?**
 >   - 구체적인 클래스 타입을 알지 못하더라도 그 클래스의 메서드, 타입, 변수들에 접근할 수 있도록 해주는 자바 API이다.
@@ -921,7 +921,7 @@ Ref.
 
 
 <details>
-<summary><h4>자바에서 멀티스레드 동기화 방법</h4></summary>
+<summary><b>자바에서 멀티스레드 동기화 방법</b></summary>
 
 > - Title
 >   - Content
@@ -932,7 +932,7 @@ Ref.
 
 
 <details>
-<summary><h4>equals & hashCode</h4></summary>
+<summary><b>equals & hashCode</b></summary>
 
 > - **equals()**
 >   - 두 참조 변수의 값이 같은지 다른지 동등 여부를 비교할 때 사용하는 메서드이다.
@@ -959,7 +959,7 @@ Ref.
 
 
 <details>
-<summary><h4>Call by value ve Call by Reference</h4></summary>
+<summary><b>Call by value ve Call by Reference</b></summary>
 
 > - **Call by Value**
 >   - 값에 의한 호출을 의미한다.
@@ -975,7 +975,7 @@ Ref.
 
 
 <details>
-<summary><h4>String 메모리 관점</h4></summary>
+<summary><b>String 메모리 관점</b></summary>
 
 > - Title
 >   - Content
@@ -987,7 +987,7 @@ Ref.
 
 
 <details>
-<summary><h4>블락킹과 논블락킹, 동기식과 비동기식</h4></summary>
+<summary><b>블락킹과 논블락킹, 동기식과 비동기식</b></summary>
 
 > - Title
 >   - Content
@@ -999,7 +999,7 @@ Ref.
 
 
 <details>
-<summary><h4>Thread-safe</h4></summary>
+<summary><b>Thread-safe</b></summary>
 
 > - Title
 >   - Content
@@ -1011,7 +1011,7 @@ Ref.
 
 
 <details>
-<summary><h4>어노테이션</h4></summary>
+<summary><b>어노테이션</b></summary>
 
 > - Title
 >   - Content
@@ -1034,7 +1034,7 @@ Ref.
 
 # Web
 <details>
-<summary><h4>JSP vs Servlet</h4></summary>
+<summary><b>JSP vs Servlet</b></summary>
 
 > - **JSP**
 >   - html 내에 자바코드를 블록화하여 삽입한 것.
@@ -1050,7 +1050,7 @@ Ref.
 
 
 <details>
-<summary><h4>Session과 Cookie</h4></summary>
+<summary><b>Session과 Cookie</b></summary>
  
 > - **Session**
 >   - 저장위치 : 웹 서버
@@ -1078,7 +1078,7 @@ Ref.
 
 
 <details>
-<summary><h4>Framework vs Library</h4></summary>
+<summary><b>Framework vs Library</b></summary>
 
 > - **Framework**
 >   - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
@@ -1092,7 +1092,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 개념</h4></summary>
+<summary><b>스프링 개념</b></summary>
 
 > - **스프링이란?**
 >   - 자바 엔터프라이즈 개발을 편하게 해주는 오픈소스 경량급 애플리케이션 프레임워크
@@ -1117,7 +1117,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 MVC</h4></summary>
+<summary><b>스프링 MVC</b></summary>
 
 > - **스프링 MVC란?**
 >   - MVC 패턴에 기반을 둔 웹 프레임워크이다.
@@ -1166,7 +1166,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 DI</h4></summary>
+<summary><b>스프링 DI</b></summary>
 
 > - **DI란?**
 >   - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
@@ -1187,7 +1187,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 IoC</h4></summary>
+<summary><b>스프링 IoC</b></summary>
 
 > - **IoC (Inversion of Control)란?**
 >   - Bean의 생성과 의존 관계 설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 스프링 컨테이너가 담당한 관리하는 것을 뜻한다.
@@ -1224,7 +1224,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 AOP</h4></summary>
+<summary><b>스프링 AOP</b></summary>
 
 > - **AOP(Aspect Oriented Programming)란?**
 >   - Aspect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다.
@@ -1291,7 +1291,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 PSA</h4></summary>
+<summary><b>스프링 PSA</b></summary>
 
 > - **PSA(Portable Service Abstraction)란?**
 >   - 일관성 있는 서비스 추상화를 뜻한다.
@@ -1312,7 +1312,7 @@ Ref.
 
 
 <details>
-<summary><h4>스프링 POJO</h4></summary>
+<summary><b>스프링 POJO</b></summary>
 
 > - **POJO (Plain Old Java Object)란?**
 >   - '오래된 방식의 간단한 자바 객체' = '단순한 자바 오브젝트' 라는 뜻이다.
@@ -1329,7 +1329,7 @@ Ref.
 
 
 <details>
-<summary><h4>빈 스코프(Bean Scope)</h4></summary>
+<summary><b>빈 스코프(Bean Scope)</b></summary>
 
 > - **빈 스코프(Bean Scope) 란?**
 >   - 스프링이 관리하는 빈이 생성되고, 존재하고, 적용되는 범위를 뜻한다.
@@ -1356,7 +1356,7 @@ Ref.
 
 
 <details>
-<summary><h4>@Transactional</h4></summary>
+<summary><b>@Transactional</b></summary>
   
 > - **트랜잭션이란?**
 >   - 트랜잭션은 데이터베이스의 상태를 변환시키는 하나의 논리적 기능을 수행하기 위한 작업의 단위 또는 한꺼번에 수행되어야 할 일련의 연산을 의미한다.
@@ -1430,7 +1430,7 @@ Ref.
 
 
 <details>
-<summary><h4>JDK Dynamic Proxy VS CGLIB Proxy</h4></summary>
+<summary><b>JDK Dynamic Proxy VS CGLIB Proxy</b></summary>
 
 > - Title
 >   - Content
@@ -1442,7 +1442,7 @@ Ref.
 
 
 <details>
-<summary><h4>Spring Filter vs Interceptor</h4></summary>
+<summary><b>Spring Filter vs Interceptor</b></summary>
  
 > - **Filter vs Interceptor**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
@@ -1462,7 +1462,7 @@ Ref.
 
 
 <details>
-<summary><h4>ORM, JPA, Hibernate, Spring Data JPA 개념</h4></summary>
+<summary><b>ORM, JPA, Hibernate, Spring Data JPA 개념</b></summary>
 
 > - **ORM이란?**
 >   - ORM이란 Object-Relational Mapping의 약자로, 객체(Object)와 관계형 데이터(Relational data)를 매핑하기 위한 기술이다.
@@ -1497,7 +1497,7 @@ Ref.
 
 
 <details>
-<summary><h4>단위테스트와 통합테스트</h4></summary>
+<summary><b>단위테스트와 통합테스트</b></summary>
 
 > - **테스트의 개념**
 >   - 테스트란?
@@ -1533,7 +1533,7 @@ Ref.
 
 
 <details>
-<summary><h4>단위테스트</h4></summary>
+<summary><b>단위테스트</b></summary>
 
 > - **F.I.R.S.T 원칙**
 >   - F.I.R.S.T 원칙이란 좋은 단위 테스트를 하기 위한 5가지 요소를 뜻한다.
@@ -1593,7 +1593,7 @@ Ref.
 
 
 <details>
-<summary><h4>어노테이션(Annotation)</h4></summary>
+<summary><b>어노테이션(Annotation)</b></summary>
 
 > - **어노테이션(Annotation)이란?**
 >   - Annotation(@)은 사전적 의미로는 주석이라는 뜻이다.
@@ -1645,7 +1645,7 @@ Ref.
 
 
 <details>
-<summary><h4>@Value VS @ConfigurationProperties</h4></summary>
+<summary><b>@Value VS @ConfigurationProperties</b></summary>
 
 > - **용도**
 >   - 스프링의 properties나 yaml에 있는 값들을 사용하기 위한 어노테이션이다.
@@ -1666,7 +1666,7 @@ Ref.
 
 
 <details>
-<summary><h4>주요 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)</h4></summary>
+<summary><b>주요 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)</b></summary>
 
 > - **GET**
 >   - GET 메서드는 리소스의 조회를 위해 사용한다.
@@ -1692,7 +1692,7 @@ Ref.
 
 
 <details>
-<summary><h4>REST(Representational State Transfer)와 RESTful</h4></summary>
+<summary><b>REST(Representational State Transfer)와 RESTful</b></summary>
 
 > - **REST(Representational State Transfer)란?**
 >   - 자원을 이름(자원의 표현)으로 구분하여 해당 자원의 상태(정보)를 주고 받는 모든 것을 의미한다.
@@ -1727,7 +1727,7 @@ Ref.
 
 
 <details>
-<summary><h4>Hateoas(Hypermedia As The Engine Of Application State)</h4></summary>
+<summary><b>Hateoas(Hypermedia As The Engine Of Application State)</b></summary>
 
 > - **Hateoas란?**
 >   - 클라이언트의 요청으로부터 응답을 할 때, 요청 이외의 관련된 URI를 응답에 추가적으로 포함시켜 반환하는 개념이다.
@@ -1746,7 +1746,7 @@ Ref.
 
 
 <details>
-<summary><h4>CORS</h4></summary>
+<summary><b>CORS</b></summary>
 
 > - **CORS란?**
 >   - 교차 출처 리소스 공유(Cross-origin Resource Sharing)는 추가 HTTP헤더를 사용하여, 한 출처에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제이다.
@@ -1764,7 +1764,7 @@ Ref.
 
 
 <details>
-<summary><h4>CI/CD</h4></summary>
+<summary><b>CI/CD</b></summary>
 
 > - **CI/CD란?**
 >   - CI/CD란 지속적 통합과 지속적 배포가 통합된 방식을 일컫는다.
@@ -1782,7 +1782,7 @@ Ref.
 
 
 <details>
-<summary><h4>PRG(POST-Redirect-GET) 패턴</h4></summary>
+<summary><b>PRG(POST-Redirect-GET) 패턴</b></summary>
 
 > - **PRG 패턴이란?**
 >   - 웹 디자인 패턴 중 하나로 POST요청에 대한 응답으로 리다이렉트를 통해 GET요청을 할 수 있도록 처리하는 패턴이다.
@@ -1800,7 +1800,7 @@ Ref.
 
 
 <details>
-<summary><h4>Maven과 Gradle</h4></summary>
+<summary><b>Maven과 Gradle</b></summary>
 
 > - **빌드와 빌드 관리 도구**
 >   - Maven과 Gradle은 모두 빌드 관리 도구이다.
@@ -1855,7 +1855,7 @@ Ref.
 
 
 <details>
-<summary><h4>웹 브라우저에 URL 입력 시 일어나는 일련의 과정</h4></summary>
+<summary><b>웹 브라우저에 URL 입력 시 일어나는 일련의 과정</b></summary>
 
 > 1. 브라우저 주소창에 maps.google.com을 입력한다.
 > 2. 브라우저가 maps.google.com의 IP 주소를 찾기 위해 캐시에서 DNS 기록을 확인한다.
@@ -1885,7 +1885,7 @@ Ref.
 
 
 <details>
-<summary><h4>[JPA] 영속성 관리</h4></summary>
+<summary><b>[JPA] 영속성 관리</b></summary>
 
 > - **영속성 컨텍스트란?**
 >   - 영속성 컨텍스트는 엔티티를 영구 저장하는 환경이다.
@@ -1920,7 +1920,7 @@ Ref.
 
 
 <details>
-<summary><h4>[JPA] N+1문제</h4></summary>
+<summary><b>[JPA] N+1문제</b></summary>
 
 > - Title
 >   - Content
@@ -1933,7 +1933,7 @@ Ref.
 
 
 <details>
-<summary><h4>[JPA] 즉시 로딩과 지연 로딩</h4></summary>
+<summary><b>[JPA] 즉시 로딩과 지연 로딩</b></summary>
 
 > - Title
 >   - Content
@@ -1946,7 +1946,7 @@ Ref.
 
 
 <details>
-<summary><h4>[JPA] 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)</h4></summary>
+<summary><b>[JPA] 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)</b></summary>
 
 > - **낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)**
 >   - JPA를 사용하여 데이터베이스와 연결된 어플리케이션을 개발할 때, 동시성 처리와 관련된 이슈가 발생할 수 있다.
@@ -1972,7 +1972,7 @@ Ref.
 
 
 <details>
-<summary><h4>CQRS</h4></summary>
+<summary><b>CQRS</b></summary>
 
 > - **CQRS란?**
 >   - Command Query Responsibility Segregation의 약자로 도메인 모델을 다음의 두 가지 모델로 분리하는 패턴이다.
@@ -2003,7 +2003,7 @@ Ref.
 
 
 <details>
-<summary><h4>lombok</h4></summary>
+<summary><b>lombok</b></summary>
 
 > - **@Data, @Setter, @AllArgsConstructor 지양**
 >   - 내용
@@ -2027,7 +2027,7 @@ Ref.
 
 # DesignPatterns
 <details>
-<summary><h4>[GoF] 디자인 패턴이란?</h4></summary>
+<summary><b>[GoF] 디자인 패턴이란?</b></summary>
 
 > - **GoF(Gang of Four)란?**
 >   - 이 분야의 4인방(Gang of Four, 줄여 GoF)의 의미로 소프트웨어 설계에 있어 공통된 문제들에 대한 표준적인 해법과 작명법을 제안한 "Design Patterns" 책의 저자들을 지칭한다.
@@ -2080,7 +2080,7 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 싱글톤 패턴</h4></summary>
+<summary><b>[GoF] 싱글톤 패턴</b></summary>
 
 > - **싱글톤 패턴이란?**
 >   - 싱글톤 패턴은 '하나'의 인스턴스만 생성하여 사용하는 디자인 패턴이다.
@@ -2126,7 +2126,7 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 팩토리 메서드 패턴</h4></summary>
+<summary><b>[GoF] 팩토리 메서드 패턴</b></summary>
 
 > - **팩토리 메서드 패턴이란?**
 >   - 팩토리 메서드 패턴은 객체의 생성 과정을 서브 클래스에 위임하는 디자인 패턴이다.
@@ -2210,7 +2210,7 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 프록시 패턴</h4></summary>
+<summary><b>[GoF] 프록시 패턴</b></summary>
 
 > - **프록시 패턴이란?**
 >   - 프록시 (Proxy)란 대리자, 대변인의 의미를 가지고 있다. 말 그대로 원본 객체를 바로 호출하는 것이 아니라, 원본 객체에 접근할 수 있는 대리자를 호출하는 패턴이다.
@@ -2256,7 +2256,7 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 템플릿 메서드 패턴</h4></summary>
+<summary><b>[GoF] 템플릿 메서드 패턴</b></summary>
 
 > - **템플릿 메서드 패턴이란?**
 >   - 여러 클래스에서 공통으로 사용하는 메서드를 템플릿화하여 상위 클래스로 정의하고, 하위 클래스마다 세부 동작 사항을 다르게 구현하는 패턴이다.
@@ -2284,7 +2284,7 @@ Ref.
 
 
 <details>
-<summary><h4>[GoF] 전략 패턴</h4></summary>
+<summary><b>[GoF] 전략 패턴</b></summary>
 
 > - **전략 패턴이란?**
 >   - 실행(런타임) 중에 알고리즘 전략을 선택하여 객체 동작을 실시간으로 변경 가능케하는 디자인 패턴이다.
@@ -2326,7 +2326,7 @@ Ref.
 
 # Database
 <details>
-<summary><h4>DDL, DML, DCL, TCL</h4></summary>
+<summary><b>DDL, DML, DCL, TCL</b></summary>
 
 > - **DDL (Data Definition Language)**
 >   - 데이터베이스의 구조를 정의할 때 사용하는 언어이다.
@@ -2364,7 +2364,7 @@ Ref.
 
 
 <details>
-<summary><h4>Key의 종류와 특징</h4></summary>
+<summary><b>Key의 종류와 특징</b></summary>
 
 > - **Key란?**
 >   - 데이터베이스에서 조건에 만족하는 튜플을 찾거나 순서대로 정렬할 때 다른 튜플들과 구별할 수 있는 유일한 기준이 되는 Attribute(속성)이다.
@@ -2394,7 +2394,7 @@ Ref.
 
 
 <details>
-<summary><h4>이상(Anomaly)</h4></summary>
+<summary><b>이상(Anomaly)</b></summary>
  
 > - **이상(Anomaly)이란?**
 >   - 릴레이션에서 일부 속성들의 종속이나 데이터의 중복으로 인해 데이터 조작시 불일치가 발생하는 것을 의미한다.
@@ -2414,7 +2414,7 @@ Ref.
 
 
 <details>
-<summary><h4>정규화</h4></summary>
+<summary><b>정규화</b></summary>
 
 > - **정규화란?**
 >   - 관계형 데이터베이스의 설계에서 중복을 최소화하기 위하여 데이터를 구조화하는 프로세스를 뜻한다.
@@ -2440,7 +2440,7 @@ Ref.
 
 
 <details>
-<summary><h4>JOIN</h4></summary>
+<summary><b>JOIN</b></summary>
  
 > - **JOIN이란?**
 >   - 두 개 이상의 테이블이나 데이터베이스를 연결하여 데이터를 검색하는 행위를 뜻한다.
@@ -2465,7 +2465,7 @@ Ref.
 
 
 <details>
-<summary><h4>Transaction</h4></summary>
+<summary><b>Transaction</b></summary>
  
 > - **트랜잭션이란?**
 >   - 데이터베이스의 상태를 변화시키기 해서 수행하는 작업의 단위를 뜻한다.
@@ -2486,7 +2486,7 @@ Ref.
 
 
 <details>
-<summary><h4>Index</h4></summary>
+<summary><b>Index</b></summary>
 
 > - **Index란?**
 >   - 테이블에 대한 동작의 속도를 높여주는 자료 구조를 일컫는다.
@@ -2519,7 +2519,7 @@ Ref.
 
 
 <details>
-<summary><h4>SQL vs NoSQL</h4></summary>
+<summary><b>SQL vs NoSQL</b></summary>
 
 > - **SQL**
 >   - 관계형 데이터베이스.
@@ -2536,7 +2536,7 @@ Ref.
 
 
 <details>
-<summary><h4>Sharding</h4></summary>
+<summary><b>Sharding</b></summary>
  
 > - 같은 테이블 스키마를 가진 데이터를 다수의 데이터베이스에 분산하여 저장하는 방법
 
@@ -2558,7 +2558,7 @@ Ref.
 
 # CS
 <details>
-<summary><h4>OSI 7계층과 TCP/IP 4계층</h4></summary>
+<summary><b>OSI 7계층과 TCP/IP 4계층</b></summary>
 
 > - **OSI 7계층과 TCP/IP 4계층**
 >   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/8f74cf13-703e-43a9-89d2-bd9543525acd)
@@ -2625,7 +2625,7 @@ Ref.
 
 
 <details>
-<summary><h4>TCP vs UDP</h4></summary>
+<summary><b>TCP vs UDP</b></summary>
 
 > - **TCP(Transmission Control Protocol)**
 >   - TCP는 신뢰성 있는 데이터 전송을 지원하는 연결 지향형 프로토콜이다.
@@ -2648,7 +2648,7 @@ Ref.
 
 
 <details>
-<summary><h4>3-Way handshake & 4-Way hadnshake</h4></summary>
+<summary><b>3-Way handshake & 4-Way hadnshake</b></summary>
 
 > - **3-Way Handshake란?**
 >   - TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정을 뜻한다.
@@ -2685,7 +2685,7 @@ Ref.
 
 
 <details>
-<summary><h4>교착상태(Deadlock)</h4></summary>
+<summary><b>교착상태(Deadlock)</b></summary>
 
 > - **교착상태란?**
 >   - 일련의 프로세스들이 서로가 가진 자원을 기다리며 block되어, 더 이상 진행이 될 수 없는 상태를 의미한다.
@@ -2739,7 +2739,7 @@ Ref.
 
 
 <details>
-<summary><h4>뮤텍스와 세마포어</h4></summary>
+<summary><b>뮤텍스와 세마포어</b></summary>
 
 > - **임계 영역(Critical Section)이란?**
 >   - 여러 프로세스가 데이터를 공유하며 수행될 때, 각 프로세스에서 공유 데이터를 접근하는 프로그램 코드 블록을 뜻한다.
@@ -2776,7 +2776,7 @@ Ref.
 
 
 <details>
-<summary><h4>프로세스와 스레드의 차이</h4></summary>
+<summary><b>프로세스와 스레드의 차이</b></summary>
 
 > - **프로세스(Process)란?**
 >   - 운영체제로부터 시스템 자원을 할당받아 실행되는 프로그램 단위를 뜻한다.
