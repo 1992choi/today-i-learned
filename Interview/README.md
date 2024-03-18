@@ -1022,6 +1022,18 @@ Ref.
 
 
 
+<details>
+<summary><b>상속과 합성</b></summary>
+
+> - Title
+>   - Content
+
+Ref.
+[Manta Ray's](https://mantaray.tistory.com/69)
+</details>
+
+
+
 
 
 <br><br><br>
