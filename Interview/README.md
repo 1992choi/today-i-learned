@@ -959,7 +959,7 @@ Ref.
 <details>
 <summary><b>자바에서 멀티스레드 동기화 방법</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1013,7 +1013,7 @@ Ref.
 <details>
 <summary><b>String 메모리 관점</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1025,7 +1025,7 @@ Ref.
 <details>
 <summary><b>블락킹과 논블락킹, 동기식과 비동기식</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1037,7 +1037,7 @@ Ref.
 <details>
 <summary><b>Thread-safe</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1049,7 +1049,7 @@ Ref.
 <details>
 <summary><b>어노테이션</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1061,8 +1061,31 @@ Ref.
 <details>
 <summary><b>상속과 합성</b></summary>
 
-> - Title
->   - Content
+> - **상속(Inheritance)과 합성(Composition)**
+>   - 상속과 합성은 객체지향 프로그래밍에서 가장 널리 사용되는 코드 재사용 기법이다.
+>   - 상속
+>     - 상속이란 부모 클래스의 기능을 자식 클래스에서 재사용하는 것을 말한다.
+>     - 코드의 중복을 줄이고, 재사용성을 높이기 위해 자바에서 사용하는 기능이다.
+>     - is-a 관계
+>   - 합성
+>     - 합성이란 기능을 가진 객체 여러개를 묶어서 조합한 것을 말한다.
+>     - 상속에 의해 코드를 재사용하는 것 대신, 객체의 기능을 호출하는 방식을 통해 코드를 재사용하는 것이다.
+>     - has-a 관계
+> - **상속의 문제점**
+>   - 결합도가 높아짐
+>     - 부모 클래스와 자식 클래스의 관계가 컴파일 시점에 결정되어 결합도가 높아진다.
+>   - 불필요한 기능 상속
+>     - 부모 클래스에 메소드를 추가했을 때, 자식 클래스에는 적합하지 않는 메소드가 상속되는 문제가 발생할 수 있다.
+>   - 부모 클래스의 기능 변경에 의한 자식 클래스의 영향도
+>     - 부모 클래스의 기능을 자식 클래스에서 그대로 사용하고 있는 경우, 부모의 기능이 변경되면 자식 클래스에도 영향을 미친다.
+>     - 부모 클래스의 메서드를 재정의하였는데 해당 메서드의 매개변수나 리턴타입이 변경된 경우, 자식 클래스에서 대응하여 변경을 해줘야한다.
+>   - 단일 상속의 한계
+>     - 자바에서는 클래스 다중 상속을 허용하지 않는다.
+>     - 만약 이미 상속 중인데 추가 상속이 필요하다면, 클래스를 다시 나누어서 구성해야하는데 결국 클래스 폭발로 이어지게 된다.
+> - **합성을 사용해야하는 이유**
+>   - 상속 관계는 변경이 불가능하지만(컴파일 타임), 합성 관계는 실행 시점에 동적으로 변경할 수 있다(런타임).
+>   - 구현에 대한 의존성을 인터페이스에 대한 의존성으로 변경하여 결합도를 낮출 수 있다.
+>   - 단일 상속 문제가 해소된다.
 
 Ref.
 [Manta Ray's](https://mantaray.tistory.com/69)
@@ -1480,7 +1503,7 @@ Ref.
 <details>
 <summary><b>JDK Dynamic Proxy VS CGLIB Proxy</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1970,7 +1993,7 @@ Ref.
 <details>
 <summary><b>[JPA] N+1문제</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
@@ -1983,7 +2006,7 @@ Ref.
 <details>
 <summary><b>[JPA] 즉시 로딩과 지연 로딩</b></summary>
 
-> - Title
+> - **Title**
 >   - Content
 
 Ref.
