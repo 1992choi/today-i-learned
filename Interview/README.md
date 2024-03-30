@@ -34,9 +34,9 @@
 <summary><b>Java의 특징</b></summary>
 
 > - 객체 지향 언어로써 캡슐화, 상속, 다형성 기능을 완벽하게 지원한다.
-> - 운영체제에 상관없이 독립적으로 작동(JVM에서 동작하기 때문)하여 이식성이 높다.
+> - JVM에서 동작하기 때문에 운영체제에 상관없이 독립적으로 작동하여 이식성이 높다.
 > - Garbage Collector에 의해 메모리가 관리된다.
-> - 스레드 생성 및 제어와 관련된 라이브러리를 제공하기 때문에 운영체제에 상관없이 멀티 스레드를 쉽게 구현할 수 있다.
+> - 스레드 생성 및 제어와 관련된 라이브러리를 제공하기 때문에 멀티 스레드를 쉽게 구현할 수 있다.
 > - 애플리케이션이 실행될 때 모든 객체가 생성되지 않고, 각 객체가 필요한 시점에 클래스를 동적 로딩해서 생성한다. 또한 유지보수 시 해당 클래스만 수정하면 되기 때문에 전체 애플리케이션을 다시 컴파일 할 필요가 없기 때문에 유지보수가 쉽고 빠르다.
 
 Ref.
@@ -755,8 +755,44 @@ Ref.
 <details>
 <summary><b>GC</b></summary>
 
-> - Title
->   - Content
+> - **GC(Garbage Collection) 란?**
+>   - JVM의 메모리 영역에서 더 이상 참조하지 않는 데이터를 JVM이 자동으로 정리를 해주는 것으로 주로 동적 메모리 영역인 Heap 영역을 대상으로 동작한다.
+> - **JVM Heap 메모리 구성**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
+>   - Young Generation
+>     - 새롭게 생성 객체가 생성되는 영역이다.
+>     - 대부분의 객체는 unreachable 상태가 되기 때문에 Young 영역에서 사라진다.
+>     - Young 영역에서 사라질 때를 Minor CG라 한다.
+>   - Old Generation
+>     - Young 영역에서 생존한 객체가 이 영역으로 이동된다.
+>     - Young 영역보다 크게 할당되고, 적은 GC가 발생한다.
+>     - Major GC 혹은 Full GC라 한다.
+> - **GC의 동작원리**
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/297b7d1a-e8b8-4fb2-90ee-c82ea1a204c0)
+>     - 객체가 생성되면 Eden 영역에 위치하게 된다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/fb765809-ccf5-4651-8de0-f09a03e3b185)
+>     - Eden영역이 가득차게 되면 Minor GC가 발생하여 참조가 없는 객체는 삭제되고, 참조 중인 객체는 Survivor 영역으로 이동한다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/49564f31-3a34-4919-831b-e2f17af1d4d1)
+>     - Survivor 영역이 가득차게 되면 Minor GC가 발생하고 참조가 없는 객체는 삭제되고, 참조 중인 객체는 다른 Survivor 영역으로 이동한다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/0547519e-ff1f-4e4c-b37a-a3e8c2d4f56f)
+>     - Survivor영역에서의 GC과정을 반복 하며, 계속 참조 중인 객체는 Old Generation으로 이동한다.
+>   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c119c549-515b-41c5-a1b2-6b74bbbc2ca5)
+>     - Eden 영역에서 Survivor 영역으로 이동 할 때 객체가 남아있는 영역보다 큰 경우 Old Generation으로 이동한다.
+> - **GC의 종류**
+>   - Serial GC
+>     - 가장 단순한 방식의 GC로 싱글 스레드(스레드 1개)로 동작한다.
+>     - 싱글 스레드로 동작하여 느리고, 그만큼 Stop The World 시간이 다른 GC에 비해 길다.
+>   - Parallel GC
+>     - Java 8의 default GC이다.
+>     - Young 영역의 GC를 멀티 스레드 방식을 사용하기 때문에, Serial GC에 비해 상대적으로 Stop The World 가 짧다.
+>   - Parallel Old GC
+>     - Parallel GC는 Young 영역에 대해서만 멀티 스레드 방식을 사용했다면, Parallel Old GC는 Old 영역까지 멀티스레드 방식을 사용한다.
+>   - CMS(Concurrent Mark Sweep) GC
+>     - Stop The World로 Java Application이 멈추는 현상을 줄이고자 만든 GC이다.
+>     - 접근가능한(Reachable) 객체를 한번에 찾지 않고 나눠서 찾는 방식을 사용한다.
+>   - G1 GC
+>     - Java 9+ 의 default GC이다.
+>     - 전체 Heap에 대해서 탐색하지 않고 부분적으로 Region 단위로 탐색하여, 각각의 Region에만 GC가 발생한다.
 
 Ref.
 [오리엔탈킴의 대충 IT 지식과 일상](https://kim-oriental.tistory.com/48),
