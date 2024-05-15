@@ -197,178 +197,163 @@
 
 
 
-
-
-
-
-<details>
-<summary><b>추상클래스</b></summary>
- 
-> - **추상클래스란?**
->   - 추상 메서드를 선언해 놓고 상속을 통해 자식 클래스에서 메서드를 완성하도록 유도하는 클래스이다.
->   - 반드시 사용되어야 하는 메서드를 추상 클래스에 추상 메서드로 선언해 놓으면, 이 클래스를 상속받는 모든 클래스에서는 이 추상 메서드를 반드시 재정의해야 한다.
->   - 추상클래스는 abstract 키워드를 붙여 선언할 수 있다.
->   -
->      ```java
->      abstract class Animal {
->          abstract void cry();
->      }
->      ```
->   -
->      ```java
->      class Bird extends Animal {
->          @Override
->          void cry() { // 반드시 cry()를 구현해야한다.
->              System.out.println("짹짹");
->          }
->      }
->      
->      class Cat extends Animal {
->          @Override
->          void cry() { // 반드시 cry()를 구현해야한다.
->              System.out.println("야옹");
->          }
->      }
->      
->      class Dog extends Animal {
->          @Override
->          void cry() { // 반드시 cry()를 구현해야한다.
->              System.out.println("멍멍");
->          }
->      }
->      ```
-> - **추상클래스 특징**
->   - 구현해야 하는 메서드들은 상위 클래스에서 선언을 해놓고, 구현의 책임을 하위클래스에 위임한다.
->   - 메서드와 클래스에 abstract 예약어를 사용한다.
->   - 추상메서드가 없어도 abstract 키워드를 사용하면 추상클래스가 된다. 단, 추상메서드가 하나라도 존재한다면 그 클래스는 반드시 추상 클래스가 돼야 한다.
->   - 생성자를 가질 수 있고, 일반 메서드도 가질 수 있다. (단, 생성자를 갖지만 객체 생성은 불가능하다.)
-> - **추상클래스 장점**
->   - 추상클래스를 만든 후 상속을 받는다면 중복코드 제거 및 코드 재사용성 증대 효과를 얻을 수 있다.
->   - 추상클래스를 사용하여 상속을 통해 자식클래스를 구현한다면, 각 각의 클래스들을 그룹화하여 제어할 수 있다.
-
-Ref.
+## 추상클래스
+- 추상클래스란?
+  - 추상 메서드를 선언해 놓고 상속을 통해 자식 클래스에서 메서드를 완성하도록 유도하는 클래스이다.
+  - 반드시 사용되어야 하는 메서드를 추상 클래스에 추상 메서드로 선언해 놓으면, 이 클래스를 상속받는 모든 클래스에서는 이 추상 메서드를 반드시 재정의해야 한다.
+  - 추상클래스는 abstract 키워드를 붙여 선언할 수 있다.
+  - ```java
+    abstract class Animal {
+        abstract void cry();
+    }
+    ```
+  - ```java
+    class Bird extends Animal {
+        @Override
+        void cry() { // 반드시 cry()를 구현해야한다.
+            System.out.println("짹짹");
+        }
+    }
+    
+    class Cat extends Animal {
+        @Override
+        void cry() { // 반드시 cry()를 구현해야한다.
+            System.out.println("야옹");
+        }
+    }
+    
+    class Dog extends Animal {
+        @Override
+        void cry() { // 반드시 cry()를 구현해야한다.
+            System.out.println("멍멍");
+        }
+    }
+    ```
+- 추상클래스 특징
+  - 구현해야 하는 메서드들은 상위클래스에서 선언을 해놓고, 구현의 책임을 하위클래스에 위임한다.
+  - 메서드와 클래스에 abstract 예약어를 사용한다.
+  - 추상메서드가 없어도 abstract 키워드를 사용하면 추상클래스가 된다. 단, 추상메서드가 하나라도 존재한다면 그 클래스는 반드시 추상 클래스가 돼야 한다.
+  - 생성자를 가질 수 있고, 일반 메서드도 가질 수 있다. (단, 생성자를 갖지만 객체 생성은 불가능하다.)
+- 추상클래스 장점
+  - 추상클래스를 만든 후 상속을 받는다면 중복코드 제거 및 코드 재사용성 증대 효과를 얻을 수 있다.
+  - 추상클래스를 사용하여 상속을 통해 자식클래스를 구현한다면, 각 각의 클래스들을 그룹화하여 제어할 수 있다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/124)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>인터페이스</b></summary>
-
-> - **인터페이스란?**
->   - 자바에서 클래스들이 구현해야 하는 동작을 지정하는 용도로 사용되는 추상 자료형이다.
->   - 인터페이스는 interface 키워드를 붙여 선언할 수 있으며, 기본적으로는 상수와 추상메서드로 구성된다. 하지만 자바8부터는 default 메서드와  static 메서드를 지원한다.
->   -
->      ```java
->      interface InterfaceSample {
->      
->          public static final int NUM = 10; // public static final 생략 가능. 컴파일 시에 자동 생성
->          public abstract void calc(); // public abstract 생략 가능. 컴파일 시에 자동 생성
->     
->          default void defaultMethod() { // Java8부터 사용 가능한 default 메서드
->              // ...
->         }
->      
->          static void staticMethod() { // Java8부터 사용 가능한 static 메서드
->              // ...
->          }
->        
->      }
->      ```
-> - **인터페이스 특징**
->   - 인터페이스는 interface 키워드를 사용하여 정의한다.
->   - 인터페이스는 상수와 추상메서드로 구성되어 있다. (자바8부터 default와  static 메서드 사용 가능)
->   - 인터페이스 안의 모든 상수는 public static final 타입이다. (생략 가능)
->   - 인터페이스 안의 모든 추상메서드는 abstract public 타입이다. (생략 가능)
->   - 추상클래스와 마찬가지로 인스턴스를 생성할 수 없다.
->   - 인터페이스는 다른 인터페이스를 extends 키워드로 상속받을 수 있으며, 다중 상속이 가능하다.
->   - 클래스에서 인터페이스의 구현은 implements 키워드를 사용하여 구현할 인터페이스를 지정 후, 추상메서드를 모두 오버라이드하여 내용을 완성해야 한다.
-
-Ref.
+## 인터페이스
+- 인터페이스란?
+  - 자바에서 클래스들이 구현해야 하는 동작을 지정하는 용도로 사용되는 추상 자료형이다.
+  - 인터페이스는 interface 키워드를 붙여 선언할 수 있으며, 기본적으로는 상수와 추상메서드로 구성된다. 하지만 자바8부터는 default 메서드와  static 메서드를 지원한다.
+  - ```java
+    interface InterfaceSample {
+    
+        public static final int NUM = 10; // public static final 생략 가능. 컴파일 시에 자동 생성
+        public abstract void calc(); // public abstract 생략 가능. 컴파일 시에 자동 생성
+   
+        default void defaultMethod() { // Java8부터 사용 가능한 default 메서드
+            // ...
+        }
+    
+        static void staticMethod() { // Java8부터 사용 가능한 static 메서드
+            // ...
+        }
+      
+    }
+    ```
+- 인터페이스 특징
+  - 인터페이스는 interface 키워드를 사용하여 정의한다.
+  - 인터페이스는 상수와 추상메서드로 구성되어 있다. (자바8부터 default와  static 메서드 사용 가능)
+  - 인터페이스 안의 모든 상수는 public static final 타입이다. (생략 가능)
+  - 인터페이스 안의 모든 추상메서드는 abstract public 타입이다. (생략 가능)
+  - 추상클래스와 마찬가지로 인스턴스를 생성할 수 없다.
+  - 인터페이스는 다른 인터페이스를 extends 키워드로 상속받을 수 있으며, 다중 상속이 가능하다.
+  - 클래스에서 인터페이스의 구현은 implements 키워드를 사용하여 구현할 인터페이스를 지정 후, 추상메서드를 모두 오버라이드하여 내용을 완성해야 한다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/125)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>추상클래스와 인터페이스의 차이</b></summary>
-
-> - **추상클래스와 인터페이스의 차이점**
->   - 추상클래스 : 자식클래스 is kind of 부모클래스
->   - 인터페이스 : 자식클래스 is able to 부모인터페이스
->   - 추상클래스는 계층 구조에서 공통된 속성들을 뽑아서 하나의 클래스로 만들고 자신의 기능들을 하위로 확장시키는 것으로 볼 수 있으며, 인터페이스는 계층 구조는 아니지만 같은 기능이 필요한 경우 사용하는 것으로 볼 수 있다.
->   ![image](https://github.com/Young-Geun/TIL/assets/27760576/960f18b5-d588-4ddc-ac10-c1998b383bb1)
-
-Ref.
+## 추상클래스와 인터페이스의 차이
+- 추상클래스와 인터페이스의 차이점
+  - 추상클래스
+    - 자식클래스 is kind of 부모클래스
+  - 인터페이스
+    - 자식클래스 is able to 부모인터페이스
+  - 차이점
+    - 추상클래스는 계층 구조에서 공통된 속성들을 뽑아서 하나의 클래스로 만들고 자신의 기능들을 하위로 확장시키는 것으로 볼 수 있으며, 인터페이스는 계층 구조는 아니지만 같은 기능이 필요한 경우 사용하는 것으로 볼 수 있다.
+    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/960f18b5-d588-4ddc-ac10-c1998b383bb1)
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/126)
-</details>
+<br><br><br>
 
 
-<details>
-<summary><b>Overloading vs Overriding</b></summary>
- 
-> - **오버로딩(Overloading)**
->   - 매개변수의 개수나 자료형을 다르게하여 같은 이름의 메서드를 사용하는 것
->   - ``` java
->     int sum(int num1, int num2) {
->         return num1 + num2;
->     }
->
->     // 새로 추가된 sum() 메서드 - OverLoading이 적용되었다.
->     double sum(double num1, double num2) {
->         return num1 + num2;
->     }
->     ```
-> - **오버라이딩(Overriding)**
->   - 오버라이딩이란 부모클래스로부터 상속받은 메서드의 내용을 변경(재정의)하여 사용하는 것
->   - 오버라이딩 X
->      ``` java
->      class ParentClass {
->          void sayName(String name) {
->              System.out.println("[부모클래스] name=" + name);
->          }
->      }
->      
->      class ChildClass extends ParentClass {
->      }
->      
->      public class OverridingTest {
->      
->          public static void main(String[] args) {
->              ChildClass child = new ChildClass();
->              child.sayName("choi"); // [부모클래스] name=choi
->          }
->      
->      }
->     ```
->   - 오버라이딩 O
->      ``` java
->      class ParentClass {
->          void sayName(String name) {
->              System.out.println("[부모클래스] name=" + name);
->          }
->      }
->      
->      class ChildClass extends ParentClass {
->          @Override
->          void sayName(String name) {
->              System.out.println("[자식클래스] name=" + name);
->          }
->      }
->      
->      public class OverridingTest {
->      
->          public static void main(String[] args) {
->              ChildClass child = new ChildClass();
->              child.sayName("choi"); // [자식클래스] name=choi
->          }
->      
->      }
->     ```
 
-Ref.
+## Overloading vs Overriding
+- 오버로딩(Overloading)
+  - 매개변수의 개수나 자료형을 다르게하여 같은 이름의 메서드를 사용하는 것을 뜻한다.
+  - ``` java
+    int sum(int num1, int num2) {
+        return num1 + num2;
+    }
+
+    // 새로 추가된 sum() 메서드 - OverLoading이 적용되었다.
+    double sum(double num1, double num2) {
+        return num1 + num2;
+    }
+    ```
+- 오버라이딩(Overriding)
+  - 오버라이딩이란 부모클래스로부터 상속받은 메서드의 내용을 변경(재정의)하여 사용하는 것을 뜻한다.
+  - 오버라이딩 X
+    - ``` java
+      class ParentClass {
+          void sayName(String name) {
+              System.out.println("[부모클래스] name=" + name);
+          }
+      }
+       
+      class ChildClass extends ParentClass {
+      }
+       
+      public class OverridingTest {
+      
+          public static void main(String[] args) {
+              ChildClass child = new ChildClass();
+              child.sayName("choi"); // [부모클래스] name=choi
+          }
+       
+      }
+      ```
+  - 오버라이딩 O
+    - ``` java
+      class ParentClass {
+          void sayName(String name) {
+              System.out.println("[부모클래스] name=" + name);
+          }
+      }
+      
+      class ChildClass extends ParentClass {
+          @Override
+          void sayName(String name) {
+              System.out.println("[자식클래스] name=" + name);
+          }
+      }
+      
+      public class OverridingTest {
+      
+          public static void main(String[] args) {
+              ChildClass child = new ChildClass();
+              child.sayName("choi"); // [자식클래스] name=choi
+          }
+      
+      }
+      ```
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/127)
-</details>
+<br><br><br>
 
 
 
