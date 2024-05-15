@@ -357,701 +357,640 @@
 
 
 
-<details>
-<summary><b>제네릭(Generic)</b></summary>
-
-> - **제네릭(Generic)이란**
->   - 제네릭이란 클래스 내부에서 사용할 데이터 타입을 외부에서 지정하는 기법을 의미한다.
->   - Ex)
->      ``` java
->      // String 타입으로 선언 및 생성
->      List<String> stringList = new ArrayList<>();
->      
->      // Integer 타입으로 선언 및 생성
->      List<Integer> integerList = new ArrayList<>();
->     ```
-> - **제네릭(Generic)의 장점**
->   - 컴파일 시점에 타입 검사를 통한 예외 방지
->   - 불필요한 캐스팅을 제거
-
-Ref.
+## 제네릭(Generic)
+- 제네릭(Generic)이란
+  - 제네릭이란 클래스 내부에서 사용할 데이터 타입을 외부에서 지정하는 기법을 의미한다.
+  - 예제코드
+    - ``` java
+      // String 타입으로 선언 및 생성
+      List<String> stringList = new ArrayList<>();
+      
+      // Integer 타입으로 선언 및 생성
+      List<Integer> integerList = new ArrayList<>();
+      ```
+- 제네릭(Generic)의 장점
+  - 컴파일 시점에 타입 검사를 통한 예외 방지
+  - 불필요한 캐스팅을 제거
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/128)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>컬렉션 프레임워크(Collection Framework)</b></summary>
-
-> - **컬렉션 프레임워크(Collection Framework)란?**
->   - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
->   - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각 각의 인터페이스들은 구현체를 가지고 있다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c00b20fb-2031-4b27-ae67-1c0efa18e549)
-> - **List**
->   - 순서가 있는 데이터 집합이다.
->   - 데이터의 중복을 허용한다.
->     - ArrayList
->       - 단방향 포인터 구조로 인덱스로 접근하므로 조회할 때 유리하지만, 데이터의 삽입이나 삭제가 발생할 경우 인덱스를 조정하는 추가 작업이 필요하다.
->     - LinkedList
->       - 순차 접근만 가능하여 조회할 때는 불리하지만, 양방향 포인터 구조로 데이터의 삽입, 삭제에 유리하다.
->     - Vector
->       - ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.
-> - **Set**
->   - 순서가 없는 데이터 집합이다.
->   - 데이터의 중복을 허용하지 않는다.
->     - HashSet
->       - 가장 빠르게 접근할 수 있으나 순서를 보장하지 않는다.
->     - TreeSet
->       - 입력한 순서대로 값을 저장하지 않지만, 기본적으로 오름차순으로 정렬한다.
->     - LinkedHashSet
->       - 입력한 순서대로 값을 저장한다.
-> - **Map**
->   - 키와 값의 한 쌍으로 이루어진 데이터 집합으로 순서가 없다.
->   - 키의 중복은 허용하지 않고, 값의 중복은 허용한다.
->     - TreeMap
->       - 데이터를 이진 검색 트리(binary search tree)의 형태로 저장하므로 데이터의 삽입이나 삭제가 빠르다.
->     - HashMap
->       - 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘(hash algorithm)을 사용하여 검색 속도가 매우 빠르다.
->     - Hashtable
->       - HashMap과 다르게 동기화를 보장한다.
-
-Ref.
+## 컬렉션 프레임워크(Collection Framework)
+- 컬렉션 프레임워크(Collection Framework)란?
+  - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
+  - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각 각의 인터페이스들은 구현체를 가지고 있다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c00b20fb-2031-4b27-ae67-1c0efa18e549)
+- 컬렉션 프레임워크의 종류
+  - List
+    - 순서가 있는 데이터 집합이다.
+    - 데이터의 중복을 허용한다.
+    - ArrayList
+      - 단방향 포인터 구조로 인덱스로 접근하므로 조회할 때 유리하지만, 데이터의 삽입이나 삭제가 발생할 경우 인덱스를 조정하는 추가 작업이 필요하다.
+    - LinkedList
+      - 순차 접근만 가능하여 조회할 때는 불리하지만, 양방향 포인터 구조로 데이터의 삽입, 삭제에 유리하다.
+    - Vector
+      - ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.
+  - Set
+    - 순서가 없는 데이터 집합이다.
+    - 데이터의 중복을 허용하지 않는다.
+    - HashSet
+      - 가장 빠르게 접근할 수 있으나 순서를 보장하지 않는다.
+    - TreeSet
+      - 입력한 순서대로 값을 저장하지 않지만, 기본적으로 오름차순으로 정렬한다.
+    - LinkedHashSet
+      - 입력한 순서대로 값을 저장한다.
+  - Map
+    - 키와 값의 한 쌍으로 이루어진 데이터 집합으로 순서가 없다.
+    - 키의 중복은 허용하지 않고, 값의 중복은 허용한다.
+    - TreeMap
+      - 데이터를 이진 검색 트리(binary search tree)의 형태로 저장하므로 데이터의 삽입이나 삭제가 빠르다.
+    - HashMap
+      - 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘(hash algorithm)을 사용하여 검색 속도가 매우 빠르다.
+    - Hashtable
+      - HashMap과 다르게 동기화를 보장한다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/129)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>람다식(Lambda Expression)</b></summary>
-
-> - **람다식(Lambda Expressions) 이란?**
->   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
->   - 함수를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
->   - 람다식은 자바 8부터 사용 가능하며 이로 인하여 자바에서도 함수형 프로그래밍이 가능하게 되었다.
-> - **장점**
->   - 코드를 간결하게 만들 수 있다.
->   - 식에 개발자의 의도가 명확히 드러나 가독성이 높아진다.
->   - 함수를 만드는 과정없이 한번에 처리할 수 있어 생산성이 높아진다.
->   - 병렬프로그래밍이 용이하다.
-> - **단점**
->   - 람다를 사용하면서 만든 익명 함수는 재사용이 불가능하다.
->   - 디버깅이 어렵다.
->   - 람다를 무분별하게 사용할 경우, 비슷한 함수가 중복 생성될 수 있다.
-> - **기본 문법**
->   - ``` java
->     interface SquareIF {
->         int square(int num);
->     }
->     
->     public class LambdaSample {
->     
->         public static void main(String[] args) {
->     
->             /*
->              *  추상 메서드를 하나만 갖는 인터페이스를 자바 8부터는 함수형 인터페이스라고 하며,
->              *  이런 함수형 인터페이스만을 람다식으로 표현 가능하다.
->              */
->             SquareIF sif1 = (int a) -> {
->                 return a * a;
->             };
->             System.out.println(sif1.square(1)); // 1
->     
->     
->             /*
->              *  1. 매개변수의 타입을 추론할 수 있는 경우에는 타입을 생략할 수 있다.
->              *     - Square(int num)를 통해 a가 int일 수 밖에 없으므로 int를 생략할 수 있다.
->              *     - (int a)가 (a)로 변경되었다.
->              */
->             SquareIF sif2 = (a) -> {
->                return a * a;
->             };
->             System.out.println(sif2.square(2)); // 4
->     
->     
->             /*
->              *  2. 매개변수가 하나인 경우는 소괄호를 생략할 수 있다.
->              *     - 1번 규칙에 의해 (a)로 변경되었으며, 매개변수가 1개이기 때문에 소괄호도 생략 가능하여 a가 되었다.
->              */
->             SquareIF sif3 = a -> {
->                 return a * a;
->             };
->             System.out.println(sif3.square(3)); // 9
->     
->     
->             /*
->              *  3. 함수의 몸체가 하나의 명령문만 있을 경우, 중괄호도 생략가능하다. 단, return구문은 생략해야한다.
->              */
->             SquareIF sif4 = a -> a * a;
->             System.out.println(sif4.square(4)); // 16
->     
->         }
->     }
->     ```
-
-Ref.
+## 람다식(Lambda Expression)
+- 람다식(Lambda Expressions) 이란?
+  - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
+  - 함수를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
+  - 람다식은 자바 8부터 사용 가능하며 이로 인하여 자바에서도 함수형 프로그래밍이 가능하게 되었다.
+- 장/단점
+  - 장점
+    - 코드를 간결하게 만들 수 있다.
+    - 식에 개발자의 의도가 명확히 드러나 가독성이 높아진다.
+    - 함수를 만드는 과정없이 한번에 처리할 수 있어 생산성이 높아진다.
+    - 병렬프로그래밍이 용이하다.
+  - 단점
+    - 람다를 사용하면서 만든 익명 함수는 재사용이 불가능하다.
+    - 디버깅이 어렵다.
+    - 람다를 무분별하게 사용할 경우, 비슷한 함수가 중복 생성될 수 있다.
+- 예제코드
+  - ``` java
+    interface SquareIF {
+        int square(int num);
+    }
+    
+    public class LambdaSample {
+    
+        public static void main(String[] args) {
+    
+            /*
+             *  추상 메서드를 하나만 갖는 인터페이스를 자바 8부터는 함수형 인터페이스라고 하며,
+             *  이런 함수형 인터페이스만을 람다식으로 표현 가능하다.
+             */
+            SquareIF sif1 = (int a) -> {
+                return a * a;
+            };
+            System.out.println(sif1.square(1)); // 1
+    
+    
+            /*
+             *  1. 매개변수의 타입을 추론할 수 있는 경우에는 타입을 생략할 수 있다.
+             *     - Square(int num)를 통해 a가 int일 수 밖에 없으므로 int를 생략할 수 있다.
+             *     - (int a)가 (a)로 변경되었다.
+             */
+            SquareIF sif2 = (a) -> {
+               return a * a;
+            };
+            System.out.println(sif2.square(2)); // 4
+    
+    
+            /*
+             *  2. 매개변수가 하나인 경우는 소괄호를 생략할 수 있다.
+             *     - 1번 규칙에 의해 (a)로 변경되었으며, 매개변수가 1개이기 때문에 소괄호도 생략 가능하여 a가 되었다.
+             */
+            SquareIF sif3 = a -> {
+                return a * a;
+            };
+            System.out.println(sif3.square(3)); // 9
+    
+    
+            /*
+             *  3. 함수의 몸체가 하나의 명령문만 있을 경우, 중괄호도 생략가능하다. 단, return구문은 생략해야한다.
+             */
+            SquareIF sif4 = a -> a * a;
+            System.out.println(sif4.square(4)); // 16
+    
+        }
+    }
+    ``` 
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/130)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스트림 API(Stream API)</b></summary>
- 
-> - **스트림 API(Stream API) 란?**
->   - Java 8에서 추가된 기능으로써 배열 또는 컬렉션 등을 함수형 프로그래밍 기법으로 처리할 수 있도록 도와주는 API이다.
-> - **스트림 API(Stream API)의 특징**
->   - 원본 데이터를 변경하지 않는다.
->   - 컬렉션과 달리 재사용이 불가하여 단 1번만 사용할 수 있다.
->   - 내부 반복을 통해 작업을 처리한다.
->   - parallelStream() 메서드를 통한 병렬처리를 지원한다.
-> - **스트림 API(Stream API)의 연산**
->   - 생성
->   - 중간 연산(Intermediate Operation)
->     - filter()
->       - 스트림 요소마다 조건문을 만족하는 요소로 구성된 스트림을 반환
->     - distinct()
->       - 스트림 요소들의 중복을 제거한 스트림을 반환
->     - map()
->       - 스트림의 각 요소마다 수행할 연산을 구현할 때 사용
->     - flatMap()
->       - 스트림 요소를 새로운 요소로 대체한 스트림을 생성
->     - limit()
->       - 스트림의 시작 요소로 부터 인자로 전달된 인덱스까지의 요소를 추출해 새로운 스트림을 생성
->     - skip()
->       - 스트림의 시작 요소로 부터 인자로 전달된 인덱스 까지를 제외하고 새로운 스트림을 생성
->     - sorted()
->       - 스트림 요소를 정렬하는 method로 기본적으로 오름차순으로 정렬
->     - peek()
->       - 결과 스트림의 요소를 사용해 추가로 동작을 수행 
->   - 최종 연산(Terminal Operation)
->     - forEach()
->       - 트림의 요소들을 순환하면서 반복해서 처리해야 하는 경우 사용
->     - reduce()
->       - map과 비슷하게 동작하지만 개별연산이 아니라 누적연산이 이루어진다는 차이 존재
->     - findFirst()
->       - 스트림에서 지정한 첫 번째 요소를 찾는 메서드
->     - findAny()
->       - 스트림에서 지정한 첫 번째 요소를 찾는 메서드. parallelStream()와 함께 사용
->     - anyMatch()
->       - 스트림의 요소 중 특정 조건을 만족하는 요소가 하나라도 있는지 검사
->     - allMatch()
->       - 스트림의 요소 중 특정 조건을 모두 만족하는지 검사
->     - noneMatch()
->       - 스트림의 요소 중 특정 조건을 만족하는 요소가 하나도 없는지 검사
->     - count()
->       - 스트림의 원소들로부터 전체 개수 구하기 위한 메서드
->     - min() / max()
->       - 스트림의 원소들로부터 최솟값 / 최댓값을 구하기 위한 메서드
->     - sum() / average()
->       - 스트림 원소들의 합계 / 평균을 구하는 메서드
->     - collect()
->       - 스트림의 결과를 모으기 위한 메서드
-
-Ref.
+## 스트림 API(Stream API)
+- 스트림 API(Stream API) 란?
+  - Java 8에서 추가된 기능으로써 배열 또는 컬렉션 등을 함수형 프로그래밍 기법으로 처리할 수 있도록 도와주는 API이다.
+- 스트림 API(Stream API)의 특징
+  - 원본 데이터를 변경하지 않는다.
+  - 컬렉션과 달리 재사용이 불가하여 단 1번만 사용할 수 있다.
+  - 내부 반복을 통해 작업을 처리한다.
+  - parallelStream() 메서드를 통한 병렬처리를 지원한다.
+- 스트림 API(Stream API)의 연산
+  - 생성
+  - 중간 연산(Intermediate Operation)
+    - filter()
+      - 스트림 요소마다 조건문을 만족하는 요소로 구성된 스트림을 반환
+    - distinct()
+      - 스트림 요소들의 중복을 제거한 스트림을 반환
+    - map()
+      - 스트림의 각 요소마다 수행할 연산을 구현할 때 사용
+    - flatMap()
+      - 스트림 요소를 새로운 요소로 대체한 스트림을 생성
+    - limit()
+      - 스트림의 시작 요소로 부터 인자로 전달된 인덱스까지의 요소를 추출해 새로운 스트림을 생성
+    - skip()
+      - 스트림의 시작 요소로 부터 인자로 전달된 인덱스 까지를 제외하고 새로운 스트림을 생성
+    - sorted()
+      - 스트림 요소를 정렬하는 method로 기본적으로 오름차순으로 정렬
+    - peek()
+      - 결과 스트림의 요소를 사용해 추가로 동작을 수행 
+  - 최종 연산(Terminal Operation)
+    - forEach()
+      - 트림의 요소들을 순환하면서 반복해서 처리해야 하는 경우 사용
+    - reduce()
+      - map과 비슷하게 동작하지만 개별연산이 아니라 누적연산이 이루어진다는 차이 존재
+    - findFirst()
+      - 스트림에서 지정한 첫 번째 요소를 찾는 메서드
+    - findAny()
+      - 스트림에서 지정한 첫 번째 요소를 찾는 메서드. parallelStream()와 함께 사용
+    - anyMatch()
+      - 스트림의 요소 중 특정 조건을 만족하는 요소가 하나라도 있는지 검사
+    - allMatch()
+      - 스트림의 요소 중 특정 조건을 모두 만족하는지 검사
+    - noneMatch()
+      - 스트림의 요소 중 특정 조건을 만족하는 요소가 하나도 없는지 검사
+    - count()
+      - 스트림의 원소들로부터 전체 개수 구하기 위한 메서드
+    - min() / max()
+      - 스트림의 원소들로부터 최솟값 / 최댓값을 구하기 위한 메서드
+    - sum() / average()
+      - 스트림 원소들의 합계 / 평균을 구하는 메서드
+    - collect()
+      - 스트림의 결과를 모으기 위한 메서드
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/135)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>Checked Exception과 Unchecked Exception</b></summary>
-
-> - **Checked Exception과 Unchecked Exception**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
->   - Checked Exception
->     - 확인시점 : Compile 시점
->     - 처리여부 : 반드시 예외 처리 필요
->     - 롤백여부 : 예외 발생 시, Rollback 수행 안함
->   - Unchecked Exception
->     - 확인시점 : Runtime 시점
->     - 처리여부 : 명시적으로 하지 않아도 무관
->     - 롤백여부 : 예외 발생 시, Rollback 수행
-> - **Checked Exception 문제점**
->   - Checked Exception은 반드시 예외를 처리한다는 특성 때문에 Exception을 던지게(throw)되면, 계층 간 종속이 발생할 수 있다.
->   - 만약 아래의 그림과 같이 사용중인 JDBC를 JPA로 변경한다고 가정했을 때, 종속된 모든 계층을 수정해야 하는 상황이 발생한다.
->     - ![image](https://github.com/Young-Geun/TIL/assets/27760576/afeccd8d-ee1d-4c9b-8d00-ca099595cb17)
->     - ![image](https://github.com/Young-Geun/TIL/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
->   - 해결방안
->     - Checked Exception을 Unchecked Exception으로 전환한다.
->     -  ```java
->        static class Repository {
->            public void call() {
->                try {
->                    runSQL();
->                } catch (SQLException e) {
->                    /*
->                        Checked Exception인 SQLException 대신에 
->                        Unchecked Exception인 RuntimeSQLException 던진다.
->                     */    
->                    throw new RuntimeSQLException(e);
->                }
->            }
->        
->            private void runSQL() throws SQLException {
->                // SQL 수행 중 오류가 발생했다고 가정.
->                throw new SQLException("ex");
->            }
->        
->        }
->        
->        // RuntimeSQLException은 RuntimeException을 상속받았으므로 Unchecked Exception이 된다.
->        static class RuntimeSQLException extends RuntimeException {
->            public RuntimeSQLException(Throwable cause) {
->                super(cause);
->            }
->        }
->        ```
-
-Ref.
+## Checked Exception과 Unchecked Exception
+- Checked Exception과 Unchecked Exception
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
+  - Checked Exception
+    - 확인시점 : Compile 시점
+    - 처리여부 : 반드시 예외 처리 필요
+    - 롤백여부 : 예외 발생 시, Rollback 수행 안함
+  - Unchecked Exception
+    - 확인시점 : Runtime 시점
+    - 처리여부 : 명시적으로 하지 않아도 무관
+    - 롤백여부 : 예외 발생 시, Rollback 수행
+- Checked Exception 문제점
+  - Checked Exception은 반드시 예외를 처리한다는 특성 때문에 Exception을 던지게(throw)되면, 계층 간 종속이 발생할 수 있다.
+  - 만약 아래의 그림과 같이 사용중인 JDBC를 JPA로 변경한다고 가정했을 때, 종속된 모든 계층을 수정해야 하는 상황이 발생한다.
+    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/afeccd8d-ee1d-4c9b-8d00-ca099595cb17)
+    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
+  - 해결방안
+    - Checked Exception을 Unchecked Exception으로 전환한다.
+    - ```java
+      static class Repository {
+          public void call() {
+              try {
+                  runSQL();
+              } catch (SQLException e) {
+                  /*
+                      Checked Exception인 SQLException 대신에 
+                      Unchecked Exception인 RuntimeSQLException 던진다.
+                   */    
+                  throw new RuntimeSQLException(e);
+              }
+          }
+      
+          private void runSQL() throws SQLException {
+              // SQL 수행 중 오류가 발생했다고 가정.
+              throw new SQLException("ex");
+          }
+      
+      }
+      
+      // RuntimeSQLException은 RuntimeException을 상속받았으므로 Unchecked Exception이 된다.
+      static class RuntimeSQLException extends RuntimeException {
+          public RuntimeSQLException(Throwable cause) {
+              super(cause);
+          }
+      }
+      ```
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/138)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스레드</b></summary>
+## 스레드
+- 프로세스(Process)와 스레드(Thread)
+  - 프로세스란 실행 중인 프로그램을 뜻한다.
+  - 스레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위를 뜻한다.
+- 스레드의 장점
+  - Context Switching이 빠르기 때문에 시스템 처리량이 증가한다.
+  - 프로세스 내의 Stack영역을 제외한 모든 메모리를 공유하기 때문에 통신 부담이 적어 프로그램 응답 시간이 단축된다.
+- Thread 클래스와 Runnable 인터페이스 구현 비교
+  - ```java
+    // 1. Thread 클래스를 상속받아 구현       
+    static class MyThread1 extends Thread {
+        // Thread 클래스의 run()을 오버라이딩
+        public void run() {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // ingore
+                }
+	        	
+                System.out.println("MyThread1 run : " + i);
+            }
+        }
+    }
 
-> - **프로세스(Process)와 스레드(Thread)**
->   - 프로세스란 실행 중인 프로그램을 뜻한다.
->   - 스레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위를 뜻한다.
-> - **스레드의 장점**
->   - Context Switching이 빠르기 때문에 시스템 처리량이 증가한다.
->   - 프로세스 내의 Stack영역을 제외한 모든 메모리를 공유하기 때문에 통신 부담이 적어 프로그램 응답 시간이 단축된다.
-> - **Thread 클래스와 Runnable 인터페이스**
->    ```java
->    // 1. Thread 클래스를 상속받아 구현       
->    static class MyThread1 extends Thread {
->        // Thread 클래스의 run()을 오버라이딩
->        public void run() {
->            for (int i = 0; i < 10; i++) {
->                try {
->                    Thread.sleep(1000);
->                } catch (InterruptedException e) {
->                    // ingore
->                }
->	        	
->                System.out.println("MyThread1 run : " + i);
->            }
->        }
->    }
->
->    // 2. Runnable 인터페이스를 구현
->    static class MyThread2 implements Runnable {
->        // Runnable 인터페이스의 run()을 구현
->        public void run() {
->            for (int i = 0; i < 10; i++) {
->                try {
->                    Thread.sleep(1000);
->                } catch (InterruptedException e) {
->                    // ingore
->                }
->	    		
->                System.out.println("MyThread2 run : " + i);
->            }
->        }
->    }
->	 
->    public static void main(String[] args) {
->        MyThread1 t1 = new MyThread1();
->        Thread t2 = new Thread(new MyThread2());
->		
->        t1.start();
->        t2.start(); // 또는 new Thread(new MyThread2()).start();
->    }
->    ```
-
-Ref.
+    // 2. Runnable 인터페이스를 구현
+    static class MyThread2 implements Runnable {
+        // Runnable 인터페이스의 run()을 구현
+        public void run() {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // ingore
+                }
+	    		
+                System.out.println("MyThread2 run : " + i);
+            }
+        }
+    }
+	 
+    public static void main(String[] args) {
+        MyThread1 t1 = new MyThread1();
+        Thread t2 = new Thread(new MyThread2());
+		
+        t1.start();
+        t2.start(); // 또는 new Thread(new MyThread2()).start();
+    }
+    ```
+- Ref.
 [wnajsldkf.log](https://velog.io/@wnajsldkf/Java%EC%9D%98-Thread%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>JVM</b></summary>
-
-> - **JVM이란?**
->   - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
->   - Java와 OS사이에서 중개자 역할을 하여, OS의 종류와 무관하게 동일한 동작을 보장한다.
->   - 메모리 관리 및 Garbage Collection 수행한다.
->   - Stack 기반의 가상머신이다.
-> - **JVM 구성**
->   - 클래스 로더(Class Loader)
->   - 실행 엔진(Excution Engine)
->   - Garbage Collector
-> - **실행과정**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
->     1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
->     2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
->     3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
->     4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
->     5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
-
-Ref.
+## JVM
+- JVM이란
+  - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
+  - Java와 OS사이에서 중개자 역할을 하여, OS의 종류와 무관하게 동일한 동작을 보장한다.
+  - 메모리 관리 및 Garbage Collection을 수행한다.
+  - Stack 기반의 가상머신이다.
+- JVM 구성
+  - 클래스 로더(Class Loader)
+  - 실행 엔진(Excution Engine)
+  - Garbage Collector
+- 실행과정
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
+    1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
+    2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
+    3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
+    4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
+    5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
+- Ref.
 [jomminii](https://doozi0316.tistory.com/entry/1%EC%A3%BC%EC%B0%A8-JVM%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EA%B2%83%EC%9D%B8%EA%B0%80),
 [doozi](https://velog.io/@jomminii/whiteship-java-01-what-is-jvm)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>자바의 메모리 구조</b></summary>
-
-> - **메서드 영역**
->   - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
->   - 모든 스레드에서 정보가 공유된다.
-> - **힙 영역**
->   - new 키워드를 통해 생성된 인스턴스의 정보, Array와 같이 동적으로 생성된 데이터가 저장되는 영역이다.
->   - Reference Type의 데이터가 저장되는 공간이다.
->   - 모든 스레드에서 정보가 공유된다.
-> - **스택 영역**
->   - 메서드가 호출되면, 메서드의 지역 변수와 매개변수가 저장되는 영역이다.
->   - 만약, 지역변수이지만 Reference Type일 경우에는 Heap에 저장된 데이터의 주소값을 Stack에 저장해서 사용하게 된다.
->   - 스레드마다 하나씩 존재한다.
-
-Ref.
+## 자바의 메모리 구조
+- 메서드 영역
+  - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
+  - 모든 스레드에서 정보가 공유된다.
+- 힙 영역
+  - new 키워드를 통해 생성된 인스턴스의 정보, Array와 같이 동적으로 생성된 데이터가 저장되는 영역이다.
+  - Reference Type의 데이터가 저장되는 공간이다.
+  - 모든 스레드에서 정보가 공유된다.
+- 스택 영역
+  - 메서드가 호출되면, 메서드의 지역 변수와 매개변수가 저장되는 영역이다.
+  - 만약, 지역변수이지만 Reference Type일 경우에는 Heap에 저장된 데이터의 주소값을 Stack에 저장해서 사용하게 된다.
+  - 스레드마다 하나씩 존재한다.
+- Ref.
 [내가 보려고 만든 개발 (Tech) blog](https://lucas-owner.tistory.com/38)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>GC</b></summary>
-
-> - **GC(Garbage Collection) 란?**
->   - JVM의 메모리 영역에서 더 이상 참조하지 않는 데이터를 JVM이 자동으로 정리를 해주는 것으로 주로 동적 메모리 영역인 Heap 영역을 대상으로 동작한다.
-> - **JVM Heap 메모리 구성**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
->   - Young Generation
->     - 새롭게 생성 객체가 생성되는 영역이다.
->     - 대부분의 객체는 unreachable 상태가 되기 때문에 Young 영역에서 사라진다.
->     - Young 영역에서 사라질 때를 Minor CG라 한다.
->   - Old Generation
->     - Young 영역에서 생존한 객체가 이 영역으로 이동된다.
->     - Young 영역보다 크게 할당되고, 적은 GC가 발생한다.
->     - Major GC 혹은 Full GC라 한다.
-> - **GC의 동작원리**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/297b7d1a-e8b8-4fb2-90ee-c82ea1a204c0)
->     - 객체가 생성되면 Eden 영역에 위치하게 된다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/fb765809-ccf5-4651-8de0-f09a03e3b185)
->     - Eden영역이 가득차게 되면 Minor GC가 발생하여 참조가 없는 객체는 삭제되고, 참조 중인 객체는 Survivor 영역으로 이동한다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/49564f31-3a34-4919-831b-e2f17af1d4d1)
->     - Survivor 영역이 가득차게 되면 Minor GC가 발생하고 참조가 없는 객체는 삭제되고, 참조 중인 객체는 다른 Survivor 영역으로 이동한다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/0547519e-ff1f-4e4c-b37a-a3e8c2d4f56f)
->     - Survivor영역에서의 GC과정을 반복 하며, 계속 참조 중인 객체는 Old Generation으로 이동한다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c119c549-515b-41c5-a1b2-6b74bbbc2ca5)
->     - Eden 영역에서 Survivor 영역으로 이동 할 때 객체가 남아있는 영역보다 큰 경우 Old Generation으로 이동한다.
-> - **GC의 종류**
->   - Serial GC
->     - 가장 단순한 방식의 GC로 싱글 스레드(스레드 1개)로 동작한다.
->     - 싱글 스레드로 동작하여 느리고, 그만큼 Stop The World 시간이 다른 GC에 비해 길다.
->   - Parallel GC
->     - Java 8의 default GC이다.
->     - Young 영역의 GC를 멀티 스레드 방식을 사용하기 때문에, Serial GC에 비해 상대적으로 Stop The World 가 짧다.
->   - Parallel Old GC
->     - Parallel GC는 Young 영역에 대해서만 멀티 스레드 방식을 사용했다면, Parallel Old GC는 Old 영역까지 멀티스레드 방식을 사용한다.
->   - CMS(Concurrent Mark Sweep) GC
->     - Stop The World로 Java Application이 멈추는 현상을 줄이고자 만든 GC이다.
->     - 접근가능한(Reachable) 객체를 한번에 찾지 않고 나눠서 찾는 방식을 사용한다.
->   - G1 GC
->     - Java 9+ 의 default GC이다.
->     - 전체 Heap에 대해서 탐색하지 않고 부분적으로 Region 단위로 탐색하여, 각각의 Region에만 GC가 발생한다.
-
-Ref.
+## GC
+- GC(Garbage Collection) 란?
+  - JVM의 메모리 영역에서 더 이상 참조하지 않는 데이터를 JVM이 자동으로 정리를 해주는 것으로 주로 동적 메모리 영역인 Heap 영역을 대상으로 동작한다.
+- JVM Heap 메모리 구성
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
+  - Young Generation
+    - 새롭게 생성 객체가 생성되는 영역이다.
+    - 대부분의 객체는 unreachable 상태가 되기 때문에 Young 영역에서 사라진다.
+    - Young 영역에서 사라질 때를 Minor CG라 한다.
+  - Old Generation
+    - Young 영역에서 생존한 객체가 이 영역으로 이동된다.
+    - Young 영역보다 크게 할당되고, 적은 GC가 발생한다.
+    - Major GC 혹은 Full GC라 한다.
+- GC의 동작원리
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/297b7d1a-e8b8-4fb2-90ee-c82ea1a204c0)
+    - 객체가 생성되면 Eden 영역에 위치하게 된다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/fb765809-ccf5-4651-8de0-f09a03e3b185)
+    - Eden영역이 가득차게 되면 Minor GC가 발생하여 참조가 없는 객체는 삭제되고, 참조 중인 객체는 Survivor 영역으로 이동한다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/49564f31-3a34-4919-831b-e2f17af1d4d1)
+    - Survivor 영역이 가득차게 되면 Minor GC가 발생하고 참조가 없는 객체는 삭제되고, 참조 중인 객체는 다른 Survivor 영역으로 이동한다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/0547519e-ff1f-4e4c-b37a-a3e8c2d4f56f)
+    - Survivor영역에서의 GC과정을 반복 하며, 계속 참조 중인 객체는 Old Generation으로 이동한다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c119c549-515b-41c5-a1b2-6b74bbbc2ca5)
+    - Eden 영역에서 Survivor 영역으로 이동 할 때 객체가 남아있는 영역보다 큰 경우 Old Generation으로 이동한다.
+- GC의 종류
+  - Serial GC
+    - 가장 단순한 방식의 GC로 싱글 스레드(스레드 1개)로 동작한다.
+    - 싱글 스레드로 동작하여 느리고, 그만큼 Stop The World 시간이 다른 GC에 비해 길다.
+  - Parallel GC
+    - Java 8의 default GC이다.
+    - Young 영역의 GC를 멀티 스레드 방식을 사용하기 때문에, Serial GC에 비해 상대적으로 Stop The World 가 짧다.
+  - Parallel Old GC
+    - Parallel GC는 Young 영역에 대해서만 멀티 스레드 방식을 사용했다면, Parallel Old GC는 Old 영역까지 멀티스레드 방식을 사용한다.
+  - CMS(Concurrent Mark Sweep) GC
+    - Stop The World로 Java Application이 멈추는 현상을 줄이고자 만든 GC이다.
+    - 접근가능한(Reachable) 객체를 한번에 찾지 않고 나눠서 찾는 방식을 사용한다.
+  - G1 GC
+    - Java 9+ 의 default GC이다.
+    - 전체 Heap에 대해서 탐색하지 않고 부분적으로 Region 단위로 탐색하여, 각각의 Region에만 GC가 발생한다.
+- Ref.
 [오리엔탈킴의 대충 IT 지식과 일상](https://kim-oriental.tistory.com/48),
 [DannyJae](https://jhyonhyon.tistory.com/20)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>HashMap 충돌</b></summary>
-
-> - **HashMap 특징 및 동작원리**
->   - HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.
->   - 위와 같은 특성으로 인하여 삽입, 삭제, 검색이 평균적으로 O(1) 시간복잡도를 갖는다.
->   - HashMap의 내부구조는 배열로 되어있으며 배열의 인덱스는 hashcode() % M로 산출한다.
->   - 하지만 동일 값이 발생하여 해시충돌이 일어날 수 있으며, 이를 방지하기 위한 방법에는 Open Addressing 방식과 Separate Chaining 방식이 있는데 자바에서는 Separate Chaining 방식을 채택했다.
-> - **Open Addressing**
->   - Open addressing 방식에도 여러가지 구현 방식이 있는데, 가장 간단한 Linear probing 방식을 예로 들자면 충돌이 일어났을 경우, 빈 버킷이 나올 때까지 순차적으로 다음 인덱스를 탐색한다.
-> - **Separate Chaining**
->   - 동일 index로 인해서 충돌이 발생하면 그 index가 가리키고 있는 Linked list에 노드를 추가하여 값을 추가한다.
->   - JDK 1.8의 경우에는 index에 노드가 8개 이하일 경우에는 Linked List를 사용하며, 8개 이상으로 늘어날때는 Tree 구조로 데이타 저장 구조를 바꾸도록 되어 있다.
-
-Ref.
+## HashMap 충돌
+- HashMap 특징 및 동작원리
+  - HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.
+  - 위와 같은 특성으로 인하여 삽입, 삭제, 검색이 평균적으로 O(1) 시간복잡도를 갖는다.
+  - HashMap의 내부구조는 배열로 되어있으며 배열의 인덱스는 hashcode() % M로 산출한다.
+  - 하지만 동일 값이 발생하여 해시충돌이 일어날 수 있으며, 이를 방지하기 위한 방법에는 Open Addressing 방식과 Separate Chaining 방식이 있는데 자바에서는 Separate Chaining 방식을 채택했다.
+- Open Addressing
+  - Open addressing 방식에도 여러가지 구현 방식이 있는데, 가장 간단한 Linear probing 방식을 예로 들자면 충돌이 일어났을 경우, 빈 버킷이 나올 때까지 순차적으로 다음 인덱스를 탐색한다.
+- Separate Chaining
+  - 동일 index로 인해서 충돌이 발생하면 그 index가 가리키고 있는 Linked list에 노드를 추가하여 값을 추가한다.
+  - JDK 1.8의 경우에는 index에 노드가 8개 이하일 경우에는 Linked List를 사용하며, 8개 이상으로 늘어날때는 Tree 구조로 데이타 저장 구조를 바꾸도록 되어 있다.
+- Ref.
 [JuHyeong.dev](https://dkswnkk.tistory.com/679)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>non-static 멤버와 static 멤버 차이</b></summary>
-
-> - **non-static 멤버**
->   - 멤버는 객체마다 별도로 존재한다.
->   - 인스턴스 멤버라고 부른다.
->   - 객체 생성 시에 멤버가 생성된다.
->   - 객체 생성 후 멤버 사용이 가능하다.
->   - 객체가 사라지면 멤버도 사라진다.
->   - 공유되지 않는다.
->   - 멤버는 객체 내에 각각의 공간을 유지한다.
-> - **static 멤버**
->   - 멤버는 클래스당 하나가 생성된다.
->   - 멤버는 별도의 공간에 생성된다.
->   - 클래스 멤버라고도 불린다.
->   - 클래스 로딩 시에 멤버가 생성된다.
->   - 객체가 생기기 전에 사용이 가능하다.(즉, 객체를 생성하지 않고도 사용가능)
->   - 객체가 사라져도 멤버는 사라지지 않는다.
->   - 멤버는 프로그램이 종료될 때 사라진다.
->   - 동일한 클래스의 모든 객체들에 의해 공유된다.
-
-Ref.
+## non-static 멤버와 static 멤버 차이
+- non-static 멤버
+  - 멤버는 객체마다 별도로 존재한다.
+  - 인스턴스 멤버라고 부른다.
+  - 객체 생성 시에 멤버가 생성된다.
+  - 객체 생성 후 멤버 사용이 가능하다.
+  - 객체가 사라지면 멤버도 사라진다.
+  - 공유되지 않는다.
+  - 멤버는 객체 내에 각각의 공간을 유지한다.
+- static 멤버
+  - 멤버는 클래스당 하나가 생성된다.
+  - 멤버는 별도의 공간에 생성된다.
+  - 클래스 멤버라고도 불린다.
+  - 클래스 로딩 시에 멤버가 생성된다.
+  - 객체가 생기기 전에 사용이 가능하다.(즉, 객체를 생성하지 않고도 사용가능)
+  - 객체가 사라져도 멤버는 사라지지 않는다.
+  - 멤버는 프로그램이 종료될 때 사라진다.
+  - 동일한 클래스의 모든 객체들에 의해 공유된다.
+- Ref.
 [Break Out of Your Comfort Zone](https://sujinhope.github.io/2021/03/03/Java-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%B3%80%EC%88%98,-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EB%B3%80%EC%88%98-%EC%B0%A8%EC%9D%B4(Static%EB%B3%80%EC%88%98%EC%99%80-Non-Static%EB%B3%80%EC%88%98).html)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>직렬화와 역직렬화</b></summary>
-
-> - **직렬화와 역직렬화**
->   - 직렬화(serialize)란 자바 언어에서 사용되는 Object 또는 Data를 다른 컴퓨터의 자바 시스템에서도 사용 할수 있도록 바이트 스트림(stream of bytes) 형태로 연속전인(serial) 데이터로 변환하는 포맷 변환 기술을 일컫는다.
->   - 그 반대 개념인 역직렬화는(Deserialize)는 바이트로 변환된 데이터를 원래대로 자바 시스템의 Object 또는 Data로 변환하는 기술이다.
-> - **직렬화 사용처**
->   - 직렬화를 응용한다면 휘발성이 있는 캐싱 데이터를 영구 저장이 필요할 때 사용할 수도 있다.
->   - 예를들어 JVM의 메모리에서만 상주되어있는 객체 데이터가 시스템이 종료되더라도 나중에 다시 재사용이 될수 있을때 영속화(Persistence)를 해두면 좋다.
->   - 이러한 특성을 살린 자바 직렬화는 다음과 같은 곳에서 응용되기도 한다.
->     - 서블릿 세션 (Servlet Session)
->       - 단순히 세션을 서블릿 메모리 위에서 운용한다면 직렬화를 필요로 하지 않지만, 만일 세션 데이터를 저장 & 공유가 필요할때 직렬화를 이용한다.
->       - 세션 데이터를 데이터베이스에 저장할 때 사용된다.
->       - 톰캣의 세션 클러스터링을 통해 각 서버간에 데이터 공유가 필요할 때 사용된다.
->     - 캐시 (Cache)
->       - 데이터베이스로부터 조회한 객체 데이터를 다른 모듈에서도 필요할때 재차 DB를 조회하는 것이 아닌, 객체를 직렬화하여 메모리나 외부 파일에 저장해 두었다가 역직렬화하여 사용하는 캐시 데이터로서 이용이 가능하다.
->     - 자바 RMI (Remote Method Invocation)
->       - 자바 RMI는 원격 시스템 간의 메시지 교환을 위해서 사용하는 자바에서 지원하는 기술이다.
->       - 이 메세지에 객체 데이터를 직렬화하여 송신하는 것이다.
->       - 최근에는 소켓을 이용하기 때문에 안쓰이는 기술이다.
-> - **직렬화 사용법**
->   - Serializable 인터페이스
->     - 우선 객체를 직렬화하기 위해선 java.io.Serializable 인터페이스를 implements 해야 된다. 그렇지 않으면 NotSerializableException 런타임 예외가 발생된다.
->   - ObjectOutputStream / ObjectInputStream 클래스
->     - 직렬화(스트림에 객체를 출력) 에는 ObjectOutputStream을 사용한다.
->     - 역직렬화(스트림으로부터 객체를 입력)에는 ObjectInputStream을 사용한다.
-> - **자바 직렬화 버전 관리**
->   - SerialVersionUID
->     - Serializable 인터페이스를 구현하는 모든 직렬화된 클래스는 serialVersionUID(이하 SUID) 이라는 고유 식별번호를 부여 받는다.
->     - 이 식별 ID는 클래스를 직렬화, 역직렬화 과정에서 동일한 특성을 갖는지 확인하는데 사용된다.
->     - 클래스 내부 구성이 수정될 경우, 기존에 직렬화한 SUID와 현재 클래스의 SUID 버전이 다르기 때문에 이를 인지하고 InvalidClassException 예외가 발생시켜 값 불일치 되는 현상을 미연에 방지할 수 있다.
->     - 위와 같은 특징으로 인해 클래스에 조그만한 변경사항이라도 있으면, 모든 사용자에게 재배포를 해야하는 애로사항이 있지만, serialVersionUID를 직접 명시해주어 클래스 버전을 수동으로 관리하게되면 이를 해결할 수 있다.
-
-Ref.
+## 직렬화와 역직렬화
+- 직렬화와 역직렬화
+  - 직렬화(serialize)란 자바 언어에서 사용되는 Object 또는 Data를 다른 컴퓨터의 자바 시스템에서도 사용 할수 있도록 바이트 스트림(stream of bytes) 형태로 연속전인(serial) 데이터로 변환하는 포맷 변환 기술을 일컫는다.
+  - 그 반대 개념인 역직렬화는(Deserialize)는 바이트로 변환된 데이터를 원래대로 자바 시스템의 Object 또는 Data로 변환하는 기술이다.
+- 직렬화 사용처
+  - 직렬화를 응용한다면 휘발성이 있는 캐싱 데이터를 영구 저장이 필요할 때 사용할 수도 있다.
+  - 예를들어 JVM의 메모리에서만 상주되어있는 객체 데이터가 시스템이 종료되더라도 나중에 다시 재사용이 될수 있을때 영속화(Persistence)를 해두면 좋다.
+  - 이러한 특성을 살린 자바 직렬화는 다음과 같은 곳에서 응용되기도 한다.
+    - 서블릿 세션 (Servlet Session)
+      - 단순히 세션을 서블릿 메모리 위에서 운용한다면 직렬화를 필요로 하지 않지만, 만일 세션 데이터를 저장 & 공유가 필요할때 직렬화를 이용한다.
+      - 세션 데이터를 데이터베이스에 저장할 때 사용된다.
+      - 톰캣의 세션 클러스터링을 통해 각 서버간에 데이터 공유가 필요할 때 사용된다.
+    - 캐시 (Cache)
+      - 데이터베이스로부터 조회한 객체 데이터를 다른 모듈에서도 필요할때 재차 DB를 조회하는 것이 아닌, 객체를 직렬화하여 메모리나 외부 파일에 저장해 두었다가 역직렬화하여 사용하는 캐시 데이터로서 이용이 가능하다.
+    - 자바 RMI (Remote Method Invocation)
+      - 자바 RMI는 원격 시스템 간의 메시지 교환을 위해서 사용하는 자바에서 지원하는 기술이다.
+      - 이 메세지에 객체 데이터를 직렬화하여 송신하는 것이다.
+      - 최근에는 소켓을 이용하기 때문에 안쓰이는 기술이다.
+- 직렬화 사용법
+  - Serializable 인터페이스
+    - 우선 객체를 직렬화하기 위해선 java.io.Serializable 인터페이스를 implements 해야 된다. 그렇지 않으면 NotSerializableException 런타임 예외가 발생된다.
+  - ObjectOutputStream / ObjectInputStream 클래스
+    - 직렬화(스트림에 객체를 출력) 에는 ObjectOutputStream을 사용한다.
+    - 역직렬화(스트림으로부터 객체를 입력)에는 ObjectInputStream을 사용한다.
+- 자바 직렬화 버전 관리
+  - SerialVersionUID
+    - Serializable 인터페이스를 구현하는 모든 직렬화된 클래스는 serialVersionUID(이하 SUID) 이라는 고유 식별번호를 부여 받는다.
+    - 이 식별 ID는 클래스를 직렬화, 역직렬화 과정에서 동일한 특성을 갖는지 확인하는데 사용된다.
+    - 클래스 내부 구성이 수정될 경우, 기존에 직렬화한 SUID와 현재 클래스의 SUID 버전이 다르기 때문에 이를 인지하고 InvalidClassException 예외가 발생시켜 값 불일치 되는 현상을 미연에 방지할 수 있다.
+    - 위와 같은 특징으로 인해 클래스에 조그만한 변경사항이라도 있으면, 모든 사용자에게 재배포를 해야하는 애로사항이 있지만, serialVersionUID를 직접 명시해주어 클래스 버전을 수동으로 관리하게되면 이를 해결할 수 있다.
+- Ref.
 [인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EC%A7%81%EB%A0%AC%ED%99%94Serializable-%EC%99%84%EB%B2%BD-%EB%A7%88%EC%8A%A4%ED%84%B0%ED%95%98%EA%B8%B0)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>리플렉션(Reflection)</b></summary>
-
-> - **리플렉션이란?**
->   - 구체적인 클래스 타입을 알지 못하더라도 그 클래스의 메서드, 타입, 변수들에 접근할 수 있도록 해주는 자바 API이다.
->   - 컴파일 시간이 아닌 실행시간에 동적으로 클래스의 정보를 추출할 수 있는 프로그래밍 기법이다.
-> - **리플렉션의 사용용도**
->   - 리플렉션은 프레임워크나 라이브러리에서 주로 사용된다.   
-프레임워크나 라이브러리에서는 들어오는 클래스의 정보를 모르기 때문이다.   
-코드를 작성한 개발자는 당연히 내가 작성한 클래스의 정보를 알 수 있지만, 프레임워크 입장에서 보면 모르는게 당연하다.   
-이때, 리플렉션을 통해 런타임 시 클래스의 정보를 얻고 이를 기반으로 하여 프레임워크나 라이브러리가 지원하는 기능을 수행하는 것이다.   
-스프링의 주요 기능인 DI도 리플렉션의 원리가 들어있다.
-> - **리플렉션의 사용예시**
->   - 메서드를 직접 호출할 경우, 기능이 추가되면 조건식을 추가하기 위해 매번 코드를 변경해야한다는 단점이 있지만, 리플렉션을 사용할 경우 이러한 단점을 극복할 수 있다.
->   - ```java
->     import java.lang.reflect.Method;
->     
->     public class ReflectionEx {
->     
->         public static void main(String[] args) throws Exception {
->             Theme theme = new Theme();
->             String userSelectTheme = "Blue";
->     
->             // 직접 호출하는 경우 : 항목이 추가될 때마다 코드 변경이 필요하다.
->             if ("Blue".equals(userSelectTheme)) {
->                 theme.changeBlue(); // 파란 테마로 변경
->             } else if ("Red".equals(userSelectTheme)) {
->                 theme.changeRed(); // 빨간 테마로 변경
->             }
->     
->             // Reflection을 사용하는 경우 : 클래스나 메서드 정보를 동적으로 변경할 수 있다는 장점이 있다.
->             //                          '직접 호출하는 경우'와 다르게 메서드를 실행하는 로직을 공통으로 만들 수 있다.
->             Class clazz = Class.forName("basic.reflection.Theme");
->             Method method = clazz.getMethod("change" + userSelectTheme);
->             method.invoke(theme); // 파란 테마로 변경
->         }
->     
->     }
->     
->     class Theme {
->         public void changeBlue() {
->             System.out.println("파란 테마로 변경");
->         }
->     
->         public void changeRed() {
->             System.out.println("빨간 테마로 변경");
->         }
->     }
-> - **리플렉션의 장단점**
->   - 장점
->     - 유연성과 확장성
->       - 구체적인 클래스를 알지 못해도 동적으로 클래스를 만들어서 의존 관계를 맺어줄 수 있다.
->       - 개발 규모가 큰 스프링인 경우, 리플렉션을 이용한 Dynamic proxy를 통해서 @AutoWired, @Service, @Controller, @Repository와 같은 DI 어노테이션을 활용할 수 있다.
->     - 접근 제어자에 상관없이 테스트 가능
->       - 접근 제어자가 private이더라도 얼마든지 접근해서 조작할 수 있다.
->   - 단점
->     - 캡슐화 저해
->       - private한 데이터에도 접근이 가능하기 때문에 캡슐화가 깨질 위험성이 존재한다.
->     - 성능
->       - 런타임에 클래스를 분석하므로 속도가 느리다.
->     - 컴파일 시 타입 체크가 불가능
->       - 컴파일 시점이 아닌 런타임 시점에 에러가 발생하기 때문에 주의가 필요하다.
-
-Ref.
+## 리플렉션(Reflection)
+- 리플렉션이란?
+  - 구체적인 클래스 타입을 알지 못하더라도 그 클래스의 메서드, 타입, 변수들에 접근할 수 있도록 해주는 자바 API이다.
+  - 컴파일 시간이 아닌 실행시간에 동적으로 클래스의 정보를 추출할 수 있는 프로그래밍 기법이다.
+- 리플렉션의 사용용도**
+  - 리플렉션은 프레임워크나 라이브러리에서 주로 사용된다.   
+    프레임워크나 라이브러리에서는 들어오는 클래스의 정보를 모르기 때문이다.   
+    코드를 작성한 개발자는 당연히 내가 작성한 클래스의 정보를 알 수 있지만, 프레임워크 입장에서 보면 모르는게 당연하다.   
+    이때, 리플렉션을 통해 런타임 시 클래스의 정보를 얻고 이를 기반으로 하여 프레임워크나 라이브러리가 지원하는 기능을 수행하는 것이다.   
+    스프링의 주요 기능인 DI도 리플렉션의 원리가 들어있다.
+- 리플렉션의 사용예시
+  - 메서드를 직접 호출할 경우, 기능이 추가되면 조건식을 추가하기 위해 매번 코드를 변경해야한다는 단점이 있지만, 리플렉션을 사용할 경우 이러한 단점을 극복할 수 있다.
+  - ```java
+    import java.lang.reflect.Method;
+    
+    public class ReflectionEx {
+    
+        public static void main(String[] args) throws Exception {
+            Theme theme = new Theme();
+            String userSelectTheme = "Blue";
+    
+            // 직접 호출하는 경우 : 항목이 추가될 때마다 코드 변경이 필요하다.
+            if ("Blue".equals(userSelectTheme)) {
+                theme.changeBlue(); // 파란 테마로 변경
+            } else if ("Red".equals(userSelectTheme)) {
+                theme.changeRed(); // 빨간 테마로 변경
+            }
+    
+            // Reflection을 사용하는 경우 : 클래스나 메서드 정보를 동적으로 변경할 수 있다는 장점이 있다.
+            //                          '직접 호출하는 경우'와 다르게 메서드를 실행하는 로직을 공통으로 만들 수 있다.
+            Class clazz = Class.forName("basic.reflection.Theme");
+            Method method = clazz.getMethod("change" + userSelectTheme);
+            method.invoke(theme); // 파란 테마로 변경
+        }
+    
+    }
+    
+    class Theme {
+        public void changeBlue() {
+            System.out.println("파란 테마로 변경");
+        }
+    
+        public void changeRed() {
+            System.out.println("빨간 테마로 변경");
+        }
+    }
+    ```
+- 리플렉션의 장단점
+  - 장점
+    - 유연성과 확장성
+      - 구체적인 클래스를 알지 못해도 동적으로 클래스를 만들어서 의존 관계를 맺어줄 수 있다.
+      - 개발 규모가 큰 스프링인 경우, 리플렉션을 이용한 Dynamic proxy를 통해서 @AutoWired, @Service, @Controller, @Repository와 같은 DI 어노테이션을 활용할 수 있다.
+    - 접근 제어자에 상관없이 테스트 가능
+      - 접근 제어자가 private이더라도 얼마든지 접근해서 조작할 수 있다.
+  - 단점
+    - 캡슐화 저해
+      - private한 데이터에도 접근이 가능하기 때문에 캡슐화가 깨질 위험성이 존재한다.
+    - 성능
+      - 런타임에 클래스를 분석하므로 속도가 느리다.
+    - 컴파일 시 타입 체크가 불가능
+      - 컴파일 시점이 아닌 런타임 시점에 에러가 발생하기 때문에 주의가 필요하다.
+- Ref.
 [영암사는 승경이네](https://tlatmsrud.tistory.com/112)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>자바에서 멀티스레드 동기화 방법</b></summary>
-
-> - **Title**
->   - Content
-
-Ref.
-</details>
+## 자바에서 멀티스레드 동기화 방법
+- Title
+  - Content
+<br><br><br>
 
 
 
-<details>
-<summary><b>equals & hashCode</b></summary>
-
-> - **equals()**
->   - 두 참조 변수의 값이 같은지 다른지 동등 여부를 비교할 때 사용하는 메서드이다.
->   - 객체 비교에 있어서 equals() 메서드는 기본적으로 == 비교인 객체 주소를 비교한다.
->   - 즉, 값이 같은 두 개의 객체를 equals()로 비교하면, 값이 같더라도 주소 비교이기 때문에 false를 반환한다.
->   - 객체의 값을 기준으로 동등 비교를 하기 원한다면 equals()를 오버라이딩하여 주소 비교가 아닌 필드값을 비교하도록 변경해야한다.
->   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsEx.java)
-> - **hashCode()**
->   - 객체의 주소 값을 이용해서 해싱(hashing) 기법을 통해 해시 코드를 만든 후 반환한다.
->   - 해시코드는 주소값으로 기반으로 만든 고유한 숫자값이다. 이렇기 때문에 서로 다른 객체는 같은 해시 코드를 가질 수 없다.
->   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/HashCodeEx.java)
-> - **equals()와 hashCode() 재정의의 필요성**
->   - 앞서 equals()를 재정의하면 값이 같은 객체는 동등한 객체로 판단되는 것을 확인할 수 있었다.
->   - 하지만 equals() 재정의로는 부족하며, hashCode()도 같이 재정의가 필요하다.
->   - 그 이유는 Collection은 객체가 논리적으로 같은지 비교할 때 아래 그림과 같은 과정을 거치기 때문이다.
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
->   - 위의 과정을 기반으로 볼 때 equals()만 재정의하게 된다면, 값이 동일한 두 객체를 Set에 담을 경우, 중복제거가 되어 1개만 적재되기를 기대하겠지만 실제로는 2개의 객체가 모두 적재되는 상황이 발생할 것이다. 이는 hashCode가 다르기 때문에 서로 다른 객체로 판단되기 때문이다.
->   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsAndHashCodeEx.java)
-
-Ref.
+## equals & hashCode
+- equals()
+  - 두 참조 변수의 값이 같은지 다른지 동등 여부를 비교할 때 사용하는 메서드이다.
+  - 객체 비교에 있어서 equals() 메서드는 기본적으로 == 비교인 객체 주소를 비교한다.
+  - 즉, 값이 같은 두 개의 객체를 equals()로 비교하면, 값이 같더라도 주소 비교이기 때문에 false를 반환한다.
+  - 객체의 값을 기준으로 동등 비교를 하기 원한다면 equals()를 오버라이딩하여 주소 비교가 아닌 필드값을 비교하도록 변경해야한다.
+  - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsEx.java)
+- hashCode()
+  - 객체의 주소 값을 이용해서 해싱(hashing) 기법을 통해 해시 코드를 만든 후 반환한다.
+  - 해시코드는 주소값으로 기반으로 만든 고유한 숫자값이다. 이렇기 때문에 서로 다른 객체는 같은 해시 코드를 가질 수 없다.
+  - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/HashCodeEx.java)
+- equals()와 hashCode() 재정의의 필요성
+  - 앞서 equals()를 재정의하면 값이 같은 객체는 동등한 객체로 판단되는 것을 확인할 수 있었다.
+  - 하지만 equals() 재정의로는 부족하며, hashCode()도 같이 재정의가 필요하다.
+  - 그 이유는 Collection은 객체가 논리적으로 같은지 비교할 때 아래 그림과 같은 과정을 거치기 때문이다.
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
+  - 위의 과정을 기반으로 볼 때 equals()만 재정의하게 된다면, 값이 동일한 두 객체를 Set에 담을 경우, 중복제거가 되어 1개만 적재되기를 기대하겠지만 실제로는 2개의 객체가 모두 적재되는 상황이 발생할 것이다. 이는 hashCode가 다르기 때문에 서로 다른 객체로 판단되기 때문이다.
+  - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsAndHashCodeEx.java)
+- Ref.
 [인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-equals-hashCode-%EB%A9%94%EC%84%9C%EB%93%9C-%EA%B0%9C%EB%85%90-%ED%99%9C%EC%9A%A9-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>Call by value ve Call by Reference</b></summary>
-
-> - **Call by Value**
->   - 값에 의한 호출을 의미한다.
->   - 전달받은 값을 복사하여 처리하기 때문에 전달받은 값을 변경하여도 원본의 값은 변경되지 않는다.
-> - **Call by Reference**
->   - 참조에 의한 호출을 의미한다.
->   - 전달받은 값을 직접 참조하기 때문에 전달받은 값을 변경하면 원본도 같이 변경된다.
-
-Ref.
+## Call by value ve Call by Reference
+- Call by Value
+  - 값에 의한 호출을 의미한다.
+  - 전달받은 값을 복사하여 처리하기 때문에 전달받은 값을 변경하여도 원본의 값은 변경되지 않는다.
+- Call by Reference
+  - 참조에 의한 호출을 의미한다.
+  - 전달받은 값을 직접 참조하기 때문에 전달받은 값을 변경하면 원본도 같이 변경된다.
+- Ref.
 [그릿 속의 해빗](https://loosie.tistory.com/486)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>String 메모리 관점</b></summary>
-
-> - **Title**
->   - Content
-
-Ref.
+## String 메모리 관점
+- Title
+  - Content
+- Ref.
 [2JINISHAPPY](https://2jinishappy.tistory.com/293)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>블락킹과 논블락킹, 동기식과 비동기식</b></summary>
-
-> - **Title**
->   - Content
-
-Ref.
+## 블락킹과 논블락킹, 동기식과 비동기식
+- Title
+  - Content
+- Ref.
 [유진](https://velog.io/@nittre/%EB%B8%94%EB%A1%9C%ED%82%B9-Vs.-%EB%85%BC%EB%B8%94%EB%A1%9C%ED%82%B9-%EB%8F%99%EA%B8%B0-Vs.-%EB%B9%84%EB%8F%99%EA%B8%B0)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>Thread-safe</b></summary>
-
-> - **Title**
->   - Content
-
-Ref.
+## Thread-safe
+- Title
+  - Content
+- Ref.
 [mangoo.log](https://velog.io/@mangoo/java-thread-safety)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>어노테이션</b></summary>
-
-> - **Title**
->   - Content
-
-Ref.
+## 어노테이션
+- Title
+  - Content
+- Ref.
 [algml070](https://mihee0703.tistory.com/207)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>상속과 합성</b></summary>
-
-> - **상속(Inheritance)과 합성(Composition)**
->   - 상속과 합성은 객체지향 프로그래밍에서 가장 널리 사용되는 코드 재사용 기법이다.
->   - 상속
->     - 상속이란 부모 클래스의 기능을 자식 클래스에서 재사용하는 것을 말한다.
->     - 코드의 중복을 줄이고, 재사용성을 높이기 위해 자바에서 사용하는 기능이다.
->     - is-a 관계
->   - 합성
->     - 합성이란 기능을 가진 객체 여러개를 묶어서 조합한 것을 말한다.
->     - 상속에 의해 코드를 재사용하는 것 대신, 객체의 기능을 호출하는 방식을 통해 코드를 재사용하는 것이다.
->     - has-a 관계
-> - **상속의 문제점**
->   - 결합도가 높아짐
->     - 부모 클래스와 자식 클래스의 관계가 컴파일 시점에 결정되어 결합도가 높아진다.
->   - 불필요한 기능 상속
->     - 부모 클래스에 메소드를 추가했을 때, 자식 클래스에는 적합하지 않는 메소드가 상속되는 문제가 발생할 수 있다.
->   - 부모 클래스의 기능 변경에 의한 자식 클래스의 영향도
->     - 부모 클래스의 기능을 자식 클래스에서 그대로 사용하고 있는 경우, 부모의 기능이 변경되면 자식 클래스에도 영향을 미친다.
->     - 부모 클래스의 메서드를 재정의하였는데 해당 메서드의 매개변수나 리턴타입이 변경된 경우, 자식 클래스에서 대응하여 변경을 해줘야한다.
->   - 단일 상속의 한계
->     - 자바에서는 클래스 다중 상속을 허용하지 않는다.
->     - 만약 이미 상속 중인데 추가 상속이 필요하다면, 클래스를 다시 나누어서 구성해야하는데 결국 클래스 폭발로 이어지게 된다.
-> - **합성을 사용해야하는 이유**
->   - 상속 관계는 변경이 불가능하지만(컴파일 타임), 합성 관계는 실행 시점에 동적으로 변경할 수 있다(런타임).
->   - 구현에 대한 의존성을 인터페이스에 대한 의존성으로 변경하여 결합도를 낮출 수 있다.
->   - 단일 상속 문제가 해소된다.
-
-Ref.
+## 상속과 합성
+- 상속(Inheritance)과 합성(Composition)
+  - 상속과 합성은 객체지향 프로그래밍에서 가장 널리 사용되는 코드 재사용 기법이다.
+  - 상속
+    - 상속이란 부모 클래스의 기능을 자식 클래스에서 재사용하는 것을 말한다.
+    - 코드의 중복을 줄이고, 재사용성을 높이기 위해 자바에서 사용하는 기능이다.
+    - is-a 관계
+  - 합성
+    - 합성이란 기능을 가진 객체 여러개를 묶어서 조합한 것을 말한다.
+    - 상속에 의해 코드를 재사용하는 것 대신, 객체의 기능을 호출하는 방식을 통해 코드를 재사용하는 것이다.
+    - has-a 관계
+- 상속의 문제점
+  - 결합도가 높아짐
+    - 부모 클래스와 자식 클래스의 관계가 컴파일 시점에 결정되어 결합도가 높아진다.
+  - 불필요한 기능 상속
+    - 부모 클래스에 메소드를 추가했을 때, 자식 클래스에는 적합하지 않는 메소드가 상속되는 문제가 발생할 수 있다.
+  - 부모 클래스의 기능 변경에 의한 자식 클래스의 영향도
+    - 부모 클래스의 기능을 자식 클래스에서 그대로 사용하고 있는 경우, 부모의 기능이 변경되면 자식 클래스에도 영향을 미친다.
+    - 부모 클래스의 메서드를 재정의하였는데 해당 메서드의 매개변수나 리턴타입이 변경된 경우, 자식 클래스에서 대응하여 변경을 해줘야한다.
+  - 단일 상속의 한계
+    - 자바에서는 클래스 다중 상속을 허용하지 않는다.
+    - 만약 이미 상속 중인데 추가 상속이 필요하다면, 클래스를 다시 나누어서 구성해야하는데 결국 클래스 폭발로 이어지게 된다.
+- 합성을 사용해야하는 이유
+  - 상속 관계는 변경이 불가능하지만(컴파일 타임), 합성 관계는 실행 시점에 동적으로 변경할 수 있다(런타임).
+  - 구현에 대한 의존성을 인터페이스에 대한 의존성으로 변경하여 결합도를 낮출 수 있다.
+  - 단일 상속 문제가 해소된다.
+- Ref.
 [Manta Ray's](https://mantaray.tistory.com/69)
-</details>
+<br><br><br>
 
 
 
