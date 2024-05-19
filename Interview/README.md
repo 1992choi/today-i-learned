@@ -1005,298 +1005,268 @@
 
 
 # Web
-<details>
-<summary><b>JSP vs Servlet</b></summary>
-
-> - **JSP**
->   - html 내에 자바코드를 블록화하여 삽입한 것.
->   - JAVA in Html.
-> - **Servlet**
->   - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
->   - Html in JAVA.
-
-Ref.
+## JSP vs Servlet
+- JSP
+  - html 내에 자바코드를 블록화하여 삽입한 것.
+  - JAVA in Html.
+- Servlet
+  - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
+  - Html in JAVA.
+- Ref.
 [effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>Session과 Cookie</b></summary>
- 
-> - **Session**
->   - 저장위치 : 웹 서버
->   - 브라우저를 종료하거나, 서버에서 세션을 삭제했을 때 삭제된다.
->   - 각 클라이언트에 고유 Session ID를 부여하고, 이 Session ID로 클라이언트를 구분한다.
->   - 동작순서
->     1. 클라이언트가 페이지를 요청한다.
->     2. 서버는 접근한 클라이언트의 Request-Header 필드인 Cookie를 확인하고, 클라이언트가 해당 Session ID를 보냈는지 확인한다.
->     3. Session ID가 존재하지 않는다면, 서버는 Session ID를 생성한 후 클라이언트에게 전달한다.
->     4. 서버에서 클라이언트로 돌려준 Session ID를 쿠키로 사용하여 서버에 저장한다.
->     5. 클라이언트 접속 시, 세션 쿠키를 이용하여 Session ID 값을 서버에 전달한다.
-> - **Cookie**
->   - 저장위치 : 클라이언트(=접속자 PC)
->   - 사용자 인증이 유효한 시간을 명시할 수 있으며, 유효 시간이 정해지면 브라우저가 종료되어도 인증이 유지된다.
->   - 동작순서
->     1. 클라이언트가 페이지를 요청한다.
->     2. 웹 서버는 쿠키를 생성하고 정보를 담은 후 HTTP 화면을 돌려줄 때 같이 클라이언트에게 반환한다.
->     3. 클라이언트가 이후 서버에 요청할 때 요청과 함께 쿠키를 전송한다.
->     4. 동일 사이트 재방문 시, 클라이언트의 PC에 해당 쿠키가 있을 경우 요청 페이지와 함께 쿠키를 전송한다.
-
-Ref.
+## Session과 Cookie
+- Session
+  - 저장위치 : 웹 서버
+  - 브라우저를 종료하거나, 서버에서 세션을 삭제했을 때 삭제된다.
+  - 각 클라이언트에 고유 Session ID를 부여하고, 이 Session ID로 클라이언트를 구분한다.
+  - 동작순서
+    1. 클라이언트가 페이지를 요청한다.
+    2. 서버는 접근한 클라이언트의 Request-Header 필드인 Cookie를 확인하고, 클라이언트가 해당 Session ID를 보냈는지 확인한다.
+    3. Session ID가 존재하지 않는다면, 서버는 Session ID를 생성한 후 클라이언트에게 전달한다.
+    4. 서버에서 클라이언트로 돌려준 Session ID를 쿠키로 사용하여 서버에 저장한다.
+    5. 클라이언트 접속 시, 세션 쿠키를 이용하여 Session ID 값을 서버에 전달한다.
+- Cookie
+  - 저장위치 : 클라이언트(=접속자 PC)
+  - 사용자 인증이 유효한 시간을 명시할 수 있으며, 유효 시간이 정해지면 브라우저가 종료되어도 인증이 유지된다.
+  - 동작순서
+    1. 클라이언트가 페이지를 요청한다.
+    2. 웹 서버는 쿠키를 생성하고 정보를 담은 후 HTTP 화면을 돌려줄 때 같이 클라이언트에게 반환한다.
+    3. 클라이언트가 이후 서버에 요청할 때 요청과 함께 쿠키를 전송한다.
+    4. 동일 사이트 재방문 시, 클라이언트의 PC에 해당 쿠키가 있을 경우 요청 페이지와 함께 쿠키를 전송한다.
+- Ref.
 [bolee](https://velog.io/@octo__/%EC%BF%A0%ED%82%A4Cookie-%EC%84%B8%EC%85%98Session)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>Framework vs Library</b></summary>
-
-> - **Framework**
->   - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
-> - **Library**
->   - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
-
-Ref.
+## Framework vs Library
+- Framework
+  - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
+- Library
+  - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
+- Ref.
 [Coding Planet](https://sharonprogress.tistory.com/169)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 개념</b></summary>
-
-> - **스프링이란?**
->   - 자바 엔터프라이즈 개발을 편하게 해주는 오픈소스 경량급 애플리케이션 프레임워크
-> - **특징**
->   - 경량 컨테이너로서 자바 객체를 직접 관리한다.
->     - 객체 생성, 소멸과 같은 라이프 사이클을 관리하며 스프링으로부터 필요한 객체를 얻어올 수 있다.
->   - 스프링은 Plain Old Java Object 방식의 프레임워크이다.
->     - 일반적인 J2EE 프레임워크에 비해 구현을 위해 특정한 인터페이스를 구현하거나 상속을 받을 필요가 없어 기존에 존재하는 라이브러리 등을 지원하기에 용이하고 객체가 가볍다.
->   - 스프링은 제어 반전(IoC : Inversion of Control)을 지원한다.
->     - 컨트롤의 제어권이 사용자가 아니라 프레임워크에 있어서 필요에 따라 스프링에서 사용자의 코드를 호출한다.
->   - 스프링은 의존성 주입(DI : Dependency Injection)을 지원한다.
->     - 각각의 계층이나 서비스들 간에 의존성이 존재할 경우 프레임워크가 서로 연결시켜준다.
->   - 스프링은 관점 지향 프로그래밍(AOP : Aspect-Oriented Programming)을 지원한다.
->     - 트랜잭션이나 로깅, 보안과 같이 여러 모듈에서 공통적으로 사용하는 기능의 경우 해당 기능을 분리하여 관리할 수 있다.
-> - **스프링 구조**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
-
-Ref.
+## 스프링 개념
+- 스프링이란?
+  - 자바 엔터프라이즈 개발을 편하게 해주는 오픈소스 경량급 애플리케이션 프레임워크
+- 특징
+    - 경량 컨테이너로서 자바 객체를 직접 관리한다.
+    - 객체 생성, 소멸과 같은 라이프 사이클을 관리하며 스프링으로부터 필요한 객체를 얻어올 수 있다.
+  - 스프링은 Plain Old Java Object 방식의 프레임워크이다.
+    - 일반적인 J2EE 프레임워크에 비해 구현을 위해 특정한 인터페이스를 구현하거나 상속을 받을 필요가 없어 기존에 존재하는 라이브러리 등을 지원하기에 용이하고 객체가 가볍다.
+  - 스프링은 제어 반전(IoC : Inversion of Control)을 지원한다.
+    - 컨트롤의 제어권이 사용자가 아니라 프레임워크에 있어서 필요에 따라 스프링에서 사용자의 코드를 호출한다.
+  - 스프링은 의존성 주입(DI : Dependency Injection)을 지원한다.
+    - 각각의 계층이나 서비스들 간에 의존성이 존재할 경우 프레임워크가 서로 연결시켜준다.
+  - 스프링은 관점 지향 프로그래밍(AOP : Aspect-Oriented Programming)을 지원한다.
+    - 트랜잭션이나 로깅, 보안과 같이 여러 모듈에서 공통적으로 사용하는 기능의 경우 해당 기능을 분리하여 관리할 수 있다.
+- 스프링 구조
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/5)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 MVC</b></summary>
-
-> - **스프링 MVC란?**
->   - MVC 패턴에 기반을 둔 웹 프레임워크이다.
-> - **MVC 패턴**
->   - Model, View, Controller의 약자이며, 클라이언트와 상호작용하는 소프트웨어를 설계함에 있어서 세 가지 요소로 나누어 설계하는 것을 뜻한다.
->     - Model
->       - Model은 애플리케이션의 정보, 데이터의 가공을 책임지며 데이터베이스와 상호작용하여 비즈니스 로직을 처리하는 모듈.
->       - 즉, 컴포넌트를 뜻한다.
->     - View
->       - View는 클라이언트 단에서 보여지는 결과화면을 반환하는 모듈.
->       - 즉, 사용자 인터페이스 요소를 뜻한다.
->     - Controller
->       - Controller는 클라이언트로부터 요청이 들어왔을 때, 어떤 로직을 실행시킬 것인지 판단하며 Model(모델)과 View(뷰)를 연결해주며 제어하는 모듈.
-> - **스프링 MVC의 구성요소와 동작순서**
->   ![image](https://github.com/Young-Geun/TIL/assets/27760576/e675f1ab-e106-415c-a02a-df22a2bf5112)
->   - 구성요소
->     - Dispatcher Servlet
->       - 클라이언트의 요청을 받아 컨트롤러에게 전달한다.
->       - 컨트롤러가 리턴한 결과값을 View에 전달한다.
->     - Handler Mapping
->       - 클라이언트의 요청 URL을 확인하여 요청을 처리할 컨트롤러를 결정한다.
->     - Handler Adapter
->       - DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달한다.
->     - Controller
->       - 클라이언트의 요청에 대한 처리를 하고 결과를 리턴한다.
->     - ModelAndView
->       - 컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보를 담고 있다.
->     - View Resolver
->       - 컨트롤러의 처리 결과를 생성할 뷰를 결정한다.
->     - View
->       - 컨트롤러의 처리 결과를 보여줄 화면을 생성한다.
->   - 동작순서
->     - 1.클라이언트로부터 요청이 발생하면 모든 요청은 Dispatcher Servlet으로 전달된다.
->     - 2.요청에 대하여 Handler Mapping은 처리를 할 Controller가 있는지 탐색한다. 
->     - 3.Controller가 결정되면 Dispatcher Servlet은 Handler Adaptor에게 요청 처리를 위임한다.
->     - 4.Handler Adaptor에 의해서 컨트롤러가 호출되고 비즈니스 로직이 수행된다. 
->     - 5.Controller는 비즈니스 로직을 처리하고 그 결과를 Model객체에 저장하여 View 페이지명과 함께 응답한다. 
->     - 6.Dispatcher Servlet은 view name을 View Resolver에게 전달하여 View 객체를 얻는다.
->     - 7.View를 호출하면 템플릿 엔진이 동작하여 HTML을 구성한다.
->     - 8.최종적으로 View의 내용이 클라이언트에게 전달된다.
-
-Ref.
+## 스프링 MVC
+- 스프링 MVC란?
+  - MVC 패턴에 기반을 둔 웹 프레임워크이다.
+- MVC 패턴
+  - Model, View, Controller의 약자이며, 클라이언트와 상호작용하는 소프트웨어를 설계함에 있어서 세 가지 요소로 나누어 설계하는 것을 뜻한다.
+    - Model
+      - Model은 애플리케이션의 정보, 데이터의 가공을 책임지며 데이터베이스와 상호작용하여 비즈니스 로직을 처리하는 모듈.
+      - 즉, 컴포넌트를 뜻한다.
+    - View
+      - View는 클라이언트 단에서 보여지는 결과화면을 반환하는 모듈.
+      - 즉, 사용자 인터페이스 요소를 뜻한다.
+    - Controller
+      - Controller는 클라이언트로부터 요청이 들어왔을 때, 어떤 로직을 실행시킬 것인지 판단하며 Model(모델)과 View(뷰)를 연결해주며 제어하는 모듈.
+- 스프링 MVC의 구성요소와 동작순서
+  ![image](https://github.com/Young-Geun/TIL/assets/27760576/e675f1ab-e106-415c-a02a-df22a2bf5112)
+  - 구성요소
+    - Dispatcher Servlet
+      - 클라이언트의 요청을 받아 컨트롤러에게 전달한다.
+      - 컨트롤러가 리턴한 결과값을 View에 전달한다.
+    - Handler Mapping
+      - 클라이언트의 요청 URL을 확인하여 요청을 처리할 컨트롤러를 결정한다.
+    - Handler Adapter
+      - DispatcherServlet의 처리 요청을 변환해서 컨트롤러에게 전달한다.
+    - Controller
+      - 클라이언트의 요청에 대한 처리를 하고 결과를 리턴한다.
+    - ModelAndView
+      - 컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보를 담고 있다.
+    - View Resolver
+      - 컨트롤러의 처리 결과를 생성할 뷰를 결정한다.
+    - View
+      - 컨트롤러의 처리 결과를 보여줄 화면을 생성한다.
+  - 동작순서
+    - 1.클라이언트로부터 요청이 발생하면 모든 요청은 Dispatcher Servlet으로 전달된다.
+    - 2.요청에 대하여 Handler Mapping은 처리를 할 Controller가 있는지 탐색한다. 
+    - 3.Controller가 결정되면 Dispatcher Servlet은 Handler Adaptor에게 요청 처리를 위임한다.
+    - 4.Handler Adaptor에 의해서 컨트롤러가 호출되고 비즈니스 로직이 수행된다. 
+    - 5.Controller는 비즈니스 로직을 처리하고 그 결과를 Model객체에 저장하여 View 페이지명과 함께 응답한다. 
+    - 6.Dispatcher Servlet은 view name을 View Resolver에게 전달하여 View 객체를 얻는다.
+    - 7.View를 호출하면 템플릿 엔진이 동작하여 HTML을 구성한다.
+    - 8.최종적으로 View의 내용이 클라이언트에게 전달된다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/6)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 DI</b></summary>
-
-> - **DI란?**
->   - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
-> - **의존관계 주입 방법**
->   1. 필드 주입
->   2. 수정자 주입(= Setter 주입)
->   3. 생성자 주입
-> - **장점**
->   - 코드의 재사용성, 유연성이 높아진다.
->   - 객체 간 결합도가 낮기 때문에 한 클래스를 수정했을 때, 다른 클래스도 수정해야 하는 상황을 막아준다.
->   - 유지보수가 쉬워지며, 테스트가 용이해진다.
->   - 확장성을 가진다.
-
-Ref.
+## 스프링 DI
+- DI란?
+  - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
+- 의존관계 주입 방법
+  1. 필드 주입
+  2. 수정자 주입(= Setter 주입)
+  3. 생성자 주입
+- 장점
+  - 코드의 재사용성, 유연성이 높아진다.
+  - 객체 간 결합도가 낮기 때문에 한 클래스를 수정했을 때, 다른 클래스도 수정해야 하는 상황을 막아준다.
+  - 유지보수가 쉬워지며, 테스트가 용이해진다.
+  - 확장성을 가진다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/13)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 IoC</b></summary>
-
-> - **IoC (Inversion of Control)란?**
->   - Bean의 생성과 의존 관계 설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 스프링 컨테이너가 담당한 관리하는 것을 뜻한다.
->   - 즉, 객체를 제어하고 관리하는 역할이 개발자로부터 스프링 컨테이너로 역전된다는 뜻이다.
-> - **Bean과 스프링 컨테이너**
->   - Bean
->     - 스프링 컨테이너가 관리하는 자바 객체를 뜻한다.
->   - 스프링 컨테이너
->     - 스프링에서 빈(Bean)을 관리하는 공간을 뜻한다.
->     - 스프링 컨테이너는 IoC 컨테이너 혹은 DI 컨테이너라고도 불리는데, 이는 스프링 컨테이너가 IoC 혹은 DI를 도맡아 진행하기 때문이다.
->     - 스프링 컨테이너는 크게 두 종류(BeanFactory, ApplicationContext)로 나눌 수 있다.
->     - ApplicationContext 컨테이너가 BeanFactory의 기능을 포괄하면서 추가적인 기능을 제공하기 때문에 대부분의 경우에는 ApplicationContext를 사용한다.
->       - BeanFactory와 ApplicationContext 관계
->         ![image](https://github.com/Young-Geun/TIL/assets/27760576/846e9d7f-aa86-464f-8628-560cc2ac2b8a)
->       - BeanFactory
->         - 스프링 컨테이너의 최상위 인터페이스이다.
->         - 스프링 빈을 관리하고 조회하는 역할을 담당한다.
->       - ApplicationContext
->         - BeanFactory 기능을 모두 상속받아서 제공한다.
->         - 다음과 같은 부가기능들을 제공한다.
->           1. 메시지 소스를 활용한 국제화 기능
->           2. 환경변수 - 로컬, 개발, 운영 등을 구분해서 처리
->           3. 애플리케이션 이벤트 관리
->           4. 편리한 리소스 조회
-> - **IoC 사용 이점**
->   - 의존성 관리를 IoC 컨테이너가 하므로 개발자는 비즈니스 로직에만 신경을 쓰면 된다.
->   - 객체의 생성과 소멸 등 생명주기를 관리해주므로 메모리를 효율적으로 사용할 수 있다.
->   - 라이프사이클 인터페이스를 이용하여 원하는 작업을 할 수 있다.
-
-Ref.
+## 스프링 IoC
+- IoC (Inversion of Control)란?
+  - Bean의 생성과 의존 관계 설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 스프링 컨테이너가 담당한 관리하는 것을 뜻한다.
+  - 즉, 객체를 제어하고 관리하는 역할이 개발자로부터 스프링 컨테이너로 역전된다는 뜻이다.
+- Bean과 스프링 컨테이너
+  - Bean
+    - 스프링 컨테이너가 관리하는 자바 객체를 뜻한다.
+  - 스프링 컨테이너
+    - 스프링에서 빈(Bean)을 관리하는 공간을 뜻한다.
+    - 스프링 컨테이너는 IoC 컨테이너 혹은 DI 컨테이너라고도 불리는데, 이는 스프링 컨테이너가 IoC 혹은 DI를 도맡아 진행하기 때문이다.
+    - 스프링 컨테이너는 크게 두 종류(BeanFactory, ApplicationContext)로 나눌 수 있다.
+    - ApplicationContext 컨테이너가 BeanFactory의 기능을 포괄하면서 추가적인 기능을 제공하기 때문에 대부분의 경우에는 ApplicationContext를 사용한다.
+      - BeanFactory와 ApplicationContext 관계
+        ![image](https://github.com/Young-Geun/TIL/assets/27760576/846e9d7f-aa86-464f-8628-560cc2ac2b8a)
+      - BeanFactory
+        - 스프링 컨테이너의 최상위 인터페이스이다.
+        - 스프링 빈을 관리하고 조회하는 역할을 담당한다.
+      - ApplicationContext
+        - BeanFactory 기능을 모두 상속받아서 제공한다.
+        - 다음과 같은 부가기능들을 제공한다.
+          1. 메시지 소스를 활용한 국제화 기능
+          2. 환경변수 - 로컬, 개발, 운영 등을 구분해서 처리
+          3. 애플리케이션 이벤트 관리
+          4. 편리한 리소스 조회
+- IoC 사용 이점
+  - 의존성 관리를 IoC 컨테이너가 하므로 개발자는 비즈니스 로직에만 신경을 쓰면 된다.
+  - 객체의 생성과 소멸 등 생명주기를 관리해주므로 메모리를 효율적으로 사용할 수 있다.
+  - 라이프사이클 인터페이스를 이용하여 원하는 작업을 할 수 있다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/14)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 AOP</b></summary>
-
-> - **AOP(Aspect Oriented Programming)란?**
->   - Aspect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다.
->   - 흩어진 관심사(Crosscutting Concerns)를 모듈화하여 제공하는 프로그래밍 기법이다.
-> - **AOP 핵심 용어**
->   - Aspect
->     - 여러 핵심 기능에 적용될 관심사 모듈을 뜻한다.
->     - Aspect는 구체적인 기능을 구현한 Advice와 Advice가 어디에서 적용될지를 결정하는 PointCut의 포괄적인 개념이다.
->   - JoinPoint
->     - 추상적인 개념으로 Advice가 적용될 수 있는 모든 위치를 뜻한다.
->     - 애플리케이션의 어떤 지점에 AOP를 사용하여 추가적인 로직을 삽입할 지 정의한다.
->   - Advice
->     - JoinPoint에서 실행되는 코드를 말한다.
->     - 로그 출력이나 트랜잭션 관리 등의 코드가 기술된다.
->   - Target
->     - Aspect를 적용할 대상을 뜻한다.
->     - 적용 방식에 따라 클래스, 메서드 등이 될 수 있다.
->   - Pointcut
->     - JoinPoint 중에서 Advice가 적용될 위치를 선별하는 기능이다.
->     - 이를통해 메서드명에 'service' 라는 문자열이 있을때만 어드바이스를 호출되도록 기술하는 것이 가능해진다.
->   - Advisor
->     - 스프링 AOP에서만 사용되는 용어로 Advice + Pointcut 한 쌍을 일컫는다.
->   - Weaving
->     - Pointcut으로 결정한 타겟의 JoinPoint에 Advice를 적용하는 것을 뜻한다.
-> - **적용방식**
->   - 컴파일 시점
->     - .java 파일을 컴파일러를 통해 .class를 만드는 시점에 부가 기능 로직을 추가하는 방식이다.
->     - 모든 지점에 적용 가능하다.
->     - AspectJ가 제공하는 특별한 컴파일러를 사용해야 하기 때문에 특별할 컴파일러가 필요한 점과 복잡하다는 단점이 있다.
->   - 클래스 로딩 시점
->     - .class 파일을 JVM 내부의 클래스 로더에 보관하기 전에 조작하여 부가 기능 로직 추가하는 방식이다.
->     - 모든 지점에 적용 가능하다.
->     - 특별한 옵션과 클래스 로더 조작기를 지정해야하므로 운영하기 까다롭다.
->   - 런타임 시점
->     - 스프링이 사용하는 방식으로 컴파일이 끝나고 클래스 로더에 이미 다 올라가 자바가 실행된 다음에 동작하는 런타임 방식이다.
->     - 실제 대상 코드는 그대로 유지되고 프록시를 통해 부가 기능이 적용된다.
->     - 프록시는 메서드 오버라이딩 개념으로 동작하기 때문에 메서드에만 적용 가능하다.
->     - 특정 컴파일러, 복잡한 옵션, 클래스 로더 조작기 등을 사용하지 않아도 스프링만 있으면 AOP를 적용할 수 있다.
-> - **스프링 AOP 특징**
->   - 순수 자바로 구현되었기 때문에 특별한 컴파일 과정이 필요하지 않다.
->   - 프록시 기반 AOP를 지원한다.
->   - Spring AOP는 메서드 조인 포인트만 지원한다.
-> - **스프링 AOP Advice 종류**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2c3dae3f-f8b6-4f69-b5ec-c54e52a16b29)
->   - @Before
->     - JointPoint가 실행되기 이전 시점에 실행된다.
->   - @After
->     - JointPoint의 정상 완료 여부에 상관없이 항상 실행된다.
->   - @AfterRetruning
->     - JointPoint가 정상 완료된 후 실행된다.
->   - @Around
->     - 메서드 호출 전후에 실행된다.
->   - @AfterThrowing
->     - 메서드가 예외를 던지는 경우 실행된다.
-> - **장점**
->   - 중복된 코드를 최대한 제외하여 기능이 필요할 때만 호출하여 쓰기 때문에 재사용성이 높다.
->   - 애플리케이션 전체에 흩어진 공통 기능이 하나의 장소에서 관리되어 보다 유지보수가 수월하다.
->   - 핵심 로직과 부가 기능의 명확한 분리로, 개발자는 핵심 로직에 집중할 수 있게 된다.
-
-Ref.
+## 스프링 AOP
+- AOP(Aspect Oriented Programming)란?
+  - Aspect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다.
+  - 흩어진 관심사(Crosscutting Concerns)를 모듈화하여 제공하는 프로그래밍 기법이다.
+- AOP 핵심 용어
+  - Aspect
+    - 여러 핵심 기능에 적용될 관심사 모듈을 뜻한다.
+    - Aspect는 구체적인 기능을 구현한 Advice와 Advice가 어디에서 적용될지를 결정하는 PointCut의 포괄적인 개념이다.
+  - JoinPoint
+    - 추상적인 개념으로 Advice가 적용될 수 있는 모든 위치를 뜻한다.
+    - 애플리케이션의 어떤 지점에 AOP를 사용하여 추가적인 로직을 삽입할 지 정의한다.
+  - Advice
+    - JoinPoint에서 실행되는 코드를 말한다.
+    - 로그 출력이나 트랜잭션 관리 등의 코드가 기술된다.
+  - Target
+    - Aspect를 적용할 대상을 뜻한다.
+    - 적용 방식에 따라 클래스, 메서드 등이 될 수 있다.
+  - Pointcut
+    - JoinPoint 중에서 Advice가 적용될 위치를 선별하는 기능이다.
+    - 이를통해 메서드명에 'service' 라는 문자열이 있을때만 어드바이스를 호출되도록 기술하는 것이 가능해진다.
+  - Advisor
+    - 스프링 AOP에서만 사용되는 용어로 Advice + Pointcut 한 쌍을 일컫는다.
+  - Weaving
+    - Pointcut으로 결정한 타겟의 JoinPoint에 Advice를 적용하는 것을 뜻한다.
+- 적용방식
+  - 컴파일 시점
+    - .java 파일을 컴파일러를 통해 .class를 만드는 시점에 부가 기능 로직을 추가하는 방식이다.
+    - 모든 지점에 적용 가능하다.
+    - AspectJ가 제공하는 특별한 컴파일러를 사용해야 하기 때문에 특별할 컴파일러가 필요한 점과 복잡하다는 단점이 있다.
+  - 클래스 로딩 시점
+    - .class 파일을 JVM 내부의 클래스 로더에 보관하기 전에 조작하여 부가 기능 로직 추가하는 방식이다.
+    - 모든 지점에 적용 가능하다.
+    - 특별한 옵션과 클래스 로더 조작기를 지정해야하므로 운영하기 까다롭다.
+  - 런타임 시점
+    - 스프링이 사용하는 방식으로 컴파일이 끝나고 클래스 로더에 이미 다 올라가 자바가 실행된 다음에 동작하는 런타임 방식이다.
+    - 실제 대상 코드는 그대로 유지되고 프록시를 통해 부가 기능이 적용된다.
+    - 프록시는 메서드 오버라이딩 개념으로 동작하기 때문에 메서드에만 적용 가능하다.
+    - 특정 컴파일러, 복잡한 옵션, 클래스 로더 조작기 등을 사용하지 않아도 스프링만 있으면 AOP를 적용할 수 있다.
+- 스프링 AOP 특징
+  - 순수 자바로 구현되었기 때문에 특별한 컴파일 과정이 필요하지 않다.
+  - 프록시 기반 AOP를 지원한다.
+  - Spring AOP는 메서드 조인 포인트만 지원한다.
+- 스프링 AOP Advice 종류
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2c3dae3f-f8b6-4f69-b5ec-c54e52a16b29)
+  - @Before
+    - JointPoint가 실행되기 이전 시점에 실행된다.
+  - @After
+    - JointPoint의 정상 완료 여부에 상관없이 항상 실행된다.
+  - @AfterRetruning
+    - JointPoint가 정상 완료된 후 실행된다.
+  - @Around
+    - 메서드 호출 전후에 실행된다.
+  - @AfterThrowing
+    - 메서드가 예외를 던지는 경우 실행된다.
+- 장점
+  - 중복된 코드를 최대한 제외하여 기능이 필요할 때만 호출하여 쓰기 때문에 재사용성이 높다.
+  - 애플리케이션 전체에 흩어진 공통 기능이 하나의 장소에서 관리되어 보다 유지보수가 수월하다.
+  - 핵심 로직과 부가 기능의 명확한 분리로, 개발자는 핵심 로직에 집중할 수 있게 된다.
+- Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/17)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 PSA</b></summary>
-
-> - **PSA(Portable Service Abstraction)란?**
->   - 일관성 있는 서비스 추상화를 뜻한다.
->   - 추상화를 통해 하위 시스템을 알지 못하거나 변경이 있더라도 일관된 방식으로 접근할 수 있게 한다.
->   - 스프링에서의 대표적 PSA 예로는 트랜잭션이 있다.
-> - **스프링의 트랜잭션 추상화 계층**
->   - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2b9889f3-3921-44b7-9243-1ae3763c576e)
->   - 스프링에서는 위의 그림과 같이 'JDBC/Connection', 'JTA/UserTransaction', 'Hibernate/Transaction' 등 다양한 트랜잭션 기능을 제공하고 있다.   
->   - 개발자는 DB와 관련된 기능 개발 시, DB접근 기술에 따라 알맞은 트랜잭션 기술을 선택해야한다.   
-만약 DB접근 기술이 바뀐다면 변경된 기술에 맞는 트랜잭션으로 변경이 필요하다.   
-하지만 PSA가 접목되어 있다면 DB접근 기술과 관계없이 일관된 방식으로 트랜잭션을 제어할 수 있다.
->   - Ex) @Transactional은 각 각의 TransactionManager를 구현하고 있는 것이 아니라 최상위 PlatformTransactionManager를 사용하여 필요한 TransactionManager를 DI로 주입받아 사용한다. 이 때문에 @Transactional을 사용하여 트랜잭션을 관리할 경우, DB접근 기술이 JDBC에서 JPA로 변경되어도 트랜잭션에 대한 수정없이 트랜잭션 처리를 보장 받을 수 있는 것이다.
-
-Ref.
+## 스프링 PSA
+- PSA(Portable Service Abstraction)란?
+  - 일관성 있는 서비스 추상화를 뜻한다.
+  - 추상화를 통해 하위 시스템을 알지 못하거나 변경이 있더라도 일관된 방식으로 접근할 수 있게 한다.
+  - 스프링에서의 대표적 PSA 예로는 트랜잭션이 있다.
+- 스프링의 트랜잭션 추상화 계층
+  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2b9889f3-3921-44b7-9243-1ae3763c576e)
+  - 스프링에서는 위의 그림과 같이 'JDBC/Connection', 'JTA/UserTransaction', 'Hibernate/Transaction' 등 다양한 트랜잭션 기능을 제공하고 있다.   
+  - 개발자는 DB와 관련된 기능 개발 시, DB접근 기술에 따라 알맞은 트랜잭션 기술을 선택해야한다.   
+    만약 DB접근 기술이 바뀐다면 변경된 기술에 맞는 트랜잭션으로 변경이 필요하다.   
+    하지만 PSA가 접목되어 있다면 DB접근 기술과 관계없이 일관된 방식으로 트랜잭션을 제어할 수 있다.
+  - Ex) @Transactional은 각 각의 TransactionManager를 구현하고 있는 것이 아니라 최상위 PlatformTransactionManager를 사용하여 필요한 TransactionManager를 DI로 주입받아 사용한다. 이 때문에 @Transactional을 사용하여 트랜잭션을 관리할 경우, DB접근 기술이 JDBC에서 JPA로 변경되어도 트랜잭션에 대한 수정없이 트랜잭션 처리를 보장 받을 수 있는 것이다.
+- Ref.
 [사바라다는 차곡차곡](https://sabarada.tistory.com/127)
-</details>
+<br><br><br>
 
 
 
-<details>
-<summary><b>스프링 POJO</b></summary>
-
-> - **POJO (Plain Old Java Object)란?**
->   - '오래된 방식의 간단한 자바 객체' = '단순한 자바 오브젝트' 라는 뜻이다.
->   - 객체 지향적인 원리에 충실하면서 환경과 기술에 종속되지 않고 필요에 따라 재활용될 수 있는 방식으로 설계된 객체를 말한다.
-> - **POJO의 조건**
->   - 특정 규약에 종속되면 안된다.
->   - 특정 환경에 종속되면 안된다.
->   - 객체 지향적 원리를 지켜야 한다.
-
-Ref.
+## 스프링 POJO
+- POJO (Plain Old Java Object)란?
+  - '오래된 방식의 간단한 자바 객체' = '단순한 자바 오브젝트' 라는 뜻이다.
+  - 객체 지향적인 원리에 충실하면서 환경과 기술에 종속되지 않고 필요에 따라 재활용될 수 있는 방식으로 설계된 객체를 말한다.
+- POJO의 조건
+  - 특정 규약에 종속되면 안된다.
+  - 특정 환경에 종속되면 안된다.
+  - 객체 지향적 원리를 지켜야 한다.
+- Ref.
 [미노드로그](https://onpups.pe.kr/386)
-</details>
+<br><br><br>
 
 
 
