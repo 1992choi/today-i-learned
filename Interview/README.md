@@ -2265,6 +2265,24 @@
 
 
 
+## 자연키와 인조키
+- Title
+  - Content
+- Ref.
+<br><br><br>
+
+
+
+## 부동소수점 데이터 저장하는 방법
+- Title
+  - Content
+- 근사값 이슈
+  - Content
+- Ref.
+<br><br><br>
+
+
+
 ## 이상(Anomaly)
 - 이상(Anomaly)이란?
   - 릴레이션에서 일부 속성들의 종속이나 데이터의 중복으로 인해 데이터 조작시 불일치가 발생하는 것을 의미한다.
@@ -2638,6 +2656,15 @@
 - Title
   - Content
 - Ref.
+<br><br><br>
+
+
+
+## 고정소수점과 부동소수점
+- Title
+  - Content
+- Ref.
+<br><br><br>
 
 
 
