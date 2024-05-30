@@ -75,5 +75,18 @@
 
  <br>
 
+### 병합(Merge)
+- 병합(Merge)이란?
+  - 병합(Merge)은 Git에서 두 개의 branch를 하나로 통합하는 과정이다.
+  - 병합에는 Fast-Forward Merge 방식과 3-way Merge 방식이 있다.
+- Fast-Forward 방식
+  - ![image](https://github.com/Young-Geun/Git/assets/27760576/d1491b31-3844-4790-8329-927fcb40ff9c)
+  - 서로 다른 브랜치의 base 커밋에 내용이 변경되지 않았을 때 사용된다.   
+    Ex) 기존 Main 브랜치에서 새로운 브랜치인 Feature를 생성 한 후, Main에서는 더 이상의 커밋이 없고 Feature에서만 커밋이 발생한 경우.
+  - Merge에 의해서 새로운 커밋이 만들어지지않고, HEAD의 위치만 이동된다.
+- 3-way 방식
+  - ![image](https://github.com/Young-Geun/Git/assets/27760576/a38d7358-d7eb-40cc-86d5-dab572659966)
+  - 각 브랜치에서 새 커밋이 발생했을 때 사용된다.
+  - 두 브랜치의 코드를 합쳐서 새로운 커밋을 자동 생성해준다.
 
 
