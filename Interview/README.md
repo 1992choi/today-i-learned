@@ -289,7 +289,7 @@
     - 자식클래스 is able to 부모인터페이스
   - 차이점
     - 추상클래스는 계층 구조에서 공통된 속성들을 뽑아서 하나의 클래스로 만들고 자신의 기능들을 하위로 확장시키는 것으로 볼 수 있으며, 인터페이스는 계층 구조는 아니지만 같은 기능이 필요한 경우 사용하는 것으로 볼 수 있다.
-    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/960f18b5-d588-4ddc-ac10-c1998b383bb1)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/960f18b5-d588-4ddc-ac10-c1998b383bb1)
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/126)
 <br><br><br>
@@ -384,7 +384,7 @@
 - 컬렉션 프레임워크(Collection Framework)란?
   - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
   - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각 각의 인터페이스들은 구현체를 가지고 있다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c00b20fb-2031-4b27-ae67-1c0efa18e549)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c00b20fb-2031-4b27-ae67-1c0efa18e549)
 - 컬렉션 프레임워크의 종류
   - List
     - 순서가 있는 데이터 집합이다.
@@ -551,7 +551,7 @@
 
 ## Checked Exception과 Unchecked Exception
 - Checked Exception과 Unchecked Exception
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
   - Checked Exception
     - 확인시점 : Compile 시점
     - 처리여부 : 반드시 예외 처리 필요
@@ -563,8 +563,8 @@
 - Checked Exception 문제점
   - Checked Exception은 반드시 예외를 처리한다는 특성 때문에 Exception을 던지게(throw)되면, 계층 간 종속이 발생할 수 있다.
   - 만약 아래의 그림과 같이 사용중인 JDBC를 JPA로 변경한다고 가정했을 때, 종속된 모든 계층을 수정해야 하는 상황이 발생한다.
-    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/afeccd8d-ee1d-4c9b-8d00-ca099595cb17)
-    - ![image](https://github.com/Young-Geun/TIL/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/afeccd8d-ee1d-4c9b-8d00-ca099595cb17)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
   - 해결방안
     - Checked Exception을 Unchecked Exception으로 전환한다.
     - ```java
@@ -667,7 +667,7 @@
   - 실행 엔진(Excution Engine)
   - Garbage Collector
 - 실행과정
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
     1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
     2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
     3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
@@ -703,7 +703,7 @@
   - JVM의 메모리 영역에서 더 이상 참조하지 않는 데이터를 JVM이 자동으로 정리를 해주는 것을 뜻한다.
   - 주로 동적 메모리 영역인 Heap 영역을 대상으로 동작한다.
 - JVM Heap 메모리 구성
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
   - Young Generation
     - 새롭게 객체가 생성되는 영역이다.
     - 대부분의 객체는 unreachable 상태가 되기 때문에 Young 영역에서 사라진다.
@@ -713,15 +713,15 @@
     - Young 영역보다 크게 할당되고, 적은 GC가 발생한다.
     - Major GC 혹은 Full GC라 한다.
 - GC의 동작원리
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/297b7d1a-e8b8-4fb2-90ee-c82ea1a204c0)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/297b7d1a-e8b8-4fb2-90ee-c82ea1a204c0)
     - 객체가 생성되면 Eden 영역에 위치하게 된다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/fb765809-ccf5-4651-8de0-f09a03e3b185)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/fb765809-ccf5-4651-8de0-f09a03e3b185)
     - Eden영역이 가득차게 되면 Minor GC가 발생하여 참조가 없는 객체는 삭제되고, 참조 중인 객체는 Survivor 영역으로 이동한다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/49564f31-3a34-4919-831b-e2f17af1d4d1)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/49564f31-3a34-4919-831b-e2f17af1d4d1)
     - Survivor 영역이 가득차게 되면 Minor GC가 발생하여 참조가 없는 객체는 삭제되고, 참조 중인 객체는 다른 Survivor 영역으로 이동한다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/0547519e-ff1f-4e4c-b37a-a3e8c2d4f56f)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/0547519e-ff1f-4e4c-b37a-a3e8c2d4f56f)
     - Survivor영역에서의 GC과정을 반복 하며, 계속 참조 중인 객체는 Old Generation으로 이동한다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/c119c549-515b-41c5-a1b2-6b74bbbc2ca5)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c119c549-515b-41c5-a1b2-6b74bbbc2ca5)
     - Eden 영역에서 Survivor 영역으로 이동 할 때 객체가 남아있는 영역보다 큰 경우 Old Generation으로 이동한다.
 - GC의 종류
   - Serial GC
@@ -909,7 +909,7 @@
   - 앞서 equals()를 재정의하면 값이 같은 객체는 동등한 객체로 판단되는 것을 확인할 수 있었다.
   - 하지만 equals() 재정의로는 부족하며, hashCode()도 같이 재정의가 필요하다.
   - 그 이유는 Collection은 객체가 논리적으로 같은지 비교할 때 아래 그림과 같은 과정을 거치기 때문이다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/4925f518-7bd6-42d1-a2f6-0e061bd179e2)
   - 위의 과정을 기반으로 볼 때 equals()만 재정의하게 된다면, 값이 동일한 두 객체를 Set에 담을 경우, 중복제거가 되어 1개만 적재되기를 기대하겠지만 실제로는 2개의 객체가 모두 적재되는 상황이 발생할 것이다. 이는 hashCode가 다르기 때문에 서로 다른 객체로 판단되기 때문이다.
   - [샘플코드](https://github.com/Young-Geun/Java/blob/master/src/basic/clazz/object/EqualsAndHashCodeEx.java)
 - Ref.
@@ -1077,7 +1077,7 @@
   - 스프링은 관점 지향 프로그래밍(AOP : Aspect-Oriented Programming)을 지원한다.
     - 트랜잭션이나 로깅, 보안과 같이 여러 모듈에서 공통적으로 사용하는 기능의 경우 해당 기능을 분리하여 관리할 수 있다.
 - 스프링 구조
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d38101c3-087a-4248-8a61-1847d11dde7a)
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/5)
 <br><br><br>
@@ -1098,7 +1098,7 @@
     - Controller
       - Controller는 클라이언트로부터 요청이 들어왔을 때, 어떤 로직을 실행시킬 것인지 판단하며 Model(모델)과 View(뷰)를 연결해주며 제어하는 모듈.
 - 스프링 MVC의 구성요소와 동작순서
-  ![image](https://github.com/Young-Geun/TIL/assets/27760576/e675f1ab-e106-415c-a02a-df22a2bf5112)
+  ![image](https://github.com/1992choi/today-i-learned/assets/27760576/e675f1ab-e106-415c-a02a-df22a2bf5112)
   - 구성요소
     - Dispatcher Servlet
       - 클라이언트의 요청을 받아 컨트롤러에게 전달한다.
@@ -1161,7 +1161,7 @@
     - 스프링 컨테이너는 크게 두 종류(BeanFactory, ApplicationContext)로 나눌 수 있다.
     - ApplicationContext 컨테이너가 BeanFactory의 기능을 포괄하면서 추가적인 기능을 제공하기 때문에 대부분의 경우에는 ApplicationContext를 사용한다.
       - BeanFactory와 ApplicationContext 관계
-        ![image](https://github.com/Young-Geun/TIL/assets/27760576/846e9d7f-aa86-464f-8628-560cc2ac2b8a)
+        ![image](https://github.com/1992choi/today-i-learned/assets/27760576/846e9d7f-aa86-464f-8628-560cc2ac2b8a)
       - BeanFactory
         - 스프링 컨테이너의 최상위 인터페이스이다.
         - 스프링 빈을 관리하고 조회하는 역할을 담당한다.
@@ -1236,7 +1236,7 @@
   - 프록시 기반 AOP를 지원한다.
   - Spring AOP는 메서드 조인 포인트만 지원한다.
 - 스프링 AOP Advice 종류
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2c3dae3f-f8b6-4f69-b5ec-c54e52a16b29)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/2c3dae3f-f8b6-4f69-b5ec-c54e52a16b29)
   - @Before
     - JointPoint가 실행되기 이전 시점에 실행된다.
   - @After
@@ -1263,7 +1263,7 @@
   - 추상화를 통해 하위 시스템을 알지 못하거나 변경이 있더라도 일관된 방식으로 접근할 수 있게 한다.
   - 스프링에서의 대표적 PSA 예로는 트랜잭션이 있다.
 - 스프링의 트랜잭션 추상화 계층
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/2b9889f3-3921-44b7-9243-1ae3763c576e)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/2b9889f3-3921-44b7-9243-1ae3763c576e)
   - 스프링에서는 위의 그림과 같이 'JDBC/Connection', 'JTA/UserTransaction', 'Hibernate/Transaction' 등 다양한 트랜잭션 기능을 제공하고 있다.   
   - 개발자는 DB와 관련된 기능 개발 시, DB접근 기술에 따라 알맞은 트랜잭션 기술을 선택해야한다.   
     만약 DB접근 기술이 바뀐다면 변경된 기술에 맞는 트랜잭션으로 변경이 필요하다.   
@@ -1333,7 +1333,7 @@
   - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.
 - JDK Proxy(Dynamic Proxy) VS CGLib
   - 스프링에서 사용하는 프록시 구현체는 JDK Proxy(Dynamic Proxy), CGLib가 있다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
   - JDK Dynamic Proxy
     - Target 클래스가 인터페이스 구현체일 경우 생성되며, 구현 클래스가 아닌 인터페이스를 프록시 객체로 구현해서 코드에 끼워 넣는 방식이다.
   - CGLib Proxy
@@ -1396,7 +1396,7 @@
 
 ## Spring Filter vs Interceptor
 - Filter vs Interceptor
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
   - Filter
     - 관리 컨테이너 : 웹 컨테이너
     - DispatcherServlet 이전에 실행된다.
@@ -1429,14 +1429,14 @@
   - JPA는 Java Persistence API의 약자로, 자바 애플리케이션에서 관계형 데이터베이스를 사용하는 방식을 정의한 인터페이스이다.
   - 여기서 중요하게 여겨야 할 부분은 JPA는 특정 기능을 가지고 있는 라이브러리가 아니고 말 그대로 인터페이스라는 점이다.
   - 따라서 JPA를 사용하기 위해서는 JPA를 구현한 Hibernate, EclipseLink, DataNucleus와 같은 ORM 프레임워크를 사용해야 한다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/27a0e8c2-59de-42fc-bda0-d76fa1957350)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/27a0e8c2-59de-42fc-bda0-d76fa1957350)
 - Hibernate란?
   - JPA 구현체의 한 종류이다. 
   - JPA와 Hibernate는 마치 자바의 interface와 해당 interface를 구현한 class와 같은 관계이다.
 - Spring Data JPA란?
   - Spring Data JPA는 Spring Framework에서 제공하는 모듈 중 하나로, 개발자가 JPA를 더 쉽고 편하게 사용할 수 있도록 도와주는 기술이다.
 - JPA, Hibernate, Spring Data JPA 관계
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/86508652-90c4-4618-9353-0fe473fcc54b)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/86508652-90c4-4618-9353-0fe473fcc54b)
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/140)
 <br><br><br>
@@ -1675,7 +1675,7 @@
 - CORS란?
   - 교차 출처 리소스 공유(Cross-origin Resource Sharing)는 추가 HTTP헤더를 사용하여, 한 출처에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제이다.
 - 출처(Origin)란?
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/ab8e57b2-8ff9-454c-9f3e-d62489c8fe3a)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/ab8e57b2-8ff9-454c-9f3e-d62489c8fe3a)
   - 출처(Origin)란 위의 URL 구조에서 Protocol, Host, Port를 합친 것을 의미한다.
   - 즉, 다른 출처란 Protocol, Host, Port 중 한 개라도 다른 것을 의미한다.
 - 동일 출처 정책(Same-Origin Policy)이란?
@@ -1800,7 +1800,7 @@
   - 영속성 컨텍스트는 엔티티를 영구 저장하는 환경이다.
   - 엔티티 매니저를 통해서 영속성 컨텍스트에 접근할 수 있고, 영속성 컨텍스트를 관리할 수 있다.
 - 엔티티의 생명주기
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/5ecec14d-0b5e-4fbb-a780-c8581408ff6f)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/5ecec14d-0b5e-4fbb-a780-c8581408ff6f)
   - 비영속(new/transient
     - 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태
   - 영속(managed)
@@ -2019,7 +2019,7 @@
 - 팩토리 메서드 패턴이란?
   - 팩토리 메서드 패턴은 객체의 생성 과정을 서브 클래스에 위임하는 디자인 패턴이다.
   - 이를 통해 클라이언트 코드는 구체적인 클래스의 인스턴스화 과정을 알 필요없이 객체를 생성할 수 있다.
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/1abff890-6371-41a2-8d87-8b760a6d39ab)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/1abff890-6371-41a2-8d87-8b760a6d39ab)
 - 팩토리 메서드 패턴의 장점
   - 객체 생성 과정의 캡슐화
     - 클라이언트는 객체 생성 방법을 몰라도 된다.
@@ -2103,7 +2103,7 @@
   - 어떤 객체를 호출할 때, 객체를 직접 호출하는 것이 아니라 대리자 객체를 호출하는 방식을 사용하면 해당 객체가 메모리에 존재하지 않아도 기본적인 정보를 참조하거나 설정할 수 있다.
   - 실제 객체의 필요 시점까지 객체 생성을 미루는 지연 초기화(Lazy Initializing)가 가능하다.
 - 프록시 패턴의 구조
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/7daa8c4d-da53-44de-9fd4-820542823e26)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/7daa8c4d-da53-44de-9fd4-820542823e26)
   - Subject
     - Proxy와 RealSubject가 모두 구현하는 인터페이스로 클라이언트가 프록시와 실제 대상을 동일하게 다룰 수 있도록 정의한다.
   - RealSubject
@@ -2143,7 +2143,7 @@
 - 템플릿 메서드 패턴이란?
   - 여러 클래스에서 공통으로 사용하는 메서드를 템플릿화하여 상위 클래스로 정의하고, 하위 클래스마다 세부 동작 사항을 다르게 구현하는 패턴이다.
 - 템플릿 메서드 패턴의 구조
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/a69e3088-9ff8-4b65-bd51-3ee2cc4d3981)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/a69e3088-9ff8-4b65-bd51-3ee2cc4d3981)
   - 상위 클래스(AbstractClass)는 템플릿을 제공하고 이를 상속받는 하위 클래스(SubClass)가 구체적인 로직을 작성한다.
 - 템플릿 메서드 패턴의 장점
   - 중복된 코드를 없애고 SubClass 에서는 비즈니스 로직에만 집중할 수 있다. (SRP)
@@ -2169,7 +2169,7 @@
   - 실행(런타임) 중에 알고리즘 전략을 선택하여 객체 동작을 실시간으로 변경 가능케하는 디자인 패턴이다.
   - 전략 패턴을 활용하면 OCP를 위반하지 않고 새로운 전략을 추가하여 코드 수정없이 기능을 추가할 수 있다는 장점이 있다.
 - 전략 패턴의 구조
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/d1570ebd-04da-43da-a399-b184ba9dffe1)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d1570ebd-04da-43da-a399-b184ba9dffe1)
   - Context
     - 전략 패턴을 이용하는 역할을 수행한다.
     - 필요에 따라 동적으로 구체적인 전략을 바꿀수 있도록 setter() 메서드를 제공한다.
@@ -2382,7 +2382,7 @@
       - 해시 테이블은 Key값을 이용해 고유한 index를 생성하여 그 index에 저장된 값을 꺼내오는 구조이다.
     - B+Tree
       - B+Tree는 DB의 인덱스를 위해 자식 노드가 2개 이상인 B-Tree를 개선시킨 자료구조이다.
-      - ![image](https://github.com/Young-Geun/TIL/assets/27760576/b7bf6909-9b83-42fc-a262-6712d7c5fbe8)
+      - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/b7bf6909-9b83-42fc-a262-6712d7c5fbe8)
       - B+Tree는 모든 노드에 데이터(Value)를 저장했던 BTree와 다른 특성을 가지고 있다.
         - 리프노드(데이터노드)만 인덱스와 함께 데이터(Value)를 가지고 있고, 나머지 노드(인덱스노드)들은 데이터를 위한 인덱스(Key)만을 갖는다.
         - 리프노드들은 LinkedList로 연결되어 있다.
@@ -2429,7 +2429,7 @@
 # CS
 ## OSI 7계층과 TCP/IP 4계층
 - OSI 7계층과 TCP/IP 4계층
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/8f74cf13-703e-43a9-89d2-bd9543525acd)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/8f74cf13-703e-43a9-89d2-bd9543525acd)
 - OSI 7계층이란?
   - 네트워크 통신이 일어나는 과정을 7단계로 나눈 국제 표준화 기구(ISO)에서 정의한 네트워크 표준 모델이다.
   - 이 모델은 프로토콜을 기능별로 나눈 것이다.
@@ -2516,7 +2516,7 @@
 - 3-Way Handshake란?
   - TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정을 뜻한다.
 - 3-Way Handshake의 동작 순서
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/205cb3fd-340a-43d3-be51-5acaacb663d6)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/205cb3fd-340a-43d3-be51-5acaacb663d6)
   - Step1. SYN
     - Client가 Server에게 접속을 요청하는 SYN플래그를 보낸다.
   - Step2. SYN + ACK
@@ -2527,7 +2527,7 @@
 - 4-Way Handshake란?
   - 3-Way handshake가 연결확립을 위해 진행했다면 4way handshake는 세션을 종료하기 위해 수행되는 절차를 뜻한다.
 - 4-Way Handshake의 동작 순서
-  - ![image](https://github.com/Young-Geun/TIL/assets/27760576/41c81252-70d4-4856-a598-bb5ce59aa11d)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/41c81252-70d4-4856-a598-bb5ce59aa11d)
   - Step1. FIN
     - Client가 연결을 종료하겠다는 FIN플래그를 전송한다.
     - 보낸 후에 FIN-WAIT-1 상태로 변한다.
