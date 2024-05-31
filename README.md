@@ -118,6 +118,25 @@
   - 풀(pull)
     - 원격 저장소의 변경사항을 가져온 후 병합한다.
 
-
-
+<br>
+ 
+### Pull Request
+- Pull Request란?
+  - 다른 사용자가 작성한 저장소에서 변경 사항을 병합(merge)하기 위한 요청을 의미한다.
+- Pull Request 순서
+  1. Fork
+     - 타겟 프로젝트의 Repository를 자신의 Repository로 Fork한다.
+  2. Clone
+     - 자신의 로컬에 Fork한 Repository를 Clone한다.
+  3. Branch 생성
+     - 작업을 위해 Branch를 생성한다.
+  4. 수정, add, commit, push
+     - 코드를 수정한 후 add > commit > push 한다. 
+  5. Pull Request 생성
+     - push 후 깃허브의 해당 레파지토리에서 'Compare & pull request' 버튼을 클릭한다.
+     - 수정에 대한 코멘트를 작성하고 'Create pull request' 버튼을 클릭한다.
+  6. Merge Pull Request
+     - 원본 Repository의 개발자가 승인하면 해당 프로젝트에 수정사항이 Merge된다. 
+  7. Branch 삭제
+     - 승인이 완료되어 Merge가 되었다면, 더 이상 사용하지 않게될 Branch를 삭제한다.
 
