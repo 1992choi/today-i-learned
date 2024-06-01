@@ -164,12 +164,23 @@
     - git commit을 입력하면 vi편집기가 활성화 된다.
   - 커밋 메시지의 제목만 입력하고 싶은 경우
     - git commit -m "커밋 제목"
-- git log
-  - 커밋 이력 상세 조회
 
 <br>
 
-
+### 커밋 이력 조회하기
+- git log
+  - 커밋 이력 상세 조회
+- git log --oneline
+  - 커밋 이력 중 커밋 ID와 타이틀 메시지만 조회
+- git log -p / git log --patch
+  - 수정 내역(=diff)을 조회
+- git log --graph
+  - 브랜치와 머지 히스토리 정보까지 아스키 그래프로 보여준다.
+- git log --since=[기간]
+  - 특정 기간 내의 log만 조회한다.
+  - Ex)
+    - git log --since=1.weeks
+    - git log --since=1.hour
 
 
 
