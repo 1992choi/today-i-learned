@@ -140,3 +140,50 @@
   7. Branch 삭제
      - 승인이 완료되어 Merge가 되었다면, 더 이상 사용하지 않게될 Branch를 삭제한다.
 
+
+
+<br><br>
+
+
+
+## 명령어
+### 저장소와 버전 만들기
+- git init
+  - 새로운 로컬 저장소 생성
+  - 명령어가 입력되면 .git 디렉토리가 생성된다.
+- git status
+  - Git 저장소의 상태를 출력하는 명령어
+- git add [파일명]
+  - Staging area에 파일을 저장한다.
+  - Ex) git add a.txt
+- git add .
+  - 현재 디렉토리의 모든 변경 내용을 Staging area에 저장한다.
+- git commit
+  - Staging area에 저장되어있는 변경 사항들을 로컬저장소에 등록한다.
+  - 커밋 메시지의 제목과 내용을 입력하고 싶은 경우
+    - git commit을 입력하면 vi편집기가 활성화 된다.
+  - 커밋 메시지의 제목만 입력하고 싶은 경우
+    - git commit -m "커밋 제목"
+- git log
+  - 커밋 이력 상세 조회
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
