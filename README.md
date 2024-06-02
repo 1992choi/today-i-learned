@@ -197,8 +197,16 @@
   - 태그를 삭제한다.
   - Ex) git tag --delete v0.0.1
 
+<br>
 
-
+### 작업내용 비교
+- git diff
+  - 커밋된 파일과 Working Directory에서 수정 중인 파일상태를 비교한다.
+- git diff --staged
+  - 커밋된 파일과 Staging Area의 파일상태를 비교한다.
+- git diff [변경전 커밋ID] [변경후 커밋ID]
+  - 커밋 간의 파일상태를 비교한다.
+  - [변경전 커밋ID]가 반드시 [변경후 커밋ID]보다 이전 커밋이어야한다.
 
 
 
