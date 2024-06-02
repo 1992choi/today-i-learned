@@ -182,9 +182,20 @@
     - git log --since=1.weeks
     - git log --since=1.hour
 
+<br>
 
-
-
+### 태그 관리
+- git tag [태그명]
+  - 최근 커밋에 태그를 추가한다.
+  - Ex) git tag v0.0.1
+- git tag [태그명] [커밋ID]
+  - 특정 커밋에 태그를 추가한다.
+  - Ex) git tag v0.0.1 fdc30cc
+- git tag / git tag --list / git tag -l
+  - 태그 목록을 조회한다.
+- git tag --delete [태그명] / git tag -d [태그명]
+  - 태그를 삭제한다.
+  - Ex) git tag --delete v0.0.1
 
 
 
