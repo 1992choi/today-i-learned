@@ -288,9 +288,12 @@
 - git push [저장소명] [브랜치명]
   - 변경사항을 원격 저장소에 반영한다.
   - Ex) git push origin main
-
-
-
+- git fetch [저장소명] [브랜치명]
+  - 원격 저장소의 변경사항을 가져오되 병합하지는 않는다.
+  - Ex) git fetch origin main
+- git pull [저장소명] [브랜치명]
+  - 원격 저장소의 변경사항을 가져온 후 병합한다.
+  - Ex) git pull origin main
 
 
 
