@@ -255,6 +255,8 @@
 - git checkout [브랜치 이름]
   - 특정 브랜치로 이동한다.
   - Ex) git checkout foo
+- git checkout -b [브랜치 이름]
+  - 특정 브랜치를 생성한 후 해당 브랜치로 이동한다.
 - git merge [병합하고자 하는 브랜치 이름]
   - 특정 브랜치의 작업사항을 병합한다.
   - Ex) git merge foo
@@ -262,6 +264,14 @@
 - git branch -d [삭제할 브랜치 이름]
   - 브랜치를 삭제한다.
   - Ex) git branch -d foo
+
+### Rebase
+- git rebase [기준이 될 브랜치 이름]
+  - 브랜치를 재설정한다.
+  - Ex) git rebase master
+    - 현재 체크아웃된 브랜치가 foo라고 가정할 때, 위의 명령어를 실행한다면 현재 master 브랜치에서 작업된 내용을 기반으로 재설정 된다.
+
+
 
 
 
