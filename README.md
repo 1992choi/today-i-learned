@@ -167,7 +167,7 @@
 
 <br>
 
-### 커밋 이력 조회하기
+### 커밋 이력 조회
 - git log
   - 커밋 이력 상세 조회
 - git log --oneline
@@ -181,6 +181,8 @@
   - Ex)
     - git log --since=1.weeks
     - git log --since=1.hour
+- git log --branches
+  - 다른 브랜치의 커밋 이력까지 조회한다.
 
 <br>
 
@@ -242,13 +244,24 @@
   - 임시저장한 내용을 삭제한다.
   - Ex) git stash drop stash@{0}
 
+<br>
 
-
-
-
-
-
-
+### 브랜치 관리
+- git branch [생성할 브랜치 이름]
+  - 브랜치를 생성한다.
+  - Ex) git branch foo
+- git branch
+  - 브랜치를 조회한다.
+- git checkout [브랜치 이름]
+  - 특정 브랜치로 이동한다.
+  - Ex) git checkout foo
+- git merge [병합하고자 하는 브랜치 이름]
+  - 특정 브랜치의 작업사항을 병합한다.
+  - Ex) git merge foo
+    - 현재 작업 디렉토리가 master인 경우, foo의 작업 내용을 master로 병합한다.
+- git branch -d [삭제할 브랜치 이름]
+  - 브랜치를 삭제한다.
+  - Ex) git branch -d foo
 
 
 
