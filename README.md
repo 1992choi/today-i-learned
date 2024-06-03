@@ -265,20 +265,29 @@
   - 브랜치를 삭제한다.
   - Ex) git branch -d foo
 
+<br>
+
 ### Rebase
 - git rebase [기준이 될 브랜치 이름]
   - 브랜치를 재설정한다.
   - Ex) git rebase master
     - 현재 체크아웃된 브랜치가 foo라고 가정할 때, 위의 명령어를 실행한다면 현재 master 브랜치에서 작업된 내용을 기반으로 재설정 된다.
 
+<br>
 
-
-
-
-
-
-
-
+### Github와의 상호작용
+- git clone [경로]
+  - 원격 저장소의 파일을 로컬 저장소로 복제한다.
+  - Ex) git clone https://github.com/1992choi/git.git
+- git remote / git remote add [저장소명] [경로]
+  - git remote
+    - 저장소명을 조회한다.
+  - git remote add [저장소명] [경로]
+    - 저장소를 추가한다.
+    - Ex) git remote add origin2 https://github.com/1992choi/git.git
+- git push [저장소명] [브랜치명]
+  - 변경사항을 원격 저장소에 반영한다.
+  - Ex) git push origin main
 
 
 
