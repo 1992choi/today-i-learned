@@ -208,6 +208,46 @@
   - 커밋 간의 파일상태를 비교한다.
   - [변경전 커밋ID]가 반드시 [변경후 커밋ID]보다 이전 커밋이어야한다.
 
+<br>
+
+### 작업 되돌리기
+- git revert [취소할 커밋ID]
+  - 작업한 내용을 Revert한다.
+  - Ex) git revert ccccccc
+    - 'ccccccc'의 변경사항을 취소 시킨다.
+    - 커밋순서가 aaaaaaa -> bbbbbbb -> ccccccc -> ddddddd 이라고 가정할 때, git reset ccccccc를 입력하면 bbbbbbb에서 작업한 내용까지가 보존된다.
+- git reset --[옵션] [되돌아갈 커밋ID]
+  - 작업한 내용을 Reset 시킨다.
+  - Default 옵션은 mixed이다.
+    - soft : git reset --soft [되돌아갈 커밋ID]
+    - mixed : git reset [되돌아갈 커밋ID] / git reset --mixed [되돌아갈 커밋ID]
+    - hard : git reset --hard [되돌아갈 커밋ID]
+  - Ex) git reset ccccccc
+    - 커밋순서가 aaaaaaa -> bbbbbbb -> ccccccc -> ddddddd 이라고 가정할 때, git reset ccccccc를 입력하면 ccccccc에서 작업한 내용까지가 보존된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
