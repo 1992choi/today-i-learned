@@ -225,9 +225,22 @@
   - Ex) git reset ccccccc
     - 커밋순서가 aaaaaaa -> bbbbbbb -> ccccccc -> ddddddd 이라고 가정할 때, git reset ccccccc를 입력하면 ccccccc에서 작업한 내용까지가 보존된다.
 
+<br>
 
-
-
+### 작업 임시저장
+- git stash
+  - 마무리하지 않은 작업을 스택에 잠시 저장한다.
+  - 이를 통해 아직 완료하지 않은 일을 commit하지 않고 나중에 다시 꺼내와 마무리할 수 있다.
+  - -m옵션을 사용하여 간단한 코멘트를 작성할 수 있다.
+    - Ex) git stash -m "add subtitle on a.txt"
+- git stash list
+  - 임시저장한 목록을 조회한다.
+- git stash apply [stash 이름]
+  - 임시저장한 내용을 다시 가져온다.
+  - Ex) git stash apply stash@{0}
+- git stash drop [stash 이름]
+  - 임시저장한 내용을 삭제한다.
+  - Ex) git stash drop stash@{0}
 
 
 
