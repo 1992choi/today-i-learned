@@ -1268,10 +1268,18 @@
 
 
 ## IoC와 DL/DI
-- Title
-  - Contents
+- IoC와 DL/DI 관계도
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/73277fd2-3dfd-42bd-9e8a-cab7add2353d)
+- DL(Dependency Lookup)
+  - 의존성 검색(DL)이란, Bean에 접근하기 위해 컨테이너가 제공하는 API를 이용하여 Bean을 Lookup하는 것이다.
+  - 자신이 필요로하는 오브젝트를 능동적으로 찾지만, 어떤 클래스의 오브젝트를 이용할지는 결정하지 않는다.
+  - ApplicationContext를 통해 필요한 빈을 검색할 수 있다.
+  - 스프링이 추구하는 개발은 특정 환경과 기술에 종속되지 않은 POJO방식인데, 이 방식은 스프링에 종속성이 생기게 되므로 권고되는 방식은 아니다.
+- DI(Dependency Injection)
+  - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
 - Ref.
-[행복한 백수 개발자](https://happy-playboy.tistory.com/entry/%EB%B0%B1%EC%88%98%EC%9D%98-%EC%8A%A4%ED%94%84%EB%A7%81-IoC%EC%99%80-DI%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C)
+[행복한 백수 개발자](https://happy-playboy.tistory.com/entry/%EB%B0%B1%EC%88%98%EC%9D%98-%EC%8A%A4%ED%94%84%EB%A7%81-IoC%EC%99%80-DI%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C),
+[Hong JinHyung](https://hjhng125.github.io/spring/dependency-lookup/)
 <br><br><br>
 
 
