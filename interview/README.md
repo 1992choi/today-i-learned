@@ -111,6 +111,19 @@
 
 
 
+## 동일성과 동등성
+- 동일성
+  - 동일성(Identity)은 두 객체의 메모리 주소가 같음을 의미한다.
+- 동등성
+  - 동등성(Equality)은 두 객체의 값이 같음을 의미한다.
+- JAVA에서의 동일성과 동등성
+  - 동일성은 '=='로, 동등성은 'equals'로 확인 가능하다.
+- Ref.
+[도둑탈을 쓴 애쉬](https://xxeol.tistory.com/15)
+<br><br><br>
+
+
+
 ## String, StringBuffer, StringBuilder 비교
 - String
   - 불변(immutable)의 속성을 갖는다.
@@ -124,6 +137,34 @@
   - 동기화를 지원하지 않는다.
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/42)
+<br><br><br>
+
+
+
+## String Pool
+- String Pool이란?
+  - String Pool은 String 문자열이 존재하는 영역(JVM 힙 메모리에 존재)을 뜻한다.
+  - 문자열 객체라고 모두 String Pool에 저장되는 것은 아니다. 리터럴 문자열(= 쌍 따옴표를 이용해 선언한 문자)은 저장 대상이지만 String 클래스 생성자를 통해 만들어진 문자열은 대상이 아니다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/a77b2b23-7a2b-4b73-aaf3-b2352f955329)
+    - s1과 s2는 리터럴로 생성되었기에 String Pool에 저장되어 재사용되므로 동일성을 보장한다.
+    - s3은 String 클래스의 생성자를 통해 만들어진 문자이기 때문에 Heap영역에 저장되어 s1과 s2와 동일비교(==)를 하면 false를 반환한다. 이 때는 동등비교(equals)를 진행해야한다.
+    - ```java
+      public static void main(String... args) {
+        String s1 = "Cat";
+        String s2 = "Cat";
+        String s3 = new String("Cat");
+        
+        // 객체의 주소값을 비교
+        System.out.println(s1 == s2); // true
+        System.out.println(s1 == s3); // false
+        
+        // equals는 문자열을 비교하기 때문에 true
+        System.out.println(s1.eqauls(s3)); // true
+      }
+      ```
+  - 리터럴을 사용해서 만든 문자열에 추가 연산을 할 경우에는 String Pool이 아닌 Heap영역에 저장되기 때문에 문자열 연산이 필요한 경우에는 StringBuffer 또는 StringBuilder를 사용해야한다.
+- Ref.
+[hjtree.log](https://velog.io/@jeb1225/JAVA-String-Pool)
 <br><br><br>
 
 
@@ -918,7 +959,7 @@
 
 
 
-## Call by value ve Call by Reference
+## Call by Value와 Call by Reference
 - Call by Value
   - 값에 의한 호출을 의미한다.
   - 전달받은 값을 복사하여 처리하기 때문에 전달받은 값을 변경하여도 원본의 값은 변경되지 않는다.
@@ -931,15 +972,6 @@
 - Ref.
 [그릿 속의 해빗](https://loosie.tistory.com/486),
 [뱀귤 블로그](https://bcp0109.tistory.com/360)
-<br><br><br>
-
-
-
-## String 메모리 관점
-- Title
-  - Content
-- Ref.
-[2JINISHAPPY](https://2jinishappy.tistory.com/293)
 <br><br><br>
 
 
