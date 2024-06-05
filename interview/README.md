@@ -926,9 +926,11 @@
   - 참조에 의한 호출을 의미한다.
   - 전달받은 값을 직접 참조하기 때문에 전달받은 값을 변경하면 원본도 같이 변경된다.
 - 자바에서는?
-  - TODO.
+  - Java 는 오직 Call by Value 로만 동작한다.
+  - 자바에서의 파라미터는 call by value로서만 동작되며, 원시값이 복사 되느냐 주소값이 복사되느냐 차이가 있을뿐이다.
 - Ref.
-[그릿 속의 해빗](https://loosie.tistory.com/486)
+[그릿 속의 해빗](https://loosie.tistory.com/486),
+[뱀귤 블로그](https://bcp0109.tistory.com/360)
 <br><br><br>
 
 
@@ -1810,7 +1812,7 @@
   - 엔티티 매니저를 통해서 영속성 컨텍스트에 접근할 수 있고, 영속성 컨텍스트를 관리할 수 있다.
 - 엔티티의 생명주기
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/5ecec14d-0b5e-4fbb-a780-c8581408ff6f)
-  - 비영속(new/transient
+  - 비영속(new/transient)
     - 영속성 컨텍스트와 전혀 관계가 없는 새로운 상태
   - 영속(managed)
     - 영속성 컨텍스트에 관리되는 상태
