@@ -1356,7 +1356,7 @@
   - Weaving
     - Pointcut으로 결정한 타겟의 JoinPoint에 Advice를 적용하는 것을 뜻한다.
 - 코드 예시
-  - TODO
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/85197023-e16a-482a-8150-3da98f9ae049)
 - 적용방식
   - 컴파일 시점
     - .java 파일을 컴파일러를 통해 .class를 만드는 시점에 부가 기능 로직을 추가하는 방식이다.
@@ -1392,7 +1392,8 @@
   - 애플리케이션 전체에 흩어진 공통 기능이 하나의 장소에서 관리되어 보다 유지보수가 수월하다.
   - 핵심 로직과 부가 기능의 명확한 분리로, 개발자는 핵심 로직에 집중할 수 있게 된다.
 - Ref.
-[Caffeine Overflow](https://caffeineoverflow.tistory.com/17)
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/17),
+[baekgom.log](https://velog.io/@baekgom/Spring-AOP)
 <br><br><br>
 
 
