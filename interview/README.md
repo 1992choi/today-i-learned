@@ -2570,7 +2570,30 @@
 
 ## Sharding
 - Sharding이란?
-  - 같은 테이블 스키마를 가진 데이터를 다수의 데이터베이스에 분산하여 저장하는 방법
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/e39102a1-6262-489c-bc22-5cd31cf8e3d0)
+  - 샤딩은 각 DB 서버에서 데이터를 분할하여 저장하는 방식이다.
+  - 샤딩(Sharding)은 DB 트래픽을 분산할 수 있는 중요한 수단이다.
+- 파티셔닝과 샤딩의 관계
+  - 샤딩은 수평 파티셔닝의 일종으로 볼 수 있다.
+  - 그러나 수평적 파티셔닝은 동일한 DB 서버 내에서 테이블을 분할하는 것이고 샤딩은 DB 서버를 분할한다는 것이다.
+- 장단점
+  - 장점
+    - Scale-Out이 가능하다.
+    - 스캔 범위를 줄여서 쿼리 속도를 높일 수 있다.
+    - 장애가 샤드 단위로 발생한다.
+  - 단점
+    - 프로그래밍 복잡도가 증가한다.
+    - 데이터가 한쪽 샤드로 몰릴 경우, 샤딩이 무의미 해진다.
+- 샤딩의 종류
+  - 모듈러 샤딩(Modular Sharding)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/de822d3c-6a63-4b7e-a397-feaf8d6100bf)
+    - 모듈러 샤딩(Modular Sharding)은 PK를 모듈러 연산한 결과로 DB를 라우팅하는 방식이다.
+  - 레인지 샤딩(Range Sharding)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/8145d02a-f5ad-431a-bf37-4f9e47184c4d)
+    - 레인지 샤딩(Range Sharding)은 PK의 범위를 기준으로 DB를 특정하는 방식이다.
+  - 디렉토리 샤딩(Directory Sharding)
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/b95d1c1a-80fd-403d-9fb8-ef4e616f9ba9)
+    - 디렉토리 샤딩(Directory Based Sharding)은 별도의 조회 테이블을 사용해서 샤딩을 하는 방식이다.
 - Ref.
 [James](https://velog.io/@kyeun95/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%83%A4%EB%94%A9Sharding%EC%9D%B4%EB%9E%80)
 <br><br><br>
