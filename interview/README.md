@@ -705,9 +705,12 @@
 
 
 
-## 자바에서 멀티스레드 동기화 방법
+## 멀티스레드와 Thread-Safety
 - Title
   - Content
+- Ref.
+[mangoo.log](https://velog.io/@mangoo/java-thread-safety)
+[jammmm](https://jammdev.tistory.com/191)
 <br><br><br>
 
 
@@ -1032,15 +1035,6 @@
 
 
 
-## Thread-safe
-- Title
-  - Content
-- Ref.
-[mangoo.log](https://velog.io/@mangoo/java-thread-safety)
-<br><br><br>
-
-
-
 ## 자바 어노테이션(Annotation)
 - 어노테이션이란?
   - 자바에서 어노테이션은 사전적 의미로 주석이라는 뜻을 가지고 있다.
@@ -1153,6 +1147,14 @@
   - Html in JAVA.
 - Ref.
 [effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
+<br><br><br>
+
+
+
+## Servlet(서블릿)
+- Title
+  - Content
+- Ref.
 <br><br><br>
 
 
@@ -2049,13 +2051,19 @@
 
 
 
-
-
 ## lombok
 - @Data, @Setter, @AllArgsConstructor 지양
   - 내용
 - @Tostring 순환 참조
   - 내용
+- Ref.
+<br><br><br>
+
+
+
+## Spring WebFlux
+- Title
+  - Content
 - Ref.
 <br><br><br>
 
@@ -2509,6 +2517,8 @@
     - 각각의 트랜잭션은 서로 간섭없이 독립적으로 수행되어야 한다.
   - 지속성(Durability)
     - 트랜잭션이 성공적으로 완료됬었을 경우, 결과는 영구적으로 반영되어야 한다.
+- 격리수준
+  - TODO.
 - Ref.
 [Wonit](https://wonit.tistory.com/462)
 <br><br><br>
