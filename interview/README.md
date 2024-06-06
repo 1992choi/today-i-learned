@@ -1428,11 +1428,10 @@
   - 스프링에서 사용하는 프록시 구현체는 JDK Proxy(Dynamic Proxy), CGLib가 있다.
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
   - JDK Dynamic Proxy
-    - Target 클래스가 인터페이스 구현체일 경우 생성되며, 구현 클래스가 아닌 인터페이스를 프록시 객체로 구현해서 코드에 끼워 넣는 방식이다.
+    - Interface를 기반으로 Proxy를 생성해주는 방식이다.
   - CGLib Proxy
-    - 스프링에서 사용하는 디폴트 방식으로써, Target 클래스를 프록시 객체로 생성하여 코드에 끼워 넣는 방식이다.
-    - JDK 방식은 java.lang.Reflection을 이용해서 동적으로 프록시를 생성해 준다. 해당 방식의 단점은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 private 접근이 가능하다는 점 때문에 스프링 부트에선 기본 방식으로 CGLib 방식을 채택하였다.
-    - TODO. 재정리 필요
+    - JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
+    - JDK 방식은 java.lang.Reflection을 이용해서 동적으로 프록시를 생성해 준다. 해당 방식의 단점은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 private 접근이 가능하다는 점 때문에 스프링 부트에서는 기본 방식으로 CGLib 방식을 채택하였다.
 - 격리 수준 (Isolation Level)
   - DEFAULT
     - 데이터베이스에서 설정된 기본 격리 수준을 따른다. 
