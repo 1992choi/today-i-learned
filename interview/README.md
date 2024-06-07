@@ -548,6 +548,14 @@
 
 
 
+## 함수형 인터페이스
+- Title
+  - Content
+- Ref.
+<br><br><br>
+
+
+
 ## 스트림 API(Stream API)
 - 스트림 API(Stream API) 란?
   - Java 8에서 추가된 기능으로써 배열 또는 컬렉션 등을 함수형 프로그래밍 기법으로 처리할 수 있도록 도와주는 API이다.
@@ -1157,10 +1165,11 @@
 
 
 
-## Servlet(서블릿)
+## Servlet과 Servlet 컨테이너
 - Title
   - Content
 - Ref.
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Spring/Servlet.md)
 <br><br><br>
 
 
@@ -2526,7 +2535,8 @@
 - 격리수준
   - TODO.
 - Ref.
-[Wonit](https://wonit.tistory.com/462)
+[Wonit](https://wonit.tistory.com/462),
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Transaction.md)
 <br><br><br>
 
 
@@ -2570,7 +2580,8 @@
   - 반정형화, 비정형화된 데이터에 적합하다.
   - 대용량의 데이터 저장에 유리하다.
 - Ref.
-[bolee](https://velog.io/@octo__/SQL-vs-NoSQL)
+[bolee](https://velog.io/@octo__/SQL-vs-NoSQL),
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/RDBMSAndNoSQL.md)
 <br><br><br>
 
 
