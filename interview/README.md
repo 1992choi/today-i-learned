@@ -2537,8 +2537,15 @@
     - 트랜잭션에서 처리 중인, 아직 커밋 되지 않은 데이터를 다른 트랜잭션에서 읽는 것을 허용한다.
     - Dirty Read, Non-Repeatable Read, Phantom Read 현상이 발생할 수 있다.
       - Dirty Read
+        - 다른 트랜잭션에서 커밋되지 않은 변화를 읽음.
+        - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/414b1cd4-13ca-4e39-bcff-e091933c00bf)
       - Non-Repeatable Read
+        - 같은 데이터를 한 Transaction 에서 읽었음에도 불구하고 값이 달라지는 현상.
+        - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/1b7d12af-ef64-4cb8-ac43-17bf55dfcfad)
       - Phantom Read
+        - 한 개의 Transaction 에서 같은 조건으로 2번 읽었는데 2 번의 결과가 다른 현상.
+        - 없던 데이터가 생기는 현상.
+        - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/6bea3fb4-5c29-4335-a542-6f64434f3e55)
   - 레벨 1 (Read Committed)
     - 트랜잭션이 커밋되어 확정된 데이터를 읽는 것을 허용한다.
     - 대부분의 DBMS가 기본 모드로 채택하고 있는 격리수준이다.
