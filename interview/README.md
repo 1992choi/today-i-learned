@@ -2533,7 +2533,23 @@
   - 지속성(Durability)
     - 트랜잭션이 성공적으로 완료됬었을 경우, 결과는 영구적으로 반영되어야 한다.
 - 격리수준
-  - TODO.
+  - 레벨 0 (Read Uncommitted)
+    - 트랜잭션에서 처리 중인, 아직 커밋 되지 않은 데이터를 다른 트랜잭션에서 읽는 것을 허용한다.
+    - Dirty Read, Non-Repeatable Read, Phantom Read 현상이 발생할 수 있다.
+      - Dirty Read
+      - Non-Repeatable Read
+      - Phantom Read
+  - 레벨 1 (Read Committed)
+    - 트랜잭션이 커밋되어 확정된 데이터를 읽는 것을 허용한다.
+    - 대부분의 DBMS가 기본 모드로 채택하고 있는 격리수준이다.
+    - Non-Repeatable Read, Phantom Read 현상이 발생할 수 있다.
+  - 레벨 2 (Repeatable Read)
+    - 선행 트랜잭션이 읽은 데이터는 트랜잭션이 종료될 때가지 후행 트랜잭션이 갱신하거나 삭제하는 것은 불허함으로써 같은 데이터를 두 번 쿼리했을 때 일관성 있는 결과를 리턴한다.
+    - Phantom Read 현상이 발생할 수 있다.
+  - 레벨 3 (Serializable Read)
+   - 선행 트랜잭션이 읽은 데이터를 후행 트랜잭션이 갱신하거나 삭제하지 못할 뿐만 아니라 중간에 새로운 레코드를 삽입하는 것도 막아준다.
+   - 완벽하게 읽기 일관성 모드를 제공한다.
+   - 일관성이 높아지지만 데이터를 처리하는 속도가 느려지게 된다.
 - Ref.
 [Wonit](https://wonit.tistory.com/462),
 [NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Transaction.md)
