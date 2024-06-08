@@ -1166,10 +1166,30 @@
 
 
 ## Servlet과 Servlet 컨테이너
-- Title
-  - Content
+- Servlet(서블릿)이란?
+  - 서블릿(Servlet)이란 동적 웹 페이지를 만들 때 사용되는 자바 기반의 웹 애플리케이션 프로그래밍 기술이다.
+  - 서블릿은 WAS내의 서블릿 컨테이너에서 동작하며, 요청(Request)을 받으면 요청에 맞는 로직을 실행하고 클라이언트에게 HTTP 형식으로 응답(Response)하게 된다.
+- Servlet(서블릿)의 주요 특징
+  - 클라이언트의 요청에 동적으로 응답하는 웹 어플리케이션 컴포넌트이다.
+  - HTML을 사용하여 응답한다.
+  - JAVA의 쓰레드를 이용한다.
+  - MVC 패턴의 Controller 역할을 맡는다.
+- Servlet(서블릿) 동작 과정
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/2efde5cc-ccd1-499e-ac82-3cee4395f600)
+    1. 클라이언트 요청
+    2. HttpServletRequest, HttpServletResponse 객체 생성
+    3. Web.xml이 어느 서블릿에 대해 요청한 것인지 탐색
+    4. 해당하는 서블릿에서 service() 메소드 호출 
+    5. doGet() 또는 doPost() 호출 
+    6. 동적 페이지 생성 후 ServletResponse 객체에 응답 전송
+    7. HttpServletRequest, HttpServletResponse 객체 소멸
+- Servlet 컨테이너란?
+  - 서블릿을 담고 관리해주는 컨테이너이다.
+  - 서블릿 컨테이너는 서블릿 객체를 자동으로 생성, 호출, 종료 시켜준다. 즉, 라이프 사이클을 관리해준다.
 - Ref.
-[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Spring/Servlet.md)
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Spring/Servlet.md),
+[Song's DLog](https://velog.io/@falling_star3/Tomcat-%EC%84%9C%EB%B8%94%EB%A6%BFServlet%EC%9D%B4%EB%9E%80),
+[코드 연구소](https://code-lab1.tistory.com/210)
 <br><br><br>
 
 
@@ -2559,7 +2579,8 @@
    - 일관성이 높아지지만 데이터를 처리하는 속도가 느려지게 된다.
 - Ref.
 [Wonit](https://wonit.tistory.com/462),
-[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Transaction.md)
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Transaction.md),
+[amazelimi](https://amazelimi.tistory.com/entry/DB-Dirty-Read-Non-Repeatable-Read-Phantom-Read-%EC%98%88%EC%8B%9C-%EB%B0%8F-Snapshot-Isolation-Level-LIM)
 <br><br><br>
 
 
