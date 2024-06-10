@@ -2869,6 +2869,7 @@
   - 일련의 프로세스들이 서로가 가진 자원을 기다리며 block되어, 더 이상 진행이 될 수 없는 상태를 의미한다.
   - 즉, 둘 이상의 프로세스가 다른 프로세스가 점유하고 있는 자원을 서로 기다릴 때 무한 대기에 빠지는 상황을 일컫는다.
 - 교착상태 발생조건
+  - 다음의 4가지 조건을 모두 성립해야 데드락이 발생한다.
   - 상호 배제
     - 매 순간 하나의 프로세스만이 자원을 사용할 수 있다.
   - 점유 대기
@@ -2910,7 +2911,8 @@
           - 프로세스에 할당된 자원을 선점해서, 교착 상태를 해결할 때까지 그 자원을 다른 프로세스에 할당해준다.
 - Ref.
 [zioo](https://velog.io/@zioo/Deadlock%EA%B5%90%EC%B0%A9-%EC%83%81%ED%83%9C%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EB%B0%9C%EC%83%9D-%EC%9B%90%EC%9D%B8), 
-[ChanBLOG](https://chanhuiseok.github.io/posts/cs-2/)
+[ChanBLOG](https://chanhuiseok.github.io/posts/cs-2/),
+[Gyoogle](https://github.com/gyoogle/tech-interview-for-developer/blob/b478de0481da8227913c647afb004c5d39c0718e/Computer%20Science/Operating%20System/DeadLock.md)
 <br><br><br>
 
 
