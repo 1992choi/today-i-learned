@@ -1476,7 +1476,7 @@
     - 기본 스코프, 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 범위의 스코프
   - Prototype
     - 스프링 컨테이너는 프로토타입 빈의 생성과 의존관계 주입까지만 관여하고 더는 관리하지 않는 매우 짧은 범위의 스코프
-    - Prototype 스코프는 Singleton 스코프와 달리 IoC에서 빈을 받아올 때마다 매번 인스턴스를 새로 생성한다.
+    - Prototype 스코프는 Singleton 스코프와 달리 컨테이너에서 빈을 받아올 때마다 매번 인스턴스를 새로 생성한다.
   - Request (* 웹 스코프)
     - HTTP 요청 하나가 들어오고 나갈 때까지 유지되는 스코프
     - 각각의 HTTP 요청마다 별도의 빈 인스턴스가 생성되고 관리된다.
@@ -2100,6 +2100,21 @@
 - Title
   - Content
 - Ref.
+<br><br><br>
+
+
+
+## 인증(Authentication)과 인가(Authorization)
+- 인증(Authentication)
+  - 인증은 사용자 또는 디바이스 등의 신원 정보를 확인하는 과정이다.
+  - 특정 서비스에 회원 가입을 하고, 로그인하는 과정이 인증에 해당한다.
+  - Ex) 어떤 A라는 건물에 출입증이 있어야만 들어갈 수 있는데 신원을 확인하여 출입증을 받는 과정을 뜻한다.
+- 인가(Authorization)
+  - 인가는 사용자 또는 디바이스 등이 어떤 리소스에 접근할 수 있는지, 어떤 동작을 수행할 수 있는지 등을 검증하는 것이다.
+  - Ex) 출입증을 받았더라도 건물 내 모든 장소에 갈 수는 없을 것이다. 특정 장소에 접근할 수 있는 권한이 있는 출입증임을 확인하는 과정을 인가라고 한다.
+- Ref.
+[JaeHoney](https://ittrue.tistory.com/246),
+[Gyunny](https://github.com/wjdrbs96/Today-I-Learn/blob/master/Interview/Network.md#%EC%9D%B8%EC%A6%9Dauthentication)
 <br><br><br>
 
 
