@@ -2734,6 +2734,63 @@
 
 
 
+## DB Lock
+- DB Lock
+  - Database에 동시 접근이 일어난다면 데이터가 오염될 가능성이 있기 때문에, 데이터의 일관성과 무결성을 유지하기 위해 Lock을 사용한다.
+- Lock의 종류
+  - Shared Lock(공유략, Read Lock)
+    - 공유락은 데이터를 읽을때 사용하는 Lock이다.
+    - Read Lock 끼리는 데이터의 일관성과 무결성을 해치지 않기 때문에 동시에 접근이 가능하다.
+    - 만약 특정 데이터에 Shared Locak 이 걸려있다면, 아래 Exclusive Lock을 걸 수 없고, 여러 Shared Lock은 동시에 적용될 수 있다.
+  - Exclusive Lock(베타락, Write Lock)
+    - 베타락은 데이터를 변경할대 사용하는 Lock이다.
+    - 하나의 트랜잭션이 완료될때까지 유지되며, 베타락이 끝날때까지 어떠한 접근도 허용되지 않는다.
+    - Exclusive Lock이 걸리면 Shared Lock을 걸 수 없다.
+    - Exclusive 상태의 데이터에 대해 다른 트랜잭션이 Exclusive Lock을 걸 수 없다.
+- Lock 단위
+  - Row Level
+    - Row에만 락을 설정한다.
+    - 가장 많이 사용되는 Lock이다.
+  - Page Level
+    - Row가 담긴 Page 에만 락을 설정한다.
+    - 같은 페이지에 존재하는 모든 Row는 모두 잠긴다.
+  - Table Level
+    - Table 과 Index 모두에 락을 설정한다.
+    - 전체 테이블에 대한 데이터 변경이 있을 경우 사용한다.
+    - 테이블을 제어하는 DDL 구문을 사용할때 Lock이 걸린다고 하여, DDL Lock 이라고도 한다.
+  - Database Level
+    - Database의 복구나 스키마 변경 시 락을 설정한다.
+    - 1개의 세션이 하나의 Database의 데이터에 접근할 수 있다.
+    - DB 전체에 영향이 있는 DB 업데이트와 같은 작업에만 사용한다.
+  - Column Level
+    - 컬럼 기준으로 Lock이 걸린다.
+    - Lock 설정 및 해제에 리소스가 많이들어 잘 사용하지 않는다.
+- 블로킹(Blocking)
+  - Lock 간의 경합(Race Condition)이 발생하여 특정 Transaction이 작업을 진행하지 못하고 멈춰선 상태를 말한다.
+  - 공유락끼리는 블로킹이 발생하지 않지만, 베타락은 블로킹을 발생시킨다.
+  - (Shared Lock + Exclusive Lock) 또는 (Exclusive Lock + Exclusive Lock) 끼리 블로킹이 발생할 수 있다.
+  - 해결방안
+    - SQL문이 빠르게 수행될 수 있도록 리팩토링한다.
+    - 트랜잭션을 가능한 짧게 정의하여 경합을 줄인다.
+    - 동일한 데이터를 동시에 변경하지 않도록 설계한다.
+    - LOCK_TIMEOUT을 설정하여 해당 Lock의 최대시간을 조정한다.
+- 교착상태(DeadLock)
+  - 교착상태는 두 트랜잭션이 각각 Lock을 설정하고 서로의 Lock에 접근하여 값을 얻어오려고 할 때, 이미 각각의 트랜잭션에 의해 Lock이 설정되어 있기 때문에 양쪽 트랜잭션 모두 영원히 처리가 되지않게 되는 상태를 뜻한다.
+  - 발생상황
+    - Shared Lock + Exclusive Lock
+      - 트랜잭션 A가 Shared Lock을 설정하고 sleep 되었을때, 트랜잭션 B가 해당 데이터에 Exclusive Lock을 걸려고 하면 무기한 기다려야하는 교착상태에 빠진다.      
+    - Exclusive Lock + Exclusive Lock
+      - 트랜잭션 A에서 Exclusive Lock을 걸었을때 트랜잭션 B에서도 다른 데이터에 Exclusive Lock을 걸었을 경우 서로의 Lock된 데이터에 접근하려고할 때 기존의 Lock이 해제될 때까지 기다리게된다.
+  - 해결방안
+    - Dead Lock이 감지되면 둘 중 하나의 트랜잭션을 강제 종료한다.
+    - Dead Lock 방지를 위해 접근 순서를 동일하게 하는 것이 중요하다.
+- Ref.
+[NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Lock.md),
+[Hyun / Log](https://hstory0208.tistory.com/entry/%EB%9D%BDLock%EC%9D%B4%EB%9E%80-Lock%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EA%B5%90%EC%B0%A9%EC%83%81%ED%83%9CDeadLock)
+<br><br><br>
+
+
+
 
 
 <br><br><br>
