@@ -96,9 +96,9 @@
 - 인스턴스
   - 객체가 메모리에 할당되어 실제 사용될 때를 지칭한다.
 - 예제코드
-  ```java
+  ``` java
   public class Animal { // 클래스
-      ...
+      // ...
   }
    
   public class Main {
@@ -154,7 +154,7 @@
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/a77b2b23-7a2b-4b73-aaf3-b2352f955329)
     - s1과 s2는 리터럴로 생성되었기에 String Pool에 저장되어 재사용되므로 동일성을 보장한다.
     - s3은 String 클래스의 생성자를 통해 만들어진 문자이기 때문에 Heap영역에 저장되어 s1과 s2와 동일비교(==)를 하면 false를 반환한다. 이 때는 동등비교(equals)를 진행해야한다.
-    - ```java
+    - ``` java
       public static void main(String... args) {
         String s1 = "Cat";
         String s2 = "Cat";
@@ -216,9 +216,9 @@
   - 기본 타입을 객체로 다루기 위해서 사용하는 클래스들을 래퍼 클래스(Wrapper class)라고 한다.
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/e2f5b643-d1e3-4b43-9695-9b5c91fc4620)
 - 박싱(Boxing) / 언박싱(UnBoxing)
-  - Boxing은 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미한다.
-  - Unboxing은 래퍼 클래스를 원시 타입으로 변환하는 것을 의미한다.
-  - ```java
+  - Boxing은 기본 타입의 값을 래퍼 클래스로 변환하는 것을 의미한다.
+  - Unboxing은 래퍼 클래스를 기본 타입으로 변환하는 것을 의미한다.
+  - ``` java
     int n = 10;
     
     // 박싱
@@ -231,7 +231,7 @@
     ```
 - 오토 박싱(Auto Boxing) / 오토 언박싱(Auto UnBoxing)
   - JDK 1.5부터 지원하는 기능으로써, 명시적으로 표현하지 않아도 컴파일러가 자동으로 박싱과 언박싱을 처리를 해준다.
-  - ```java
+  - ``` java
     int n = 10;
     
     // 오토 박싱
@@ -253,12 +253,12 @@
   - 추상 메서드를 선언해 놓고 상속을 통해 자식 클래스에서 메서드를 완성하도록 유도하는 클래스이다.
   - 반드시 사용되어야 하는 메서드를 추상 클래스에 추상 메서드로 선언해 놓으면, 이 클래스를 상속받는 모든 클래스에서는 이 추상 메서드를 반드시 재정의해야 한다.
   - 추상클래스는 abstract 키워드를 붙여 선언할 수 있다.
-  - ```java
+  - ``` java
     abstract class Animal {
         abstract void cry();
     }
     ```
-  - ```java
+  - ``` java
     class Bird extends Animal {
         @Override
         void cry() { // 반드시 cry()를 구현해야한다.
@@ -298,7 +298,7 @@
 - 인터페이스란?
   - 자바에서 클래스들이 구현해야 하는 동작을 지정하는 용도로 사용되는 추상 자료형이다.
   - 인터페이스는 interface 키워드를 붙여 선언할 수 있으며, 기본적으로는 상수와 추상메서드로 구성된다. 하지만 자바8부터는 default 메서드와  static 메서드를 지원한다.
-  - ```java
+  - ``` java
     interface InterfaceSample {
     
         public static final int NUM = 10; // public static final 생략 가능. 컴파일 시에 자동 생성
@@ -318,7 +318,7 @@
   - 인터페이스는 interface 키워드를 사용하여 정의한다.
   - 인터페이스는 상수와 추상메서드로 구성되어 있다. (자바8부터 default와  static 메서드 사용 가능)
   - 인터페이스 안의 모든 상수는 public static final 타입이다. (생략 가능)
-  - 인터페이스 안의 모든 추상메서드는 abstract public 타입이다. (생략 가능)
+  - 인터페이스 안의 모든 추상메서드는 public abstract 타입이다. (생략 가능)
   - 추상클래스와 마찬가지로 인스턴스를 생성할 수 없다.
   - 인터페이스는 다른 인터페이스를 extends 키워드로 상속받을 수 있으며, 다중 상속이 가능하다.
   - 클래스에서 인터페이스의 구현은 implements 키워드를 사용하여 구현할 인터페이스를 지정 후, 추상메서드를 모두 오버라이드하여 내용을 완성해야 한다.
@@ -484,18 +484,18 @@
 ## 람다식(Lambda Expression)
 - 람다식(Lambda Expressions) 이란?
   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
-  - 함수를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
+  - 메서드를 람다식으로 표현하면 메서드의 이름 없이 사용할 수 있게 되는데, 이 때문에 익명 함수라고도 불린다.
   - 람다식은 자바 8부터 사용 가능하며, 이로 인하여 자바에서도 함수형 프로그래밍이 가능하게 되었다.
 - 장/단점
   - 장점
     - 코드를 간결하게 만들 수 있다.
     - 식에 개발자의 의도가 명확히 드러나기 때문에 가독성이 높아진다.
-    - 함수를 만드는 과정없이 한 번에 처리할 수 있기 때문에 생산성이 높아진다.
+    - 메서드를 만드는 과정없이 한 번에 처리할 수 있기 때문에 생산성이 높아진다.
     - 병렬프로그래밍이 용이하다.
   - 단점
     - 람다를 사용하면서 만든 익명 함수는 재사용이 불가능하다.
     - 디버깅이 어렵다.
-    - 람다를 무분별하게 사용할 경우, 비슷한 함수가 중복 생성될 수 있다.
+    - 익명 함수는 재사용이 불가능하기 때문에 람다를 무분별하게 사용할 경우, 비슷한 함수가 중복 생성될 수 있다.
 - 예제코드
   - ``` java
     interface SquareIF {
@@ -555,8 +555,8 @@
 ## 함수형 인터페이스
 - 함수형 인터페이스란?
   - 함수형 인터페이스(functional interface)는 추상메서드가 1개만 정의된 인터페이스를 통칭하여 일컫는다.
-  - 이 인터페이스 형태의 목적은 자바에서 람다 표현식(Lambda Expression)Visit Website을 이용해 함수형 프로그래밍을 구현하기 위함이다.
-  - 함수형 인터페이스를 표현하기 위하여 @FunctionalInterface 어노테이션을 사용할 수 있다. 해당 어노테이션을 붙여주면 두 개 이상의 메소드 선언 시 컴파일 오류를 발생시켜 개발자의 실수를 줄일 수 있다.
+  - 함수형 인터페이스의 목적은 자바에서 람다 표현식을 이용해 함수형 프로그래밍을 구현하기 위함이다.
+  - 함수형 인터페이스를 표현하기 위하여 @FunctionalInterface 어노테이션을 사용할 수 있다. 해당 어노테이션을 붙여주면 두 개 이상의 메서드 선언 시 컴파일 오류를 발생시켜 개발자의 실수를 줄일 수 있다.
   - 자주 사용할 것 같은 람다 함수 형태를 함수형 인터페이스 표준 API로 미리 만들어 제공해준다.
 - 종류
   - Consumer<T>
@@ -655,7 +655,7 @@
     - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/59b48da0-1c3f-4107-bf91-d39df636f39f)
   - 해결방안
     - Checked Exception을 Unchecked Exception으로 전환한다.
-    - ```java
+    - ``` java
       static class Repository {
           public void call() {
               try {
@@ -697,7 +697,7 @@
   - Context Switching이 빠르기 때문에 시스템 처리량이 증가한다.
   - 프로세스 내의 Stack영역을 제외한 모든 메모리를 공유하기 때문에 통신 부담이 적어 프로그램 응답 시간이 단축된다.
 - Thread 클래스와 Runnable 인터페이스 구현 비교
-  - ```java
+  - ``` java
     // 1. Thread 클래스를 상속받아 구현       
     static class MyThread1 extends Thread {
         // Thread 클래스의 run()을 오버라이딩
@@ -748,7 +748,7 @@
 - Title
   - Content
 - Ref.
-[mangoo.log](https://velog.io/@mangoo/java-thread-safety)
+[mangoo.log](https://velog.io/@mangoo/java-thread-safety),
 [jammmm](https://jammdev.tistory.com/191)
 <br><br><br>
 
@@ -764,6 +764,7 @@
   - 클래스 로더(Class Loader)
   - 실행 엔진(Excution Engine)
   - Garbage Collector
+  - TODO. 상세역할 추가
 - 실행과정
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
     1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
@@ -930,7 +931,7 @@
     스프링의 주요 기능인 DI도 리플렉션의 원리가 들어있다.
 - 리플렉션의 사용예시
   - 메서드를 직접 호출할 경우, 기능이 추가되면 조건식을 추가하기 위해 매번 코드를 변경해야한다는 단점이 있지만, 리플렉션을 사용할 경우 이러한 단점을 극복할 수 있다.
-  - ```java
+  - ``` java
     import java.lang.reflect.Method;
     
     public class ReflectionEx {
@@ -1204,7 +1205,7 @@
     1. 클라이언트 요청
     2. HttpServletRequest, HttpServletResponse 객체 생성
     3. Web.xml이 어느 서블릿에 대해 요청한 것인지 탐색
-    4. 해당하는 서블릿에서 service() 메소드 호출 
+    4. 해당하는 서블릿에서 service() 메서드 호출 
     5. doGet() 또는 doPost() 호출 
     6. 동적 페이지 생성 후 ServletResponse 객체에 응답 전송
     7. HttpServletRequest, HttpServletResponse 객체 소멸
