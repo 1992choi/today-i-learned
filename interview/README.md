@@ -211,6 +211,10 @@
 
 
 ## 래퍼클래스(Wrapper Class)와 박싱(Boxing), 언박싱(Unboxing)
+- 래퍼클래스란?
+  - 자바의 자료형은 크게 기본 타입(Primitive type)과 참조 타입(Reference type)으로 나누어진다.
+  - 기본 타입을 객체로 다루기 위해서 사용하는 클래스들을 래퍼 클래스(Wrapper class)라고 한다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/e2f5b643-d1e3-4b43-9695-9b5c91fc4620)
 - 박싱(Boxing) / 언박싱(UnBoxing)
   - Boxing은 원시 타입의 값을 래퍼 클래스(Wrapper class)로 변환하는 것을 의미한다.
   - Unboxing은 래퍼 클래스를 원시 타입으로 변환하는 것을 의미한다.
@@ -1193,7 +1197,7 @@
 - Servlet(서블릿)의 주요 특징
   - 클라이언트의 요청에 동적으로 응답하는 웹 어플리케이션 컴포넌트이다.
   - HTML을 사용하여 응답한다.
-  - JAVA의 쓰레드를 이용한다.
+  - JAVA의 스레드를 이용한다.
   - MVC 패턴의 Controller 역할을 맡는다.
 - Servlet(서블릿) 동작 과정
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/2efde5cc-ccd1-499e-ac82-3cee4395f600)
