@@ -215,7 +215,7 @@
 - 래퍼클래스란?
   - 자바의 자료형은 크게 기본 타입(Primitive type)과 참조 타입(Reference type)으로 나누어진다.
   - 기본 타입을 객체로 다루기 위해서 사용하는 클래스들을 래퍼 클래스(Wrapper class)라고 한다.
-  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/e2f5b643-d1e3-4b43-9695-9b5c91fc4620)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/6568409b-fdd3-4ab7-9e77-1410f542f1f8)
 - 박싱(Boxing) / 언박싱(UnBoxing)
   - Boxing은 기본 타입의 값을 래퍼 클래스로 변환하는 것을 의미한다.
   - Unboxing은 래퍼 클래스를 기본 타입으로 변환하는 것을 의미한다.
@@ -456,6 +456,8 @@
         - 순차 접근만 가능하여 조회할 때는 불리하지만, 양방향 포인터 구조이기 때문에 데이터의 삽입, 삭제 시에는 유리하다.
       - Vector
         - ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.
+    - 시간복잡도
+      - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c3c4f910-beb9-4a2b-988b-30b5ad30d966)
   - Set
     - 순서가 없는 데이터 집합이다.
     - 데이터의 중복을 허용하지 않는다.
@@ -466,6 +468,8 @@
         - 입력한 순서대로 값을 저장하지 않지만, 기본적으로 오름차순으로 정렬한다.
       - LinkedHashSet
         - 입력한 순서대로 값을 저장한다.
+    - 시간복잡도
+      - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c2ffd676-f00c-4f06-a20c-ccaea5886118)
   - Map
     - 키와 값의 한 쌍으로 이루어진 데이터 집합으로 순서가 없다.
     - 키의 중복은 허용하지 않고, 값의 중복은 허용한다.
@@ -476,8 +480,11 @@
         - 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘을 사용하여 검색 속도가 매우 빠르다.
       - Hashtable
         - HashMap과 다르게 동기화를 보장한다.
+    - 시간복잡도
+      - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c78422a1-bb45-4909-abf8-d908ff6b0b12)
 - Ref.
-[Caffeine Overflow](https://caffeineoverflow.tistory.com/129)
+[Caffeine Overflow](https://caffeineoverflow.tistory.com/129),
+[Medium](https://yogeshkkhichi.medium.com/time-and-space-complexity-of-collections-5a00c7b1d32b)
 <br><br><br>
 
 
@@ -560,19 +567,19 @@
   - 함수형 인터페이스를 표현하기 위하여 @FunctionalInterface 어노테이션을 사용할 수 있다. 해당 어노테이션을 붙여주면 두 개 이상의 메서드 선언 시 컴파일 오류를 발생시켜 개발자의 실수를 줄일 수 있다.
   - 자주 사용할 것 같은 람다 함수 형태를 함수형 인터페이스 표준 API로 미리 만들어 제공해준다.
 - 종류
-  - Consumer\<T>
+  - Consumer
     - 한 개의 입력을 받아서 결과를 반환하지 않는 함수를 정의한다.
     - void accept(T t) 메서드를 가지며, 이 메서드는 매개변수 T를 받아서 아무런 결과도 반환하지 않는다.
     - 주로 입력값을 이용한 연산이나 출력 등의 동작에 사용된다.
-  - Supplier\<T>
+  - Supplier
     - 입력 없이 결과를 반환하는 함수를 정의한다.
     - T get() 메서드를 가지며, 이 메서드는 아무런 매개변수를 받지 않고 결과 T를 반환한다.
-    - 주로 입력 받는 방식을 경정해 파라미터 없이 특정 결과를 생성하는데 사용된다.
-  - Function<T, R>
+    - 파라미터 없이 특정 결과를 생성하는데 사용된다.
+  - Function
     - 한 개의 입력을 받아서 결과를 매핑하여 반환하는 함수를 정의한다.
     - R apply(T t) 메서드를 가지며, 이 메서드는 매개변수 T를 받아서 R타입의 결과를 반환한다.
-    - 주로 T 타입의 객체를 받아 다른 형태R로 변환하는데 사용된다.
-  - Predicate\<T>
+    - 주로 T 타입의 객체를 받아 다른 형태 R로 변환하는데 사용된다.
+  - Predicate
     - 한 개의 입력을 받아서 boolean 결과를 반환하는 함수를 정의한다.
     - boolean test(T t) 메서드를 가지며, 이 메서드는 매개변수 T를 받아서 boolean 결과를 반환한다.
     - 주로 객체를 조건에 따른 필터링이 필요할 때 사용한다.
@@ -696,6 +703,7 @@
 - 프로세스(Process)와 스레드(Thread)
   - 프로세스란 실행 중인 프로그램을 뜻한다.
   - 스레드란 프로세스 내에서 동시에 실행되는 독립적인 실행단위를 뜻한다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/fb645fff-1b25-45f4-93cd-cb8e9fcc0ca2)
 - 스레드의 장점
   - Context Switching이 빠르기 때문에 시스템 처리량이 증가한다.
   - 프로세스 내의 Stack영역을 제외한 모든 메모리를 공유하기 때문에 통신 부담이 적어 프로그램 응답 시간이 단축된다.
@@ -804,6 +812,8 @@
 - GC(Garbage Collection) 란?
   - JVM의 메모리 영역에서 더 이상 참조하지 않는 데이터를 JVM이 자동으로 정리를 해주는 것을 뜻한다.
   - 주로 동적 메모리 영역인 Heap 영역을 대상으로 동작한다.
+  - GC가 실행되면 stop-the-world가 발생한다.
+    - `stop-the-world란 GC를 실행하기 위해 JVM이 모든 애플리케이션 실행을 멈추는 것을 말한다.`
 - JVM Heap 메모리 구성
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/005dc2f5-884b-4b80-9216-90072bdf1fef)
   - Young Generation
@@ -841,6 +851,7 @@
     - Java 9+ 의 default GC이다.
     - 전체 Heap에 대해서 탐색하지 않고 부분적으로 Region 단위로 탐색하여, 각각의 Region에만 GC가 발생한다.
 - Ref.
+[Naver D2](https://d2.naver.com/helloworld/1329),
 [오리엔탈킴의 대충 IT 지식과 일상](https://kim-oriental.tistory.com/48),
 [DannyJae](https://jhyonhyon.tistory.com/20)
 <br><br><br>
@@ -1130,6 +1141,14 @@
   - Custom 어노테이션
     - 사용자가 개발의 편의를 위해 정의하는 어노테이션이다.
     - 어노테이션은 특별한 종류의 인터페이스이며, 일반 인터페이스와 타입 구분을 위해 @를 앞에 붙여 선언한다.
+    - ``` java
+      @Target(ElementType.TYPE)
+      @Retention(RetentionPolicy.RUNTIME)
+      @Documented
+      public @interface MyAnnotation {
+          String value() default "";
+      }
+      ```
 - Ref.
 [algml0703](https://mihee0703.tistory.com/207),
 [A6K 개발노트](https://hbase.tistory.com/169),
