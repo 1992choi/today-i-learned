@@ -2703,6 +2703,7 @@
       - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/031b6ec4-396b-4948-8443-84e19cfe5c64)
       - B-Tree는 데이터베이스에서 가장 널리 사용되는 인덱스 자료구조 중 하나이다.
       - O(logN)의 시간 복잡도를 가지고 있다.
+      - 이진 트리와는 다르게 하나의 노드에 많은 정보를 가지거나, 두 개 이상의 자식을 가질 수도 있다.
       - B-Tree의 각 노드 내 데이터들은 항상 정렬된 상태인 것이 특징이며, 데이터와 데이터 사이의 범위를 이용하여 자식 노드를 가진다.
       - B-Tree의 경우, 키 값과 데이터 값이 노드 안에 함께 저장되기 때문에 노드 크기가 크고, 디스크 I/O 작업이 많아지는 문제가 있기 때문에 B+Tree구조를 더 많이 사용한다.
     - B+Tree
@@ -2710,10 +2711,12 @@
       - B+Tree는 B-Tree의 변형된 구조이다.
       - B-Tree는 내부 노드와 리프 노드가 모두 데이터를 가지는 반면에 B+Tree는 리프 노드만 데이터를 가지게 때문에 더 적은 I/O 작업을 필요로 한다.
       - B-Tree와 B+Tree 모두 O(log n)의 시간복잡도를 가지지만, B+Tree가 더 작은 크기의 노드들을 읽어나가기 떄문에 리프 노드에 더 빨리도착할 수 있다.
+      - B-Tree는 탐색을 위해서 노드를 찾아서 이동해야 한다는 단점을 가지고 있는데, B+Tree는 이러한 단점을 해소하고자 같은 레벨의 모든 키값들이 정렬되어 있고, 같은 레벨의 Sibiling node는 연결리스트 형태로 이어져 있다. 또한 이 자료들은 연결리스트로 연결되어 있으므로 탐색에 유리하다.
 - Ref.
 [망나니개발자](https://mangkyu.tistory.com/96),
 [IT is True](https://ittrue.tistory.com/331),
-[dev.KwonTaeHyeong](https://velog.io/@kwontae1313/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90)
+[dev.KwonTaeHyeong](https://velog.io/@kwontae1313/%EC%9D%B8%EB%8D%B1%EC%8A%A4Index%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90),
+[간단히 알아보는 B-Tree, B+Tree, B*Tree](https://ssocoit.tistory.com/217)
 <br><br><br>
 
 
