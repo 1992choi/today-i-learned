@@ -2230,6 +2230,7 @@
         - 전략 (Strategy)
         - 템플릿 메서드 (Template Method)
         - 방문자 (Visitor)
+- [샘플코드](https://github.com/1992choi/design-patterns)
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/41)
 <br><br><br>
@@ -2491,8 +2492,7 @@
     - GRANT : 권한 부여
     - REVOKE : 권한을 제한하거나 회수
 - TCL (Transaction Control Language)
-  - 데이터베이스의 구조를 정의할 때 사용하는 언어이다.
-  - DDL은 명령어를 입력하는 순간 작업이 즉시 반영(Auto Commit)되기 때문에 사용할 때 주의해야 한다.
+  - 트랜잭션을 제어하는 명령인 COMMIT과 ROLLBACK만을 따로 분리해서 TCL이라고 표현하고 있다.
   - 종류
     - COMMIT : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 영구적으로 반영
     - ROLLBACK : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 작업 이전의 상태로 복구
@@ -2598,6 +2598,7 @@
   - 일반적으로 Primary key 혹은 Foreign key로 두 테이블을 연결한다.
   - 연결하려면 적어도 하나의 칼럼은 서로 공유되고 있어야 한다.
 - JOIN의 종류
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/13aba6a1-b866-4772-a747-82c49d5e1b07)
   - INNER JOIN
     - 기존테이블과 조인한 테이블의 중복값을 보여주는데 결과값은 교집합만 검색
   - LEFT / RIGHT OUTER JOIN
@@ -2797,7 +2798,7 @@
 - DB Lock
   - Database에 동시 접근이 일어난다면 데이터가 오염될 가능성이 있기 때문에, 데이터의 일관성과 무결성을 유지하기 위해 Lock을 사용한다.
 - Lock의 종류
-  - Shared Lock(공유략, Read Lock)
+  - Shared Lock(공유락, Read Lock)
     - 공유락은 데이터를 읽을때 사용하는 Lock이다.
     - Read Lock 끼리는 데이터의 일관성과 무결성을 해치지 않기 때문에 동시에 접근이 가능하다.
     - 만약 특정 데이터에 Shared Locak 이 걸려있다면, 아래 Exclusive Lock을 걸 수 없고, 여러 Shared Lock은 동시에 적용될 수 있다.
