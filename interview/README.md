@@ -2596,18 +2596,23 @@
 - 정규화의 종류
   - 1NF
     - 모든 도메인이 원자값으로만 구성된다.
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/505be8f8-f9ed-4f8c-9e02-2a20d42e7547)
   - 2NF
-    - 모든 속성의 부분적 종속이 없이 완전 함수 종속을 만족한다.
+    - 기본키가 아닌 모든 속성이 기본키에 대하여 완전 함수적 종속을 만족한다.
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/8f19a508-0b6e-4746-a161-9036157582de)
   - 3NF
     - 기본키를 제외한 속성들 간에 이행 종속성이 없다.
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/5d66af2e-fd92-41b9-831c-95b319523b41)
   - BCNF
     - 모든 결정자가 후보키일 때, 결정자이면서 후보키가 아닌 것을 제거한다.
+    - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/5953a132-4eac-48a4-b951-a19a50091c73)
   - 4NF
     - 다치 종속을 제거한다.
   - 5NF
     - 모든 조인 종속이 후보키를 통해서만 성립한다. 
 - Ref.
-[star가 되고나서](https://star7sss.tistory.com/822)
+[star가 되고나서](https://star7sss.tistory.com/822),
+[goodGid](https://goodgid.github.io/DB-Normalization%281%29/)
 <br><br><br>
 
 
