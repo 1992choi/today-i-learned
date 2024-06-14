@@ -2076,6 +2076,14 @@
 
 
 
+## [JPA] equals와 hashCode
+- Title
+  - Content
+- Ref.
+<br><br><br>
+
+
+
 ## [JPA] 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)
 - 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)
   - JPA를 사용하여 데이터베이스와 연결된 어플리케이션을 개발할 때, 동시성 처리와 관련된 이슈가 발생할 수 있다.
