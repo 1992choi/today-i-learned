@@ -2196,6 +2196,14 @@
 
 
 
+## Outbox Pattern
+- Title
+  - Content
+- Ref.
+<br><br><br>
+
+
+
 
 
 <br><br><br>
@@ -2958,7 +2966,8 @@
     - 어플리케이션들이 데이터를 교환하기 위해 사용하는 프로토콜을 정의한다.
     - TCP/IP 네트워크를 사용하거나 관리하는 것을 도와주는 프로토콜이다.
 - Ref.
-[DevOwen](https://devowen.com/344)
+[DevOwen](https://devowen.com/344),
+[Im-D](https://github.com/im-d-team/Dev-Docs/blob/master/Network/OSI7%20Layer.md)
 <br><br><br>
 
 
