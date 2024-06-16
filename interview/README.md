@@ -2077,9 +2077,13 @@
 
 
 ## [JPA] equals와 hashCode
-- Title
-  - Content
+- 복합키에서 equals() 및 hashCode()를 구현하는 이유
+  - 영속성 컨테스트는 엔티티의 식별자를 키로 사용해서 엔티티를 관리한다.   
+    그리고 식별자를 비교할 때 equals() 와 hashcode()를 사용한다.   
+    따라서, 식별자 객체의 동등성(equals)이 지켜지지 않으면 예상과 다른 엔티티가 조회되거나 엔티티를 찾을 수 없는 등 영속성 컨텍스트가 엔티티를 관리하는 데 문제가 발생하므로, 복합 키는 equals()와 hashCode()를 필수로 구현해야 한다.
 - Ref.
+[modiday](https://modimodi.tistory.com/14),
+[Medium](https://xeounxzxu.medium.com/jpa-about-equals-and-hashcode-9456224253d5)
 <br><br><br>
 
 
