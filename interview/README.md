@@ -1848,6 +1848,23 @@
   - 복수의 값을 바인딩할 수 있다.
   - RelaxedBinding이 가능하다.
   - spEL 적용이 불가능하다.
+- RelaxedBinding과 spEL
+  - RelaxedBinding
+    - 프로퍼티 값의 이름이 조금 달라도 유연하게 바인딩을 시켜주는 규칙을 의미한다.
+    - Environment 프로퍼티 값과 Bean 프로퍼티 이름을 정확히 일치할 필요가 없다.
+    - 프로퍼티와 환경 변수들의 구분을 어느정도 유연한 규칙으로 동일하게 인식하기 때문이다.
+    - 프로퍼티의 값이 root.path=/dev 와 같이 정의되어 있다고 가정할 때, Bean 프로퍼티 이름이 String rootPath여도 유연한 규칙을 통해 동일하게 인식해서 값을 매핑시켜준다.
+  - spEL
+    - Spring Expression Language는 SpEL로 많이 표기한다.
+    - SpEL 표현식은 # 기호로 시작하며 중괄호로 묶어서 표현한다. : #{표현식}
+    - Ex)
+      ``` java
+      @Value("#{1 == 1}") // true
+      private boolean boolTmp;
+
+      @Value("#{some.property != null ? some.perperty : 'test'}") // null인 경우 test 주입
+      private String strTmp;
+      ``` 
 - Ref.
 [dhkim's development blog](https://velog.io/@dhkim1522/SpringBoot-%EC%99%B8%EB%B6%80-%ED%94%84%EB%A1%9C%ED%8D%BC%ED%8B%B0-%EC%A0%81%EC%9A%A9-Value-ConfigurationProperties),
 [호준송](https://hojunking.tistory.com/125)
