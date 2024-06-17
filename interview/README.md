@@ -775,12 +775,23 @@
 
 
 
-## 멀티스레드와 Thread-Safety
-- Title
-  - Content
+## 멀티스레드와 Thread Safety
+- 멀티스레드란?
+  - 멀티스레드는 하나의 프로세스 내부에서 여러 개의 스레드가 동시에 실행되는 것이다.
+  - 멀티스레드를 사용하면 시스템의 처리량이 향상되고 자원 소모가 줄어들어 자연스럽게 프로그램의 응답 시간이 단축된다는 장점을 가지고 있다.
+- Thread Safety란?
+  - 다수의 스레드가 공유 자원에 접근해도 프로그램이 문제 없이 동작하는 것을 의미한다.
+- Thread Safety한 구현
+  - Synchronized 키워드 사용
+  - Volatile 키워드 사용
+  - ThreadLocal 사용
+  - Atomic Object 사용
+  - Synchronized Collections 사용
+  - Concurrent Collections 사용
 - Ref.
 [mangoo.log](https://velog.io/@mangoo/java-thread-safety),
-[jammmm](https://jammdev.tistory.com/191)
+[jammmm](https://jammdev.tistory.com/191),
+[eckrin.log](https://eckrin.tistory.com/173)
 <br><br><br>
 
 
