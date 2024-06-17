@@ -803,17 +803,34 @@
   - 메모리 관리 및 Garbage Collection을 수행한다.
   - Stack 기반의 가상머신이다.
 - JVM 구성
-  - 클래스 로더(Class Loader)
-  - 실행 엔진(Excution Engine)
-  - Garbage Collector
-  - TODO. 상세역할 추가
-- 실행과정
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d24ea6ce-6f74-4da1-b6d5-3a931e0e7df7)
-    1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
-    2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
-    3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
-    4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
-    5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
+    - 클래스 로더(Class Loader)
+      - JVM 내로 클래스 파일(*.class)을 로드하고, 링크를 통해 배치하는 작업을 수행하는 모듈이다.
+    - Runtime Data Area
+      - 프로그램을 수행하기 위해 OS에서 할당받은 메모리 공간.
+    - Method Area
+      - 클래스에 대한 정보와 클래스 변수(static variable)가 저장되는 영역이다.
+    - Heap
+      - new 키워드를 통해 생성된 인스턴스의 정보, Array와 같이 동적으로 생성된 데이터가 저장되는 영역이다.
+    - JVM Stack
+      - 메서드가 호출되면, 메서드의 지역 변수와 매개변수가 저장되는 영역이다.
+    - PC Register
+      - Thread가 시작될 때 생성되며 생성될 때마다 생성되는 공간으로, 스레드마다 하나씩 존재한다.
+      - Thread가 어떤 부분을 어떤 명령으로 실행해야할 지에 대한 기록을 하는 부분으로 현재 수행 중인 JVM 명령의 주소를 갖는다.
+    - Native Stack
+      - JAVA가 아닌 다른 언어로 작성된 코드를 위한 공간이다.
+      - Java Native Interface를 통해 바이트 코드로 전환하여 저장하게 된다.
+    - 실행 엔진(Excution Engine)
+      - 클래스를 실행시키는 역할이다.
+      - 자바 바이트 코드(*.class)는 기계가 바로 수행할 수 있는 언어보다는 비교적 인간이 보기 편한 형태로 기술된 것이다. 그래서 실행 엔진은 이와 같은 바이트 코드를 실제로 JVM 내부에서 기계가 실행할 수 있는 형태로 변경한다.
+    - Garbage Collector
+      - 더이상 사용되지 않는 인스턴스를 찾아 메모리에서 삭제하는 역할을 한다.
+- 실행과정
+  1. 프로그램이 실행되면 JVM은 OS로부터 메모리를 할당 받는다.
+  2. 컴파일러가 소스코드(.java)를 읽어 바이트코드(.class)로 변환시킨다.
+  3. 클래스 로더를 통해 class파일들을 JVM에 로딩시킨다.
+  4. 실행 엔진을 통해 로딩된 class파일들을 해석한다.
+  5. 해석된 바이트코드는 Runtime Data Areas에 배치된 후 실행된다. 
 - Ref.
 [jomminii](https://doozi0316.tistory.com/entry/1%EC%A3%BC%EC%B0%A8-JVM%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%9E%90%EB%B0%94-%EC%BD%94%EB%93%9C%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EA%B2%83%EC%9D%B8%EA%B0%80),
 [doozi](https://velog.io/@jomminii/whiteship-java-01-what-is-jvm)
