@@ -1909,8 +1909,8 @@
   - 메시지 바디를 통해 서버로 요청 데이터를 전달하면, 서버는 정해진 로직에 따라 요청 데이터를 처리한다.
   - 주로, 전달된 데이터를 이용하여 신규 리소스를 등록하거나 프로세스를 처리한다.
 - PUT
-  - PUT 메서드는 리소스 전체를 대체한다.
-  - 기존 리소스가 없을 경우 새로 생성한다. 즉, 덮어쓰기를 수행한다고 볼 수 있다.
+  - PUT 메서드는 리소스 전체를 대체한다. 즉, 덮어쓰기를 수행한다고 볼 수 있다.
+  - 기존 리소스가 없을 경우 새로 생성한다.
   - POST와 차이점은 클라이언트가 리소스의 위치를 알고 URI를 명시해야 한다는 점이다.
 - PATCH
   - PATCH 메서드는 리소스를 부분 변경한다.
@@ -2253,10 +2253,16 @@
 
 
 
-## Outbox Pattern
-- Title
+## MSA 환경에서의 분산 트랜잭션 관리
+- 2PC
+  - Content
+- SAGA
+  - Content
+- Outbox 패턴
   - Content
 - Ref.
+[dev_hwan.log](https://velog.io/@ch200203/MSA-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C%EC%9D%98-%EB%B6%84%EC%82%B0-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B4%80%EB%A6%AC2PC-SAGA-%ED%8C%A8%ED%84%B4),
+[RIDI](https://ridicorp.com/story/transactional-outbox-pattern-ridi/)
 <br><br><br>
 
 
