@@ -1,10 +1,10 @@
 ## JSP vs Servlet
 - JSP
   - html 내에 자바코드를 블록화하여 삽입한 것.
-  - JAVA in Html.
+  - JAVA in HTML.
 - Servlet
   - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
-  - Html in JAVA.
+  - HTML in JAVA.
 - Ref.
 [effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
 <br><br><br>
@@ -65,11 +65,20 @@
 
 
 
-## Framework vs Library
+## Framework와 Library
 - Framework
   - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
+  - 개발자가 소프트웨어를 개발함에 있어 코드를 구현하는 개발시간을 줄이고, 코드의 재사용성을 증가시키기 위하여 클래스 묶음이나 뼈대, 틀을 제공하는 것을 말한다.
+  - Framework의 특징
+    - 개발자가 따라야 하는 가이드를 제공한다.
+    - 개발할 수 있는 범위가 정해져있다.
+    - 정형화 되어있어 일정수준 이상의 품질을 기대할 수 있다.
 - Library
   - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
+- 차이점
+  - Framework와 Library의 차이는 제어 흐름에 대한 주도성이 누구에게 있는가에 있다.
+  - 프레임워크는 그 스스로 제어 흐름의 주도성을 갖는 반면, 라이브러리는 개발자가 가지고 있다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/9cfbb7e6-9208-4f54-b6f2-4fd7121d0bb3)
 - Ref.
 [Coding Planet](https://sharonprogress.tistory.com/169)
 <br><br><br>
