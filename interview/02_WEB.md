@@ -290,6 +290,28 @@
 
 
 
+## 스프링 AOP와 Proxy
+- 스프링 AOP와 Proxy
+  - 스프링에서는 프록시를 이용해 AOP를 지원한다.
+  - 스프링 AOP에서 사용하는 프록시 방식에는 JDK Proxy(=JDK Dynamic Proxy)와 CGLib Proxy가 있다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
+  - JDK Dynamic Proxy
+    - Interface를 기반으로 Proxy를 생성해주는 방식이다.
+    - Refelction을 이용해 Proxy를 생성한다.
+  - CGLib Proxy
+    - Code Generator Libray의 약자로, JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
+    - Refelction이 아닌 바이트 조작을 사용하며, 타겟에 대한 정보를 알고 있기 때문에 JDK Dynamic Proxy에 비해 성능이 좋다.
+- 스프링과 스프링부트에서의 채택
+  - 스프링 AOP에서는 기본적으로 JDK Dynamic Proxy를 사용한다. 하지만 JDK Dynamic Proxy는 인터페이스가 있어야만 사용할 수 있기 때문에 인터페이스가 없는 경우에는 CGLIB Proxy를 사용한다.
+  - 스프링 부트에서는 설정을 통해 프록시 방식을 선택할 수 있다.
+  - JDK 방식은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 Private에 접근이 가능하다는 점 때문에 스프링 부트 2.0에서는 기본 방식으로 CGLib 방식을 채택하였다.
+- Ref.
+[펲로그](https://suyeonchoi.tistory.com/81),
+[제이온](https://steady-coding.tistory.com/608)
+<br><br><br>
+
+
+
 ## 스프링 PSA
 - PSA(Portable Service Abstraction)란?
   - 일관성 있는 서비스 추상화를 뜻한다.
@@ -364,15 +386,8 @@
     - 성공적으로 완료된 트랜잭션의 결과는 영구적으로 반영되어야 한다.
 - @Transactional
   - @Transactional 어노테이션은 스프링에서 많이 사용되는 선언적 트랜잭션 방식이다.
-  - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.
-- JDK Proxy(Dynamic Proxy) VS CGLib
-  - 스프링에서 사용하는 프록시 구현체는 JDK Proxy(Dynamic Proxy), CGLib가 있다.
-  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
-  - JDK Dynamic Proxy
-    - Interface를 기반으로 Proxy를 생성해주는 방식이다.
-  - CGLib Proxy
-    - JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
-    - JDK 방식은 java.lang.Reflection을 이용해서 동적으로 프록시를 생성해 준다. 해당 방식의 단점은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 private 접근이 가능하다는 점 때문에 스프링 부트에서는 기본 방식으로 CGLib 방식을 채택하였다.
+  - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.\
+  - @Transactional에는 Spring AOP의 Proxy방식이 사용된다.
 - 격리 수준 (Isolation Level)
   - DEFAULT
     - 데이터베이스에서 설정된 기본 격리 수준을 따른다. 
@@ -414,15 +429,6 @@
     - 특정 예외가 발생하더라도 Rollback 하지 않는다.
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/139)
-<br><br><br>
-
-
-
-## JDK Dynamic Proxy VS CGLIB Proxy
-- Title
-  - Content
-- Ref.
-[펲로그](https://suyeonchoi.tistory.com/81)
 <br><br><br>
 
 
