@@ -30,7 +30,7 @@
 
 <br>
 
-### IAM (Identity and Access Management)
+### IAM(Identity and Access Management)
 - IAM이란?
   - AWS 리소스에 대한 액세스를 안전하게 제어할 수 있는 웹 서비스이다.
   - IAM을 사용하여 리소스를 사용하도록 인증 및 권한 부여된 대상을 제어할 수 있다.
@@ -54,7 +54,7 @@
 
 <br>
 
-### EC2 (Elastic Compute Cloud)
+### EC2(Elastic Compute Cloud)
 - EC2란?
   - Amazon Elastic Compute Cloud의 줄임말로서 AWS에서 제공하는 클라우드 컴퓨팅이다.
   - Elastic이라는 이름은 가상서버를 사용한 만큼 비용을 탄력적으로 지불하고, 성능과 용량도 자유롭게 조절할 수 있다는 의미를 가지고 있다.
@@ -77,37 +77,37 @@
 
 <br>
 
-### EBS (Elastic Block Storage)
+### EBS(Elastic Block Storage)
 - EBS란?
   - Elastic Block Store의 약자로 Amazon EC2 인스턴스에서 사용할 수 있는 블록 수준 스토리지 볼륨을 제공하는 서비스이다.
   - EC2 안에 부착되어 있는 일종의 하드 디스크이다.
   - EBS는 특정 Availability Zone에 생성된다.
-    - Availability Zone (AZ)
+    - Availability Zone(AZ)
       - 가용 영역이라한다.
       - 하나 이상의 데이터 센터로 구성되어져있는 논리적인 데이터센터이다.
       - 한쪽 서버가 망가져도 서비스를 유지시켜준다.
       - 중심부로부터 그의 복사본들이 AZ로 뿌려지며 한쪽 서버가 망가지거나 셧다운 됐을 경우, AZ라는 백업을 통해 서비스 제공을 가능하게 해주는 일종의 Disaster Recovery라고 볼 수 있다.
 - EBS 볼륨 타입
   - SSD군
-    - General Purpose SSD (GP2)
+    - General Purpose SSD(GP2)
       - 최대 10K IOPS 지원하며, 1GB당 3IOPS 속도가 나온다.
-    - Provisioned IOPS SSD (IO1)
+    - Provisioned IOPS SSD(IO1)
       - 극도의 I/O률을 요구하는(예시 : 매우 큰 DB 관리) 환경에서 주로 사용된다.
       - 10K이상에서 IOPS 지원한다.
   - Magnetic / HDD군
     - Throughput Optimized HDD(ST1)
       - 빅데이터 Datawarehouse, Log 프로세싱 시 주로 사용된다.
       - Boot volume으로 사용할 수 없다.
-    - CDD HDD (SC1)
+    - CDD HDD(SC1)
       - 파일 서버와 같이 드문 volume 접근 시 주로 사용된다.
       - Boot volume으로 사용할 수 없다.
-    - Magnetic (Standard)
+    - Magnetic(Standard)
       - 디스크 1GB당 가장 싼 비용을 자랑한다.
       - Boot volume으로 유일하게 가능하다.
 
 <br>
 
-### ELB (Elastic Load Balancer)
+### ELB(Elastic Load Balancer)
 - ELB란?
   - 로드 밸런서(Load Balancer)는 부하(load)를 적절하게 분배해주는 장치이다.
   - AWS에서는 ELB(Elastic Load Balancer)라는 이름으로 로드 밸런서를 제공한다.
@@ -125,6 +125,27 @@
     - 매우 빠른 속도를 자랑하며 Production 환경에서 종종 사용된다.
     - 극도의 Performance가 요구되는 TCP 트래픽에서 적합하다.
     - 초당 수백만개의 요청을 아주 미세한 delay로 처리 가능하다.
+
+<br>
+
+### RDS(Relational Database Service)
+- RDS란?
+  - 데이터 베이스 인프라 및 업데이트들을 AWS 측에서 관리해주고 데이터베이스의 설치, 운영 그리고 관리 등의 서비스들을 지원하는 AWS의 관계형 데이터베이스이다.
+  - AWS RDS는 MySQL, Oracle, SQL Server, PostgreSQL, MariaDB, Microsoft SQL Server 그리고 MySQL, PostgreSQL과 호환이 되는 Aurora DB를 제공한다.
+- RDS 백업 시스템
+  - 종류
+    - 자동 백업(Automated Backups, AB)
+      - 매일마다 스냅샷과 트랜잭션 로그를 참고하여 자동으로 백업을 해준다.
+      - RDS에서는 디폴트로 AB 기능이 설정되어 있다.
+      - AB를 통해 데이터베이스를 Retention Period(1~35일) 안의 과거 특정 시간으로 되돌아 갈 수 있다.
+      - RDB 백업 정보는 S3에 저장되며, AB동안 약간의 I/O suspension(딜레이)이 존재할 수 있다.
+    - 수동 백업 (DB 스냅샷)
+      - 수동 백업은 유저 혹은 다른 프로세스로부터 요청에 따라 만들어지는 DB 스냅샷이다.
+      - 만약 원본 RDS를 삭제한다고 하더라도, 스냅샷은 S3 버킷에 그대로 존재한다. 따라서 스냅샷만으로 RDS 인스턴스를 복원시킬 수 있다.
+  - RDS 백업 복원시 도메인 변경
+    - 원본 RDS 인스턴스를 가지고 새로운 DB를 복원시 새로운 인스턴스와 Endpoint가 생성된다.
+    - 원본 DNS는 앞에 original인 반면, 복원된 것은 앞에 restored가 붙게된다.
+    - <img width="737" alt="image" src="https://github.com/1992choi/aws/assets/27760576/580dfa94-358b-4981-8ce5-ba5732a71d8d">
 
 
 
