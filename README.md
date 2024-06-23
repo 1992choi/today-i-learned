@@ -101,15 +101,30 @@
     - CDD HDD (SC1)
       - 파일 서버와 같이 드문 volume 접근 시 주로 사용된다.
       - Boot volume으로 사용할 수 없다.
-    - Magnetic(Sandard)
+    - Magnetic (Standard)
       - 디스크 1GB당 가장 싼 비용을 자랑한다.
       - Boot volume으로 유일하게 가능하다.
 
 <br>
 
-### ELB
--
-
+### ELB (Elastic Load Balancer)
+- ELB란?
+  - 로드 밸런서(Load Balancer)는 부하(load)를 적절하게 분배해주는 장치이다.
+  - AWS에서는 ELB(Elastic Load Balancer)라는 이름으로 로드 밸런서를 제공한다.
+  - 이 시스템은 자동으로 로드 밸런싱을 제공하며 시스템이 서버가 죽지 않도록 알아서 관리해준다.
+- ELB의 종류
+  - Classic Load Balancer
+    - OSI Layer 4계층, 7계층에서 동작한다.
+    - 현재는 Legacy로 간주되어 거의 사요되지 않는다.
+  - Application Load Balancer
+    - OSI Layer 7계층에서 동작한다.
+    - HTTP, HTTPS와 같은 트래픽의 로드 밸런싱에 가장 적합하다.
+    - 라우팅 설정을 통하여 특정 서버로 요청을 보낼 수 있다.
+  - Network Load Balancer
+    - OSI Layer 4계층에서 동작한다.
+    - 매우 빠른 속도를 자랑하며 Production 환경에서 종종 사용된다.
+    - 극도의 Performance가 요구되는 TCP 트래픽에서 적합하다.
+    - 초당 수백만개의 요청을 아주 미세한 delay로 처리 가능하다.
 
 
 
