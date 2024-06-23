@@ -77,8 +77,33 @@
 
 <br>
 
-### EBS
--
+### EBS (Elastic Block Storage)
+- EBS란?
+  - Elastic Block Store의 약자로 Amazon EC2 인스턴스에서 사용할 수 있는 블록 수준 스토리지 볼륨을 제공하는 서비스이다.
+  - EC2 안에 부착되어 있는 일종의 하드 디스크이다.
+  - EBS는 특정 Availability Zone에 생성된다.
+    - Availability Zone (AZ)
+      - 가용 영역이라한다.
+      - 하나 이상의 데이터 센터로 구성되어져있는 논리적인 데이터센터이다.
+      - 한쪽 서버가 망가져도 서비스를 유지시켜준다.
+      - 중심부로부터 그의 복사본들이 AZ로 뿌려지며 한쪽 서버가 망가지거나 셧다운 됐을 경우, AZ라는 백업을 통해 서비스 제공을 가능하게 해주는 일종의 Disaster Recovery라고 볼 수 있다.
+- EBS 볼륨 타입
+  - SSD군
+    - General Purpose SSD (GP2)
+      - 최대 10K IOPS 지원하며, 1GB당 3IOPS 속도가 나온다.
+    - Provisioned IOPS SSD (IO1)
+      - 극도의 I/O률을 요구하는(예시 : 매우 큰 DB 관리) 환경에서 주로 사용된다.
+      - 10K이상에서 IOPS 지원한다.
+  - Magnetic / HDD군
+    - Throughput Optimized HDD(ST1)
+      - 빅데이터 Datawarehouse, Log 프로세싱 시 주로 사용된다.
+      - Boot volume으로 사용할 수 없다.
+    - CDD HDD (SC1)
+      - 파일 서버와 같이 드문 volume 접근 시 주로 사용된다.
+      - Boot volume으로 사용할 수 없다.
+    - Magnetic(Sandard)
+      - 디스크 1GB당 가장 싼 비용을 자랑한다.
+      - Boot volume으로 유일하게 가능하다.
 
 <br>
 
