@@ -147,6 +147,18 @@
     - 원본 DNS는 앞에 original인 반면, 복원된 것은 앞에 restored가 붙게된다.
     - <img width="737" alt="image" src="https://github.com/1992choi/aws/assets/27760576/580dfa94-358b-4981-8ce5-ba5732a71d8d">
 
+<br>
+
+### Multi-AZ와 Read Replica
+- AWS RDS에는 가용성과 확장성을 위해 Multi-AZ라는 기능과 Read Replica라는 기능을 지원한다.
+  - Multi-AZ
+    - DR(Disaster Recovery)을 위해 서로 다른 AZ에 2개 이상의 Master DB를 배치하는 것을 의미한다.
+    - Active - Standby 방식으로 동작한다.
+    - 가용성이 주요 목적이다.
+  - Read Replica
+    - 서비스에서 읽기 위주의 작업이 많은 경우, Read Replica를 여러개 만들어 부하를 분산할 수 있다.
+    - DB는 일반적으로 읽기 작업이 쓰기 작업보다 많다는 점에 기인하여, READ 트랜잭션은 Read Replica에서 처리하도록 애플리케이션을 설계한다.
+    - 확장성이 주요 목적이다.
 
 
 
