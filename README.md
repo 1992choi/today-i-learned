@@ -320,3 +320,15 @@
         - 정렬 키(Sort Key)
           - Range 속성으로 Sort Key라고도 부르며 비교대소 혹은 '~로 시작하는'과 같은 연산만 가능하다.
           - DynamoDB에서 데이터 정리를 위해 사용된다.
+- Secondary Index(보조 인덱스)
+  - Primary Key(Hash Key)만으로 DynamoDB에서 원하는 데이터에 대한 요청을 처리하는 것에 대해 비효율적인 엑세스 패턴이 발생할 수 있다.   
+    이를 방지하고자 테이블에 대해 다른 엑세스 패턴을 설계할 수 있는 Secondary Index개념이 존재하며, RDB의 'View'와 비슷한 개념이다.
+  - Secondary Index에는 로컬 보조 인덱스(Local Secondary Index, LSI)와 글로벌 보조 인덱스(Global Secondary Index, GSI)가 존재한다.
+    - 로컬 보조 인덱스(Local Secondary Index, LSI)
+      - 로컬 보조 인덱스는 파티션 키는 동일하지만 정렬 키는 다른 인덱스이다.
+      - 파티션 키는 테이블의 기본 키와 동일하다.
+      - 테이블을 생성할 때 함께 생성해야 하며, 테이블이 생성된 이후에는 추가, 수정, 삭제가 불가능하다.
+    - 글로벌 보조 인덱스(Global Secondary Index, GSI)
+      - 글로벌 보조 인덱스는 파티션 키와 정렬 키가 모두 다른 인덱스이다.
+      - 테이블과 다른 파티션 키 및 정렬 키를 가질 수 있다.
+      - 테이블 생성 후에도 생성할 수 있으며, 생성된 이후에도 추가, 수정, 삭제가 가능하다.
