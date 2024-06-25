@@ -288,3 +288,35 @@
     - 보통 Origin Server에는 S3, EC2 instance 등이 있다.
 - 데이터 전달 과정
   - ![image](https://github.com/1992choi/aws/assets/27760576/f4b01eaa-39a8-48b8-a0b9-3358c04368c9)
+
+<br>
+
+### DynamoDB
+- DynamoDB란?
+  - AWS에서 제공하는 서버리스 기반 Key-Value NoSQL 데이터베이스.
+  - Auto-Scaling 기능을 탑재하고 있다.
+  - SSD 스토리지 사용하여 읽고 쓰는 속도가 빠르다.
+- 구조
+  - ![image](https://github.com/1992choi/aws/assets/27760576/0d96cf40-0444-4eb3-90ed-6fa4de3772a5)
+  - 아이템(Items)
+    - 행(row)과 유사한 개념.
+  - 특징(Attributes)
+    - 열(column)과 유사한 개념.
+  - Key-Value
+    - Key : 데이터의 이름
+    - Value : 데이터 자신
+    - 예시) JSON, XML와 같은 Key-Value 형식
+- DynamoDB의 PK
+  - DynamoDB에는 두가지의 PK 유형이 있다.
+    - 파티션키(Partition Key)
+      - 데이터를 나누고 분리시키는 키. (RDB의 PK와 유사한 개념.)
+      - 고유 특징 (Unique Attribute)
+      - 실제 데이터가 들어가는 위치를 결정해준다.
+      - 데이터가 저장될 때 어디로 저장될지 파티션 키 내부에 들어있는 해시함수를 통해 저장될 주소값이 결정된다.
+      - 두 개의 데이터가 같은 위치에 저장될 수 없다.(=파티션키 중복 불가)
+      - Hash 속성으로 Hash Key라고도 부르며 '같다' 혹은 '같지 않다'와 같은 연산만 가능하다.
+    - 복합키(Composite Key)
+      - 파티션키(Partition Key) + 정렬키(Sort Key)로 구성된다.
+        - 정렬 키(Sort Key)
+          - Range 속성으로 Sort Key라고도 부르며 비교대소 혹은 '~로 시작하는'과 같은 연산만 가능하다.
+          - DynamoDB에서 데이터 정리를 위해 사용된다.
