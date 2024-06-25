@@ -380,3 +380,14 @@
       - ![image](https://github.com/1992choi/aws/assets/27760576/741d285c-c376-47af-8c56-f0240b620239)
     - Message Format Transformation
       - 클라이언트의 요청을 하위 서비스가 처리할 수 있도록 데이터 형식을 변형하거나, 하위 서비스의 응답 표준 포맷으로 데이터 형식을 변형.
+
+<br>
+
+### CI/CD
+- CI/CD란?
+  - CI
+    - 개발자를 위한 자동화 프로세스인 지속적인 통합(Continuous Integration)을 의미한다.
+    - CI가 제대로 구현되면 애플리케이션 코드의 새로운 변경 사항이 정기적으로 빌드 및 테스트를 거쳐 공유 리포지토리에 병합된다.
+  - CD
+    - 지속적인 서비스 제공(Continuous Delivery) 또는 지속적인 배포(Continuous Deployment)를 의미한다.
+    - Downtime(서비스 중단 시간)을 최소화하여 사용자들이 서비스에 대한 연속적인 접근성을 유지하면서도 최신 버전의 소프트웨어를 이용할 수 있게 하는 것을 목적으로 한다.
