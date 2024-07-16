@@ -297,10 +297,10 @@
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
   - JDK Dynamic Proxy
     - Interface를 기반으로 Proxy를 생성해주는 방식이다.
-    - Refelction을 이용해 Proxy를 생성한다.
+    - Reflection을 이용해 Proxy를 생성한다.
   - CGLib Proxy
     - Code Generator Libray의 약자로, JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
-    - Refelction이 아닌 바이트 조작을 사용하며, 타겟에 대한 정보를 알고 있기 때문에 JDK Dynamic Proxy에 비해 성능이 좋다.
+    - Reflection이 아닌 바이트 조작을 사용하며, 타겟에 대한 정보를 알고 있기 때문에 JDK Dynamic Proxy에 비해 성능이 좋다.
 - 스프링과 스프링부트에서의 채택
   - 스프링 AOP에서는 기본적으로 JDK Dynamic Proxy를 사용한다. 하지만 JDK Dynamic Proxy는 인터페이스가 있어야만 사용할 수 있기 때문에 인터페이스가 없는 경우에는 CGLIB Proxy를 사용한다.
   - 스프링 부트에서는 설정을 통해 프록시 방식을 선택할 수 있다.
@@ -577,6 +577,15 @@
   - Contents
 - Ref.
 [GwanMtCat](https://velog.io/@xeropise1/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BB%A4%EB%B2%84%EB%A6%AC%EC%A7%80%EB%9E%80)
+<br><br><br>
+
+
+
+## Private 메소드를 테스트
+- Title
+  - Contents
+- Ref.
+[망나니개발자](https://mangkyu.tistory.com/235)
 <br><br><br>
 
 
