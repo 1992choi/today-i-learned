@@ -156,9 +156,16 @@
 > - **재부팅**   
 >   \- shutdown -r now
 
-### 시간변경 
+### 시스템 시간 확인 및 변경 
+> - **확인**   
+>   \- date
+> - **변경**   
 >   \- date -s "시:분:초"   
->   \- Ex) date -s "07:31:00"   
+>   \- Ex) date -s "07:31:00"
+
+### AWS 서버 타임존 변경 
+>   \- sudo rm /etc/localtime   
+>   \- sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 ### 프롬프트(prompt) 색상 변경
 >   \- .bash_profile에 아래 문구 추가   
