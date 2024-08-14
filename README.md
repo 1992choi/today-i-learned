@@ -100,5 +100,20 @@
 
 
 ## 실습
-### 제목
-- 내용
+### Redis 셋팅
+- 설치
+  - brew install redis
+- 실행
+  - brew services start redis
+- 종료
+  - brew services stop redis
+- 접속
+  - redis-cli
+
+### 기본 실습
+- 데이터 저장
+  - SET lecture inflearn-redis
+- 데이터 조회
+  - GET lecture
+- 데이터 삭제
+  - DEL lecture
