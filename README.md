@@ -101,9 +101,10 @@
   - MGET : 다수의 문자열을 반환
   - INCR : 특정 숫자의 값을 1 올림
   - INCRBY : 특정 숫자의 값에 할당한 값만큼 더함
-
-
-
+- Lists
+  - String을 Linked List로 저장하는 데이터 타입
+  - 레디스의 리스트는 Doubly Linked List이기 때문에 큐나 스택을 쉽게 구현할 수 있다.
+  - 간단한 메시지 브로커를 구현할 수도 있다.
 
 
 
@@ -146,3 +147,26 @@
 - SET inflearn-redis:ko:price 200
   - key의 구성을 콜론(:)으로 구분하여 사용하기도 한다.
   - Ex) 키의 의미 : inflearn-redis강좌는 한국어로 되어있으며 200원이다.
+
+### List
+- LPUSH queue job1 job2 job3
+  - key가 'queue'인 항목에 job1, job2, job3을 추가한다.
+- RPOP queue
+  - 가장 먼저 들어갔던 값을 빼낸다.
+  - 위에서 job1, job2, job3 순서로 들어가있으므로 job1이 출력된다.
+- LPUSH stack job1 job2 job3
+  - key가 'stack'인 항목에 job1, job2, job3을 추가한다.
+- LPOP stack
+  - 가장 나중에 들어갔던 값을 빼낸다.
+  - 위에서 job1, job2, job3 순서로 들어가있으므로 job3이 출력된다.
+- LRANGE queue 0 -1
+  - LRANGE 전에 데이터 추가를 위해 'LPUSH queue job4 job5' 먼저 수행 (=job2~5까지 들어있는 상태)
+  - 첫번째 요소부터 마지막 요소까지 모두 출력한다. (실제 값을 빼내는 것은 아니다. 단순 출력.)
+  - job5, job4, job3, job2 순으로 출력된다.
+- LRANGE queue -2 -1
+  - job3, job2 순으로 출력된다. (=job2~5까지 들어있는 상태)
+- LRANGE queue 2 3
+  - job3, job2 순으로 출력된다. (=job2~5까지 들어있는 상태)
+- LTRIM queue 0 1
+  - 0번째 1번째만 남기고 빼낸다. (=job2~5까지 들어있는 상태)
+  - job5와 job4만 남기고 job3, job2는 제거된다. (=job4, 5만 들어있는 상태)
