@@ -92,6 +92,18 @@
     - 2\. 캐시에 해당 데이터가 존재하지 않으면 DB에서 찾아 제공한다.
     - 3\. DB에서 찾은 데이터를 캐시에 적재한다. 
 
+### 데이터 타입
+- Strings
+  - 가장 기본적인 데이터 타입.
+  - 문자열, 숫자, Serialized Object 등 저장 가능
+  - SET : 하나의 문자열을 저장
+  - MSET : 다수의 문자열을 저장
+  - MGET : 다수의 문자열을 반환
+  - INCR : 특정 숫자의 값을 1 올림
+  - INCRBY : 특정 숫자의 값에 할당한 값만큼 더함
+
+
+
 
 
 
@@ -117,3 +129,20 @@
   - GET lecture
 - 데이터 삭제
   - DEL lecture
+ 
+### Strings
+- SET lecture inflearn-redis
+  - key가 'lecture'이고 value가 'inflearn-redis'인 문자열을 저장한다.
+- MSET price 100 language ko
+  - key가 'price'이고 value가 '100'인 문자열과  key가 'language'이고 value가 'ko'인 문자열을 한 번에 저장한다.
+- MGET lecture price language
+  - key가 'lecture', 'price', 'language'인 값들을 한 번에 가져온다.
+- INCR price
+  - price 값을 1 증가시킨다.
+- INCRBY price 9
+  - price 값을 9만큼 증가시킨다.
+- SET inflearn-redis '{"price": 100, "language": "ko"}'
+  - json 타입으로 문자열을 저장시킨다.
+- SET inflearn-redis:ko:price 200
+  - key의 구성을 콜론(:)으로 구분하여 사용하기도 한다.
+  - Ex) 키의 의미 : inflearn-redis강좌는 한국어로 되어있으며 200원이다.
