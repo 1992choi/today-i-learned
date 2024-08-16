@@ -121,6 +121,11 @@
   - score가 동일하다면, 사전 편찬 순으로 정렬된다.
   - 순서를 가지기 때문에 리스트와 마찬가지로 인덱스를 통해 특정 범위를 조회할 수 있다.
   - ZSets이라고도 불린다.
+- Stream
+  - append-only log에 consumer groups과 같은 기능을 더한 자료 구조
+  - Kafka와 유사한 기능을 가진다.
+  - 엔트리마다 고유 ID를 가지고 있으며, 이러한 특성 때문에 O(1) 시간 복잡도를 갖는다.
+  - Consumer Group을 통해 분산 시스템에서 다수의 consumer가 event 처리된다.
 
 
 
@@ -233,3 +238,33 @@
   - 랭킹을 조회한다.
   - 0번부터 채번된다. (TeamB의 경우는 1이 반환된다.)
   - 인덱스 번호와 동일하다고 볼 수 있다.
+
+### Stream
+- XADD events * action like user_id 1 product_id 1
+  - events라는 Stream에 user_id는 1, product_id는 1이라는 값을 저장한다.
+  - action like user_id 1 product_id 1 : 1번 유저가 1번 상품을 좋아요를 눌렀다라고 해석할 수 있다.
+    - action like는 옵션은 아니고 문자열 데이터이다. (아래 스크린샷에서 생성된 Stream 데이터 확인 가능)
+  - \* 옵션을 통해 유니크ID를 자동 할당한다.
+  - 명령어가 실행되면 고유 ID가 반환된다.
+- XRANGE events - +
+  - 처음 들어간 데이터부터 마지막 들어간 데이터까지 확인 가능하다.
+  - <img width="930" alt="image" src="https://github.com/user-attachments/assets/f8eaf2f9-a1ae-4bd0-b4ae-346916208f96">
+- XDEL events 1723849452521-0
+  - evenets라는 이름의 Stream의 고유 ID에 해당하는 데이터를 삭제한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
