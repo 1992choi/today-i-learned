@@ -105,6 +105,12 @@
   - String을 Linked List로 저장하는 데이터 타입
   - 레디스의 리스트는 Doubly Linked List이기 때문에 큐나 스택을 쉽게 구현할 수 있다.
   - 간단한 메시지 브로커를 구현할 수도 있다.
+- Sets
+  - 중복되지 않는 유니크한 String을 저장하는 정렬되지 않은 집합.
+  - 집합에 대한 연산 기능을 제공한다.
+    - Intersection : 교집합
+    - Union : 합집합
+    - Difference : 차집합
 
 
 
@@ -170,3 +176,30 @@
 - LTRIM queue 0 1
   - 0번째 1번째만 남기고 빼낸다. (=job2~5까지 들어있는 상태)
   - job5와 job4만 남기고 job3, job2는 제거된다. (=job4, 5만 들어있는 상태)
+
+
+### Set
+- SADD user:1:fruits apple banana orange orange
+  - key가 'user:1:fruits'인 항목에 apple banana orange orange을 저장한다.
+  - Set에 특성상 중복되는 orange는 1개만 저장되어, 값을 조회해보면 apple, banana, orange 총 3개가 들어있다.
+- SMEMBERS user:1:fruits
+  - key가 'user:1:fruits'인 항목의 데이터를 조회한다.
+  - orange, apple, banana가 조회된다. (순서가 보장되지 않는다.)
+- SCARD user:1:fruits
+  - key가 'user:1:fruits'인 항목에 들어있는 데이터의 총 갯수를 조회한다.
+- SISMEMBER user:1:fruits banana
+  - banana가 들어있는지 조회한다.
+  - 1이면 TRUE, 0이면 FALSE를 의미한다.
+- SINTER user:1:fruits user:2:fruits
+  - user:1:fruits와 user:2:fruits의 공통 원소를 조회한다.
+- SDIFF user:1:fruits user:2:fruits
+  - user:1:fruits와 user:2:fruits의 차집합을 조회한다. (좌측이 기준)
+- SUNION user:1:fruits user:2:fruits
+  - user:1:fruits와 user:2:fruits의 합집합을 조회한다.
+
+
+
+
+
+
+
