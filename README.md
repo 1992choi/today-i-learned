@@ -114,6 +114,13 @@
 - Hashes
   - field-value 구조를 갖는 데이터 타입.
   - 다양한 속성을 갖는 객체의 데이터를 저장할 때 유용
+- Sorted Sets
+  - Set과 유사하지만 score라는 추가적인 기능이 존재하며, score를 통하여 정렬 기능을 지원한다.
+  - 내부적으로 Skip List와 Hash Table의 조합으로 이루어져 있다.
+  - 값이 저장될 때마다 정렬된다.
+  - score가 동일하다면, 사전 편찬 순으로 정렬된다.
+  - 순서를 가지기 때문에 리스트와 마찬가지로 인덱스를 통해 특정 범위를 조회할 수 있다.
+  - ZSets이라고도 불린다.
 
 
 
@@ -206,12 +213,23 @@
     - price:100
     - language:ko
 - HGET lecture name
-  - key가 'lecture'인 Hash에서 field가 name인 항목을 조회한다. (= inflearn-redis이 조회된다.)
+  - key가 'lecture'인 Hash에서 field가 name인 항목을 조회한다. (= inflearn-redis가 조회된다.)
 - HMGET lecture name price
   - 한 번에 여러개의 field를 조회할 수 있다.
   - 만약 존재하지 않은 field가 포함되어 있을 경우, (nil)이 반환된다.
 - HINCRBY lecture price 10
   - 숫자형 field에는 연산을 할 수 있다.
 
-
-
+### Sorted Set
+- ZADD points 10 TeamA 10 TeamB 50 TeamC
+  - score, member 순서로 명령어를 입력한다.
+  - 10점의 TeamA와 TeamB, 그리고 50점의 TeamC를 저장한다.
+- ZRANGE points 0 -1
+  - 오름차순 정렬로 조회한다. (TeamA -> TeamB -> TeamC) 
+- ZRANGE points 0 -1 REV WITHSCORES
+  - REV 옵션에 의해서 역정렬인 내림차순으로 조회된다.
+  - WITHSCORES 옵션에 의해서 Score까지 조회된다.
+- ZRANK points TeamB
+  - 랭킹을 조회한다.
+  - 0번부터 채번된다. (TeamB의 경우는 1이 반환된다.)
+  - 인덱스 번호와 동일하다고 볼 수 있다.
