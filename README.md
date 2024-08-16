@@ -111,6 +111,9 @@
     - Intersection : 교집합
     - Union : 합집합
     - Difference : 차집합
+- Hashes
+  - field-value 구조를 갖는 데이터 타입.
+  - 다양한 속성을 갖는 객체의 데이터를 저장할 때 유용
 
 
 
@@ -177,7 +180,6 @@
   - 0번째 1번째만 남기고 빼낸다. (=job2~5까지 들어있는 상태)
   - job5와 job4만 남기고 job3, job2는 제거된다. (=job4, 5만 들어있는 상태)
 
-
 ### Set
 - SADD user:1:fruits apple banana orange orange
   - key가 'user:1:fruits'인 항목에 apple banana orange orange을 저장한다.
@@ -197,9 +199,19 @@
 - SUNION user:1:fruits user:2:fruits
   - user:1:fruits와 user:2:fruits의 합집합을 조회한다.
 
-
-
-
+### Hash
+- HSET lecture name inflearn-redis price 100 language ko
+  - key가 'lecture'인 Hash에 아래와 같은 field:value 값을 저장한다.
+    - name:inflearn-redis
+    - price:100
+    - language:ko
+- HGET lecture name
+  - key가 'lecture'인 Hash에서 field가 name인 항목을 조회한다. (= inflearn-redis이 조회된다.)
+- HMGET lecture name price
+  - 한 번에 여러개의 field를 조회할 수 있다.
+  - 만약 존재하지 않은 field가 포함되어 있을 경우, (nil)이 반환된다.
+- HINCRBY lecture price 10
+  - 숫자형 field에는 연산을 할 수 있다.
 
 
 
