@@ -126,6 +126,9 @@
   - Kafka와 유사한 기능을 가진다.
   - 엔트리마다 고유 ID를 가지고 있으며, 이러한 특성 때문에 O(1) 시간 복잡도를 갖는다.
   - Consumer Group을 통해 분산 시스템에서 다수의 consumer가 event 처리된다.
+- Geospatials
+  - 좌표를 저장하고, 검색하는 데이터 타입
+  - 거리 계산, 범위 탐색 등을 지원한다.
 
 
 
@@ -252,7 +255,12 @@
 - XDEL events 1723849452521-0
   - evenets라는 이름의 Stream의 고유 ID에 해당하는 데이터를 삭제한다.
 
-
+### Geospatial
+- GEOADD seoul:station 126.923917 37.556944 hong-dae 127.027583 37.497928 gang-nam
+  - 홍대역과 강남역의 좌표 추가
+  - 위도 다음에 경도 순서이다.
+- GEODIST seoul:station hong-dae gang-nam KM
+  - 홍대와 강남역의 거리를 출력하되, KM 단위로 출력한다.
 
 
 
