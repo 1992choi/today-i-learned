@@ -129,6 +129,9 @@
 - Geospatials
   - 좌표를 저장하고, 검색하는 데이터 타입
   - 거리 계산, 범위 탐색 등을 지원한다.
+- Bitmaps
+  - 실제 데이터 타입은 아니고, String에 binary operation을 적용한 것.
+  - 최대 42억개의 binary 데이터를 표현할 수 있다. (= 2^32)
 
 
 
@@ -262,9 +265,27 @@
 - GEODIST seoul:station hong-dae gang-nam KM
   - 홍대와 강남역의 거리를 출력하되, KM 단위로 출력한다.
 
-
-
-
+### Bitmaps
+- 유저별로 날짜별 로그인 데이터 생성
+  - SETBIT user:log-in:23-01-01 123 1
+    - 123번 유저가 '23-01-01'에 로그인 시도
+    - 마지막 1은 비트 수를 의미한다. (0 또는 1로 표기.)
+  - SETBIT user:log-in:23-01-01 456 1
+    - 456번 유저가 '23-01-01'에 로그인 시도
+  - SETBIT user:log-in:23-01-02 123 1
+    - 123번 유저가 '23-01-02'에 로그인 시도
+- BITCOUNT user:log-in:23-01-01
+  - 23-01-01에 로그인한 유저 숫자를 조회할 수 있다.
+- BITOP AND result user:log-in:23-01-01 user:log-in:23-01-02
+  - 23-01-01과 23-01-02일에 모두 로그인 한 유저를 반환한다. (=123 유저 반환)
+  - AND 옵션을 통해 AND 연산을 수행한다.
+  - result 변수에 반환 결과를 받는다.
+- BITCOUNT result
+  - 위에서 저장한 result 값을 조회한다.
+  - 123 유저의 수인 1을 반환한다.
+- GETBIT result 123
+  - result의 값이 123 유저가 맞는지 확인한다.
+  - 맞으므로 1을 반환한다. (GETBIT result 456 명령어를 입력하면 0을 반환. 모두 로그인하지 않았으므로)
 
 
 
