@@ -161,6 +161,28 @@
 - XX
   - 해당 Key가 이미 존재하는 경우에만 SET
 
+### Pub/Sub
+- Publisher와 Subscriber가 서로 알지 못해도 통신이 가능하도록 decoupling 된 패턴.
+- Publisher는 Subscriber에게 직접 메시지를 보내지 않고, Channel에 Publish Subscriber는 관심이 있는 Channel을 필요에 따라 Subscribe하며 메시지 수신.
+- Stream과의 차이는 메시지가 보관되는 Stream과 달리 Pub/Sub은 Subscribe 하지 않을 때 발행된 메시지 수신 불가.
+
+### Pipeline
+- 다수의 commands를 한 번에 요청하여 네트워크 성능을 향상 시키는 기술
+- Round-Trip Times를 최소화 시킨다.
+  - Round-Trip Times란 Request / Response 모델에서 발생하는 네트워크 지연 시간을 의미한다.
+
+### Transaction
+- 다수의 명령을 하나의 트랜잭션으로 처리하여 원자성을 보장할 수 있다.
+- 중간에 에러가 발생하면 모든 작업을 Rollback 시킨다.
+- 하나의 트랜잭션이 처리되는 동안 다른 클라이언트의 요청이 중간에 끼어들 수 없다.
+- 명령어
+  - MULTI
+    - 트랜잭션을 시작한다.
+  - DISCARD
+    - Rollback 시킨다.
+  - EXEC
+    - 변경사항을 적용시킨다.
+
 
 
 <br><hr><br>
@@ -349,3 +371,22 @@
 - SET a hello XX
   - 해당 Key가 이미 존재하는 경우에만 SET
   - a의 값이 없는 상태에서 SET a hello XX를 입력 후 GET a를 입력하면 (nil)을 반환한다.
+ 
+### Pub/Sub
+- SUBSCRIBE order payment
+  - order 채널과 payment 채널을 구독한다.
+- PUBLISH order msg1
+  - order 채널로 msg1을 전송한다.
+- PUBLISH payment pay1
+  - payment 채널로 pay1을 전송한다.
+
+### Transaction
+- MULTI
+  - 트랜잭션을 시작한다.
+- DISCARD
+  - Rollback 시킨다.
+- EXEC
+  - 변경사항을 적용시킨다.
+- 예제
+  - MULTI > SET text a > DISCARD > GET text : 롤백되어 값을 조회할 수 없다.
+  - MULTI > SET text a > EXEC > GET text : a가 조회된다.
