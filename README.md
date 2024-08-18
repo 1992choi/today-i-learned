@@ -155,6 +155,12 @@
 - 데이터가 만료되자마자 삭제하지 않고, 만료로 표시했다가 백그라운드에서 주기적으로 삭제한다.
 - 데이터가 유효한 시간(초 단위)을 TTL 이라고 한다.
 
+### SET NX/XX
+- NX
+  - 해당 Key가 존재하지 않는 경우에만 SET
+- XX
+  - 해당 Key가 이미 존재하는 경우에만 SET
+
 
 
 <br><hr><br>
@@ -336,5 +342,10 @@
 - SETEX greeting 10 hello
   - 저장과 동시에 만료시간을 지정한다.
 
-
-
+### SET NX/XX
+- SET greeting hello NX
+  - 해당 Key가 존재하지 않는 경우에만 SET
+  - 이후 SET greeting hi NX 명령어를 입력하더라도 이미 Key가 존재하므로 덮어쓰여지지 않게되어 GET greeting을 입력하면 hello를 반환한다.
+- SET a hello XX
+  - 해당 Key가 이미 존재하는 경우에만 SET
+  - a의 값이 없는 상태에서 SET a hello XX를 입력 후 GET a를 입력하면 (nil)을 반환한다.
