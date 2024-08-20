@@ -199,6 +199,10 @@
     - INCR (요청 수 증가) : INCR 1.1.1.1:10 (포맷예시 - 아이피:요청시간의 분. 1분후 초기화되므로 분으로만 판단해도 충분하다.)
     - EXPIRE 1.1.1.1:10 60 (1.1.1.1 아이피가 10분에 접근했다는 키를 60초 후에 만료시킴)
     - EXEC (트랜잭션 커밋)
+- Sliding Window Rate Limiter
+  - 시간에 따라 Window를 이동시켜 동적으로 요청수를 조절하는 기술을 뜻한다.
+  - Fixed Window는 window 시간마다 허용량이 초기화 되지만, Sliding Window는 시간이 경과함에 따라 window가 같이 움직인다.
+  - ZREMRANGEBYSCORE, ZCARD, ZADD 명령어를 사용하여 구현할 수 있다.
 - SNS Activity Feed
   - 사용자 또는 시스템과 관련된 활동이나 업데이트를 시간순으로 정렬하여 보여주는 기능
   - 활동 피드에는 Fan-Out이라는 기술이 사용된다.
@@ -221,6 +225,13 @@
   - 사용예시
     - 아이디가 1이며, 사용자 등급이 프리미엄인 사용자의 로그인 정보를 저장한다. 이후 저장유무로 로그인 상태를 유지할 수 있다.
       - HSET login id 1 grade preminum
+- Geofencing
+  - 위치를 활용하여 지도 상의 가상의 경계 또는 지리적 영역을 정의하는 기술.
+  - 사용예시
+    - 좌표 기반으로 가게를 등록한다.
+      - GEOADD gang-nam:burgers 127.025705 37.501272 five-guys 127.025699 37.502775 shake-shack 127.028747 37.498668 mc-donalds 127.027531 37.498847 burger-king
+    - 현재 위치를 기준으로 반경 n키로미터 내에 위치하는 가게를 구할 수 있다.
+      - GEORADIUS gang-nam:burgers 127.027583 37.497928 0.5 km
 
 
 
