@@ -56,3 +56,17 @@
 - 정리
   - PK에는 인덱스가 기본적으로 적용된다.
   - PK에는 인덱스가 적용되어 있으므로 PK를 기준으로 데이터가 정렬된다.
+
+### 제약 조건을 추가하면 자동으로 생성되는 인덱스 (UNIQUE)
+- MySQL은 UNIQUE 제약 조건을 추가하면 자동으로 인덱스가 생성된다.
+- UNIQUE 옵션을 사용하면 인덱스가 같이 생성되기 때문에 조회 성능이 향상된다.
+- ```
+  -- 테이블 생성 (name에 유니크 설정)
+  CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) UNIQUE
+  );
+
+  -- 인덱스 확인 (name으로 생성된 인덱스를 확인할 수 있다)
+  SHOW INDEX FROM users;
+  ```
