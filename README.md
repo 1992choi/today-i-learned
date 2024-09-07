@@ -7,6 +7,8 @@
   - docker pull mysql
 - 컨테이너 실행
   - docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=admin -d -p 3306:3306 mysql
+- Ref
+  - [MySQL 도커 컨테이너 설치 후 DBeaver 연결하기](https://robomoan.medium.com/mysql-%EB%8F%84%EC%BB%A4-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%84%A4%EC%B9%98-%ED%9B%84-dbeaver-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0-cf945454cf1e)
 
 <br><br><br>
 
@@ -77,4 +79,96 @@
 
   -- 인덱스 확인 (name으로 생성된 인덱스를 확인할 수 있다)
   SHOW INDEX FROM users;
+  ```
+
+### 인덱스를 많이 걸면?
+- 인덱스를 사용하면 데이터를 조회할 때의 성능이 향상된다.
+- 그러면 인덱스를 무조건적으로 많이 추가하는 게 좋다고 착각할 수도 있다.
+- 하지만 인덱스를 추가하면 조회 성능은 올라가지만, 쓰기 작업(삽입, 수정, 삭제)의 성능은 저하된다.
+- ```
+  -- 테이블 A: 인덱스가 없는 테이블
+  CREATE TABLE test_table_no_index (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      column1 INT,
+      column2 INT,
+      column3 INT,
+      column4 INT,
+      column5 INT,
+      column6 INT,
+      column7 INT,
+      column8 INT,
+      column9 INT,
+      column10 INT
+  );
+
+  -- 테이블 B: 인덱스가 많은 테이블
+  CREATE TABLE test_table_many_indexes (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      column1 INT,
+      column2 INT,
+      column3 INT,
+      column4 INT,
+      column5 INT,
+      column6 INT,
+      column7 INT,
+      column8 INT,
+      column9 INT,
+      column10 INT
+  );
+
+  -- 각 컬럼에 인덱스를 추가
+  CREATE INDEX idx_column1 ON test_table_many_indexes (column1);
+  CREATE INDEX idx_column2 ON test_table_many_indexes (column2);
+  CREATE INDEX idx_column3 ON test_table_many_indexes (column3);
+  CREATE INDEX idx_column4 ON test_table_many_indexes (column4);
+  CREATE INDEX idx_column5 ON test_table_many_indexes (column5);
+  CREATE INDEX idx_column6 ON test_table_many_indexes (column6);
+  CREATE INDEX idx_column7 ON test_table_many_indexes (column7);
+  CREATE INDEX idx_column8 ON test_table_many_indexes (column8);
+  CREATE INDEX idx_column9 ON test_table_many_indexes (column9);
+  CREATE INDEX idx_column10 ON test_table_many_indexes (column10);
+
+  -- 데이터 삽입 테스트
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 100000; 
+
+  -- 인덱스가 없는 테이블에 데이터 10만개 삽입
+  INSERT INTO test_table_no_index (column1, column2, column3, column4, column5, column6, column7, column8, column9, column10)
+  WITH RECURSIVE cte AS (
+      SELECT 1 AS n
+      UNION ALL
+      SELECT n + 1 FROM cte WHERE n < 100000
+  )
+  SELECT
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000)
+  FROM cte;
+
+  -- 인덱스가 많은 테이블에 데이터 10만개 삽입
+  INSERT INTO test_table_many_indexes (column1, column2, column3, column4, column5, column6, column7, column8, column9, column10)
+  WITH RECURSIVE cte AS (
+      SELECT 1 AS n
+      UNION ALL
+      SELECT n + 1 FROM cte WHERE n < 100000
+  )
+  SELECT
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000),
+      FLOOR(RAND() * 1000)
+  FROM cte;
   ```
