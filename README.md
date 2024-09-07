@@ -1,6 +1,14 @@
 # [인프런] 비전공자도 이해할 수 있는 MySQL 성능 최적화 입문/실전 (SQL 튜닝편)
 
 <br><br>
+## 사전 준비
+### MySQL 설치
+- 도커로 설치
+  - docker pull mysql
+- 컨테이너 실행
+  - docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=admin -d -p 3306:3306 mysql
+
+<br><br><br>
 
 ## 학습정리
 ### DB 성능 개선할 때 ‘SQL 튜닝’을 가장 먼저 해야 하는 이유
