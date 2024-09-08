@@ -455,3 +455,44 @@
       - type = range
       - rows = 1,000
       - 단일 컬럼 인덱스와의 성능 차이가 크지 않다면, 최소한의 컬럼으로 인덱스를 생성하는 것이 좋으므로 단일 컬럼 인덱스를 선택하는 것이 좋다.
+
+<br>
+
+### 인덱스를 걸었는데도 인덱스가 작동하지 않는 경우 - 1
+- ```
+  -- 테이블 생성
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      age INT
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, age)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')),
+      FLOOR(1 + RAND() * 1000) AS age
+  FROM cte;
+
+  -- 인덱스 생성
+  CREATE INDEX idx_name ON users (name);
+
+  -- 실행계획 조회
+  EXPLAIN SELECT * FROM users 
+  ORDER BY name DESC;
+  ```
+- 실행결과
+  - <img width="1287" alt="image" src="https://github.com/user-attachments/assets/00f6d8c0-fb88-47ce-8fe9-02af02e97c05">
+  - type이 ALL 인 것으로 보아 인덱스가 작동하지 않는 것을 볼 수 있다.
+  - SELECT * 로 작성했기 때문에 옵티마이저는 넓은 범위의 데이터를 조회할 때는 인덱스를 활용하는 것보다 풀 테이블 스캔이 더 효율적이라 판단하여 이와 같은 계획이 나온 것이다.
+    - 즉, 굳이 인덱스를 거쳤다가 각 원래 테이블의 데이터를 일일이 하나씩 찾아내는 것보다, 바로 원래 테이블에 접근해서 모든 데이터를 통째로 가져와서 정렬하는 게 효율적이라고 판단한 것이다.
+    - 실제 성능상으로도 풀 테이블 스캔을 통해 데이터를 가져오는 게 효율적이다. 
