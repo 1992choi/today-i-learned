@@ -325,6 +325,8 @@
   - 10,000건을 조회할 때와 10건을 조회할 때의 시간 차이를 확인해보면 조회하는 데이터의 개수에 따라 성능이 달라지는 것을 볼 수 있다.
   - 조회하는 데이터의 개수가 성능에 많은 영향을 끼치기 때문에 LIMIT, WHERE문 등을 활용해서 한 번에 조회하는 데이터의 수를 줄이는 방법을 고려해볼 필요가 있다.
 
+<br>
+
 ### WHERE문이 사용된 SQL문 튜닝하기 - 1
 - ```
   CREATE TABLE users (
@@ -381,3 +383,75 @@
   - created_at으로 인덱스를 생성하여 정렬시킴에 따라 성능이 향상된 것을 볼 수 있다.
     - 소요시간이 단축되었으며, type 또한 ALL에서 range로 변경되었다.
   - WHERE문의 부등호(>, <, ≤, ≥, =), IN, BETWEEN, LIKE와 같은 곳에서 사용되는 컬럼은 인덱스를 사용했을 때 성능이 향상될 가능성이 높다. 
+
+<br>
+
+### WHERE문이 사용된 SQL문 튜닝하기 - 2
+- ```
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      department VARCHAR(100),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+  
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, department, created_at)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')) AS name,
+      CASE 
+          WHEN n % 10 = 1 THEN 'Engineering'
+          WHEN n % 10 = 2 THEN 'Marketing'
+          WHEN n % 10 = 3 THEN 'Sales'
+          WHEN n % 10 = 4 THEN 'Finance'
+          WHEN n % 10 = 5 THEN 'HR'
+          WHEN n % 10 = 6 THEN 'Operations'
+          WHEN n % 10 = 7 THEN 'IT'
+          WHEN n % 10 = 8 THEN 'Customer Service'
+          WHEN n % 10 = 9 THEN 'Research and Development'
+          ELSE 'Product Management'
+      END AS department,
+      TIMESTAMP(DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 3650) DAY) + INTERVAL FLOOR(RAND() * 86400) SECOND) AS created_at -- 최근 10년 내의 임의의 날짜와 시간 생성
+  FROM cte;
+  ```
+- 튜닝 전
+  - <img width="1309" alt="image" src="https://github.com/user-attachments/assets/f0925eb6-82fb-45d3-9c40-04b61d3c2edd">
+    - 대략 200ms 소요.
+    - type은 ALL로 풀 테이블 스캔이 일어난 것을 알 수 있다.
+  - <img width="1044" alt="image" src="https://github.com/user-attachments/assets/8e6bb177-8b29-4691-9b64-7d1c112baa74">
+    - rows의 1e+6은 10의 6승을 의미한다.
+- 튜닝 후
+  - 성능 향상을 위해 인덱스를 생성할 때, department / created_at / 멀티 컬럼 인덱스(순서도 고려)를 고민해봐야한다.
+    - CREATE INDEX idx_created_at ON users (created_at);
+      - 30ms 소요
+      - type = range
+      - rows = 1,000
+    - CREATE INDEX idx_department ON users (department);
+      - 130ms 소요
+      - type = ref
+      - rows = 191,000
+      - created_at으로 접근했을 때보다 department로 접근했을 때의 데이터가 수가 많다보니 더 많은 시간이 소요된 것이다.
+    - created_at와 department 각 각 생성
+      - 30ms 소요
+      - type = range
+      - possible_key = idx_department, idx_created_at : 2개의 인덱스를 사용할 수 있다.
+      - key = idx_created_at : 하지만 실제 사용된 인덱스는 idx_created_at다.
+      - row = 1,000
+      - 실제 성능향상에 도움이 된 인덱스는 idx_created_at이기 때문에, 현재 예시에서는 굳이 2개의 인덱스를 만들 필요가 없다.
+        - 불필요하게 2개의 인덱스를 모두 생성할 시, 쓰기 작업에서 성능이 저하될 수 있기 때문에 필요한 인덱스만 만드는 것이 중요하다.
+        - 데이터 액세스(rows)를 크게 줄일 수 있는 컬럼은 중복 정도가 낮은 컬럼이다.
+        - 따라서 중복 정도가 낮은 컬럼을 골라서 인덱스를 생성하는 것이 좋다.
+    - CREATE INDEX idx_created_at_department ON users (created_at, department); -- 멀티 컬럼 인덱스
+      - 25ms 소요 (created_at, department 컬럼의 순서를 바꿔 생성하여도 성능은 비슷)
+      - type = range
+      - rows = 1,000
+      - 단일 컬럼 인덱스와의 성능 차이가 크지 않다면, 최소한의 컬럼으로 인덱스를 생성하는 것이 좋으므로 단일 컬럼 인덱스를 선택하는 것이 좋다.
