@@ -324,3 +324,60 @@
   - <img width="616" alt="image" src="https://github.com/user-attachments/assets/62dcaaf1-1576-4f3b-8ed2-92d95177d75e">
   - 10,000건을 조회할 때와 10건을 조회할 때의 시간 차이를 확인해보면 조회하는 데이터의 개수에 따라 성능이 달라지는 것을 볼 수 있다.
   - 조회하는 데이터의 개수가 성능에 많은 영향을 끼치기 때문에 LIMIT, WHERE문 등을 활용해서 한 번에 조회하는 데이터의 수를 줄이는 방법을 고려해볼 필요가 있다.
+
+### WHERE문이 사용된 SQL문 튜닝하기 - 1
+- ```
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      department VARCHAR(100),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, department, created_at)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')) AS name,
+      CASE 
+          WHEN n % 10 = 1 THEN 'Engineering'
+          WHEN n % 10 = 2 THEN 'Marketing'
+          WHEN n % 10 = 3 THEN 'Sales'
+          WHEN n % 10 = 4 THEN 'Finance'
+          WHEN n % 10 = 5 THEN 'HR'
+          WHEN n % 10 = 6 THEN 'Operations'
+          WHEN n % 10 = 7 THEN 'IT'
+          WHEN n % 10 = 8 THEN 'Customer Service'
+          WHEN n % 10 = 9 THEN 'Research and Development'
+          ELSE 'Product Management'
+      END AS department,
+      TIMESTAMP(DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 3650) DAY) + INTERVAL FLOOR(RAND() * 86400) SECOND) AS created_at -- 최근 10년 내의 임의의 날짜와 시간 생성
+  FROM cte;
+
+  -- 조회
+  SELECT * FROM users
+  WHERE created_at >= DATE_SUB(NOW(), INTERVAL 3 DAY);
+
+  -- 실행 계획
+  EXPLAIN SELECT * FROM users
+  WHERE created_at >= DATE_SUB(NOW(), INTERVAL 3 DAY);
+
+  -- 인덱스 생성
+  CREATE INDEX idx_created_at ON users (created_at);
+  ```
+- 조회결과
+  - 인덱스 생성 전
+    - <img width="1314" alt="image" src="https://github.com/user-attachments/assets/edc4df4d-81a9-416e-b7ae-8a71bc9dff7c">
+  - 인덱스 생성 후
+    - <img width="1378" alt="image" src="https://github.com/user-attachments/assets/d6ac1db9-863f-4f7d-93b5-846aaba32c7a">
+  - created_at으로 인덱스를 생성하여 정렬시킴에 따라 성능이 향상된 것을 볼 수 있다.
+    - 소요시간이 단축되었으며, type 또한 ALL에서 range로 변경되었다.
+  - WHERE문의 부등호(>, <, ≤, ≥, =), IN, BETWEEN, LIKE와 같은 곳에서 사용되는 컬럼은 인덱스를 사용했을 때 성능이 향상될 가능성이 높다. 
