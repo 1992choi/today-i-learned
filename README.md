@@ -685,3 +685,69 @@
       - type : range
   - ORDER BY의 특징 상 모든 데이터를 바탕으로 정렬을 해야 하기 때문에, 인덱스 풀 스캔 또는 테이블 풀 스캔을 활용할 수 밖에 없다.
   - 이 때문에 ORDER BY문보다 WHERE문에 있는 컬럼에 인덱스를 걸었을 때 성능이 향상되는 경우가 많다. 
+
+<br>
+
+### HAVING문이 사용된 SQL문 튜닝하기
+- ```
+  -- 테이블 생성
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      age INT,
+      department VARCHAR(100),
+      salary INT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, age, department, salary, created_at)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000 
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')) AS name,
+      FLOOR(1 + RAND() * 100) AS age,
+      CASE 
+          WHEN n % 10 = 1 THEN 'Engineering'
+          WHEN n % 10 = 2 THEN 'Marketing'
+          WHEN n % 10 = 3 THEN 'Sales'
+          WHEN n % 10 = 4 THEN 'Finance'
+          WHEN n % 10 = 5 THEN 'HR'
+          WHEN n % 10 = 6 THEN 'Operations'
+          WHEN n % 10 = 7 THEN 'IT'
+          WHEN n % 10 = 8 THEN 'Customer Service'
+          WHEN n % 10 = 9 THEN 'Research and Development'
+          ELSE 'Product Management'
+      END AS department,
+      FLOOR(1 + RAND() * 1000000) AS salary,
+      TIMESTAMP(DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 3650) DAY) + INTERVAL FLOOR(RAND() * 86400) SECOND) AS created_at
+  FROM cte;
+
+  -- 인덱스 생성
+  CREATE INDEX idx_age ON users (age);
+  ```
+- 쿼리 실행
+  ```
+  SELECT age, MAX(salary) FROM users
+  GROUP BY age
+  HAVING age >= 20 AND age < 30;
+  ```
+- 쿼리 실행 결과
+  - 대략 800ms 소요
+  - type : index
+- 성능 개선
+  - HAVING문 대신에 WHERE문을 쓸 수 있는지 체크하여 개선.
+  - HAVING 대신에 WHERE문을 사용함으로써 GROUP BY를 처리하기 전에 데이터를 필터링하도록 변경하였다.
+    - ```
+      SELECT age, MAX(salary) FROM users
+      WHERE age >= 20 AND age < 30
+      GROUP BY age;
+      ```
+  - 약 150ms으로 단축되었다.
