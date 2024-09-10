@@ -557,3 +557,64 @@
   WHERE salary < 1000 / 2
   ORDER BY salary;
   ```
+
+<br>
+
+### ORDER BY문이 사용된 SQL문 튜닝하기
+- ```
+  -- 테이블 생성
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      department VARCHAR(100),
+      salary INT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, department, salary, created_at)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')) AS name,
+      CASE 
+          WHEN n % 10 = 1 THEN 'Engineering'
+          WHEN n % 10 = 2 THEN 'Marketing'
+          WHEN n % 10 = 3 THEN 'Sales'
+          WHEN n % 10 = 4 THEN 'Finance'
+          WHEN n % 10 = 5 THEN 'HR'
+          WHEN n % 10 = 6 THEN 'Operations'
+          WHEN n % 10 = 7 THEN 'IT'
+          WHEN n % 10 = 8 THEN 'Customer Service'
+          WHEN n % 10 = 9 THEN 'Research and Development'
+          ELSE 'Product Management'
+      END AS department,
+      FLOOR(1 + RAND() * 1000000) AS salary,
+      TIMESTAMP(DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 3650) DAY) + INTERVAL FLOOR(RAND() * 86400) SECOND) AS created_at -- 최근 10년 내의 임의의 날짜와 시간 생성
+  FROM cte;
+  ```
+- 쿼리 실행
+  ```
+  SELECT * FROM users
+  ORDER BY salary
+  LIMIT 100;
+  ```
+- 쿼리 실행 결과
+  - 대략 200ms 소요
+  - type은 ALL로 풀 테이블 스캔을 한다.
+  - ORDER BY는 시간이 오래걸리는 작업이므로 최대한 피해주는 것이 좋다.
+  - 정렬이라는 작업 자체가 다른 작업에 비해서 부담스러운 작업이며 성능에 안 좋은 영향을 끼치는 요소 중 하나이기 때문이다.
+  - 만약 인덱스를 사용하면 미리 정렬을 해둔 상태이기 때문에, ORDER BY를 사용하여 정렬해야 하는 번거로운 작업을 피할 수 있다.
+    - 성능 개선을 위해 인덱스를 추가한다.
+      - CREATE INDEX idx_salary ON users (salary);
+- 성능 개선
+  - 인덱스를 추가함으로써 인덱스 풀 스캔(type: index)으로 변경되어 빠르게 데이터를 정렬해서 조회하도록 변경되었다.
+  - LIMIT 없이 큰 범위의 데이터를 조회해오는 경우 옵티마이저가 인덱스를 활용하지 않고 테이블 풀 스캔을 해버릴 수도 있다.
+  - 따라서 성능 효율을 위해 LIMIT을 통해 작은 데이터의 범위를 조회해오도록 항상 신경쓰는 것이 중요하다.
