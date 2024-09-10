@@ -618,3 +618,70 @@
   - 인덱스를 추가함으로써 인덱스 풀 스캔(type: index)으로 변경되어 빠르게 데이터를 정렬해서 조회하도록 변경되었다.
   - LIMIT 없이 큰 범위의 데이터를 조회해오는 경우 옵티마이저가 인덱스를 활용하지 않고 테이블 풀 스캔을 해버릴 수도 있다.
   - 따라서 성능 효율을 위해 LIMIT을 통해 작은 데이터의 범위를 조회해오도록 항상 신경쓰는 것이 중요하다.
+
+<br>
+
+### WHERE문에 인덱스를 걸기 vs ORDER BY문에 인덱스를 걸기
+- ```
+  -- 테이블 생성
+  CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100),
+      department VARCHAR(100),
+      salary INT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 높은 재귀(반복) 횟수를 허용하도록 설정
+  SET SESSION cte_max_recursion_depth = 1000000; 
+
+  -- 더미 데이터 삽입 쿼리
+  INSERT INTO users (name, department, salary, created_at)
+  WITH RECURSIVE cte (n) AS
+  (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM cte WHERE n < 1000000
+  )
+  SELECT 
+      CONCAT('User', LPAD(n, 7, '0')) AS name,
+      CASE 
+          WHEN n % 10 = 1 THEN 'Engineering'
+          WHEN n % 10 = 2 THEN 'Marketing'
+          WHEN n % 10 = 3 THEN 'Sales'
+          WHEN n % 10 = 4 THEN 'Finance'
+          WHEN n % 10 = 5 THEN 'HR'
+          WHEN n % 10 = 6 THEN 'Operations'
+          WHEN n % 10 = 7 THEN 'IT'
+          WHEN n % 10 = 8 THEN 'Customer Service'
+          WHEN n % 10 = 9 THEN 'Research and Development'
+          ELSE 'Product Management'
+      END AS department,
+      FLOOR(1 + RAND() * 1000000) AS salary,
+      TIMESTAMP(DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 3650) DAY) + INTERVAL FLOOR(RAND() * 86400) SECOND) AS created_at
+  FROM cte;
+  ```
+- 쿼리 실행
+  ```
+  SELECT * FROM users
+  WHERE created_at >= DATE_SUB(NOW(), INTERVAL 3 DAY)
+  AND department = 'Sales'
+  ORDER BY salary
+  LIMIT 100;
+  ```
+- 쿼리 실행 결과
+  - 대략 200ms 소요
+  - type : ALL
+- 성능 개선
+  - SQL문만 봤을 때는 created_at, department, salary 컬럼에 인덱스를 걸 수 있는 선택지가 있다는 걸 알 수 있다.
+    - department
+      - 성능을 향상시키는 데 중요한 요소 중 하나는 데이터 액세스 수를 줄이는 것이다. 따라서 department보다 created_at에 인덱스를 생성하는 게 더 좋을 것이다.
+    - salary
+      - salary로 인덱스를 만들게 되면 오히려 성능이 나빠진다.
+      - 풀 인덱스 스캔이지만 salary로 만든 인덱스에는 created_at, department 정보가 없기 때문에 실제 테이블에 접근해서 조건을 만족하는 지 확인해야한다.
+      - 따라서 풀 테이블 스캔과 거의 다를 바가 없다.
+    - created_at
+      - 대략 35ms 소요
+      - type : range
+  - ORDER BY의 특징 상 모든 데이터를 바탕으로 정렬을 해야 하기 때문에, 인덱스 풀 스캔 또는 테이블 풀 스캔을 활용할 수 밖에 없다.
+  - 이 때문에 ORDER BY문보다 WHERE문에 있는 컬럼에 인덱스를 걸었을 때 성능이 향상되는 경우가 많다. 
