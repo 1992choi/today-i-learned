@@ -31,3 +31,11 @@
   - https://www.docker.com/products/docker-desktop
 - 버전 확인
   - docker --version
+
+### Docker Image
+- Docker Image란?
+  - 도커를 통해서 실행하고자 하는 운영체제 / 미들웨어 / 어플리케이션 등을 제공하기 위한 하나의 템플릿으로 볼 수 있다.
+  - 이미지 안에는 소스 코드와 라이브러리 등 구동을 위해 필요한 것들을 포함하고 있는 파일로 볼 수 있다.
+  - 이미지를 토대로 실제로 실행되는 상태를 컨테이너라고 한다.
+  - 이미지는 내부적으로 계층형 구조로 되어있으며, 이를 레이어 방식이라고 한다.
+    - Ref. https://github.com/1992choi/docker?tab=readme-ov-file#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%9D%B4%EC%96%B4
