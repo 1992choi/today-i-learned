@@ -39,3 +39,32 @@
   - 이미지를 토대로 실제로 실행되는 상태를 컨테이너라고 한다.
   - 이미지는 내부적으로 계층형 구조로 되어있으며, 이를 레이어 방식이라고 한다.
     - Ref. https://github.com/1992choi/docker?tab=readme-ov-file#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%9D%B4%EC%96%B4
+
+### Docker Container
+- Docker Container란?
+ - 도커 이미지를 실행한 상태
+ - 인스턴스화 되어있는 상태
+- Lifecycle
+  - 컨테이너의 실행과 중지에 따른 상태 변화를 의미한다.
+  - ![image](https://github.com/user-attachments/assets/f5aea19a-ed4e-4def-8ee6-905bc4f56b9d)
+  - create
+    - 컨테이너를 생성하는 명령어.
+    - 아직 실행상태는 아니다.
+  - start
+    - 생성된 컨테이너를 실행상태로 만든다.
+  - run
+    - 컨테이너 생성과 동시에 실행 시킨다.
+    - create와 start의 결합된 명령어
+  - pause
+    - 사용 중인 컨테이너를 일시중지한다.
+  - unpause
+    - 일시중지 시킨 컨테이너를 다시 실행한다.
+  - stop
+    - 컨테이너를 중지한다.
+    - 컨테이너가 삭제되면, 다시 실행 상태로 돌아갈 수 없다.
+  - start(Stopped 상태에서)
+    - 중지한 컨테이너를 다시 실행한다.
+  - rm
+    - 컨테이너를 삭제한다.
+
+ 
