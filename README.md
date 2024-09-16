@@ -42,8 +42,8 @@
 
 ### Docker Container
 - Docker Container란?
- - 도커 이미지를 실행한 상태
- - 인스턴스화 되어있는 상태
+  - 도커 이미지를 실행한 상태
+  - 인스턴스화 되어있는 상태
 - Lifecycle
   - 컨테이너의 실행과 중지에 따른 상태 변화를 의미한다.
   - ![image](https://github.com/user-attachments/assets/f5aea19a-ed4e-4def-8ee6-905bc4f56b9d)
