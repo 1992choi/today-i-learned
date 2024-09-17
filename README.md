@@ -66,6 +66,8 @@
     - 중지한 컨테이너를 다시 실행한다.
   - rm
     - 컨테이너를 삭제한다.
+
+### Docker Container 명령어1
 - run 명령어
   - docker run [OPTION] IMAGE:[:TAG|@DIGEST][COMMAND][ARG..]
   - OPTION
@@ -86,3 +88,30 @@
       - 키보드에 의해서 입력된 명령어가 컨테이너 내부로 전달될 때 사용한다.
     - -link
       - 컨테이너끼리 연결[컨테이너명:별칭]
+
+### Docker Container 명령어2
+- docker container ls [OPTION]
+  - 컨테이너 목록 조회
+  - docker ps와 동일
+- docker container stop [OPTION] CONTAINER [CONTAINER ...]
+  - 컨테이너 중지
+- docker container rm [OPTION] CONTAINER [CONTAINER ...]
+  - 컨테이너 삭제
+- docker container logs ${CONTAINER_ID}
+  - 컨테이너 로그 메시지 확인
+  - CONTAINER_ID 대신 CONTAINER_NAME을 사용할 수도 있다.
+- docker container exec [OPTION] CONTAINER COMMAND [ARG ...]
+  - 컨테이너에게 명령어 전달
+- docker container inspect ${CONTAINER_ID}
+  - 컨테이너의 세부 정보 조회 
+- docker image ls [OPTION] CONTAINER [REPOSITORY[:TAG]]
+  - 이미지 목록 조회
+  - docker images와 동일
+- docker image rm [OPTION] IMAGE [IMAGE ...]
+  - 이미지 삭제
+  - 작동 중인 컨테이너가 있다면, 중지하고 삭제해야한다.
+- docker image pull [OPTION] NAME[:TAG|@DIGEST]
+  - 이미지를 가져온다.
+  - image를 생략하고 docker pull로 사용할 수도 있다.
+- docker system prune
+  - 사용되지 않는 컨테이너 / 이미지 등을 정리한다.
