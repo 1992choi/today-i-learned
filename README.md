@@ -115,3 +115,12 @@
   - image를 생략하고 docker pull로 사용할 수도 있다.
 - docker system prune
   - 사용되지 않는 컨테이너 / 이미지 등을 정리한다.
+
+### Port Mapping
+- Port Mapping이란?
+  - 도커 컨테이너에서 사용하고자 하는 Port를 자요롭게 설정하는 기능이다.
+  - 호스트 시스템에서 도커 컨테이너 Port를 사용하기 위해서는 Post Mapping이 필요하다.
+- 명령어
+  - docker run -p host_port:container_port ${IMAGE_NAME}
+  - Ex) docker run -p 80:8080
+    - 도커 컨테이너 내부에서 8080 포트를 사용하는 톰캣이 있다고 가정할 때, HOST PC에서 톰캣을 호출할 때 80 포트로 접근할 수 있다.
