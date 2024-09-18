@@ -36,9 +36,19 @@
 - Docker Image란?
   - 도커를 통해서 실행하고자 하는 운영체제 / 미들웨어 / 어플리케이션 등을 제공하기 위한 하나의 템플릿으로 볼 수 있다.
   - 이미지 안에는 소스 코드와 라이브러리 등 구동을 위해 필요한 것들을 포함하고 있는 파일로 볼 수 있다.
+  - 이미지는 컨테이너 실행에 필요한 파일과 설정 값 등을 포함하고 있지만, 그 자체로는 상태값을 가지고 있지는 않다.
   - 이미지를 토대로 실제로 실행되는 상태를 컨테이너라고 한다.
   - 이미지는 내부적으로 계층형 구조로 되어있으며, 이를 레이어 방식이라고 한다.
     - Ref. https://github.com/1992choi/docker?tab=readme-ov-file#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%9D%B4%EC%96%B4
+- Docker Image 생성 방법
+  - Dockerfile을 작성한다.
+  - Dockerfile 작성 후 명령어를 사용하여 생성한다.
+    - docker image build --tag [tag명] -f 파일명 .
+      - Ex) docker image build --tag [first-iamge:0.1] -f Dockerfile .
+      - build는 이미지에서만 사용되는 명령어기 때문에 image를 생략할 수 있다.
+      - --tage 대신 -t로 사용 가능하다.
+      - 태그 번호인 :0.1을 생략하면 최신버전을 뜻하는 latest가 된다.
+      - 마지막 온점(.)은 현재 디렉토리를 의미하는 경로이다.
 - Dockerfile
   - Dockerfile은 docker에서 이미지를 생성하기 위한 용도로 작성하는 스크립트 파일이다.
   - 만들 이미지에 대한 정보를 기술해 둔 템플릿(template) 이라고 보면 된다.
@@ -72,7 +82,7 @@
   - rm
     - 컨테이너를 삭제한다.
 
-### Docker Container 명령어1
+### Docker Container 명령어(1)
 - run 명령어
   - docker run [OPTION] IMAGE:[:TAG|@DIGEST][COMMAND][ARG..]
   - OPTION
@@ -94,7 +104,7 @@
     - -link
       - 컨테이너끼리 연결[컨테이너명:별칭]
 
-### Docker Container 명령어2
+### Docker Container 명령어(2)
 - docker container ls [OPTION]
   - 컨테이너 목록 조회
   - docker ps와 동일
