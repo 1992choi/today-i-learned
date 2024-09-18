@@ -14,6 +14,8 @@
   - 기능적인 측면보다는 안정적인 운영을 위한 전체적인 구조를 설계한다.
   - SW를 구성하는 요소와 요소 간의 관계를 정의한다.
 
+<br>
+
 ### 가상화 방식의 변화
 - ![image](https://github.com/user-attachments/assets/e9568a0d-9f8e-46ca-ab6c-b60d1cfdade5)
 - 하이퍼바이저와 컨테이너
@@ -26,11 +28,15 @@
     - 운영체제 수준의 가상화 기술로 리눅스 커널을 공유함과 동시에 프로세스를 격리된 환경에서 실행한다.
     - 때문에 하이퍼바이저 가상화 방식보다 더욱 가볍고 빠르게 동작한다.
 
+<br>
+
 ### 설치
 - 설치 URL
   - https://www.docker.com/products/docker-desktop
 - 버전 확인
   - docker --version
+
+<br>
 
 ### Docker Image
 - Docker Image란?
@@ -49,6 +55,10 @@
       - --tage 대신 -t로 사용 가능하다.
       - 태그 번호인 :0.1을 생략하면 최신버전을 뜻하는 latest가 된다.
       - 마지막 온점(.)은 현재 디렉토리를 의미하는 경로이다.
+- Docker Image의 생성과 사용 Flow
+  - ![image](https://github.com/user-attachments/assets/c2aa8969-e988-4334-9841-6d6c7b8489cd)
+
+<br>
 
 ### Dockerfile
 - Dockerfile이란?
@@ -80,6 +90,16 @@
   - EXPOSE
     - 컨테이너의 특정 포트를 외부에 오픈한다.
 
+<br>
+
+### Docker Registry
+- Docker Registry란?
+  - Docker를 통해 생성하는 Image들을 저장해주는 저장소이다.
+  - 모두에게 공개된 Public Registry와 일부만 접근을 허용하는 Private Registry가 존재한다.
+  - CI/CD를 위한 자동화 Pipeline을 구축하는데 사용하기도 한다.
+
+<br>
+
 ### Docker Container
 - Docker Container란?
   - 도커 이미지를 실행한 상태
@@ -107,6 +127,8 @@
   - rm
     - 컨테이너를 삭제한다.
 
+<br>
+
 ### Docker Container 명령어(1)
 - run 명령어
   - docker run [OPTION] IMAGE:[:TAG|@DIGEST][COMMAND][ARG..]
@@ -128,6 +150,8 @@
       - 키보드에 의해서 입력된 명령어가 컨테이너 내부로 전달될 때 사용한다.
     - -link
       - 컨테이너끼리 연결[컨테이너명:별칭]
+
+<br>
 
 ### Docker Container 명령어(2)
 - docker container ls [OPTION]
@@ -155,6 +179,8 @@
   - image를 생략하고 docker pull로 사용할 수도 있다.
 - docker system prune
   - 사용되지 않는 컨테이너 / 이미지 등을 정리한다.
+
+<br>
 
 ### Port Mapping
 - Port Mapping이란?
