@@ -39,6 +39,11 @@
   - 이미지를 토대로 실제로 실행되는 상태를 컨테이너라고 한다.
   - 이미지는 내부적으로 계층형 구조로 되어있으며, 이를 레이어 방식이라고 한다.
     - Ref. https://github.com/1992choi/docker?tab=readme-ov-file#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A0%88%EC%9D%B4%EC%96%B4
+- Dockerfile
+  - Dockerfile은 docker에서 이미지를 생성하기 위한 용도로 작성하는 스크립트 파일이다.
+  - 만들 이미지에 대한 정보를 기술해 둔 템플릿(template) 이라고 보면 된다.
+  - 자체 DSL(Domain-Specific Language) 언어를 사용하여 이미지 생성과정을 기술한다.
+  - 파일로 만들어지기 때문에 버전관리가 가능하며, 누구나 수정할 수 있기 때문에 공유하거나 유지보수 하는데도 유리하다.
 
 ### Docker Container
 - Docker Container란?
