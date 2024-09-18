@@ -97,6 +97,21 @@
   - Docker를 통해 생성하는 Image들을 저장해주는 저장소이다.
   - 모두에게 공개된 Public Registry와 일부만 접근을 허용하는 Private Registry가 존재한다.
   - CI/CD를 위한 자동화 Pipeline을 구축하는데 사용하기도 한다.
+- Local Registry 구축
+  - Local Registry 실행
+    - docker run -d -p 5001:5000 --restart always --name registry registry:2
+  - Repositories 리스트 확인
+    - curl http://localhost:5001/v2/_catalog
+  - Tag
+    - 기존 이미지에 태그를 수정하여 새로운 이미지명을 만들 목적
+    - Ex) docker tag ubuntu:16.04 localhost:5001/ubuntu:16.04
+    - localhost:5001를 생략하면, Docker Hub에서 가져오겠다는 의미이다.
+    - <img width="875" alt="image" src="https://github.com/user-attachments/assets/41df8ad5-1dd6-4167-ab3f-4b441e047a9a">
+  - 이미지 업로드
+    - docker push localhost:5001/ubuntu:16.04
+    - 'curl http://localhost:5001/v2/_catalog' 명령어를 수행하면, Repositories 리스트에서 업로드한 이미지를 확인할 수 있다.
+  - 이미지 가져오기
+    - docker pull localhost:5001/ubuntu:16.04
 
 <br>
 
