@@ -112,6 +112,16 @@
     - 'curl http://localhost:5001/v2/_catalog' 명령어를 수행하면, Repositories 리스트에서 업로드한 이미지를 확인할 수 있다.
   - 이미지 가져오기
     - docker pull localhost:5001/ubuntu:16.04
+- Cloud Registry 사용
+  - Repository 생성
+    - https://hub.docker.com로 접속하여 Repository를 생성한다.
+  - TAG
+    - docker tag ubuntu:16.04 [계정명]/ubuntu:16.04
+  - 이미지 업로드
+    - Cloud Registry로 이미지를 업로드한다.
+    - docker push [계정명]/ubuntu:16.04
+  - 이미지 가져오기
+    - docker pull [계정명]/ubuntu:16.04
 
 <br>
 
