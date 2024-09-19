@@ -236,3 +236,16 @@
     - 네트워크를 사용하지 않는 형태이다.
   - Overlay Network
     - 여러 Host에 분산되어있는 컨테이너를 연결할 때 사용하는 형태이다.
+- 명령어
+  - docker network ls
+    - 네트워크 목록을 조회한다.
+  - docker network inspect ${NETWORK_NAME}
+    - 네트워크 상세정보를 조회한다.
+  - docker network create ${NETWORK_NAME}
+    - 네트워크를 생성한다.
+  - docker network rm ${NETWORK_NAME}
+    - 네트워크를 삭제한다.
+  - docker network connect ${NETWORK_NAME} ${CONTAINER}
+    - 실행 중인 컨테이너를 Network에 추가한다.
+  - docker network disconnect ${NETWORK_NAME} ${CONTAINER}
+    - Network에 추가된 컨테이너를 삭제한다.
