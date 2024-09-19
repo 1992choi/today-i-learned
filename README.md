@@ -215,3 +215,24 @@
   - docker run -p host_port:container_port ${IMAGE_NAME}
   - Ex) docker run -p 80:8080
     - 도커 컨테이너 내부에서 8080 포트를 사용하는 톰캣이 있다고 가정할 때, HOST PC에서 톰캣을 호출할 때 80 포트로 접근할 수 있다.
+
+<br>
+
+### Docker Network
+- Docker Network란?
+  - Docker 컨테이너 간의 통신을 관리하고 격리하기 위한 기능을 제공하는 것이다.
+- 특징
+  - Container Isolation
+    - 컨테이너는 격리 된 환경에서 동작하므로 서로 다른 컨테이너끼리는 통신이 불가능하다.
+  - 도커 네트워크는 이러한 특징을 보완하기 위하여 다른 컨테이너 간의 통신을 쉽게 설정하고 관리할 수 있도록 도와준다.
+- 종류
+  - Bridge Network
+    - 가장 기본적인 상태의 네트워크이다.
+    - 하나의 Host PC에 여러 개의 컨테이너들이 서로 연결 가능한 상태이다.
+  - Host Network
+    - Host PC와 동일한 네트워크를 사용하는 형태이다.
+    - 포트 포워딩 없이 내부 애플리케이션 사용 가능
+  - None Network
+    - 네트워크를 사용하지 않는 형태이다.
+  - Overlay Network
+    - 여러 Host에 분산되어있는 컨테이너를 연결할 때 사용하는 형태이다.
