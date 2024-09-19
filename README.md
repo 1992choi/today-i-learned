@@ -249,3 +249,29 @@
     - 실행 중인 컨테이너를 Network에 추가한다.
   - docker network disconnect ${NETWORK_NAME} ${CONTAINER}
     - Network에 추가된 컨테이너를 삭제한다.
+
+<br>
+
+### Multi Container 구성 예제
+- 네트워크 생성
+  - ```
+    docker network create --driver bridge my-network
+    ```
+- DB 생성 및 네트워크 설정
+  - ```
+    docker run -d -p 13306:3306 --network my-network \
+    -e MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true \
+    -e MARIADB_DATABASE=mydb \
+    --name my-mariadb edowon0623/my-mariadb:1.0
+    ```
+- Backend 생성 및 네트워크 설정
+  - ```
+    docker run -d -p 8088:8088 --network my-network \
+    -e "spring.datasource.url=jdbc:mariadb://my-mariadb:3306/mydb" \
+    --name catalog-service edowon0623/catalog-service:mariadb-demo
+    ```
+  - 위의 명령어에서 MariaDB Host를 할당받은 IP대신 my-mariadb로 적는 이유는
+    - IP를 적으면 네트워크 할당 순서에 따라 MariaDB의 IP가 변경될 수 있기 때문에 컨테이너명을 기재한다.
+    - 도커에서는 컨테이너명이 호스트명으로도 쓰이기 때문이다.
+- 조회
+  - http://localhost:8088/catalogs
