@@ -212,7 +212,7 @@
   - 도커 컨테이너에서 사용하고자 하는 Port를 자요롭게 설정하는 기능이다.
   - 호스트 시스템에서 도커 컨테이너 Port를 사용하기 위해서는 Post Mapping이 필요하다.
 - 명령어
-  - docker run -p host_port:container_port ${IMAGE_NAME}
+  - docker run -p host_port:container_port [IMAGE_NAME]
   - Ex) docker run -p 80:8080
     - 도커 컨테이너 내부에서 8080 포트를 사용하는 톰캣이 있다고 가정할 때, HOST PC에서 톰캣을 호출할 때 80 포트로 접근할 수 있다.
 
@@ -239,15 +239,15 @@
 - 명령어
   - docker network ls
     - 네트워크 목록을 조회한다.
-  - docker network inspect ${NETWORK_NAME}
+  - docker network inspect [NETWORK_NAME]
     - 네트워크 상세정보를 조회한다.
-  - docker network create ${NETWORK_NAME}
+  - docker network create [NETWORK_NAME]
     - 네트워크를 생성한다.
-  - docker network rm ${NETWORK_NAME}
+  - docker network rm [NETWORK_NAME]
     - 네트워크를 삭제한다.
-  - docker network connect ${NETWORK_NAME} ${CONTAINER}
+  - docker network connect [NETWORK_NAME] [CONTAINER]
     - 실행 중인 컨테이너를 Network에 추가한다.
-  - docker network disconnect ${NETWORK_NAME} ${CONTAINER}
+  - docker network disconnect [NETWORK_NAME]}[CONTAINER]
     - Network에 추가된 컨테이너를 삭제한다.
 
 <br>
@@ -275,3 +275,23 @@
     - 도커에서는 컨테이너명이 호스트명으로도 쓰이기 때문이다.
 - 조회
   - http://localhost:8088/catalogs
+
+<br>
+
+### Docker Volume Storage
+- Docker Volume이란?
+  - Docker는 개별적인 가상환경이기 때문에 컨테이너가 삭제되면, 작업했던 모든 데이터도 삭제된다.
+  - 컨테이너 내부의 데이터를 외부로 연결 시켜주는 기능이 도커 볼륨이다.
+  - Docker Volume은 기본적으로 /var/lib/docker/volumes 디렉토리에 저장한다.
+    - OS별로 디렉토리 경로가 다를 수도 있다.
+- 명령어
+  - 생성
+    - docker volume create [볼륨명]
+  - 목록조회
+    - docker volume ls
+  - 상세조회
+    - docker volume inspect [볼륨명]
+  - 삭제
+    - docker volume rm [볼륨명]
+  - 컨테이너 생성 시 볼륨 연결
+    - docker run -v [볼륨명]:[컨테이너 내부 디렉토리 경로] --name [컨테이너명][이미지 이름]
