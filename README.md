@@ -282,8 +282,13 @@
 - Docker Volume이란?
   - Docker는 개별적인 가상환경이기 때문에 컨테이너가 삭제되면, 작업했던 모든 데이터도 삭제된다.
   - 컨테이너 내부의 데이터를 외부로 연결 시켜주는 기능이 도커 볼륨이다.
-  - Docker Volume은 기본적으로 /var/lib/docker/volumes 디렉토리에 저장한다.
-    - OS별로 디렉토리 경로가 다를 수도 있다.
+- Docker Volume 경로
+  - docker volume inspect 명령어를 통해 Mountpoint의 값으로 볼륨의 경로를 알아낼 수 있다.
+    - 하지만 Host PC에서 해당 경로를 찾아갈 수는 없다.
+    - 리눅스에서는 해당 경로에 접근 가능하지만, 이외의 OS에서는 도커를 직접 설치한 것이 아니라 도커 데스크탑을 통해 설치하여 해당 경로로 이동할 수 없는 것이다.
+    - 만약 Host PC에서 접근 가능한 경로로 마운트하고 싶을 때는 v 옵션에 현재 경로를 뜻하는 온점(.)부터 명시하면 된다.
+      - Ex) docker run -v ./docker_data:/app/test ubuntu:16.04 bash
+        - 현재 경로에 docker_data 디렉토리를 만들고 이를 컨테이너의 /app/test 디렉토리와 마운트 시킨다는 의미. 
 - 명령어
   - 생성
     - docker volume create [볼륨명]
