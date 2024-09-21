@@ -325,6 +325,27 @@
     - 기본 파일명으로 작성하면 실행 명령어에서 파일명을 기재하지 않아도 되지만, 기본 파일명이 아니라면 파일명을 명시해줘야한다.
     - 파일 예시
       - ![image](https://github.com/user-attachments/assets/c32baee4-bbb6-4a72-8969-b5b64a99e400)
+    - 명령어
+      - image
+        - Docker Image를 지정한다.
+      - build
+        - Dockerfile을 이용하여 이미지를 빌드할 때 사용할 수 있다.
+      - command 또는 entrypoint
+        - 컨테이너 안에서 작동하는 명령어 지정
+      - ports 또는 expose
+        - 컨테이너 간 통신을 위한 포트 설정
+      - depends on
+        - 서비스의 의존 관계를 정의한다.
+        - 컴포즈를 통해서 컨테이너가 기동될 때, 순차적으로 기동되는 것이 아니라 병렬로 기동된다.
+          - 만약 B 컨테이너는 A 컨테이너 이후에 기동되야한다면, 이때 사용할 수 있는 명령어이다.
+          - 하지만 해당 명령어는 절대적으로 순서를 보장해주지는 않는다.
+      - environment 또는 env_file
+        - 컨테이너 환경변수 지정
+      - container_name 또는 labels
+        - 컨테이너 정보 설정
+        - docker ps 명령어에서 나오는 컨테이너 이름을 명시할 용도로 사용할 수 있다.
+      - volumes 또는 volumes_from
+        - 컨테이너 데이터 관리
   - 실행
     - docker-compose up
       - 파일명이 docker-compose.yml인 경우
@@ -338,3 +359,23 @@
   - 중지
     - docker-compose down
     - docker-compose -f docker-compose-dev.yml down
+  - 그 외 실행 명령어
+    - docker-compose logs
+      - 컨테이너 로그를 출력한다.
+    - docker-compose run
+      - 컨테이너 실행
+      - docker-compose up 이후에 실행되지 않은 컨테이너를 개별적으로 제어하기 위해 사용할 수 있다.
+    - docker-compose stop
+      - 컨테이너 중지
+      - 컨테이너를 개별적으로 제어하기 위해 사용할 수 있다.
+    - docker-compose port
+      - 공개 포트 번호 표시
+    - docker-compose rm
+      - 컨테이너 삭제
+    - docker-compose config
+      - 구성 확인
+
+
+
+
+
