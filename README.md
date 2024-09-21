@@ -309,3 +309,24 @@
   - DB 실습
     - DB 실행 시 볼륨 옵션을 통해 테이블 및 데이터를 유지할 수 있다.
       - 볼륨 옵션을 사용한다면, 컨테이너를 지운 후 새로운 컨테이너를 생성하더라도 기존 데이터가 남아있게 운영할 수 있다.
+
+<br>
+
+### Docker Compose
+- Docker Compose란?
+  - 컨테이너 애플리케이션을 정의하고 실행하는 도구.
+  - 여러 개의 컨테이너를 동시에 실행하고 할 때, 각 컨테이너별로 별도의 명령어를 통해 실행해야 한다.
+    - 10개의 컨테이너를 실행한다고 가정하면, 10개의 명령어가 필요하며, 네트워크, 볼륨 등 까지 설정해야 한다면 그 이상이 될 수도 있다.
+    - 도커 컴포즈는 이러한 명령어를 하나로 묶어 관리할 수 있는 기술을 의미한다.
+  - Docker 생성, 설정 관련 된 작업을 작성해 놓은 Script 파일(=Docker Compose 파일)을 사용한다.
+- Docker Compose 파일 작성 및 실행
+  - 작성
+    - 기본적인 파일명은 docker-compose.yml이지만, 다른 이름으로 작성할 수도 있다.
+    - 기본 파일명으로 작성하면 실행 명령어에서 파일명을 기재하지 않아도 되지만, 기본 파일명이 아니라면 파일명을 명시해줘야한다.
+    - 파일 예시
+      - ![image](https://github.com/user-attachments/assets/c32baee4-bbb6-4a72-8969-b5b64a99e400)
+  - 실행
+    - docker-compose up
+      - 파일명이 docker-compose.yml인 경우
+    - docker-compose -f docker-compose-dev.yml up
+      - 파일명이 docker-compose-dev.yml인 경우에는 기본 파일명이 아니므로 명시해줘야한다.
