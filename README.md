@@ -330,3 +330,11 @@
       - 파일명이 docker-compose.yml인 경우
     - docker-compose -f docker-compose-dev.yml up
       - 파일명이 docker-compose-dev.yml인 경우에는 기본 파일명이 아니므로 명시해줘야한다.
+  - 목록 조회
+    - docker-compose.yml 파일이 있는 동일 경로에서만 가능하다.
+    - docker compose 내에서 관리하는 컨테이너의 상태만 조회 가능하다.
+      - docker-compose ps
+      - docker-compose -f docker-compose-dev.yml ps
+  - 중지
+    - docker-compose down
+    - docker-compose -f docker-compose-dev.yml down
