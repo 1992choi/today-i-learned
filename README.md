@@ -578,3 +578,10 @@
         - manager 노드의 nginx 80포트와 8000포트를 매핑시켜 놓았다.
         - 웹의 요청을 받은 manager는 HAProxys를 사용하여 worker 1번 또는 2번의 nginx을 호출한다.
 
+<br>
+
+### Rolling Updates
+- Rolling Updates
+  - 무중단 배포의 종류 중 하나이다.
+  - 서비스의 각 태스크를 한 번에 업데이트하지 않고, 지연 시간을 설정하여 태스크를 순차적으로 업데이트한다.
+  - ![image](https://github.com/user-attachments/assets/2c92e28d-ce5a-46ed-b6c3-cd8787ba1f3d)
