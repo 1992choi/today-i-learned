@@ -477,3 +477,33 @@
         ```
       - init이 정상적으로 실행되면, 콘솔창에서 join 명령어를 확인할 수 있다.
         - docker swarm join --token SWMTKN-1-0a1c95nj0c83nerwcmiddrwlqzbag25vg2jdxthfgorr01lc82-71rslfxwxy0si2oqs443sl2wo 172.17.0.2:2377
+    - Worker 노드 생성
+      - ```
+        docker run --privileged --name worker1 -itd -p 20022:22 -p 8082:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+
+        docker run --privileged --name worker2 -itd -p 30022:22 -p 8083:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+        ```
+    - Worker 노드 접속
+      - ```
+        docker exec -it worker1 bash
+        docker exec -it worker2 bash
+        ```
+    - Worker 노드 접속 후 데몬 실행
+      - ```
+        # 자동실행되도록 설정
+        $ systemctl enable docker
+
+        # 도커 데몬 실행
+        $ systemctl start docker
+
+        # 도커 실행 후 상태 확인
+        $ systemctl status docker
+        ```
+    - Worker 노드에서 Manager 노드로 JOIN
+      - ```
+        docker swarm join --token SWMTKN-1-0a1c95nj0c83nerwcmiddrwlqzbag25vg2jdxthfgorr01lc82-71rslfxwxy0si2oqs443sl2wo 172.17.0.2:2377
+        ```
+    - Manager 노드에서 노드 목록 확인
+      - ```
+        docker node ls
+        ```
