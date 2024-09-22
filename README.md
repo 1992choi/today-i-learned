@@ -424,5 +424,30 @@
 - Docker Swarm
   - 여러 Docker host를 클러스터로 묶어주는 컨테이너 오케스트레이션
   - 여러 컨테이너를 관리한다는 측면에서는 docker compose와 유사하나, compose는 주로 단일 호스트에서 이용하는 반면에 Swarm은 멀티 호스트에서 사용된다.
-
-
+- 멀티 노드의 Swarm Cluster 구성
+  - Swarm Cluster의 초기화를 담당하는 노드를 Manager 노드라고 한다.
+  - Manager 노드에 등록되어 컨테이너를 배포하는 등의 실제 일을하는 노드를 Worker 노드라고 한다.
+  - 구성예시
+    -  총 3대의 PC인 A, B, C가 있다고 가정할 때, A PC에서 docker swarm init 명령어를 입력하면 Swarm 모드가 활성화되며 A PC가 Manager 노드가 된다.
+    -  이 때 토큰이 발행되는데, 이 토큰을 사용하여 Worker 노드들을 Manager 노드에 등록할 수 있다.
+    -  토큰을 사용하여 B, C를 등록하면 B와 C는 Worker 노드가 된다.
+- Docker Swarm을 이용한 시스템 구축
+  - 구축 방법
+    - 2대 이상의 PC 환경에서 구축이 가능하기 때문에, 아래의 방법으로 환경 구축이 가능하다.
+      - 2대 이상의 PC 사용
+      - 1대의 PC와 VM을 활용한 구축 방법
+      - 1대의 PC와 Docker in Docker(=dind)를 활용한 구축 방법
+        - 도커 컨테이너 안에서 도커 호스트를 실행하는 방법
+        - 도커 컨테이너로 Linux를 실행 후, 도커를 설치
+  - 명령어 예시
+    - docker exec -it manager docker swarm init
+      - Manager 컨테이너에 Swarm 모드를 활성화한다.
+    - docker exec -it worker01 docker swarm join --token [JOIN TOKEN] manager:2377
+      - Worker 컨테이너를 Manager 컨테이너에 등록한다.
+  - Swarm에서 사용되는 주요 포트
+    - 2377
+      - cluster managerment 통신에 사용되는 포트번호
+    - 7946
+      - node간의 통신에 사용되는 포트번호
+    - 4789
+      - overlay network 트래픽에 사용되는 포트번호
