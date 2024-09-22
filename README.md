@@ -375,7 +375,33 @@
     - docker-compose config
       - 구성 확인
 
+<br>
 
+### Docker Compose를 활용한 IT 서비스 구축
+- 강의내용
+  - Docker Compose를 활용하여 DB, BE, FE를 구축한다.
+  - section5 > Docker Compose를 활용한 IT 서비스 구축 ②
+- 실습파일 경로
+  - /docker-devops/section5/docker-compose.yml
+- 실습내용
+  - 실행
+    - docker-compose.yml 파일이 있는 경로에서 실행한다.
+    - docker-compose -f docker-compose.yml up -d my-db
+      - 백엔드 컨테이너 실행 전에 DB가 실행되야하므로 위의 명령어를 통해 DB부터 실행한다.
+      - 백엔드 실행옵션에 depends_on이 명시되어 있기는 하지만, 절대적인 것이 아니므로 위와 같이 DB를 먼저 실행하는 것도 가능하다.
+    - docker-compose -f docker-compose.yml up -d
+      - DB실행 이후 다시 명령어를 수행해서 전체를 다 실행시킨다.
+      - 이 때, 이전에 DB는 실행된 상태이므로 중복되서 실행되지 않고, 백엔드 컨테이너와 프론트엔드 컨테이너만 실행된다.
+  - 중지 및 삭제
+    - docker-compose -f  docker-compose.yml stop my-backend
+      - 만약 백엔드를 중지해야한다면, 위와 같은 명령어로 특정 컨테이너만 중지할 수 있다.
+    - docker-compose -f  docker-compose.yml rm my-backend
+      - 특정 컨테이너만 삭제할 수 있다.
+  - 로그
+    - 모든 컨테이너 확인
+      - docker-compose -f  docker-compose.yml logs
+    - 특정 컨테이너 확인
+      - docker-compose -f  docker-compose.yml logs my-db
 
 
 
