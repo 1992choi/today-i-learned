@@ -529,3 +529,25 @@
     - 컨테이너 수평 확장을 한다.
     - 만약 Worker 노드에서 nginx를 중지 후 삭제한 후, docker ps -a 명령어를 입력하면 그대로 1개가 조회된다.
       - 그 이유는 scale 옵션을 3으로 주었기 때문에, Manager 노드에서 자동으로 다시 서비스를 실행시키기 때문이다.
+
+<br>
+
+### Docker Swarm Stack
+- Docker Swarm Stack
+  - 하나 이상의 서비스를 그룹으로 묶은 단위이다.
+  - Docker Swarm Service는 애플리케이션 이미지를 하나 밖에 다루지 못하는 반면에 Stack은 여러 서비스를 한꺼번에 다룰 수 있다.
+  - Docker Swarm Stack을 사용하여 배포 된 Service 그룹은 overlay 네트워크에 속한다.
+- Stack 활용
+  - Stack 배포
+    - Manager에서 실행한다.
+    - docker stack deploy -c /stack/stack sample.yml my-stack
+  - 배포 확인
+    - docker stack services my-stack
+  - Stack에 배포 된 컨테이너 확인
+    - docker stack ps my-stack
+  - Stack 삭제
+    - docker stack rm my-stack
+
+
+
+
