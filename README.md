@@ -451,3 +451,29 @@
       - node간의 통신에 사용되는 포트번호
     - 4789
       - overlay network 트래픽에 사용되는 포트번호
+  - 실습
+    - Manager 노드 생성
+      - ```
+        docker run --privileged --name manager -itd -p 10022:22 -p 8081:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+        ```
+    - Manager 노드 접속
+      - ```
+        docker exec -it manager bash
+        ```
+    - Manager 노드 접속 후 데몬 실행
+      - ```
+        # 자동실행되도록 설정
+        $ systemctl enable docker
+
+        # 도커 데몬 실행
+        $ systemctl start docker
+
+        # 도커 실행 후 상태 확인
+        $ systemctl status docker
+        ```
+    - Manager 노드에서 swarm 초기화
+      - ```
+        docker swarm init
+        ```
+      - init이 정상적으로 실행되면, 콘솔창에서 join 명령어를 확인할 수 있다.
+        - docker swarm join --token SWMTKN-1-0a1c95nj0c83nerwcmiddrwlqzbag25vg2jdxthfgorr01lc82-71rslfxwxy0si2oqs443sl2wo 172.17.0.2:2377
