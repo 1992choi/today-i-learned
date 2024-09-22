@@ -547,7 +547,34 @@
     - docker stack ps my-stack
   - Stack 삭제
     - docker stack rm my-stack
-
-
-
+- 실습
+  - 실습파일
+    - section6/docker-compose.yml
+      - manager / worker 노드를 조금 더 쉽게 생성하기 위함.
+      - 이전 실습에서는 노드 생성을 위해 비슷한 docker run 명령어를 3번 반복하였는데, 이를 줄이고자 docker-compose 활용. 
+    - section6/stack/haproxy.cfg
+      - proxy 설정을 위한 파일.
+      - 기본 설정을 대체할 용도.
+    - section6/stack/stack_sample.yml
+      - network 및 프록시 설정을 담고 있다.
+      - replica의 정보(= 컨테이너의 scale 관련 옵션)를 담고 있다.
+      - deploy.placement.constraints: [node.role == worker]의 의미는 manager가 아닌 worker 노드에만 배포하겠다는 의미.
+  - 실습진행
+    - docker-compose up -d
+      - docker-compose.yml 경로에서 실행
+      - manager 노드와 worker 노드를 생성한다.
+    - 노드 접속 / 도커 데몬 실행 / Swarm 실행 및 JOIN
+      - 앞서 실습했던 내용과 동일하게 진행한다.
+      - 노드 접속 > 노드 접속 후 도커 데몬 실행 > Swarm 실행 및 JOIN
+    - overlay network 생성
+      - docker network create --driver overlay my-overlay-network
+    - stack 파일 실행
+      - cd /stack
+        - volume 옵션을 통해 stack 디렉토리 내에 파일이 이미 옮겨졌을 것이다.
+      - docker stack deploy -c /stack/stack_sample.yml my-stack
+        - stack을 실행한다.
+    - 서비스 확인
+      - localhost:8000 실행
+        - manager 노드의 nginx 80포트와 8000포트를 매핑시켜 놓았다.
+        - 웹의 요청을 받은 manager는 HAProxys를 사용하여 worker 1번 또는 2번의 nginx을 호출한다.
 
