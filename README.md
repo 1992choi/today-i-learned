@@ -507,3 +507,25 @@
       - ```
         docker node ls
         ```
+
+<br>
+
+### Docker Swarm Service
+- Docker Swarm Service
+  - 애플리케이션을 구성하는 일부 컨테이너를 제어하기 위한 단위
+  - Manager 노드에서 수행하면, Worker 노드로 명령어가 전달되어 실행되게 된다.
+- 실습
+  - docker service create --replicas 1 --publish 80:80 --name my-nginx nginx:latest
+    - 서비스를 배포한다. (현재는 nginx로 예시로 실습)
+    - replicas : 컨테이너 실행 갯수를 지정하는 옵션
+      - Manager 노드도 Worker 노드처럼 동작하므로, 현재 3개의 노드를 생성한 것과 마찬가지이다.
+      - 이 때 갯수가 1개이므로 Manager 노드와 Worker 노드 2개 중에 랜덤으로 1개에서 nginx가 생성된다.
+      - 옵션을 통해 노드를 지정할 수도 있다.
+      - scale 명령어로 갯수를 늘릴 수도 있다.
+        - docker service scale my-nginx=3
+  - docker service ls
+    - 서비스 목록을 조회한다.
+  - docker service scale my-nginx=3
+    - 컨테이너 수평 확장을 한다.
+    - 만약 Worker 노드에서 nginx를 중지 후 삭제한 후, docker ps -a 명령어를 입력하면 그대로 1개가 조회된다.
+      - 그 이유는 scale 옵션을 3으로 주었기 때문에, Manager 노드에서 자동으로 다시 서비스를 실행시키기 때문이다.
