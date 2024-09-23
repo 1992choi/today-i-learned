@@ -611,3 +611,28 @@
     - docker service update --rollback myweb3
       - 롤백을 진행한다.
       - 롤백은 직전 단계로만 되돌릴 수 있다. (이전 몇 단계를 롤백하는 것은 불가능하다.)
+
+<br>
+
+### Docker 이미지 관리
+- Docker 이미지 관리
+  - 작업 중인 커테이너를 이미지로 저장할 수 있다.
+    - docker commit
+  - 이미지를 백업할 수 있다.
+    - docker save 명령어를 통해 이미지를 tar 파일 형태로 export할 수 있다.
+  - 이미지를 복원할 수 있다.
+    - 백업된 파일을 docker load 명령어를 통해 이미지를 복원할 수 있다.
+- 실습
+  - commit
+    - docker commit [CONTAINER_ID] [IMAGE_NAME:TAG]
+    - Ex) docker commit 73caca0e41bd 1992choi/docker-server:1.0
+  - save
+    - dokcer save [OPTION] [TAR_FILE_NAME] [IMAGE_NAME:TAG]
+    - Ex) docker save -o docker-server.tar 1992choi/docker-server:1.0
+  - load
+    - docker load -i [TAR_FILE_NAME]
+    - Ex) docker load -i docker-server.tar
+
+
+
+
