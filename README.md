@@ -585,3 +585,14 @@
   - 무중단 배포의 종류 중 하나이다.
   - 서비스의 각 태스크를 한 번에 업데이트하지 않고, 지연 시간을 설정하여 태스크를 순차적으로 업데이트한다.
   - ![image](https://github.com/user-attachments/assets/2c92e28d-ce5a-46ed-b6c3-cd8787ba1f3d)
+- 실습
+  - 서비스 생성
+    - docker service create --replicas 4 --name myweb --update-delay 10s --update-parallelism 2 nginx:latest
+      - replicas 4 : 4대를 생성
+      - update-delay 10s : 업데이트 시, 10초 간격으로 업데이트
+      - update-parallelism 2 : 2대씩 처리
+  - 업데이트
+    - docker service update --image nginx:1.24 myweb
+      - nginx 버전을 1.24로 업데이트 한다.
+      - 위에서 설정한 옵션으로 인하여 2대씩 처리되며, 10초 간격으로 업데이트 된다.
+        - docker service ps myweb 명령어로 중지, 실행 시간으로 확인 가능하다.
