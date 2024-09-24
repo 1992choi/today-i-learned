@@ -676,5 +676,20 @@
         - docker network create --driver bridge isolated_network
       - 격리된 네트워크에 컨테이너 연결
         - docker run --network=isolated_network [이미지명]
-
-
+- Runtime Security
+  - 실행 중인 컨테이너의 보안을 강화하고, 지속적인 모니터링 진행한다.
+  - Security Prifiles를 적용한다.
+    - AppArmor, SELinux, seccomp profiles 사용 등
+  - 컨테이너를 최소 권한으로 실행한다.
+    - root 사용자는 운영체제 전반적인 권한을 가지기 때문에 보안상 고려해야할 점이 많다.
+    - Linux의 Capabilities를 제어하여, root 사용자의 권한을 세분화할 수 있다.
+      - Ex) docker run --cap-drop=ALL --cap-add=SETGID --cap-add=SETUID --cap-add=CHOWN first-image:0.1 bash
+        - --cap-drop=ALL : 모든 Capabilities을 제거한다. (Capabilities에 해당하는 권한은 레퍼런스 알아서 찾아보기)
+        - --cap-add=SETGID : 모든 권한을 삭제했기 때문에 필요한 권한을 add 해준다.
+  - Dockerfile에서의 권한 조정
+    - Dockerfile로 이미지를 빌드할 때는 높은 권한으로 실행되기 때문에 제한이 필요없다.
+    - 하지만 컨테이너 이미지를 이용하여 컨테이너를 실행할 때는 제한이 필요하다.
+    - 위와 동일하게 'docker run --cap-drop=ALL --cap-add=SETGID ...' 명령어로 컨테이너 실행 시 권한 조정이 가능하다.
+  - 일반 유저로 컨테이너 실행
+    - 가능한 상황이라면 root 유저보다는 일반 유저로 컨테이너를 실행한다.
+    - Dockerfile에서 USER 지시어를 사용하면, 일반 사용자로 실행하도록 지정할 수 있다.
