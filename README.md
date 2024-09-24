@@ -633,6 +633,38 @@
     - docker load -i [TAR_FILE_NAME]
     - Ex) docker load -i docker-server.tar
 
+<br>
+
+### Docker 보안
+- Docker 보안
+  - 도커 보안은 크게 4가지 범주로 나눌 수 있다.
+    - Docker Daemon Security
+      - 컨테이너 실행을 위한 도커 엔진에 대한 보안
+    - Container Image Security
+      - 컨테이너 이미지가 안전하게 생성 되었는지 검증
+    - Container Isolation
+      - 컨테이너의 실행이 다른 컨테이너나 호스트에 영향을 주지 않는 독립적인 실행 환경 구성
+    - Runtime Security
+      - 컨테이너 실행동안 지속적인 모니터링과 관리
+- Docker Daemon Security
+  - Docker daemon은 Root 권한을 가지고 실행되기 때문에 주의 깊은 보안 관리가 필요하다.
+  - 루트의 접근 권한을 제한한다.
+    - 루트 대신에 일반 사용자 계정 사용 검토
+  - TLS를 활성화한다.
+  - API Access를 제한한다.
+- Container Image Security
+  - 취약점이 없는 컨테이너 이미지를 사용한다.
+    - 검증된 기본 이미지를 사용한다.
+  - 보안 취약점 점검
+    - clair, Trivy, Docker Security Scanning과 같은 툴을 사용하여 취약점 점검을 주기적으로 수행한다.
+  - 이미지 크기 최소화
+    - 필요한 것만 최소화하여 이미지를 사용한다.
+      - Ex) alpine 이미지 사용
+  - Docker Scout
+    - Docker Desktop에서 기본으로 제공하는 이미지 분석 툴이다.
+    - 다양한 옵션으로 분석이 가능하다.
+      - docker scout quickview 1992choi/docker:latest
+      - docker scout recommendations 1992choi/docker:latest
 
 
 
