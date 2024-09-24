@@ -665,6 +665,16 @@
     - 다양한 옵션으로 분석이 가능하다.
       - docker scout quickview 1992choi/docker:latest
       - docker scout recommendations 1992choi/docker:latest
-
+- Container Isolation
+  - 컨테이너와 호스트는 기본적으로 격리된 상태이다.
+  - 무단 액세스 방지 및 위험을 최소화 하기 위해 격리를 강화하면 좋다.
+    - 프로세스, 네트워킹, 파일 시스템을 격리한다.
+    - 리소스를 보호하기 위해 CPU, Memory, I/O 리소스를 제한한다.
+  - 컨테이너 간의 트래픽을 제한하기 위해 네트워크 세분화 및 방화벽 규칙을 도입하면 좋다.
+    - 사용자 정의 브리지 네트워크를 생성하여, 컨테이너 통신을 격리한다.
+      - 격리된 네트워크 생성
+        - docker network create --driver bridge isolated_network
+      - 격리된 네트워크에 컨테이너 연결
+        - docker run --network=isolated_network [이미지명]
 
 
