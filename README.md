@@ -718,3 +718,27 @@
   - MariaDB 접속
     - mariadb -h127.0.0.1 -uroot -p 명령어를 실행하면, 비밀번호를 입력하는 콘솔이 나타나며 이 때 qwer1234를 입력한다.
     - 패스워드를 통해 정상적으로 접속을 했다는 것은 qwer1234가 secret 기반으로 정상적으로 사용되었다는 것을 의미한다.
+
+<br>
+
+### Docker Container Logging
+- Docker Container Logging 이란?
+  - 도커 컨테이너 내부에서 발생되는 다양한 기록들을 의미한다.
+  - 로그 메시지를 파악해줌으로써 장애 시, 어떠한 문제가 생겼는지 등에 대한 추적이 가능하다.
+- 로그 확인 방법
+  - docker logs 명령어 활용
+    - docker logs [컨테이너ID 또는 컨테이너명]
+  - 컨테이너 로그 파일 확인
+    - 리눅스의 경우에만 사용 가능한 방법이다.
+    - docker inspect 명령어를 통해 LogPath 확인
+    - LogPath의 경로로 접근하여 파일을 확인한다.
+      - LogPath의 경로는 보통 /var/lib/docker/containers/[컨테이너ID]/[컨테이너ID]-json.log 이다.
+      - 윈도우와 Mac의 경우 해당 경로에 실제 파일이 없어 직접 접근하여 로그 파일을 볼 수 없다.
+  - syslog 활용
+    - syslog는 유닉스 계열의 운영체제에서 로그를 수집하는 도구이다. 이 때문에 리눅스에서만 사용 가능한 방법이다.
+      - 도커 컨테이너 뿐만 아니라 커널 및 응용프로그램에 의해 발생하는 로그 모두가 생성된다.
+    - docker run 명령어에 '--log-driver syslog'를 추가하여 사용할 수 있다.
+      - 컨테이너에서 발생한 로그가 syslog에 모이게 된다.
+      - 이렇게 syslog를 확인하는 방법은
+        - journalctl -u docker.service | grep [컨테이너ID]
+          - syslog에 출력된 모든 로그 중에 컨테이너의 로그만 필터링해서 볼 수 있다.
