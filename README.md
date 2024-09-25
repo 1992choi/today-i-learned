@@ -693,3 +693,28 @@
   - 일반 유저로 컨테이너 실행
     - 가능한 상황이라면 root 유저보다는 일반 유저로 컨테이너를 실행한다.
     - Dockerfile에서 USER 지시어를 사용하면, 일반 사용자로 실행하도록 지정할 수 있다.
+
+<br>
+
+### Secrets Management
+- Secret
+  - Secret은 보안이 필요한 민감한 데이터를 클러스터 단위에서 안전하게 관리할 수 기술이다.
+  - Docker Swarm Mode에서 생성 된 Service에서 사용 가능하다.
+  - Docker Swarm의 Secret에 있는 데이터는 항상 암호화 되어있다.
+  - Secret은 파일 형태로 컨테이너에 마운트된다.
+  - Secret의 데이터는 해당 Sercret이 삽입된 Service와 이에 속하여 구동 중인 컨테이너에서만 접근이 가능하다.
+- 명령어
+  - 목록 조회
+    - docker secret ls
+  - 상세 조회
+    - docker secret inspect [secret]
+- 실습
+  - secret 생성
+    - echo "qwer1234" | docker secret create my_db_password -
+    - 암호화가 되어있다지만 실제로 암호를 secret으로 사용하는 것은 좋은 방법이 아니다.
+  - secret을 사용한 DB 컨테이너 실행
+    - docker service create --name my-db --replicas 1 --secret source=my_db_password, target=mariadb_root_password -e MARIADB_ROOT_PASSWORD_FILE="/run/secrets/mariadb_root_password" mariadb:latest
+    - 생성한 secret을 사용하여 MariaDB의 패스워드를 설정한다.
+  - MariaDB 접속
+    - mariadb -h127.0.0.1 -uroot -p 명령어를 실행하면, 비밀번호를 입력하는 콘솔이 나타나며 이 때 qwer1234를 입력한다.
+    - 패스워드를 통해 정상적으로 접속을 했다는 것은 qwer1234가 secret 기반으로 정상적으로 사용되었다는 것을 의미한다.
