@@ -742,3 +742,28 @@
       - 이렇게 syslog를 확인하는 방법은
         - journalctl -u docker.service | grep [컨테이너ID]
           - syslog에 출력된 모든 로그 중에 컨테이너의 로그만 필터링해서 볼 수 있다.
+
+<br>
+
+### Docker Container Monitoring
+- Monitoring이란?
+  - 일반적인 Monitoring
+    - 서버의 CPU, 메모리 사용량, 디스크 공간 등의 기본 지표를 추적한다.
+  - 컨테이너 Monitoring
+    - 컨테이너의 생명 주기가 짧고, 여러 개의 컨테이너가 동시에 작동되고 있다 보니 다수의 컨테이너를 관리하기 위한 목적으로 모니터링을 하는 것이 일반적이다.
+- Prometheus
+  - 특징
+    - 모니터링 기능을 제공해주는 서비스 중 하나이다.
+    - 여러 개의 컨테이너의 상태를 추적할 수 있다.
+    - 마이크로 서비스로 작성되어 있는 서비스 구조에서 여러개로 분산되어 있는 서비스들에 대한 모니터링을 가능하게 지원해준다.
+  - 적용
+    - 리눅스 환경이라면 /etc/docker/daemon.json 파일에 메트릭스 정보를 추가한다.
+    - ```
+      {
+        "metrics-addr": "0.0.0.0:9323", # 0.0.0.0의 뜻은 Prometheus를 호출하는 모든 서비스에 대해 메트릭스를 수집하겠다는 설정.
+        "experimental": true
+      }
+      ```
+    - 도커를 재실행한다.
+    - Prometheus를 도커 형태로 기동한다.
+      - Ex) docker container run -e DOCKER_HOST=[HOST IP] -d -p 9090:9090 diamol/prometheus:2.13.1
