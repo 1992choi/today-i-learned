@@ -819,3 +819,24 @@
       - 컨테이너 생성, 유지 및 관리를 위해 사용하는 툴이다.
       - daemon-less로 동작한다.
       - root 권한이 필요없다.
+  - Docker Registry를 대신하는 기술
+    - Harbor
+      - 특징
+        - 웹 대시보드를 지원한다.
+        - Role 기반의 접근을 제어할 수 있다.
+        - 스캐닝을 통한 취약점 검사 기능을 지원한다.
+        - 인증서 설치가 필요하다.
+          - CA Certificates를 생성한다.
+          - Server Certificates 생성
+          - SAN(Subject Alternative Name) 등록
+          - Docker Engine Certificate 업데이트
+      - 설치
+        - Harbor 다운로드
+        - harbor.yml 파일 생성 및 설정
+          - cp harbor.yml.tmp harbor.yml
+          - vi harvor.yml
+            - hostname(=IP)과 만들었던 인증서 관련 설정을 추가한다.
+        - Deploy
+          - ./prepare
+          - ./install.sh
+            - 파일 내부에는 docker compose를 기동하는 스크립트가 작성되어 있다.
