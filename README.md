@@ -826,7 +826,7 @@
         - Role 기반의 접근을 제어할 수 있다.
         - 스캐닝을 통한 취약점 검사 기능을 지원한다.
         - 인증서 설치가 필요하다.
-          - CA Certificates를 생성한다.
+          - CA Certificates 생성
           - Server Certificates 생성
           - SAN(Subject Alternative Name) 등록
           - Docker Engine Certificate 업데이트
@@ -840,3 +840,28 @@
           - ./prepare
           - ./install.sh
             - 파일 내부에는 docker compose를 기동하는 스크립트가 작성되어 있다.
+      - 실습
+        - 컨테이너 실행
+          - docker run --privileged --name my-harbor -itd -p 10022:22 -p 8081:8080 -p 80:80 -p 443:443 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+        - OpenSSL 설치
+          - Key를 보관할 디렉토리 생성
+            - mkdir ~/certs
+          - CA Certificates 생성
+            - openssl genrsa -out ca.key 4096
+            - openssl req -x509 -new -nodes -sha512 -days 365 -key ca.key -out ca.crt
+          - Server Certificates 생성
+            - openssl genrsa -out server.key 4096
+            - openssl req -new -sha512 -key server.key -out server.csr
+          - SAN 등록
+            - vi v3ext.cnf
+              - Key와 동일한 위치에서 작업
+              - subjectAltName = IP:192.168.0.33, IP:127.0.0.1
+                - havor가 설치되고자하는 호스트 PC의 IP를 입력하면 된다.
+          - Cert파일 생성
+            - openssl x509 -req -sha512 -days 365 -extfile v3ext.cnf -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
+            - openssl x509 -inform PEM -in server.crt -out server.cert
+          - Docker Engine에 인증서 관련 파일 옮기기
+            - mkdir -p /etc/docker/certs.d/server
+            - cp server.cert /etc/docker/certs.d/server/
+            - cp server.key /etc/docker/certs.d/server/
+            - cp ca.crt /etc/docker/certs.d/server/
