@@ -841,7 +841,7 @@
           - ./install.sh
             - 파일 내부에는 docker compose를 기동하는 스크립트가 작성되어 있다.
       - 실습
-        - 컨테이너 실행
+        - 컨테이너 실행 (Dind 형태)
           - docker run --privileged --name my-harbor -itd -p 10022:22 -p 8081:8080 -p 80:80 -p 443:443 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
         - OpenSSL 설치
           - Key를 보관할 디렉토리 생성
@@ -865,3 +865,26 @@
             - cp server.cert /etc/docker/certs.d/server/
             - cp server.key /etc/docker/certs.d/server/
             - cp ca.crt /etc/docker/certs.d/server/
+        - Container에 docker-compose 설치
+          - curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          - chmod +x /usr/local/bin/docker-compose
+        - Havor 설치
+          - 다운로드
+            - wget https://github.com/goharbor/harbor/releases/download/v2.2.2/harbor-offline-installer-v2.2.2.tgz
+            - tar -xf harbor-offline-installer-v2.2.2.tgz
+          - 설정
+            - cp harbor.yml.tmpl harbor.yml
+            - vi harbor.yml
+              - hostname과 인증서 경로 재설정
+          - 설치 및 실행
+            - ./prepare
+            - ./install.sh
+        - Dind에서 registry 사용 설정
+          - /etc/docker/daemon.json 파일에 아래 내용 추가
+          - ```
+            {
+                "insecure-registries": ["192.168.0.33", "127.0.0.1"]
+            }
+            ```
+        - 도커 재실행
+          - systemctl restart docker  
