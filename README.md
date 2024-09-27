@@ -801,3 +801,21 @@
         - macOS에서 amd64로 이미지를 생성해서 실행하면,
           - macOS에서 오류가 발생한다.
           - 반대로 Linux에서는 사용할 수 있게 된다.
+
+<br>
+
+### Docker를 대신하는 기술
+- Docker를 대체할 수 있는 기술에 대한 학습 내용
+  - Docker Runtime을 대신하는 기술
+    - Docker의 한계점
+      - Docker 서버에 너무 많은 기능이 집중되어 있다.
+      - Docker 명령어는 root 권한이 필요하다.
+      - 대체재로 CRI-O와 Podman이라는 기술이 있다.
+    - CRI-O
+      - 컨테이너 간의 이식성에 대한 표준안을 가지고 있다.
+      - Container Runtime 기능만 지원하기 때문에 이미지 빌드, cli, Registry 등의 기능은 사용이 불가능하다.
+    - Podman
+      - Docker cli와 유사한 툴이다.
+      - 컨테이너 생성, 유지 및 관리를 위해 사용하는 툴이다.
+      - daemon-less로 동작한다.
+      - root 권한이 필요없다.
