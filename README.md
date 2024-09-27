@@ -767,3 +767,37 @@
     - 도커를 재실행한다.
     - Prometheus를 도커 형태로 기동한다.
       - Ex) docker container run -e DOCKER_HOST=[HOST IP] -d -p 9090:9090 diamol/prometheus:2.13.1
+
+<br>
+
+### Docker Buildx
+- Docker Buildx란?
+  - 멀티 플랫폼에서 사용할 수 있는 이미지를 만들기 위한 기술이다.
+  - 만약 macOS에서 이미지 빌드를 한 후, 리눅스에서 사용할 경우 OS가 달라 이미지를 사용할 수 없을 수도 있다.
+  - 이 때 사용할 수 있는 기술이 Docker Buildx이다.
+- 지원 가능한 플랫폼 확인
+  - 'docker buildx ls' 명령어를 사용하여 지원가능한 플랫폼을 확인할 수 있다.
+- Cross Platform Build 테스트
+  - 이미지 생성 (macOS에서 실행)
+    - Dockerfile 작성 및 실행
+    - 빌드
+      - docker build --tag 1992choi/my-node:m1 -f Dockerfile .
+    - 업로드
+      - docker push 1992choi/my-node:m1
+  - 이미지 사용 (Linux 등 타 OS 환경)
+    - 이미지 다운로드
+      - docker pull 1992choi/my-node:m1
+    - 컨테이너 실행
+      - docker run -it 1992choi/my-node:m1 bash
+      - 위의 명령어 실행 시, 오류가 발생한다.
+        - 플랫폼이 다르기 때문
+  - 해결방법
+    - Buildx를 사용하여 멀티 플랫폼을 위한 이미지를 생성한다.
+      - 지원하는 플랫폼 확인
+        - docker buildx imagetools inspect node:alpine
+      - 이미지 생성
+        - docker buildx build --platform linux/amd64 --tag 1992choi/my-node:amd64 -f Dockerfile .
+      - 결과
+        - macOS에서 amd64로 이미지를 생성해서 실행하면,
+          - macOS에서 오류가 발생한다.
+          - 반대로 Linux에서는 사용할 수 있게 된다.
