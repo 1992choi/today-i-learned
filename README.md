@@ -843,7 +843,7 @@
       - 실습
         - 컨테이너 실행 (Dind 형태)
           - docker run --privileged --name my-harbor -itd -p 10022:22 -p 8081:8080 -p 80:80 -p 443:443 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
-        - OpenSSL 설치
+        - OpenSSL 설치 (my-harbor 컨테이너에서 실행)
           - Key를 보관할 디렉토리 생성
             - mkdir ~/certs
           - CA Certificates 생성
@@ -865,10 +865,10 @@
             - cp server.cert /etc/docker/certs.d/server/
             - cp server.key /etc/docker/certs.d/server/
             - cp ca.crt /etc/docker/certs.d/server/
-        - Container에 docker-compose 설치
+        - Container에 docker-compose 설치 (my-harbor 컨테이너에서 실행)
           - curl -L "https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           - chmod +x /usr/local/bin/docker-compose
-        - Havor 설치
+        - Harbor 설치 (my-harbor 컨테이너에서 실행)
           - 다운로드
             - wget https://github.com/goharbor/harbor/releases/download/v2.2.2/harbor-offline-installer-v2.2.2.tgz
             - tar -xf harbor-offline-installer-v2.2.2.tgz
@@ -879,12 +879,49 @@
           - 설치 및 실행
             - ./prepare
             - ./install.sh
-        - Dind에서 registry 사용 설정
+        - Dind에서 registry 사용 설정 (my-harbor 컨테이너에서 실행)
           - /etc/docker/daemon.json 파일에 아래 내용 추가
           - ```
             {
                 "insecure-registries": ["192.168.0.33", "127.0.0.1"]
             }
             ```
-        - 도커 재실행
-          - systemctl restart docker  
+        - 도커 재실행 및 Harbor 재실행 (my-harbor 컨테이너에서 실행)
+          - systemctl restart docker
+          - ./install.sh
+        - Harbor 접속 및 사용
+          - 브라우저로 192.168.0.33 접속
+          - 계정정보 : admin / Harbor12345
+            - 계정정보는 harbor.yml 파일에 명시되어 있다.
+          - Project 생성
+          - docker와 Harbor 연결 (my-harbor 컨테이너에서 실행)
+            - $ docker login 192.168.0.33
+            - 위의 명령어 입력 후 나오는 로그인 ID와 PW는 위의 계정정보와 동일하게 입력하면 된다.
+          - Harbor에 이미지 올리기 (my-harbor 컨테이너에서 실행)
+            - 이미지 받기
+              - 현재 작업하는 컨테이너에는 이미지가 없기 때문에 이미지 업로드를 위해 이미지를 다운로드 받는다.
+              - docker pull edowon0623/catalog-service:1.0
+            - 이미지 올리기
+              - docker tag edowon0623/catalog-service:1.0 192.168.0.33/[Project명]/catalog-service:1.0
+        - Harbor 사용하기 (myapp 컨테이너에서 실행)
+          - 추가적으로 별도 컨테이너를 실행한다.
+            - docker run --privileged --name myapp -itd -p 20022:22 -p 8082:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+          - 로그인 계정 만들기 및 권한 추가
+            - 추가적으로 기동한 컨테이너에서 Harbor를 사용하기 위해서는 로그인이 필요하다.
+            - 이 떄 로그인할 수 있도록 Harbor 홈페이지에서 사용자를 추가해준다.
+              - 192.168.0.33 > Administration > Users 메뉴에서 사용자 생성
+                - 신규 사용자 계정 : user1 / Harbor12345
+            - 생성한 프로젝트의 권한에 해당 계정을 추가해준다.
+          - 로그인
+            - 별도 컨테이너로 돌아가서 로그인을 시도한다.
+              - 'docker login -u user1 192.168.0.33' 입력 후 패스워드(=Harbor12345) 입력
+          - registry 사용을 위한 설정
+            - Harbor를 실행한 컨테이너와 동일하게 아래 설정을 추가해준다.
+              - /etc/docker/daemon.json
+              - ```
+                {
+                    "insecure-registries": ["registry:5000"]
+                }
+                ```
+          - 이미지 Pull
+            - docker pull 192.168.0.33//[Project명]/catalog-service:1.0
