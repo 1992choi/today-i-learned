@@ -908,15 +908,15 @@
             - docker run --privileged --name myapp -itd -p 20022:22 -p 8082:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
           - 로그인 계정 만들기 및 권한 추가
             - 추가적으로 기동한 컨테이너에서 Harbor를 사용하기 위해서는 로그인이 필요하다.
-            - 이 떄 로그인할 수 있도록 Harbor 홈페이지에서 사용자를 추가해준다.
+            - 로그인할 수 있도록 Harbor 홈페이지에서 사용자를 추가해준다.
               - 192.168.0.33 > Administration > Users 메뉴에서 사용자 생성
                 - 신규 사용자 계정 : user1 / Harbor12345
             - 생성한 프로젝트의 권한에 해당 계정을 추가해준다.
           - 로그인
-            - 별도 컨테이너로 돌아가서 로그인을 시도한다.
+            - myapp 컨테이너로 돌아가서 로그인을 시도한다.
               - 'docker login -u user1 192.168.0.33' 입력 후 패스워드(=Harbor12345) 입력
           - registry 사용을 위한 설정
-            - Harbor를 실행한 컨테이너와 동일하게 아래 설정을 추가해준다.
+            - Harbor를 실행한 컨테이너와 동일하게 myapp 컨테이너에 아래 설정을 추가해준다.
               - /etc/docker/daemon.json
               - ```
                 {
@@ -924,4 +924,4 @@
                 }
                 ```
           - 이미지 Pull
-            - docker pull 192.168.0.33//[Project명]/catalog-service:1.0
+            - docker pull 192.168.0.33/[Project명]/catalog-service:1.0
