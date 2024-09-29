@@ -925,3 +925,40 @@
                 ```
           - 이미지 Pull
             - docker pull 192.168.0.33/[Project명]/catalog-service:1.0
+
+
+
+<br><br>
+
+
+
+## 최종 실습
+### Docker Compose를 이용한 멀티컨테이너 환경 구축
+- 네트워크 생성
+  - docker network create --driver bridge my-network
+- docker-compose
+  - docker-compose 파일 생성
+    - /section11/docker-compose/docker-compose.yml
+  - DB
+    - 실행
+      - docker-compose up my-db -d
+        - depends_on 설정이 있지만, 100% 보장되는 것이 아니기 때문에 DB부터 개별 실행
+    - DB 확인
+      - docker ps -a | grep my-db
+    - DB 접속
+      - docker exec -it docker-compose-my-db-1 bash
+      - mariadb -h127.0.0.1 -uroot
+    - DB 조회
+      - show databases;
+      - use mydb;
+      - show tables;
+  - Backend
+    - 실행
+      - docker-compose up my-backend -d
+    - 확인
+      - http://localhost:8088/catalogs
+  - Frontend
+    - 실행
+      - docker-compose up my-frontend -d
+    - 확인
+      - http://localhost/
