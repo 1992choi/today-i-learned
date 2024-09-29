@@ -962,3 +962,30 @@
       - docker-compose up my-frontend -d
     - 확인
       - http://localhost/
+
+<br>
+
+### CI/CD
+- CI/CD Pipeline
+  - <img width="1414" alt="image" src="https://github.com/user-attachments/assets/ce759090-4e52-4606-81bf-733652cc2b3b">
+  - Github
+    - 소스코드를 관리한다.
+  - Harbor
+    - 도커 이미지가 저장될 저장소
+    - Docker 안의 또다른 Docker를 설치하는 dind 방식으로 구성한다.
+  - Jenkins
+    - Git으로부터 코드를 가져와서 빌드 > 테스트 > 패키징 순서로 진행되는 CI/CD 작업을 진행한다.
+    - 젠킨스 설치를 위해 JDK가 필요하다.
+    - 이미지를 Harbor에 저장하는 역할도 한다.
+    - ArgoCD에 트리거를 발생시킨다.
+      - ArgoCD는 트리거에 의해 작동되면, Kubernetes에 배포를 진행한다.
+  - ArgoCD
+    - 전반적인 배포를 담당한다.
+      - 무엇을 배포할 것인지
+      - 컨테이너를 몇개 실행할 것인지
+      - 어느 노드에 배치할 것인지
+      - 트래픽 증가, 기존 컨테이너 이상 등에 어떻게 대응할 것인지를 Kubernetes에 전달한다.
+    - 배포전략을 git으로 관리할 수 있다.
+      - deployment.yml
+      - service.yml
+
