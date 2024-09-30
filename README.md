@@ -989,3 +989,62 @@
       - deployment.yml
       - service.yml
 
+<br>
+
+### Harbor
+- 위의 실습 내용으로 대체
+
+<br>
+
+### Jenkins
+- 컨테이너 실행
+  - docker run --privileged --name jenkins-server -itd -p 10022:22 -p 8080:8080 -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host edowon0623/docker-server:m1 /usr/sbin/init
+- 컨테이너 접속
+  - docker exec -it jenkins-server bash
+- 컨테이너 내 유틸리티 설치
+  - yum install git wget ncurses -y
+  - yum install wget git -y
+- JDK 설치 및 환경변수 설정
+  - JDK 설치
+   - yum install java-17-openjdk-devel.aarch64
+  - 환경변수 설정
+    - vi ~/.bashrc
+    - ```
+      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.1.0.12-2.el8_5.aarch64
+      export PATH=$PATH:$JAVA_HOME/bin
+      ```
+    - source ~/.bashrc
+- 젠킨스 설치
+  - 설치  
+    - wget https://mirrors.tuna.tsinghua.edu.cn/jenkins/war-stable/2.452.1/jenkins.war
+  - 실행
+    - java -jar jenkins.war
+    - 실행 후 콘솔에 표시되는 비밀번호 확인
+      - 27d2689292cc4f2984120ad1b42a3328
+  - 접속
+    - http://localhost:8080/
+    - 접속 후 비밀번호 입력
+    - 플러그인 설치
+    - 계정 생성
+      - admin / admin
+  - 유용한 플러그인 설치
+    - Jenkins 관리 > Plugins > Available plugins
+      - Docker
+      - Docker Commons
+      - Docker Pipeline
+      - Docker API
+      - docker-build-step
+      - Maven Integration
+      - Publish Over SSH
+  - 환경설정
+    - Jenkins 관리 > Tools
+      - <img width="1046" alt="image" src="https://github.com/user-attachments/assets/85f57e2e-18ac-4ccb-b751-8bc7cc024ab3">
+      - <img width="1053" alt="image" src="https://github.com/user-attachments/assets/8bf2a4e0-5c8e-4b02-b6dd-b34688a3c563">
+    - Jenkins 관리 > System
+      - <img width="1054" alt="image" src="https://github.com/user-attachments/assets/e44e4015-2144-4d5b-8071-bc5e80006ae2">
+  - Credentials
+    - Home > 계정 옆 메뉴 클릭 > Stores from parent > System 클릭 > Global credentials (unrestricted) 클릭 > Add Credentials 버튼 클릭
+      - <img width="1180" alt="image" src="https://github.com/user-attachments/assets/4702d348-88f9-4974-a454-4370f0f674f0">
+      - <img width="1081" alt="image" src="https://github.com/user-attachments/assets/d6c596aa-8cdd-4dbc-b735-1da36c035635">
+      - Username=user1 / Password=harbor12345 / ID=harbor-user
+        - Harbor의 계정과 맞춰주면 된다.
