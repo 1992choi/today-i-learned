@@ -1051,7 +1051,26 @@
 
 <br>
 
+### Jenkins + Harbor 연계 프로젝트
+- 실습강의
+  - Docker를 활용한 자동화 빌드 시스템 구축 - Jenkins + Harbor 연계 프로젝트
+- 강의 내 젠킨스 추가 작업
+  - 젠킨스 추가 작업 (젠킨스를 설치한 컨테이너에서 실행)
+    - 도커 실행
+      - systemctl start docker
+    - vi /etc/docker/daemon.json
+      - ```
+        {
+          "insecure-registries": ["129.168.0.33", "127.0.0.1"]
+        }
+        ```
+    - 도커 재실행
+      - systemctl restart docker
+
+<br>
+
 ### Jenkins Pipeline
+
 - Item 생성
   - Dashboard > 새로운 Item
     - item name 작성 > Pipeline 선택 후 생성
