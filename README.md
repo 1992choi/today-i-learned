@@ -1048,3 +1048,23 @@
       - <img width="1081" alt="image" src="https://github.com/user-attachments/assets/d6c596aa-8cdd-4dbc-b735-1da36c035635">
       - Username=user1 / Password=harbor12345 / ID=harbor-user
         - Harbor의 계정과 맞춰주면 된다.
+
+<br>
+
+### Jenkins Pipeline
+- Item 생성
+  - Dashboard > 새로운 Item
+    - item name 작성 > Pipeline 선택 후 생성
+- Item 설정
+  - Configure > General
+    - Pipeline 영역의 script
+      - '/section11/docker-compose/jenkins/Jenkinsfile2' 내용 Copy
+    - 매개변수
+      - '이 빌드는 매개변수가 있습니다.' 체크
+      - 매개변수 추가 (script에서 사용되는 값을 파라미터로 받아야한다.)
+        - MAVEN_BUILD (Boolean, Set by Default 체크)
+        - DOCKER_BUILD (Boolean, Set by Default 체크)
+        - DOCKER_IMAGE_TAG (String)
+        - DOCKER_PUSH (Boolean, Set by Default 체크)
+- 배포
+  - '파라미터와 함께 빌드' 버튼을 클릭하여 배포 진행
