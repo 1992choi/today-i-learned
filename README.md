@@ -1112,3 +1112,18 @@
   - 설정 변경
     - kubectl edit svc argocd-server -n argocd
       - 'type: ClusterIP'를 'type: NodePort'로 변경
+  - 접속
+    - kubectl get svc -n argocd 입력하여 argocd-server의 포트확인
+      - 80포트와 포워딩된 포트번호를 확인한다.
+      - Ex) 80:30925
+    - http://localhost:30925/
+      - 계정 및 패스워드 입력
+        - admin / Jjtme7A-pUdfCZ1L
+      - 패스워드를 알아내는 방법은 몇가지가 있는데, argocd cli를 설치하여 획득하는 것이 간단하다.
+        - kubectl 명령어를 통한 방법
+          - kubectl get secret argocd-initial-admin-secret -n argocd -o "jsonpath={.data.password}" | base64 -d
+        - argocd cli를 통한 방법
+          - argocd admin initial-password -n argocd
+  - argocd cli 설치
+    - brew install argocd
+    
