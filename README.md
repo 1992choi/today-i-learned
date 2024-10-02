@@ -1087,3 +1087,28 @@
         - DOCKER_PUSH (Boolean, Set by Default 체크)
 - 배포
   - '파라미터와 함께 빌드' 버튼을 클릭하여 배포 진행
+
+<br>
+
+### Kubernetes + Argocd 연동
+- 구축 환경
+  - Kubernetes
+    - Docker desktop에 포함된 Kubernetes 사용
+  - ArgoCD
+    - Host PC에서 설치하여 사용
+- Kubernetes
+  - Docker desktop > Settings > Kubernetes > Enable Kubernetes 체크 > Apply & restart
+- ArgoCD 
+  - namespace 생성
+    - 격리되어 있는 작업환경을 생성한다.
+    - kubectl create namespace argocd
+  - 설치
+    - kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.3/manifests/install.yaml
+    - -n 옵션은 namespace를 의미한다.
+  - pod 확인
+    - kubectl get pod -n argocd
+  - 서비스정보 확인
+    - kubectl get svc -n argocd
+  - 설정 변경
+    - kubectl edit svc argocd-server -n argocd
+      - 'type: ClusterIP'를 'type: NodePort'로 변경
