@@ -489,3 +489,15 @@
 - 예제
   - MULTI > SET text a > DISCARD > GET text : 롤백되어 값을 조회할 수 없다.
   - MULTI > SET text a > EXEC > GET text : a가 조회된다.
+
+
+
+<br><br>
+
+
+
+## 자주 사용하는 명령어(강의 내용 아님)
+- 모든 키 확인
+  - keys *
+- 모든 데이터 삭제
+  - flushall
