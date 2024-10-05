@@ -1070,7 +1070,6 @@
 <br>
 
 ### Jenkins Pipeline
-
 - Item 생성
   - Dashboard > 새로운 Item
     - item name 작성 > Pipeline 선택 후 생성
@@ -1126,4 +1125,26 @@
           - argocd admin initial-password -n argocd
   - argocd cli 설치
     - brew install argocd
-    
+- Argocd를 이용한 Kubernetes 환경에 배포
+  - 설정파일 준비
+    - /section11/argocd/deployment.yml
+    - /section11/argocd/kustomization.yml
+    - /section11/argocd/service.yml
+  - App 생성
+    - Argocd 접속 후 CREATE APPLICATION
+      - Application Name: acgocd-hello-web
+      - Project: default
+      - SYNC POLICY: Manual
+      - Repository URL: https://github.com/1992choi/docker-devops.git
+        - 설정파일이 있는 깃 주소
+      - Revision: main
+        - 설정파일이 있는 깃 주소의 브랜치
+      - Path: section11/docker-compose/argocd
+        - 설정파일이 있는 깃의 base 디렉토리 경로
+      - Cluster URL: https://kubernetes.default.svc
+      - Namespace: default
+  - Kubernetes 연동
+    - 콘솔에서 진행
+    - kubectl create secret docker-registry regcred --docker-server=192.168.0.33 --docker-username=user1 --docker-password=Harbor12345 --docker-email=younggeunn@naver.com
+  - 배포
+    - 상단의 'SYNC' 버튼을 클릭해서 배포 진행
