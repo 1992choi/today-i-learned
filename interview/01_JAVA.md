@@ -618,6 +618,23 @@
 
 
 
+### try / catch / finally
+- finally
+  - finally는 catch에서 잡지못하는 Exception이 발생하여도 무조건 실행된다.
+- Try-with-resources를 통한 자원 해제의 장점
+  - 리소스 누수 방지
+    - 실수로 finally를 작성하지 않는 실수를 막아준다.
+  - 가독성 향상
+    - close()가 없어 코드가 더 간결하고 읽기 쉬워진다.
+  - 스코프 범위 한정
+    - 리소스로 사용되는 변수의 스코프가 try로만 한정되어 코드 유지보수가 더 쉬워진다.
+  - 조금 더 빠른 자원해제
+    - 기존 방식 : catch 이후 자원 반납
+    - Try-with-resources : try 블럭이 끝남과 동시에 반납 후 catch 구문 실행
+<br><br><br>
+
+
+
 ## Checked Exception과 Unchecked Exception
 - Checked Exception과 Unchecked Exception
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/569aa4c7-5107-4345-86b5-3902fce637c9)
