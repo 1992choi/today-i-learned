@@ -1,10 +1,10 @@
 ## JSP vs Servlet
 - JSP
   - html 내에 자바코드를 블록화하여 삽입한 것.
-  - JAVA in Html.
+  - JAVA in HTML.
 - Servlet
   - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
-  - Html in JAVA.
+  - HTML in JAVA.
 - Ref.
 [effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
 <br><br><br>
@@ -65,11 +65,20 @@
 
 
 
-## Framework vs Library
+## Framework와 Library
 - Framework
   - 뼈대가 되는 부분을 미리 구현한 클래스, 인터페이스, 메서드 등의 집합체이다.
+  - 개발자가 소프트웨어를 개발함에 있어 코드를 구현하는 개발시간을 줄이고, 코드의 재사용성을 증가시키기 위하여 클래스 묶음이나 뼈대, 틀을 제공하는 것을 말한다.
+  - Framework의 특징
+    - 개발자가 따라야 하는 가이드를 제공한다.
+    - 개발할 수 있는 범위가 정해져있다.
+    - 정형화 되어있어 일정수준 이상의 품질을 기대할 수 있다.
 - Library
   - 자주 쓰일 만한 기능들을 따로 구현하여 모아 놓은 클래스의 집합체이다.
+- 차이점
+  - Framework와 Library의 차이는 제어 흐름에 대한 주도성이 누구에게 있는가에 있다.
+  - 프레임워크는 그 스스로 제어 흐름의 주도성을 갖는 반면, 라이브러리는 개발자가 가지고 있다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/9cfbb7e6-9208-4f54-b6f2-4fd7121d0bb3)
 - Ref.
 [Coding Planet](https://sharonprogress.tistory.com/169)
 <br><br><br>
@@ -281,6 +290,28 @@
 
 
 
+## 스프링 AOP와 Proxy
+- 스프링 AOP와 Proxy
+  - 스프링에서는 프록시를 이용해 AOP를 지원한다.
+  - 스프링 AOP에서 사용하는 프록시 방식에는 JDK Proxy(=JDK Dynamic Proxy)와 CGLib Proxy가 있다.
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
+  - JDK Dynamic Proxy
+    - Interface를 기반으로 Proxy를 생성해주는 방식이다.
+    - Reflection을 이용해 Proxy를 생성한다.
+  - CGLib Proxy
+    - Code Generator Libray의 약자로, JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
+    - Reflection이 아닌 바이트 조작을 사용하며, 타겟에 대한 정보를 알고 있기 때문에 JDK Dynamic Proxy에 비해 성능이 좋다.
+- 스프링과 스프링부트에서의 채택
+  - 스프링 AOP에서는 기본적으로 JDK Dynamic Proxy를 사용한다. 하지만 JDK Dynamic Proxy는 인터페이스가 있어야만 사용할 수 있기 때문에 인터페이스가 없는 경우에는 CGLIB Proxy를 사용한다.
+  - 스프링 부트에서는 설정을 통해 프록시 방식을 선택할 수 있다.
+  - JDK 방식은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 Private에 접근이 가능하다는 점 때문에 스프링 부트 2.0에서는 기본 방식으로 CGLib 방식을 채택하였다.
+- Ref.
+[펲로그](https://suyeonchoi.tistory.com/81),
+[제이온](https://steady-coding.tistory.com/608)
+<br><br><br>
+
+
+
 ## 스프링 PSA
 - PSA(Portable Service Abstraction)란?
   - 일관성 있는 서비스 추상화를 뜻한다.
@@ -355,15 +386,8 @@
     - 성공적으로 완료된 트랜잭션의 결과는 영구적으로 반영되어야 한다.
 - @Transactional
   - @Transactional 어노테이션은 스프링에서 많이 사용되는 선언적 트랜잭션 방식이다.
-  - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.
-- JDK Proxy(Dynamic Proxy) VS CGLib
-  - 스프링에서 사용하는 프록시 구현체는 JDK Proxy(Dynamic Proxy), CGLib가 있다.
-  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3e9696e2-29c2-4b92-a8b3-260b924ad2cb)
-  - JDK Dynamic Proxy
-    - Interface를 기반으로 Proxy를 생성해주는 방식이다.
-  - CGLib Proxy
-    - JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
-    - JDK 방식은 java.lang.Reflection을 이용해서 동적으로 프록시를 생성해 준다. 해당 방식의 단점은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 private 접근이 가능하다는 점 때문에 스프링 부트에서는 기본 방식으로 CGLib 방식을 채택하였다.
+  - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.\
+  - @Transactional에는 Spring AOP의 Proxy방식이 사용된다.
 - 격리 수준 (Isolation Level)
   - DEFAULT
     - 데이터베이스에서 설정된 기본 격리 수준을 따른다. 
@@ -405,15 +429,6 @@
     - 특정 예외가 발생하더라도 Rollback 하지 않는다.
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/139)
-<br><br><br>
-
-
-
-## JDK Dynamic Proxy VS CGLIB Proxy
-- Title
-  - Content
-- Ref.
-[펲로그](https://suyeonchoi.tistory.com/81)
 <br><br><br>
 
 
@@ -562,6 +577,23 @@
   - Contents
 - Ref.
 [GwanMtCat](https://velog.io/@xeropise1/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BB%A4%EB%B2%84%EB%A6%AC%EC%A7%80%EB%9E%80)
+<br><br><br>
+
+
+
+## Private 메소드 테스트
+- Private 메소드를 테스트하는 방법
+  - Java Reflection API 이용
+    - 리플렉션을 이용하면 정적으로 고정된 메소드의 코드를 메타정보로 추상화된 Method를 얻어낼 수 있으며 직접 호출 또한 가능하다.
+    - 테스트하고자 하는 클래스로부터 Method를 추출하여 해당 메소드를 직접 invoke해주면 된다.
+  - ReflectionTestUtils 이용
+    - Spring에 내장되어있는 ReflectionTestUtils를 사용해서 간단히 테스트를 할 수 있다.
+- Private 메소드 테스트를 지양해야 하는 이유
+  - Private 메소드는 내부를 감추어 클라이언트와의 결합도를 낮춰주는데, 클라이언트인 테스트 클래스가 내부 메소드를 알고 있으니 결합도가 높아진다.
+  - 이는 유지보수할 때 테스트에 대한 비용을 증가시키는 요인이 될 수 있는데, 메소드 이름이나 파라미터 등을 변경할 때 실패하게 된다.
+  - Private 메소드를 테스트해야 하는 상황이라면 무언가 책임이 이상하거나 설계가 잘못되었다는 신호로 받아들이고 점검을 해볼 필요가 있다. 이는 리팩토링의 신호이다.
+- Ref.
+[망나니개발자](https://mangkyu.tistory.com/235)
 <br><br><br>
 
 
@@ -747,6 +779,35 @@
   - CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.
 - Ref.
 [jung_ho9 개발일지](https://velog.io/@leejungho9/CICD-%EB%9E%80)
+<br><br><br>
+
+
+
+## 배포 전략
+- 인플레이스 배포 (In-place Deployment)
+  - 현재 운영중인 인프라에서 변경 사항이 있는 애플리케이션을 그대로 변경하는 방식.
+- 롤링 배포(Rolling Update Deployment)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/3b325f99-d29a-4452-bb3f-cfe768c6a582)
+  - 롤링 배포는 사용 중인 인스턴스 내에서 새 버전을 점진적으로 교체하는 방식.
+  - 무중단 배포의 가장 기본적인 방식.
+  - 운영중인 인스턴스를 순차적으로 재배포 함으로 서비스 운영간 중단없이 기능을 제공할 수 있다.
+  - 배포 중간 단계에서 기존 버전/신규 버전이 함께 운영되어 일부 상황에서는 문제가 발생할 수 있다.
+- 블루/그린 배포(Blue/Green Deployment)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/40b3f8cd-b71d-4aa0-b352-9324bedce135)
+  - 블루/그린 배포는 동일한 구성의 새로운 인프라를 활용해 변경 사항이 있는 애플리케이션을 실행하는 방식.
+  - 로드밸런서의 트래픽을 그린 인프라로 옮겨 변경사항이 적용된 인프라로 트래픽을 한 번에 이동하는 방식.
+  - 두 개의 인프라를 구축하여 사용해야 하기 때문에 서버 비용이 추가적으로 발생할 수 있다.
+    - 블루 : 기존에 운영되던 인프라.
+    - 그린 : 새로운 변경사항이 적용될 인프라.
+- 카나리 배포(Canary Deployment)
+  - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/a8ec55ce-a434-42ef-b61c-c73248a7c42f)
+  - 카나리 배포는 단계적으로 전환하는 방식.
+  - 카나리 배포의 핵심은 일부분에 새로운 버전을 배포한 후에 특정 사용자들에게만 새로운 버전으로 접근되도록 라우팅 하는 것이다.
+  - 테스트 후 새로운 버전을 모두 반영한다.
+  - 기존 버전/신규 버전이 함께 운영되어 일부 상황에서는 문제가 발생할 수 있다.
+- Ref.
+[Gelog](https://velog.io/@gehwan96/CICD-%EB%B0%B0%ED%8F%AC-%EC%A0%84%EB%9E%B5-%EC%A0%95%EB%A6%AC),
+[뽀뽀이 부부의 IT 이야기](https://jihuni1026.tistory.com/5)
 <br><br><br>
 
 
