@@ -10,6 +10,6 @@
 
 ### 날짜 구하기
 - 오늘 날짜   
-  - MySQL : SELECT NOW()   
+  - SELECT NOW()   
 - 어제 날짜   
-  - MySQL : SELECT NOW()- INTERVAL 1 DAY
+  - SELECT NOW()- INTERVAL 1 DAY
