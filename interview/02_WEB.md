@@ -1049,6 +1049,20 @@
 
 
 
+## Connection Timeout과 Read Timeout
+- Connection Timeout
+  - Connection Timeout은 종단 간 연결하는데 소요되는 최대 시간을 의미한다.
+    - 이 때의 연결이란 TCP 3-way-handshake를 통해 TCP 연결이 생성되는 것을 의미.
+  - 이 시간을 넘기게 되면 연결 할 수 없는 것으로 판단하고 에러가 발생한다.
+- Read Timeout
+  - 연결된 종단 간에 데이터를 주고 받을 때 소요되는 최대 시간을 의미한다.
+  - 이 시간을 넘기게 되면 데이터를 받을 수 없는 것으로 판단하고 에러가 발생한다.
+- Ref.
+  [Alden's Dev Log](https://alden-kang.tistory.com/20)
+  <br><br><br>
+
+
+
 ## 인증(Authentication)과 인가(Authorization)
 - 인증(Authentication)
   - 인증은 사용자 또는 디바이스 등의 신원 정보를 확인하는 과정이다.
