@@ -1057,6 +1057,8 @@
 - Read Timeout
   - 연결된 종단 간에 데이터를 주고 받을 때 소요되는 최대 시간을 의미한다.
   - 이 시간을 넘기게 되면 데이터를 받을 수 없는 것으로 판단하고 에러가 발생한다.
+- 정리
+  - ![image](https://github.com/user-attachments/assets/722e9278-ce6d-4de7-993a-766622ec49dc)
 - Ref.
   [Alden's Dev Log](https://alden-kang.tistory.com/20)
   <br><br><br>
