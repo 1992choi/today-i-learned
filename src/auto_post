@@ -1,0 +1,164 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from bs4 import BeautifulSoup
+from openai import OpenAI
+
+import time
+import requests
+
+
+# Chrome WebDriver 설정
+# 크롬 옵션 설정
+options = webdriver.ChromeOptions()
+
+# Chrome WebDriver 설정
+service = Service(ChromeDriverManager().install())
+options = webdriver.ChromeOptions()
+options.add_argument("--window-size=1200,800")
+driver = webdriver.Chrome(service=service, options=options)
+
+# 검색 키워드
+str_list = [
+    "apple",
+    "banana"
+]
+
+### chat gpt 연동
+# gpt key
+# client = OpenAI(api_key='key')
+
+# for keyword in str_list:
+#     response = client.chat.completions.create(
+#         model = "gpt-3.5-turbo",
+#         messages=[{"role": "user", "content": f"블로그 글 쓸건데 [{keyword}]라는 주제를 가지고 상세하게 작성해줘."}]
+#     )
+#     print(response['choices'][0]['message']['content'])
+
+#     time.sleep(60)
+
+
+try:
+    ############ 기본 로딩 ############
+    # 티스토리 로그인 페이지로 이동
+    driver.get("https://www.tistory.com/auth/login")
+    time.sleep(2)
+
+    # 카카오톡 로그인 버튼 클릭
+    kakao_login_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, ".btn_login.link_kakao_id"))
+    )
+    kakao_login_button.click()
+    time.sleep(3)
+
+    # 로그인 정보 입력
+    login_element = driver.find_element('id', 'loginId--1')
+    login_element.send_keys('id')
+
+    password_element = driver.find_element('id', 'password--2')
+    password_element.send_keys('password')
+
+    time.sleep(1)
+    login_element.send_keys(Keys.RETURN)
+    time.sleep(1)
+
+    for url in str_list:
+        # 10초 대기
+        time.sleep(10)
+
+        # 포스트 페이지로 이동
+        driver.get("https://data-cloud.tistory.com/manage/post")
+
+
+        ############ 본문 가져오기 ############
+        contents = ""
+
+        # 크롤링할 URL 입력
+        url = 'blog_url'
+
+        # HTTP 요청 보내기
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            iframe = soup.find('iframe', {'id': 'mainFrame'})  # id를 사용하여 iframe 찾기
+            
+            if iframe:
+                # src 속성 값 추출
+                iframe_src = iframe.get('src')
+
+                ### 재크롤링
+                response = requests.get('https://blog.naver.com' + iframe_src)
+
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    containers = soup.find_all(class_='se-main-container')
+                    if containers:
+                        for container in containers:
+                            # print(container)
+                            print('성공 1')
+                            contents += container.text
+                            print('성공 2')
+                    else:
+                        print("찾을 수 있는 요소가 없습니다.")
+                    
+                else:
+                    print(f"Error #2: {response.status_code}")
+
+            else:
+                print("iframe을 찾을 수 없습니다.")
+            
+        
+        else:
+            print(f"Error #1: {response.status_code}")
+        
+
+        ############ 게시글 작성 ############
+        # 이전 글쓰기 팝업 무시
+        try:
+            time.sleep(1)
+            driver.switch_to.alert.dismiss()
+        except:
+            pass
+
+        # 타이틀
+        time.sleep(1)
+        title_element = driver.find_element('id', 'post-title-inp')
+        title_element.send_keys('테스트 제목')
+
+        # 본문
+        driver.switch_to.frame(driver.find_element(By.ID, "editor-tistory_ifr"))
+        tinymce_body = driver.find_element(By.ID, "tinymce")
+        actions = ActionChains(driver)
+        actions.move_to_element(tinymce_body).click()  # 에디터 영역 클릭
+        # actions.send_keys("자동으로 작성된 본문 내용입니다. Selenium으로 작성된 글입니다.")  # 텍스트 입력
+        actions.send_keys(contents)  # 텍스트 입력
+        actions.perform()
+        driver.switch_to.default_content()
+
+        # # 완료버튼 클릭
+        # time.sleep(1)
+        # driver.find_element('id', 'publish-layer-btn').click()
+        
+        # # # 공개버튼 클릭
+        # time.sleep(0.5)
+        # driver.find_element('id', 'open20').click()
+
+        # # # 발행버튼 클릭
+        # time.sleep(0.5)
+        # driver.find_element('id', 'publish-btn').click()
+    
+
+    # 브라우저 유지
+    print("브라우저가 열려 있습니다. 종료하려면 Ctrl+C를 누르세요.")
+    while True:
+        pass  # 무한 대기
+    
+finally:
+    while True:
+        pass  # 무한 대기
