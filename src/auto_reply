@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.alert import Alert
 
 import time
 
@@ -49,6 +50,7 @@ try:
         # 포스트 목록 페이지로 이동
         time.sleep(10)
         driver.get("https://www.tistory.com/search?keyword=%EA%BF%80%ED%8C%81&type=post&sort=RECENCY&page=1")
+        #driver.get("https://www.tistory.com/search?keyword=%EB%A7%9B%EC%A7%91&type=post&sort=RECENCY&page=1")
 
         # 루프를 돌며 각 요소의 텍스트 출력
         time.sleep(5)
@@ -82,8 +84,15 @@ try:
                 time.sleep(1)
                 register_button = driver.find_element(By.CLASS_NAME, 'tt-btn_register')
                 register_button.click()
-                print(f"코멘트 성공 - {count}")
-                count += 1
+
+                # 댓글 스팸처리 알럿 제거
+                try:
+                    alert = Alert(driver)
+                    alert.accept()
+                    print(f"코멘트 실패")
+                except:
+                    print(f"코멘트 성공 - {count}")
+                    count += 1
 
                 time.sleep(1)
             except:
