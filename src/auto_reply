@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.alert import Alert
+from datetime import datetime
 
 import time
 
@@ -47,6 +48,10 @@ try:
     count = 1
 
     while True:
+        # 현재 시간 가져오기
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"\n\n======= [{current_time}] 댓글 봇 시작 =======")
+
         # 포스트 목록 페이지로 이동
         time.sleep(10)
         driver.get("https://www.tistory.com/search?keyword=%EA%BF%80%ED%8C%81&type=post&sort=RECENCY&page=1")
@@ -89,14 +94,14 @@ try:
                 try:
                     alert = Alert(driver)
                     alert.accept()
-                    print(f"코멘트 실패")
+                    print("코멘트 실패 - 스팸처리")
                 except:
                     print(f"코멘트 성공 - {count}")
                     count += 1
 
                 time.sleep(1)
             except:
-                print("'tt-cmt' 클래스를 가진 label 태그가 없습니다.")
+                print("코멘트 실패 - 영역없음")
     
 finally:
     while True:
