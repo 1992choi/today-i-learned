@@ -89,7 +89,7 @@
 >   - 정규화
 >   - JOIN
 >   - Transaction
-
+>   - [ MySQL에서 테이블 백업 - CREATE TABLE AS와 LIKE 사용법 ](https://caffeineoverflow.tistory.com/151)
 
 <br><br>
 
@@ -122,7 +122,7 @@
 >   - [ [Linux] alias ](https://caffeineoverflow.tistory.com/115)
 >   - [ [Linux] 리눅스마스터 2급 정리 #1 ](https://caffeineoverflow.tistory.com/118)
 >   - [ [Linux] 리눅스마스터 2급 정리 #2 ](https://caffeineoverflow.tistory.com/119)
-
+>   - [ CloudFront란? ](https://caffeineoverflow.tistory.com/152)
 
 <br><br>
 
