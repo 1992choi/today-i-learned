@@ -18,7 +18,7 @@ options = webdriver.ChromeOptions()
 # Chrome WebDriver 설정
 service = Service(ChromeDriverManager().install())
 options = webdriver.ChromeOptions()
-options.add_argument("--window-size=1200,800")
+options.add_argument("--window-size=1600,1200")
 driver = webdriver.Chrome(service=service, options=options)
 
 
@@ -39,7 +39,7 @@ try:
     login_element.send_keys('id')
 
     password_element = driver.find_element('id', 'password--2')
-    password_element.send_keys('password')
+    password_element.send_keys('password')
 
     time.sleep(1)
     login_element.send_keys(Keys.RETURN)
@@ -54,8 +54,8 @@ try:
 
         # 포스트 목록 페이지로 이동
         time.sleep(10)
-        driver.get("https://www.tistory.com/search?keyword=%EA%BF%80%ED%8C%81&type=post&sort=RECENCY&page=1")
-        #driver.get("https://www.tistory.com/search?keyword=%EB%A7%9B%EC%A7%91&type=post&sort=RECENCY&page=1")
+        driver.get("https://www.tistory.com/search?keyword=팁&type=post&sort=RECENCY&page=1")
+        #driver.get("https://www.tistory.com/search?keyword=맛집&type=post&sort=RECENCY&page=1")
 
         # 루프를 돌며 각 요소의 텍스트 출력
         time.sleep(5)
@@ -81,7 +81,7 @@ try:
                 comment = driver.find_element(By.CLASS_NAME, "tt-cmt")
                 actions = ActionChains(driver)
                 actions.move_to_element(comment).click()  # 에디터 영역 클릭
-                actions.send_keys("포스팅 너무 잘 봤습니다. 제 블로그에도 좋은 정보가 많은데 한 번 놀러 오세요~")
+                actions.send_keys("포스팅 너무 잘 봤습니다.\n제 블로그에도 좋은 정보가 많은데 한 번 놀러 오세요~\n\n 그리고 오셔서 마음에 드시면 구독 부탁드려요~~\n구독해주시면 3~4시간 내로 맞구독하러 다시 오겠습니다 :D")
                 actions.perform()
                 driver.switch_to.default_content()
 
