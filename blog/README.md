@@ -73,6 +73,7 @@
 >   - [ 단위테스트와 JUnit ](https://caffeineoverflow.tistory.com/142)
 >   - [ 계층별 단위테스트 ](https://caffeineoverflow.tistory.com/143)
 >   - [ 통합 테스트(Integration Test) ](https://caffeineoverflow.tistory.com/144)
+>   - [ 에러 전파와 /error 호출 흐름 ](https://caffeineoverflow.tistory.com/153)
 >   - Maven과 Gradle
 >   - CI/CD
 
