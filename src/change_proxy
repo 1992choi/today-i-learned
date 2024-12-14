@@ -1,0 +1,51 @@
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from stem import Signal
+from stem.control import Controller
+import time
+
+# Tor ControlPort와 비밀번호 설정
+TOR_CONTROL_PORT = 9051
+TOR_PASSWORD = "1234"  # torrc 파일에서 설정한 비밀번호
+
+# IP 변경 함수
+def change_tor_ip():
+    with Controller.from_port(port=TOR_CONTROL_PORT) as controller:
+        controller.authenticate(password=TOR_PASSWORD)  # 비밀번호 인증
+        controller.signal(Signal.NEWNYM)  # IP 변경 신호 전송
+        print("Tor IP address has been changed.")
+        time.sleep(5)  # Tor 네트워크에서 새로운 IP를 받는 데 시간이 걸림
+
+# 셀레니움으로 Tor 네트워크 연결
+def access_website_with_tor():
+    # Tor 프록시 설정
+    proxy = "127.0.0.1:9050"  # Tor가 사용하는 SOCKS5 프록시
+
+    # Firefox 옵션 설정
+    options = Options()
+    options.set_preference("network.proxy.type", 1)  # 수동 프록시 설정
+    options.set_preference("network.proxy.socks", "127.0.0.1")
+    options.set_preference("network.proxy.socks_port", 9050)
+    options.set_preference("network.proxy.socks_remote_dns", True)  # 원격 DNS 사용
+
+    # User-Agent 변경 (임의로 변경된 값으로 설정)
+    options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+
+    # WebDriver 실행 (Geckodriver 사용)
+    driver = webdriver.Firefox(options=options)
+
+    # 사이트 접속
+    driver.get("https://httpbin.org/ip")
+
+    # 페이지를 10초 동안 확인한 후, 브라우저를 종료하지 않음
+    time.sleep(10)  # 10초 동안 대기
+
+    # driver.quit()를 호출하지 않아서 브라우저가 계속 열려 있음
+    # driver.quit()  # 브라우저를 종료하려면 이 줄을 추가하세요
+
+# 10초마다 반복해서 IP 변경하고 웹사이트 접속
+while True:
+    change_tor_ip()  # IP 변경
+    access_website_with_tor()  # 웹사이트 접속
+    time.sleep(10)  # 10초 대기 후 다시 실행
