@@ -11,6 +11,20 @@ from datetime import datetime
 
 import time
 
+# 첫 번째 탭을 제외한 다른 탭 닫기 함수
+def close_other_tabs(driver):
+    try:
+        # 모든 탭의 핸들을 가져옴
+        all_tabs = driver.window_handles
+        # 첫 번째 탭만 남기고 나머지 닫기
+        for tab in all_tabs[1:]:  # 첫 번째 탭 제외
+            driver.switch_to.window(tab)  # 해당 탭으로 전환
+            driver.close()  # 현재 탭 닫기
+        # 첫 번째 탭으로 다시 전환
+        driver.switch_to.window(all_tabs[0])
+    except Exception as e:
+        print(f"탭 닫기 중 오류 발생: {e}")
+
 # Chrome WebDriver 설정
 # 크롬 옵션 설정
 options = webdriver.ChromeOptions()
@@ -20,7 +34,6 @@ service = Service(ChromeDriverManager().install())
 options = webdriver.ChromeOptions()
 options.add_argument("--window-size=1600,1200")
 driver = webdriver.Chrome(service=service, options=options)
-
 
 try:
     # 티스토리 로그인 페이지로 이동
@@ -39,7 +52,7 @@ try:
     login_element.send_keys('id')
 
     password_element = driver.find_element('id', 'password--2')
-    password_element.send_keys('password')
+    password_element.send_keys('password')
 
     time.sleep(1)
     login_element.send_keys(Keys.RETURN)
@@ -48,60 +61,68 @@ try:
     count = 1
 
     while True:
-        # 현재 시간 가져오기
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"\n\n======= [{current_time}] 댓글 봇 시작 =======")
+        try:
+            # 현재 시간 가져오기
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"\n\n======= [{current_time}] 댓글 봇 시작 =======")
 
-        # 포스트 목록 페이지로 이동
-        time.sleep(10)
-        driver.get("https://www.tistory.com/search?keyword=팁&type=post&sort=RECENCY&page=1")
-        #driver.get("https://www.tistory.com/search?keyword=맛집&type=post&sort=RECENCY&page=1")
+            # 탭 정리: 첫 번째 탭 외의 탭 닫기
+            close_other_tabs(driver)
 
-        # 루프를 돌며 각 요소의 텍스트 출력
-        time.sleep(5)
-        elements = driver.find_elements(By.CSS_SELECTOR, ".link_cont, .zoom_cont")
+            # 포스트 목록 페이지로 이동
+            time.sleep(10)
+            driver.get("https://www.tistory.com/search?keyword=팁&type=post&sort=RECENCY&page=1")
+            #driver.get("https://www.tistory.com/search?keyword=맛집&type=post&sort=RECENCY&page=1")
 
-        # 루프를 돌며 href 속성 출력
-        href = elements[0].get_attribute("href")  # 첫 번째 요소에서 href 속성 가져오기
-        if href:
-            if prevUrl == href:
-                print("URL이 변경되지 않았습니다.")
-                time.sleep(30)
-                continue
-            
-            prevUrl = href
+            # 루프를 돌며 각 요소의 텍스트 출력
+            time.sleep(5)
+            elements = driver.find_elements(By.CSS_SELECTOR, ".link_cont, .zoom_cont")
 
-            time.sleep(1)
-            driver.get(href)
-
-            try:
-                time.sleep(10)
+            # 루프를 돌며 href 속성 출력
+            href = elements[0].get_attribute("href")  # 첫 번째 요소에서 href 속성 가져오기
+            if href:
+                if prevUrl == href:
+                    print("URL이 변경되지 않았습니다.")
+                    time.sleep(30)
+                    continue
                 
-                # 코멘트 남기기
-                comment = driver.find_element(By.CLASS_NAME, "tt-cmt")
-                actions = ActionChains(driver)
-                actions.move_to_element(comment).click()  # 에디터 영역 클릭
-                actions.send_keys("포스팅 너무 잘 봤습니다.\n제 블로그에도 좋은 정보가 많은데 한 번 놀러 오세요~\n\n 그리고 오셔서 마음에 드시면 구독 부탁드려요~~\n구독해주시면 3~4시간 내로 맞구독하러 다시 오겠습니다 :D")
-                actions.perform()
-                driver.switch_to.default_content()
+                prevUrl = href
 
-                # 버튼 클릭
                 time.sleep(1)
-                register_button = driver.find_element(By.CLASS_NAME, 'tt-btn_register')
-                register_button.click()
+                driver.get(href)
 
-                # 댓글 스팸처리 알럿 제거
                 try:
-                    alert = Alert(driver)
-                    alert.accept()
-                    print("코멘트 실패 - 스팸처리")
-                except:
-                    print(f"코멘트 성공 - {count}")
-                    count += 1
+                    time.sleep(10)
+                    
+                    # 코멘트 남기기
+                    comment = driver.find_element(By.CLASS_NAME, "tt-cmt")
+                    actions = ActionChains(driver)
+                    actions.move_to_element(comment).click()  # 에디터 영역 클릭
+                    actions.send_keys("포스팅 너무 잘 봤습니다.\n제 블로그에도 좋은 정보가 많은데 한 번 놀러 오세요~\n\n그리고 오셔서 마음에 드시면 구독 부탁드려요~~\n구독해주시면 3~4시간 내로 맞구독하러 다시 오겠습니다 :D")
+                    actions.perform()
+                    driver.switch_to.default_content()
 
-                time.sleep(1)
-            except:
-                print("코멘트 실패 - 영역없음")
+                    # 버튼 클릭
+                    time.sleep(1)
+                    register_button = driver.find_element(By.CLASS_NAME, 'tt-btn_register')
+                    register_button.click()
+
+                    # 댓글 스팸처리 알럿 제거
+                    try:
+                        alert = Alert(driver)
+                        alert.accept()
+                        print("코멘트 실패 - 스팸처리")
+                    except:
+                        print(f"코멘트 성공 - {count}")
+                        count += 1
+
+                    time.sleep(1)
+                except:
+                    print("코멘트 실패 - 영역없음")
+        except Exception as e:
+            print(f"루프 실행 중 오류 발생: {e}")
+            time.sleep(1)  # 오류 발생 시 10초 대기 후 다시 실행
+            continue  # 루프 재실행
     
 finally:
     while True:
