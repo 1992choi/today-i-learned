@@ -64,8 +64,8 @@ def access_website_with_tor():
         # WebDriver 실행 (Geckodriver 사용)
         driver = webdriver.Firefox(options=options)
 
-        # 랜덤한 숫자 생성 (1~89 사이)
-        random_number = random.randint(1, 92)
+        # 랜덤한 숫자 생성
+        random_number = random.randint(1, 98)
         url = f"https://data-cloud.tistory.com/{random_number}"  # URL에 랜덤 숫자 추가
 
         # 랜덤한 URL로 접속
@@ -78,7 +78,7 @@ def access_website_with_tor():
         click_like_button(driver)
 
         # 한 페이지에 머무는 시간을 랜덤하게 설정
-        page_wait_time = random.randint(30, 60)
+        page_wait_time = random.randint(120, 300)
         print(f"한 페이지에 {page_wait_time}초 동안 머뭄.")
 
         # 자동 스크롤 제어
@@ -104,7 +104,7 @@ while True:
         access_website_with_tor()  # 웹사이트 접속
 
         # 랜덤한 시간 대기
-        sleep_time = random.randint(30, 60)
+        sleep_time = random.randint(20, 40)
         print(f"{sleep_time}초 후 다음 시도 실행.")
         time.sleep(sleep_time)
     except Exception as e:
