@@ -777,11 +777,19 @@
 
 ## 스레드 가시성
 - 가시성(Visibility)이란?
-  - 티스레드 환경에서 각각의 스레드가 공유자원에 대해서 모두 같은 상태를 바라보고 있는 것을 의미한다.
+  - 스레드 환경에서 각 각의 스레드가 공유자원에 대해서 모두 같은 상태를 바라보고 있는 것을 의미한다.
 - 가시성 문제
-  - 공유하는 변수에 연산이 일어날 때 CPU를 점유하고 동작하는데 이 때 main memory에만 존재하는 것이 아니라 CPU cache에도 공유하는 자원에 대한 데이터가 들어있다.
-  - 이 때 CPU cache를 읽어오는데 언제 main memory에 옮겨갈 지 모르기 때문에 여러 thread가 동시에 읽음 연산과 쓰기 연산을 한다면 main memory에서 cache로 데이터를 옮기는 과정에서 다른 thread가 연산을 진행하여 결국 데이터 불일치 문제가 생기는 것이다.
+  - 공유하는 변수에 연산이 일어날 때 CPU를 점유하고 동작하는데, 이 때 main memory에만 존재하는 것이 아니라 CPU cache에도 공유하는 자원에 대한 데이터가 들어있다.
+    - ![image](https://github.com/user-attachments/assets/7be992e1-badf-48d4-bda9-ce10412f109f)
+      - CPU cache와 Main Memory에 저장된 값이 다를 때, 일어날 수 있는 이슈.
+  - 이 때 CPU cache를 읽어오는데, 언제 main memory에 옮겨갈 지 모르기 때문에 여러 thread가 동시에 읽음 연산과 쓰기 연산을 한다면 main memory에서 cache로 데이터를 옮기는 과정에서 다른 thread가 연산을 진행하여 결국 데이터 불일치 문제가 생기는 것이다.
   - 이런 불일치 문제를 Thread 가시성 이슈라고 하며 자바에서는 volatile 키워드를 통해 해결할 수 있다.
+    - volatile 키워드는 가시성 이슈를 해결할 수 있지만, 동시성 이슈를 해결할 수는 없다.
+- Ref.
+[Nick_Choi](https://whitehartlane.tistory.com/33)
+<br><br><br>
+
+
 
 ## 멀티스레드와 Thread Safety
 - 멀티스레드란?
