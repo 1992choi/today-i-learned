@@ -20,3 +20,10 @@
         - 비밀번호는 '16:CF52A67D0F14C6B160EFC9EC32726D68FBC4B52C61D07DAF8C869E57AF'와 같은 형태임. 
 - 서비스 재시작
   - brew services restart tor
+
+
+
+## auto_like 실행
+- pip install selenium
+- pip3 install selenium
+- pip install stem
