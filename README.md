@@ -27,3 +27,6 @@
 - pip install selenium
 - pip3 install selenium
 - pip install stem
+- 윈도우는 port 번호 변경필요
+  -  9051 > 9151
+  -  9050 > 9150
