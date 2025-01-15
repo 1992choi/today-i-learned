@@ -30,3 +30,6 @@
 - 윈도우는 port 번호 변경필요
   -  9051 > 9151
   -  9050 > 9150
+
+## auto_reply 실행
+- pip install selenium webdriver-manager
