@@ -56,11 +56,14 @@
     - 불필요한 매개변수는 없는가?
     - 하나의 레코드로 뭉칠 수 있는 매개변수 목록은 없는가?
 - 리팩토링
-  - 매개변수를 질의 함수로 바꾸기 (Replace Parameter with Query)
   - 객체 통째로 넘기기 (Preserve Whole Object)
   - 매개변수 객체 만들기 (Introduce Parameter Object)
   - 여러 함수를 클래스로 묶기 (Combine Functions into Class)
+    - 위 3개 방법은 작은 단위에 매개변수가 반복된다면 하나의 틀로 묶어서 전달하는 것을 의미한다.
+  - 매개변수를 질의 함수로 바꾸기 (Replace Parameter with Query)
+    - 매개 변수 중 isPremium 이라는 값이 있으며, 이를 통해서 내부적으로 계산식이 분기된다고 가정할 때, 매개 변수를 넘기지 않고 해당 메서드 내에서 특정 함수를 호출하여 구할 수 있다면 매개변수 삭제가 가능하다.
   - 플래그 인수 제거하기 (Remove Flag Argument)
     - 매개변수가 플래그로 사용된다면, 하나의 메서드가 다양한 일을 하고 있을 수 있다.
     - 메서드를 적절히 분리할 수 있는지 파악한다.
+
   
