@@ -59,3 +59,68 @@
 - 플러시
   - 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
   - 영속성 컨텍스트의 내용을 비운다고 잘못 해석될 수 있으나, 비우는 것이 아닌 데이터베이스에 반영하는 것.
+
+### 객체와 테이블 매핑
+- @Entity
+  - @Entity가 붙은 클래스는 JPA가 관리, 엔티티라 한다.
+  - JPA를 사용해서 테이블과 매핑할 클래스는 @Entity 필수
+  - 기본 생성자 필수(파라미터가 없는 public 또는 protected 생성자)
+  - 속성
+    - name
+      - JPA에서 사용할 엔티티 이름을 지정한다.
+      - 기본값: 클래스 이름을 그대로 사용(예: Member)
+- @Table
+  - 엔티티와 매핑할 테이블 지정
+  - 속성
+    - name
+      - 매핑할 테이블 이름 엔티티 이름을 사용
+    - catalog
+      - 데이터베이스 catalog 매핑
+    - schema
+      - 데이터베이스 schema 매핑
+    - uniqueConstraints [DDL]
+      - DDL 생성 시에 유니크 제약 조건 생성
+- @Column
+  - 컬럼 매핑
+  - 속성
+    - name
+      - 필드와 매핑할 테이블의 컬럼 이름 객체의 필드 이름
+    - insertable, updatable
+      - 등록, 변경 가능 여부 TRUE
+    - nullable
+      - null 값의 허용 여부를 설정한다. false로 설정하면 DDL 생성 시에 not null 제약조건이 붙는다.
+    - unique
+      - @Table의 uniqueConstraints와 같지만 한 컬럼에 간단히 유니크 제약조건을 걸 때 사용한다.
+    - columnDefinition
+      - 데이터베이스 컬럼 정보를 직접 줄 수 있다.
+      - ex) varchar(100) default ‘EMPTY'
+    - length
+      - 문자 길이 제약조건
+      - String 타입에만 사용한다.
+- @Enumerated
+  - 자바 enum 타입을 매핑할 때 사용
+  - 속성
+    - value
+      - EnumType.ORDINAL
+        - enum 순서를 데이터베이스에 저장
+        - 주의
+          - 순서로 저장되기 때문에 1,2,3과 같은 값을 갖는다.
+          - 만약 신규로 생성되는 ENUM이 2번째로 끼어들게 되서 순서가 변경되면, 이미 데이터베이스에 2로 저장된 데이터와 신규 2번이 혼용되어 사용될 수 있다.
+          - 따라서 ORDINAL는 사용하지 않는 것을 권장한다.
+      - EnumType.STRING
+        - enum 이름을 데이터베이스에 저장
+- @Temporal
+  - 날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용
+  - LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원)
+- @Lob
+  - 데이터베이스 BLOB, CLOB 타입과 매핑
+  - 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+  - CLOB
+    - String, char[], java.sql.CLOB
+  - BLOB
+    - byte[], java.sql. BLOB
+- @Transient
+  - 필드를 매핑하지 않을 때 사용.
+    - 스키마에 없는 필드를 추가하여 사용하고 싶을 때, DB의 컬럼과 매핑되는 변수가 아님을 나타낼 때 사용된다.
+  - 데이터베이스에 저장X, 조회X
+  - 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
