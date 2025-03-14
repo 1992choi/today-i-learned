@@ -148,3 +148,47 @@
     - AUTO
       - 방언에 따라 자동 지정
       - 기본값
+
+### 양방향 매핑
+- 객체와 테이블의 관계 맺음 차이
+  - TEAM과 MEMBER가 있다고 가정할 때, 테이블은 외래 키 하나로 연관관계를 맺는다.
+  - 반면, 객체는 서로를 알기 위해서는 양방향 매핑이 필요하다.
+- 양방향 매핑 규칙
+  - 객체의 두 관계중 하나를 연관관계의 주인으로 지정해야한다.
+  - 연관관계의 주인만이 외래 키를 관리해야한다.
+  - 주인은 mappedBy 속성을 사용하면 안된다.
+  - 주인이 아니면 mappedBy 속성으로 주인을 지정해야한다.
+  - 그렇다면 누구를 주인으로?
+    - 외래 키가 있는 있는 곳을 주인으로 정해라
+- 양방향 매핑의 필요성
+  - 가장 좋은 것은 복잡도를 낮추기 위하여 단방향 매핑을 가급적 사용하는 것이 좋다.
+  - 그러므로 처음 개발 시에는 단방향 매핑으로 진행한 후 필요 시에만 양방향 매핑을 적용한다.
+- 예제
+  - ```java
+    // 외래키를 가지고 있는 Member가 주인. 그러므로 mappedBy 속성을 사용하지 않음.
+    @Entity
+    public class Member {
+      @Id 
+      @GeneratedValue
+      private Long id;
+      
+      private String name;
+      
+      @ManyToOne
+      @JoinColumn(name = "TEAM_ID")
+      private Team team;
+    }
+    
+    // 주인이 아니므로 mappedBy 속성을 사용.
+    @Entity
+    public class Team {
+      @Id
+      @GeneratedValue
+      private Long id;
+      
+      private String name;
+      
+      @OneToMany(mappedBy = "team") // 주인(=Member)의 team 변수와 매핑
+      List<Member> members = new ArrayList<Member>(); // Team 엔티티의 members 필드는 읽기 전용 (변경 불가. 변경해도 쿼리가 실행되지 않음)
+    }
+    ```
