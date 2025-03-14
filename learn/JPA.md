@@ -124,3 +124,27 @@
     - 스키마에 없는 필드를 추가하여 사용하고 싶을 때, DB의 컬럼과 매핑되는 변수가 아님을 나타낼 때 사용된다.
   - 데이터베이스에 저장X, 조회X
   - 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
+
+### 기본키 매핑
+- 직접 할당
+  - @Id만 사용
+- 자동 생성
+  - @Id와 함께 @GeneratedValue 사용
+    - ```
+      Ex) 
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      ```
+  - 옵션
+    - IDENTITY
+      - 데이터베이스에 위임, MYSQL
+    - SEQUENCE
+      - 데이터베이스 시퀀스 오브젝트 사용, ORACLE
+      - @SequenceGenerator 필요
+    - TABLE
+      - 키 생성용 테이블 사용
+      - 모든 DB에서 사용 가능하다는 장점이 있다.
+      - @TableGenerator 필요
+    - AUTO
+      - 방언에 따라 자동 지정
+      - 기본값
