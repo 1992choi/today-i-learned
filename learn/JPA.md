@@ -249,6 +249,7 @@
 - 슈퍼타입 서브타입 논리 모델을 실제 물리 모델로 구현하는 방법
   - 조인 전략
     - @Inheritance(strategy=InheritanceType.JOINED)
+    - <img width="667" alt="image" src="https://github.com/user-attachments/assets/3b065d04-808f-466e-94ab-776902cabe83" />
     - 장점
       - 테이블 정규화
       - 외래 키 참조 무결성 제약조건 활용가능
@@ -259,6 +260,7 @@
       - 데이터 저장시 INSERT SQL 2번 호출
   - 단일 테이블 전략
     - @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+    - <img width="294" alt="image" src="https://github.com/user-attachments/assets/3111b6e3-007c-4434-80b2-d5fb3e8d6b0f" />
     - 장점
       - 조인이 필요 없으므로 일반적으로 조회 성능이 빠름
       - 조회 쿼리가 단순함
@@ -267,6 +269,7 @@
       - 단일 테이블에 모든 것을 저장하므로 테이블이 커질 수 있다. 상황에 따라서 조회 성능이 오히려 느려질 수 있다.
   - 구현 클래스마다 테이블 전략
     - @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+    - <img width="661" alt="image" src="https://github.com/user-attachments/assets/efce7b2f-de7a-4244-9cbb-6c0046c797b7" />
     - 장점
       - 서브 타입을 명확하게 구분해서 처리할 때 효과적
       - not null 제약조건 사용 가능
