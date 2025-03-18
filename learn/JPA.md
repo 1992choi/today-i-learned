@@ -316,3 +316,51 @@
   - @ManyToOne, @OneToOne은 기본이 즉시 로딩
     - 때문에 LAZY로 설정 권장
   - @OneToMany, @ManyToMany는 기본이 지연 로딩
+
+### 영속성 전이 (CASCADE)
+- 특정 엔티티를 영속 상태로 만들 때 연관된 엔티티도 함께 영속상태로 만들도 싶을 때 사용
+  - Ex) 부모 엔티티를 저장할 때 자식 엔티티도 함께 저장.
+- 저장
+  - @OneToMany(mappedBy="parent", cascade=CascadeType.PERSIST)
+  - 예시
+    - ```
+      @Entity
+      public class Parent {
+        @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Child> childList = new ArrayList<>();
+      }
+      
+      @Entity
+      public class Child {
+        @ManyToOne
+        @JoinColumn(name = "parent_id")
+        private Parent parent;
+      }
+      
+      // em.persist(parent); 만 있어도 Child까지 저장 가능.
+      ```
+- CASCADE의 종류
+  - ALL: 모두 적용
+  - PERSIST: 영속
+  - REMOVE: 삭제
+  - MERGE: 병합
+  - REFRESH: REFRESH
+  - DETACH: DETACH
+
+### 고아 객체
+- 부모와 관계가 끊어진 객체를 의미한다.
+- 옵션
+  - orphanRemoval = true
+  - ```
+    Parent parent1 = em.find(Parent.class, id);
+    parent1.getChildren().remove(0); // orphanRemoval 옵션에 의해 끊어진 객체는 자동 DELETE
+    ```
+- 주의사항
+  - 참조하는 곳이 하나일 때 사용해야한다.
+    - 그렇지 않다면 의도지않은 동작을 할 가능성이 높다.
+  - @OneToOne, @OneToMany만 가능
+
+### `영속성 전이 + 고아 객체`의 생명주기
+- CascadeType.ALL + orphanRemoval=true
+- 두 옵션을 모두 활성화 하면 부모 엔티티를 통해서 자식의 생명주기를 관리할 수 있음
+- 도메인 주도 설계(DDD)의 Aggregate Root개념을 구현할 때 유용
