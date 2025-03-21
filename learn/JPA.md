@@ -428,3 +428,49 @@
 - JDBC API 직접 사용, MyBatis, SpringJdbcTemplate 함께 사용
   - JPA를 사용하면서 JDBC 커넥션을 직접 사용하거나, 스프링 JdbcTemplate, 마이바티스등을 함께 사용 가능
   - 단, 영속성 컨텍스트를 적절한 시점에 강제로 플러시 필요
+
+### JPQL 기본 문법과 기능
+- JPQL 문법
+  - Ex) select m from Member as m where m.age > 18
+    - 엔티티와 속성은 대소문자를 구분한다.
+    - JPQL 키워드는 대소문자를 구분하지 않는다.
+    - 엔티티 이름 사용(테이블 이름이 아니다.)
+    - 별칭은 필수
+- 결과 조회 API
+  - query.getResultList()
+    - 결과가 하나 이상일 때, 리스트 반환
+    - 결과가 없으면 빈 리스트 반환
+  - query.getSingleResult()
+    - 결과가 정확히 하나, 단일 객체 반환
+    - 결과가 정확히 하나가 아니면 오류 발생
+      - 결과가 없으면 javax.persistence.NoResultException 발생
+      - 둘 이상이면 javax.persistence.NonUniqueResultException 발생
+- 파라미터 바인딩
+  - 이름 기준 바인딩
+    - ```
+      SELECT m FROM Member m where m.username=:username
+      query.setParameter("username", usernameParam);
+      ```
+  - 위치 기준 바인딩 (지양)
+    - ```
+      SELECT m FROM Member m where m.username=?1
+      query.setParameter(1, usernameParam);
+      ```
+    - 기능이 변경되어 순서가 변경된다면, 오류가 발생할 여지가 크다.
+- 프로젝션
+  - SELECT 절에 조회할 대상을 지정하는 것을 뜻한다.
+  - 프로젝션 종류
+    - 엔티티 프로젝션 예시
+      - SELECT m FROM Member m
+      - SELECT m.team FROM Member m
+    - 임베디드 타입 프로젝션 예시
+      - SELECT m.address FROM Member m
+    - 스칼라 타입 프로젝션 예시
+      - SELECT m.username, m.age FROM Member m
+- 페이징 API
+  - JPA는 페이징을 다음 두 API로 추상화한다.
+    - setFirstResult(int startPosition)
+      - 조회 시작 위치
+      - 0부터 시작
+    - setMaxResults(int maxResult)
+      - 조회할 데이터 수
