@@ -474,3 +474,45 @@
       - 0부터 시작
     - setMaxResults(int maxResult)
       - 조회할 데이터 수
+- 조인
+  - 종류
+    - 내부 조인
+      - Ex) SELECT m FROM Member m [INNER] JOIN m.team t
+    - 외부 조인:
+      - Ex) SELECT m FROM Member m LEFT [OUTER] JOIN m.team t
+    - 세타 조인:
+      - Ex)  SELECT count(m) FROM Member m, Team t WHERE m.username = t.name
+  - ON 절
+    - ON절을 활용한 조인 (JPA 2.1부터 지원)
+- 서브 쿼리
+  - 서브 쿼리 사용 예시
+    - Ex) select m from Member m where m.age > (select avg(m2.age) from Member m2)
+    - Ex) select m from Member m where (select count(o) from Order o where m = o.member) > 0
+  - 서브 쿼리 지원 함수
+    - 그 외 EXISTS, NOT EXISTS, IN, NOT IN, ALL, ANY, SOME 등 지원
+  - 서브 쿼리 특이사항
+    - 원래는 SELECT와 WHERE 절에만 사용이 가능했지만, 하이버네이트6 부터는 FROM 절의 서브쿼리를 지원
+- JPQL 기타 문법
+  - SQL과 문법이 같은 식은 대부분 지원한다.
+    - EXISTS, IN
+    - AND, OR, NOT
+    - =, >, >=, <, <=, <>
+    - BETWEEN, LIKE, IS NULL
+  - 조건식도 지원한다.
+    - CASE
+    - COALESCE
+    - NULLIF
+  - JPQL 함수
+    - 아래와 같은 기본함수를 제공한다.
+      - CONCAT
+      - SUBSTRING
+      - TRIM
+      - LOWER, UPPER
+      - LENGTH
+      - LOCATE
+      - ABS, SQRT, MOD
+      - SIZE, INDEX(JPA 용도)
+    - 사용자 정의 함수도 사용할 수 있다.
+      - 하이버네이트에서 사용 전 방언에 추가하여 사용할 수 있다.
+      - 사용예시 
+        - select function('group_concat', i.name) from Item i
