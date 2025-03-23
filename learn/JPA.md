@@ -555,3 +555,37 @@
     - 내부 조인만 가능하다.
     - 가급적 묵시적 조인 대신에 명시적 조인을 사용하는 것이 좋다.
       - 조인은 SQL 튜닝에 중요 포인트인데, 묵시적 조인은 조인이 일어나는 상황을 한눈에 파악하기 어려움.
+### JPQL - 페치 조인(fetch join)
+- 페치 조인
+  - JPQL에서 성능 최적화를 위해 제공하는 기능
+  - 연관된 엔티티나 컬렉션을 SQL 한 번에 함께 조회하는 기능
+  - Ex)
+    - 회원을 조회하면서 연관된 팀도 함께 조회(SQL 한 번에)
+    - JPQL
+      - select m from Member m join fetch m.team
+    - SQL
+      - SELECT M.*, T.* FROM MEMBER M INNER JOIN TEAM T ON M.TEAM_ID=T.ID
+- 페치 조인과 일반 조인의 차이
+  - 일반 조인 실행시 연관된 엔티티를 함께 조회하지 않음
+    - JPQL
+      - select t from Team t join t.members m where t.name = ‘팀A'
+    - SQL
+      - SELECT T.* FROM TEAM T INNER JOIN MEMBER M ON T.ID=M.TEAM_ID WHERE T.NAME = '팀A'
+  - 반면 페치 조인은 Member 엔티티도 함께 조회한다.
+    - JPQL
+      - select t from Team t join fetch t.members where t.name = ‘팀A'
+    - SQL
+      - SELECT T.*, M.* FROM TEAM T INNER JOIN MEMBER M ON T.ID=M.TEAM_ID WHERE T.NAME = '팀A'
+- 페치 조인의 특징과 한계
+  - 페치 조인 대상에는 별칭을 줄 수 없다.
+    - 하이버네이트는 가능하지만, 가급적 사용하지 않는 것이 좋다.
+  - 둘 이상의 컬렉션은 페치 조인 할 수 없다.
+  - 컬렉션을 페치 조인하면 페이징 API(setFirstResult, setMaxResults)를 사용할 수 없다.
+    - 일대일, 다대일 같은 단일 값 연관 필드들은 페치 조인해도 페이징 가능
+    - 하이버네이트는 경고 로그를 남기고 메모리에서 페이징(매우 위험)
+      - 메모리로 모든 데이터를 로드해서 페이징하는 방식이기 때문에 OOM이 발생 할 수도 있다.
+  - 엔티티에 직접 적용하는 글로벌 로딩 전략보다 우선함
+    - @OneToMany(fetch = FetchType.LAZY) 와 같이 글로벌 로딩 전략으로 선언되어 있어도 fetch join을 하면 즉시로딩된다.
+  - 모든 것을 페치 조인으로 해결할 수 는 없다.
+    - 페치 조인은 객체 그래프를 유지할 때 사용하면 효과적
+    - 여러 테이블을 조인해서 엔티티가 가진 모양이 아닌 전혀 다른 결과를 내야 하면, 페치 조인 보다는 일반 조인을 사용하고 필요한 데이터들만 조회해서 DTO로 반환하는 것이 효과적
