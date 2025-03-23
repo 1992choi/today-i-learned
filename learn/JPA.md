@@ -516,3 +516,42 @@
       - 하이버네이트에서 사용 전 방언에 추가하여 사용할 수 있다.
       - 사용예시 
         - select function('group_concat', i.name) from Item i
+### JPQL 경로 표현식
+- 경로 표현식이란?
+  - .(점)을 찍어 객체 그래프를 탐색하는 것을 의미.
+- 종류
+  - 상태 필드(state field)
+    - 단순히 값을 저장하기 위한 필드
+    - Ex) m.username
+  - 연관 필드(association field)
+    - 연관관계를 위한 필드
+      - 단일 값 연관 필드
+        - @ManyToOne, @OneToOne, 대상이 엔티티인 것
+        - Ex) m.team
+      - 컬렉션 값 연관 필드
+        - @OneToMany, @ManyToMany, 대상이 컬렉션인 것
+        - Ex) m.orders
+- 경로 표현식 특징
+  - 상태 필드
+    - 경로 탐색의 끝으로 더 이상 탐색할 수 없음
+    - Ex) select `m.username, m.age` from Member m
+  - 단일 값 연관 경로
+    - 묵시적 내부 조인이 발생
+    - 더 탐색할 수 있음
+    - Ex) select `o.member` from Order o
+  - 컬렉션 값 연관 경로
+    - 묵시적 내부 조인이 발생
+    - 더 탐색할 수 있음
+      - FROM 절에서 명시적 조인을 통해 별칭을 얻으면 별칭을 통해 더 탐색할 수 있음
+      - Ex) select `t.members` from Team t
+        - members에는 username, age 등이 있지만, 더 이상 탐색 불가.
+        - 탐색을 하려면 명시적 조인을 해야한다.
+          - Ex) select m.username from Team t join t.members m
+- 명시직 조인과 묵시적 조인
+  - 명시적 조인
+    - join 키워드 직접 사용하는 것
+  - 묵시적 조인
+    - 경로 표현식에 의해 묵시적으로 SQL 조인 발생하는 것
+    - 내부 조인만 가능하다.
+    - 가급적 묵시적 조인 대신에 명시적 조인을 사용하는 것이 좋다.
+      - 조인은 SQL 튜닝에 중요 포인트인데, 묵시적 조인은 조인이 일어나는 상황을 한눈에 파악하기 어려움.
