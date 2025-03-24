@@ -641,3 +641,39 @@
   - 따라서 `영속성 컨텍스트를 사용하는 코드`와 `벌크 연산을 사용하는 코드`가 모두 존재할 때는 아래 두 가지 방법 중 하나를 선택해서 사용해야한다.
     - 벌크 연산을 먼저 실행
     - 벌크 연산 수행 후 영속성 컨텍스트 초기화
+
+<br><hr>
+
+# 스프링 데이터 JPA
+### 공통 인터페이스 설정
+- JavaConfig 설정
+  - @EnableJpaRepositories 어노테이션을 사용해서 설정 가능
+    - Ex) @EnableJpaRepositories(basePackages = "jpabook.jpashop.repository")
+    - 스프링 부트 사용시 `@SpringBootApplication` 와 동등 레벨부터 모든 하위를 기본으로 인식한다.
+      - 때문에 생략 가능하다.
+    - 만약 특정 위치를 지정하고 싶다면 `@EnableJpaRepositories` 필요
+- 공통 인터페이스 적용
+  - 스프링 데이터 JPA 기반 MemberRepository 적용 예시
+  - ```
+    public interface MemberRepository extends JpaRepository<Member, Long> {
+    }
+    ```
+    - `@Repository` 어노테이션 생략 가능
+  - JpaRepository 인터페이스는 공통 CRUD를 제공한다.
+  - 제네릭은 <엔티티 타입, 식별자 타입> 으로 설정한다.
+    - Ex) <Member, Long> : 엔티티는 Member이며, Member의 식별자(=PK)는 Long 타입
+- 주요 메서드
+  - save(S)
+    - 새로운 엔티티는 저장하고 이미 있는 엔티티는 병합한다.
+  - delete(T)
+    - 엔티티 하나를 삭제한다.
+    - 내부에서 `EntityManager.remove()` 호출
+  - findById(ID)
+    - 엔티티 하나를 조회한다.
+    - 내부에서 `EntityManager.find()` 호출
+  - getOne(ID)
+    - 엔티티를 프록시로 조회한다.
+    - 내부에서 `EntityManager.getReference()` 호출
+  - findAll(…)
+    - 모든 엔티티를 조회한다.
+    - 정렬(`Sort` )이나 페이징(`Pageable` ) 조건을 파라미터로 제공할 수 있다.
