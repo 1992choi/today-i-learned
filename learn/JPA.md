@@ -732,3 +732,12 @@
     @Query("select m from Member m where m.username in :names")
     List<Member> findByNames(@Param("names") List<String> names);
     ```
+
+### 반환 타입
+- 스프링 데이터 JPA는 유연한 반환 타입을 지원한다.
+  - 컬렉션
+    - List<Member> findByUsername(String name);
+  - 단건
+    - Member findByUsername(String name);
+  - 단건 Optional
+    - Optional<Member> findByUsername(String name);
