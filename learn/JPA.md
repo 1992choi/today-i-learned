@@ -677,3 +677,58 @@
   - findAll(…)
     - 모든 엔티티를 조회한다.
     - 정렬(`Sort` )이나 페이징(`Pageable` ) 조건을 파라미터로 제공할 수 있다.
+
+### 메소드 이름으로 쿼리 생성
+- 스프링 데이터 JPA는 메소드 이름을 분석해서 JPQL을 생성하고 실행하는 기능을 지원한다.
+  - Ex) List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
+- 제공하는 쿼리 메소드 기능
+  - 조회
+    - find…By ,read…By ,query…By get…By,
+  - COUNT
+    - count…By 반환타입 `long`
+  - EXISTS
+    - exists…By 반환타입 `boolean`
+  - 삭제
+    - delete…By, remove…By 반환타입 `long`
+  - DISTINCT
+    - findDistinct, findMemberDistinctBy
+  - LIMIT
+    - findFirst3, findFirst, findTop, findTop3
+
+### JPA NamedQuery
+- `@NamedQuery` 어노테이션을 사용해서 Named 쿼리를 정의할 수도 있지만, 스프링 데이터 JPA로는 아래와 같이 사용할 수도 있다.
+  - ```
+    @Query(name = "Member.findByUsername")
+    List<Member> findByUsername(@Param("username") String username);
+    ```    
+    - @Query 를 생략하고 메서드 이름만으로 Named 쿼리를 호출할 수 있다.
+      - 이 때는 Entity에 @NamedQuery로 선언되어 있어야한다.
+    - 만약 실행할 Named 쿼리가 없으면 메서드 이름으로 쿼리 생성 전략을 사용한다.
+    - 스프링 데이터 JPA를 사용하면 실무에서 Named Query를 직접 등록해서 사용하는 일은 드물다.
+    - `@Query` 를 사용해서 레포지토리 메소드에 쿼리를 직접 정의해서 쓰는 경우가 대부분이기 때문.
+
+### @Query, 레포지토리 메소드에 쿼리 정의하기
+- ```
+  @Query("select m from Member m where m.username= :username and m.age = :age")
+  List<Member> findUser(@Param("username") String username, @Param("age") int age);
+  ```
+  - JPA Named 쿼리처럼 애플리케이션 실행 시점에 문법 오류를 발견할 수 있다는 장점이 있다.
+  - 아래와 같이 DTO에 직접 담아서 반환할 수도 있다.
+    - ```
+      @Query("select new study.datajpa.dto.MemberDto(m.id, m.username, t.name) from Member m join m.team t")
+      List<MemberDto> findMemberDto();
+      ```
+      
+### 파라미터 바인딩
+- 파라미터 바인딩 방식은 '위치 기반' 방식과 '이름 기반' 방식이 있다.
+- 위치기반은 순서가 바뀌면 오류가 발생할 여지가 있어 '이름 기반' 방식 사용이 권장된다.
+- 사용예시
+  - ```
+    @Query("select m from Member m where m.username = :name")
+    Member findMembers(@Param("name") String username);
+    ```
+  - ```
+    // 컬렉션 파라미터 바인딩 예시
+    @Query("select m from Member m where m.username in :names")
+    List<Member> findByNames(@Param("names") List<String> names);
+    ```
