@@ -741,3 +741,28 @@
     - Member findByUsername(String name);
   - 단건 Optional
     - Optional<Member> findByUsername(String name);
+
+### 페이징과 정렬
+- 페이징과 정렬 사용 예제
+  - count 쿼리가 같이 수행되는 경우
+    - Page<Member> findByUsername(String name, Pageable pageable);
+  - count 쿼리가 같이 수행되지 않는 경우
+    - Slice<Member> findByUsername(String name, Pageable pageable);
+    - List<Member> findByUsername(String name, Pageable pageable);
+    - List<Member> findByUsername(String name, Sort sort);
+- 페이징 관련 파라미터
+  - `Pageable`은 페이징을 위한 파라미터이다.
+  - 인터페이스이며, 구현체로는 `org.springframework.data.domain.PageRequest` 객체를 사용한다.
+  - 사용예시
+    - ```
+      PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC,
+      Page<Member> page = memberRepository.findByAge(10, pageRequest);
+      ```
+- 카운트 쿼리 분리
+  - 리스트 조회 쿼리와 카운트 쿼리를 분리할 수 있다.
+    - Ex) 리스트 쿼리는 Member와 Team을 Join해서 조회해야하는데, 카운트 쿼리는 Member 테이블만 있어도 될 때
+    - ```
+      @Query(value = "select m from Member m left join m.team t",
+          countQuery = "select count(m.username) from Member m")
+      Page<Member> findMemberAllCountBy(Pageable pageable);
+      ```
