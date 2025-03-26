@@ -780,3 +780,85 @@
     - @Modifying()에 옵션을 설정한다.
       - @Modifying(clearAutomatically = true)
       - 기본값은 `false`
+
+### @EntityGraph
+- 연관된 엔티티들을 SQL 한번에 조회하는 방법
+- 사용하는 이유
+  - 지연로딩 관계에서는 N+1 문제가 발생할 수 있다.
+  - JPQL 페치 조인으로 해결할 수 있는데, 스프링 데이터 JPA에서는 @EntityGraph 어노테이션을 활용해서 쉽게 해결할 수 있다.
+    - 사실상 페치 조인(FETCH JOIN)의 간편 버전
+- 사용 예시
+  - ```
+    // 공통 메서드 오버라이드
+    @Override
+    @EntityGraph(attributePaths = {"team"})
+    List<Member> findAll();
+    
+    // JPQL + 엔티티 그래프
+    @EntityGraph(attributePaths = {"team"})
+    @Query("select m from Member m")
+    List<Member> findMemberEntityGraph();
+    
+    // 메서드 이름 쿼리
+    @EntityGraph(attributePaths = {"team"})
+    List<Member> findByUsername(String username)
+    ```
+
+### JPA Hint
+- JPA Hint란?
+  - SQL 힌트가 아니라 JPA 구현체에게 제공하는 힌트
+  - JPA의 기본 동작을 미세 조정할 수 있도록 도와주는 기능이다.
+- 주요 힌트 종류
+  - org.hibernate.readOnly
+    - 읽기 전용 모드로 설정하여 변경 감지를 비활성화
+  - org.hibernate.cacheable
+    - 2차 캐시를 활성화
+  - org.hibernate.fetchSize
+    - 한 번에 가져올 레코드 수를 조정하여 페이징 성능 개선
+  - org.hibernate.comment
+    - 실행되는 SQL에 주석 추가
+- 사용예시
+  - ```
+    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+    Member findReadOnlyByUsername(String username);
+    ```
+    - readOnly 속성에 의해서 아래 로직에서 Update 쿼리가 실행되지 않는다.
+      - ```
+        @Test
+        public void queryHint() throws Exception {
+          // given
+          memberRepository.save(new Member("member1", 10));
+          em.flush();
+          em.clear();
+          
+          // when
+          Member member = memberRepository.findReadOnlyByUsername("member1");
+          member.setUsername("member2");
+          
+          em.flush(); // Update Query 실행X
+        }
+        ```
+        
+### Lock
+- @Lock 어노테이션
+  - JPA에서 비관적 락(Pessimistic Lock)을 적용할 때 주로 사용하는 어노테이션이다.
+    - 옵션에 따라서 낙관적 락으로도 사용 가능하다.
+- 락 모드
+  - PESSIMISTIC_READ
+    - 읽기 전용 비관적 락.
+    - 다른 트랜잭션이 수정/삭제 못 하게 막음
+    - SELECT ... FOR SHARE (DB에 따라 다름)
+  - PESSIMISTIC_WRITE
+    - 쓰기용 비관적 락.
+    - 다른 트랜잭션이 읽기/쓰기/삭제 모두 차단
+    - SELECT ... FOR UPDATE
+  - PESSIMISTIC_FORCE_INCREMENT
+    - PESSIMISTIC_WRITE + 버전 필드(@Version) 증가
+    - Hibernate 전용
+  - OPTIMISTIC
+    - 낙관적 락.
+    - @Version 필드를 사용하여 변경 감지
+    - @Version 필드가 필요함
+  - OPTIMISTIC_FORCE_INCREMENT
+    - OPTIMISTIC + 버전 필드를 강제로 증가
+    - @Version 필드 필요
