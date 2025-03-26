@@ -766,3 +766,17 @@
           countQuery = "select count(m.username) from Member m")
       Page<Member> findMemberAllCountBy(Pageable pageable);
       ```
+      
+### 벌크성 수정 쿼리
+- 스프링 데이터 JPA에서는 어노테이션으로 벌크성 수정 쿼리를 작성할 수 있다.
+  - ```
+    @Modifying
+    @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
+    int bulkAgePlus(@Param("age") int age);
+    ```
+  - 벌크성 수정, 삭제 쿼리는 `@Modifying` 어노테이션을 사용
+  - 벌크성 쿼리를 실행하고 나서 영속성 컨텍스트 초기화 필요.
+    - 직접 Entity Manager를 flush / clear 하거나
+    - @Modifying()에 옵션을 설정한다.
+      - @Modifying(clearAutomatically = true)
+      - 기본값은 `false`
