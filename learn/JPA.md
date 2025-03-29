@@ -1007,3 +1007,12 @@
   - 인터페이스 기반 Open Proejctions
   - 클래스 기반 Projection
   - 동적 Projections
+
+### 네이티브 쿼리
+- JPQL이 아닌 직접 쿼리를 작성할 수 있는 네이티브 쿼리 기능을 지원한다.
+- 사용예시
+  - ```
+    @Query(value = "select * from member where username = ?", nativeQuery = true)
+    Member findByNativeQuery(String username);
+    ```
+- 코드 복잡성이 올라갈 수 있으므로, 네이티브 쿼리보다는 차라리 dbcTemplate 또는 myBatis가 권장된다.   
