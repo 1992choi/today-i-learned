@@ -862,3 +862,81 @@
   - OPTIMISTIC_FORCE_INCREMENT
     - OPTIMISTIC + 버전 필드를 강제로 증가
     - @Version 필드 필요
+
+### 사용자 정의 리포지토리
+- 사용자 정의 리포지토리의 필요성
+  - 스프링 데이터 JPA 리포지토리는 인터페이스만 정의하고 구현체는 스프링이 자동 생성.
+  - 만약 필요한 메서드를 직접 구현하고 싶다면, 스프링 데이터 JPA가 제공하는 인터페이스를 직접 구현해야하는데 이렇게 되면 구현해야 하는 기능이 너무 많음.
+  - 다양한 이유로 인터페이스의 메서드를 직접 구현하고 싶다면?
+    - JPA 직접 사용(EntityManager)
+    - 스프링 JDBC Template 사용
+    - MyBatis 사용
+    - 데이터베이스 커넥션 직접 사용 등등...
+    - Querydsl 사용
+    - 그리고 사용자 정의 인터페이스!
+- 사용자 정의 인터페이스 사용 예시
+  - ```
+    // 인터페이스 정의
+    public interface MemberRepositoryCustom {
+      List<Member> findMemberCustom();
+    }
+
+    // 인터페이스 구현
+    // - 구현체는 리포지토리 인터페이스 이름 + `Impl` 이라는 규칙을 따라야한다. 그래야지 스프링 데이터 JPA가 인식해서 스프링 빈으로 등록한다.
+    // - 최신버전에서는 사용자 정의 인터페이스 명 + `Impl` 방식도 지원 (Ex. MemberRepositoryCustomImpl)
+    @RequiredArgsConstructor
+    public class MemberRepositoryImpl implements MemberRepositoryCustom {
+      private final EntityManager em;
+
+      @Override
+      public List<Member> findMemberCustom() {
+        return em.createQuery("select m from Member m").getResultList();
+      }
+    }
+
+    // 스프링 데이터 JPA 리포지토리에서 위의 인터페이스 상속 (구현체가 아닌 인터페이스를 상속 받아야한다.)
+    public interface MemberRepository
+      extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+    }
+    ```
+
+### Auditing
+- Auditing의 필요성
+  - 엔티티 생성, 변경 사항을 추적하기 위하여 아래와 같은 필드들이 대부분의 엔티티에 적용되야 한다면?
+    - 등록일
+    - 수정일
+    - 등록자
+    - 수정자
+  - 모든 엔티티마다 구현할 필요없이 스프링 데이터 JPA에서 지원해주는 Auditing 기능을 사용하면 된다.
+- 설정 예시
+  - 설정 클래스에 @EnableJpaAuditing 적용
+  - Auditing을 적용한 클래스 생성
+    - 클래스에 @EntityListeners(AuditingEntityListener.class) 선언
+    - 필드에 아래 어노테이션 사용
+      - @CreatedDate
+      - @LastModifiedDate
+      - @CreatedBy
+      - @LastModifiedBy
+    - 코드 샘플
+      - ```
+        @EntityListeners(AuditingEntityListener.class)
+        @MappedSuperclass
+        @Getter
+        public class BaseEntity {
+          @CreatedDate
+          @Column(updatable = false)
+          private LocalDateTime createdDate;
+  
+          @LastModifiedDate
+          private LocalDateTime lastModifiedDate;
+  
+          @CreatedBy
+          @Column(updatable = false)
+          private String createdBy;
+  
+          @LastModifiedBy
+          private String lastModifiedBy;
+        }
+        ```
+  - 사용하고자 하는 엔티티에서 BaseEntity 상속받아 사용
+    - 만약 모든 엔티티에서 사용하고자하면 별도 설정을 통해서 전체 적용도 가능하다.
