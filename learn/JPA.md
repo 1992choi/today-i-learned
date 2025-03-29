@@ -968,3 +968,42 @@
       - 따라서 이 경우 `merge()` 가 호출된다.
         - `merge()` 는 우선 DB를 호출해서 값을 확인하고, DB에 값이 없으면 새로운 엔티티로 인지하므로 매우 비효율 적이다.
         - 따라서 `Persistable` 를 사용해서 새로운 엔티티 확인 여부를 직접 구현하게는 효과적이다.
+
+### Specifications
+- Specifications 란?
+  - 도메인 주도 설계(Domain Driven Design)는 SPECIFICATION(명세)라는 개념을 소개.
+  - 스프링 데이터 JPA는 JPA Criteria를 활용해서 이 개념을 사용할 수 있도록 지원하고 있다.
+  - AND OR 같은 연산자를 조합해서 다양한 검색조건을 쉽게 생성할 수 있다는 장점이 있지만, 활용도가 높은 편은 아니다.
+
+### Query By Example
+- 원하는 검색 조건을 가지고 있는 Probe라고 하는 도메인 객체를 생성하여 Example 객체를 생성하고 검색하는 기술.
+- 장점
+  - 동적 쿼리를 편리하게 처리
+  - 도메인 객체를 그대로 사용
+  - 데이터 저장소를 RDB에서 NOSQL로 변경해도 코드 변경이 없게 추상화 되어 있음
+  - 스프링 데이터 JPA `JpaRepository` 인터페이스에 이미 포함
+- 단점
+  - 조인은 가능하지만 내부 조인(INNER JOIN)만 가능함 외부 조인(LEFT JOIN) 안됨
+  - 다음과 같은 중첩 제약조건 안됨
+    - `firstname = ?0 or (firstname = ?1 and lastname = ?2)`
+  - 매칭 조건이 매우 단순함
+    - 문자를 제외한 속성은 정확한 매칭(=)만 지원
+   
+### Projections
+- 엔티티 대신에 DTO를 편리하게 조회할 때 사용하는 기술.
+- 조회할 엔티티의 필드를 getter 형식으로 지정하면 해당 필드만 선택해서 조회(Projection)
+  - ```
+    public interface UsernameOnly {
+      String getUsername();
+    }
+
+    public interface MemberRepository ... {
+      // 메서드 이름은 자유, 반환 타입으로 인지
+      List<UsernameOnly> findProjectionsByUsername(String username);
+    }
+    ```
+- 종류 (위 기술들과 마찬가지로 활용도가 높은 편은 아니라 코드 예시는 생략)
+  - 인터페이스 기반 Closed Projections
+  - 인터페이스 기반 Open Proejctions
+  - 클래스 기반 Projection
+  - 동적 Projections
