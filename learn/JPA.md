@@ -1016,3 +1016,95 @@
     Member findByNativeQuery(String username);
     ```
 - 코드 복잡성이 올라갈 수 있으므로, 네이티브 쿼리보다는 차라리 dbcTemplate 또는 myBatis가 권장된다.   
+
+<br><hr>
+
+# QueryDSL
+### Querydsl 기본사용법
+- 사용방법
+  - EntityManager로 `JPAQueryFactory` 생성
+  - JPAQueryFactory를 빌드형태로 사용하여 쿼리를 작성한다.
+- 사용예시
+  - ```
+    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+    QMember m = new QMember("m");
+  
+    Member findMember = queryFactory
+      .select(m)
+      .from(m)
+      .where(m.username.eq("member1"))
+      .fetchOne();
+    ```
+
+### 기본 Q-Type 활용
+- Q클래스 인스턴스를 사용하는 2가지 방법
+  - 별칭 직접 지정
+    - QMember qMember = new QMember("m");
+  - 기본 인스턴스 사용
+    - QMember qMember = QMember.member;
+    - 같은 테이블을 조인해야 하는 경우가 아니면 기본 인스턴스를 사용
+
+### 검색 조건 쿼리
+- 검색 조건 예시
+  - ```
+    member.username.eq("member1") // username = 'member1'
+    member.username.ne("member1") // username != 'member1'
+    member.username.eq("member1").not() // username != 'member1'
+    member.username.isNotNull() // is not null
+    
+    member.age.in(10, 20) // age in (10,20)
+    member.age.notIn(10, 20) // age not in (10, 20)
+    member.age.between(10,30) // between 10, 30
+    member.age.goe(30) // age >= 30
+    member.age.gt(30) // age > 30
+    member.age.loe(30) // age <= 30
+    member.age.lt(30) // age < 30
+    
+    member.username.like("member%") // like 검색
+    member.username.contains("member") // like ‘%member%’ 검색
+    member.username.startsWith("member") // like ‘member%’ 검색
+    ```
+
+### 결과 조회
+- 결과 조회 종류
+  - fetch()
+    - 리스트 조회, 데이터 없으면 빈 리스트 반환
+  - fetchOne()
+    - 단 건 조회
+    - 결과가 없으면 : null
+    - 결과가 둘 이상이면 : com.querydsl.core.NonUniqueResultException
+  - fetchFirst()
+    - 검색 결과 중 첫 번째 항목만 반환
+    - limit(1).fetchOne() 와 검색결과가 같다.
+  - fetchResults()
+    - 페이징 정보 포함
+    - total count 쿼리 추가 실행
+  - fetchCount()
+    - count 쿼리로 변경해서 count 수 조회
+- 사용 예시
+  - ```
+    // List
+    List<Member> fetch = queryFactory
+      .selectFrom(member)
+      .fetch();
+    
+    // 단 건
+    Member findMember1 = queryFactory
+      .selectFrom(member)
+      .fetchOne();
+    
+    // 처음 한 건 조회
+    Member findMember2 = queryFactory
+      .selectFrom(member)
+      .fetchFirst();
+    
+    // 페이징에서 사용
+    QueryResults<Member> results = queryFactory
+      .selectFrom(member)
+      .fetchResults();
+    
+    // count 쿼리로 변경
+    long count = queryFactory
+      .selectFrom(member)
+      .fetchCount();
+    ```
