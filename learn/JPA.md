@@ -1108,3 +1108,47 @@
       .selectFrom(member)
       .fetchCount();
     ```
+    
+### 정렬
+- 일반 정렬
+  - desc()
+  - asc() 
+- null 데이터 순서 부여
+  - nullsLast()
+  - nullsFirst() 
+- 정렬 예시
+  - ```
+    List<Member> result = queryFactory
+      .selectFrom(member)
+      .where(member.age.eq(100))
+      .orderBy(member.age.desc(), member.username.asc().nullsLast()) // 정렬 사용
+      .fetch();
+    ```
+    
+### 페이징
+- 조회 건수 제한
+  - ```
+    List<Member> result = queryFactory
+      .selectFrom(member)
+      .offset(1) // 0부터 시작
+      .limit(2) // 최대 2건
+      .fetch();
+    ```
+- 전체 조회 수를 포함한 조회
+  - ```
+    QueryResults<Member> queryResults = queryFactory
+      .selectFrom(member)
+      .orderBy(member.username.desc())
+      .offset(1)
+      .limit(2)
+      .fetchResults();
+    
+    assertThat(queryResults.getTotal()).isEqualTo(4);
+    assertThat(queryResults.getLimit()).isEqualTo(2);
+    assertThat(queryResults.getOffset()).isEqualTo(1);
+    assertThat(queryResults.getResults().size()).isEqualTo(2);
+    ```
+  - 주의사항
+    - 위 로직은 count 쿼리가 함께 실행된다.
+      - 원본 쿼리에 조인이 있다면, 카운트 쿼리도 조인을 하기 때문에 성능 이슈가 발생할 수 있다.
+      - count 쿼리에 조인이 필요없는 성능 최적화가 필요하다면, count 전용 쿼리를 별도로 작성해야 한다.
