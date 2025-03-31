@@ -1152,3 +1152,99 @@
     - 위 로직은 count 쿼리가 함께 실행된다.
       - 원본 쿼리에 조인이 있다면, 카운트 쿼리도 조인을 하기 때문에 성능 이슈가 발생할 수 있다.
       - count 쿼리에 조인이 필요없는 성능 최적화가 필요하다면, count 전용 쿼리를 별도로 작성해야 한다.
+
+### 집합
+- 집합 함수 종류
+  - 개수
+    - COUNT(m)
+  - 합
+    - SUM(m.age)
+  - 평균
+    - AVG(m.age)
+  - 최대
+    - MAX(m.age)
+  - 최소
+    - MIN(m.age)
+- 예시
+  - ```
+    List<Tuple> result = queryFactory
+      .select(member.count(),
+              member.age.sum(),
+              member.age.avg(),
+              member.age.max(),
+              member.age.min())
+      .from(member)
+      .fetch();
+    ```
+- GroupBy 및 Having
+  - GroupBy 예시
+    - ```
+      List<Tuple> result = queryFactory
+        .select(team.name, member.age.avg())
+        .from(member)
+        .join(member.team, team)
+        .groupBy(team.name)
+        .fetch();
+      ```
+  - Having 예시
+    - ```
+      …
+      .groupBy(item.price)
+      .having(item.price.gt(1000))
+      …
+      ```
+      
+### 조인
+- 기본 조인
+  - 조인의 기본 문법은 첫 번째 파라미터에 조인 대상을 지정하고, 두 번째 파라미터에 별칭(alias)으로 사용할 Q 타입을 지정하면 된다.
+  - join(조인 대상, 별칭으로 사용할 Q타입)
+  - 종류
+    - 내부 조인(inner join)
+      - join()
+      - innerJoin()
+    - left 외부 조인(left outer join)
+      - leftJoin()
+    - right 외부 조인(right outer join)
+      - rightJoin()
+  - 사용예시
+    - ```
+      List<Member> result = queryFactory
+        .selectFrom(member)
+        .join(member.team, team)
+        .where(team.name.eq("teamA"))
+        .fetch();
+      ```
+- 세타 조인
+  - 연관관계가 없는 필드로 조인
+  - from 절에 여러 엔티티를 선택해서 세타 조인이 가능하다.
+  - 사용예시 (Ex. 사용자 이름과 팀 이름이 같은 경우)
+    - ```
+      List<Member> result = queryFactory
+        .select(member)
+        .from(member, team)
+        .where(member.username.eq(team.name))
+        .fetch();
+      ```
+- on절
+  - ON절은 크게 2가지 케이스에 사용된다.
+    - 조인 대상을 필터링할 때 사용한다.
+      - Ex. 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조회
+         - ```
+           List<Tuple> result = queryFactory
+             .select(member, team)
+             .from(member)
+             .leftJoin(member.team, team).on(team.name.eq("teamA"))
+             .fetch();
+           ```
+      - on 절을 활용해 조인 대상을 필터링 할 때,
+        - 외부조인이 아니라 내부조인(inner join)을 사용하면, where 절에서 필터링 하는 것과 기능이 동일하다.
+        - 따라서 on 절을 활용한 조인 대상 필터링을 사용할 때, 내부조인이면 익숙한 where 절로 해결하고, 정말 외부조인이 필요한 경우에만 이 기능을 사용하자.
+    - 연관관계 없는 엔티티 외부 조인
+      - Ex. 회원의 이름과 팀의 이름이 같은 대상 외부 조인
+        - ```
+          List<Tuple> result = queryFactory
+            .select(member, team)
+            .from(member)
+            .leftJoin(team).on(member.username.eq(team.name))
+            .fetch();
+          ```
