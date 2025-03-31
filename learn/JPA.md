@@ -1248,3 +1248,17 @@
             .leftJoin(team).on(member.username.eq(team.name))
             .fetch();
           ```
+- 페치 조인
+  - SQL조인을 활용해서 연관된 엔티티를 SQL 한번에 조회하는 기능이다.
+    - 지연로딩으로 설정되어 있는 경우, Member를 조회하고 Team에 접근을 하면 N+1 문제가 야기될 수 있다.
+    - 이를 보완하기 위해 SQL 한 번에 연관된 엔티티를 조회함으로써 해결할 수 있다.
+  - 주로 성능 최적화에 사용하는 방법이다.
+  - `join(), leftJoin()` 등 조인 기능 뒤에 `fetchJoin()`을 추가한다.
+  - 사용 예시
+    - ```
+      Member findMember = queryFactory
+        .selectFrom(member)
+        .join(member.team, team).fetchJoin()
+        .where(member.username.eq("member1"))
+        .fetchOne();
+      ```
