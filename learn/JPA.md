@@ -1262,3 +1262,63 @@
         .where(member.username.eq("member1"))
         .fetchOne();
       ```
+      
+### 서브 쿼리
+- com.querydsl.jpa.JPAExpressions 를 사용해서 구현할 수 있다.
+  - ```
+    List<Member> result = queryFactory
+      .selectFrom(member)
+      .where(member.age.eq(
+                JPAExpressions
+                    .select(memberSub.age.max())
+                    .from(memberSub)
+      ))
+      .fetch();
+    ```
+- 서브쿼리의 한계와 해결방안
+  - JPA JPQL 서브쿼리의 한계점으로 from 절의 서브쿼리(인라인 뷰)는 지원하지 않는다.
+    - 때문에 QueryDSL에서도 지원하지 않는다.
+  - from절에 서브쿼리가 필요하다면, 아래와 같은 방안도 고려해볼 수 있다.
+    - 서브쿼리를 join으로 변경
+    - 애플리케이션에서 쿼리를 2번 분리해서 실행
+    - nativeSQL을 사용
+
+### Case 문
+- select, 조건절(where), order by에서 사용 가능하다.
+  - ```
+    // 단순 사용
+    List<String> result = queryFactory
+       .select(member.age
+                .when(10).then("열살")
+                .when(20).then("스무살")
+                .otherwise("기타"))
+       .from(membe)
+       .fetch();
+
+    // CaseBuilder() 사용하여 복잡한 조건 구현
+    List<String> result = queryFactory
+      .select(new CaseBuilder()
+                .when(member.age.between(0, 20)).then("0~20살")
+                .when(member.age.between(21, 30)).then("21~30살")
+                .otherwise("기타"))
+      .from(member)
+      .fetch();
+    ```  
+    
+### 상수, 문자 더하기
+- 상수 더하기 - Expressions.constant() 사용
+  - ```
+    Tuple result = queryFactory
+      .select(member.username, Expressions.constant("A"))
+      .from(member)
+      .fetchFirst();
+    ```
+- 문자 더하기 - concat() 사용
+  - ```
+    String result = queryFactory
+      .select(member.username.concat("_").concat(member.age.stringValue()))
+      .from(member)
+      .where(member.us
+    ```
+  - 문자가 아닌 다른 타입들을 stringValue()를 사용해서 문자로 변환할 수 있다.
+    - ENUM 처리 시 유용
