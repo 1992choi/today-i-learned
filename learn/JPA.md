@@ -1322,3 +1322,51 @@
     ```
   - 문자가 아닌 다른 타입들을 stringValue()를 사용해서 문자로 변환할 수 있다.
     - ENUM 처리 시 유용
+
+### 프로젝션과 결과 반환
+- 프로젝션 대상이 하나인 경우
+  - 프로젝션 대상이 하나면 타입을 명확하게 지정할 수 있음
+  - ```
+    List<String> result = queryFactory
+      .select(member.username)
+      .from(member)
+      .fetch();
+    ```
+- 프로젝션 대상이 둘 이상인 경우
+  - 튜플이나 DTO로 조회 필요
+  - ```
+    // 튜플 사용
+    List<Tuple> result = queryFactory
+      .select(member.username, member.age)
+      .from(member)
+      .fetch();
+    
+    // Querydsl 빈 - 필드
+    List<MemberDto> result = queryFactory
+      .select(Projections.fields(MemberDto.class, member.username, member.age))
+      .from(member)
+      .fetch();
+    
+    // Querydsl 빈 - Setter
+    List<MemberDto> result = queryFactory
+      .select(Projections.bean(MemberDto.class, member.username, member.age))
+      .from(member)
+      .fetch();
+    
+    // Querydsl 빈 - 생성자 사용
+    List<MemberDto> result = queryFactory
+      .select(Projections.constructor(MemberDto.class, member.username, member.age))
+      .from(member)
+      .fetch();
+    
+    // 생성자 + @QueryProjection
+    // DTO 생성자에 @QueryProjection 추가 후 사용.
+    List<MemberDto> result = queryFactory
+      .select(new QMemberDto(member.username, member.age))
+      .from(member)
+      .fetch();
+    ```
+  - 마지막 방법인 `생성자 + @QueryProjection` 방식이 컴파일 시점에 타입 체크를 할 수 있는 가장 안전한 방법이다.
+    - 그 외 방법은 컴파일 시점에 오류를 발견하지 못할 수도 있다.
+      - Ex. 생성자가 userName과 age만 받는데, QueryDSL 문법에서 가령 파라미터를 하나 더 넣을 경우, 런타임 시점에 오류 발생
+    - 하지만 DTO에 어노테이션이 사용되기 때문에 QueryDSL이라는 기술에 종속된다.
