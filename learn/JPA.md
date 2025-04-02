@@ -1370,3 +1370,69 @@
     - 그 외 방법은 컴파일 시점에 오류를 발견하지 못할 수도 있다.
       - Ex. 생성자가 userName과 age만 받는데, QueryDSL 문법에서 가령 파라미터를 하나 더 넣을 경우, 런타임 시점에 오류 발생
     - 하지만 DTO에 어노테이션이 사용되기 때문에 QueryDSL이라는 기술에 종속된다.
+
+### 동적 쿼리
+- 동적 쿼리를 해결하는 방식은 크게 두가지가 있다.
+  - BooleanBuilder
+  - Where 다중 파라미터 사용
+- BooleanBuilder
+  - ```
+    BooleanBuilder builder = new BooleanBuilder();
+    
+    if (usernameCond != null) {
+      builder.and(member.username.eq(usernameCond));
+    }
+    
+    if (ageCond != null) {
+      builder.and(member.age.eq(ageCond));
+    }
+    
+    return queryFactory
+      .selectFrom(member)
+      .where(builder)
+      .fetch();
+    ```
+- Where 다중 파라미터 사용
+  - ```
+    return queryFactory
+      .selectFrom(member)
+      .where(usernameEq(usernameCond), ageEq(ageCond))
+      .fetch();
+    
+    private BooleanExpression usernameEq(String usernameCond) {
+      return usernameCond != null ? member.username.eq(usernameCond) : null;
+    }
+    
+    private BooleanExpression ageEq(Integer ageCond) {
+      return ageCond != null ? member.age.eq(ageCond) : null;
+    }
+    ```
+  - 특징 및 장점
+    - where 조건에 null 값은 무시된다.
+    - 메서드를 다른 쿼리에서도 재활용 할 수 있다.
+    - 쿼리 자체의 가독성이 높아진다.
+
+### 수정, 삭제 벌크 연산
+- ```
+  queryFactory
+    .update(member)
+    .set(member.username, "비회원")
+    .where(member.age.lt(28))
+    .execute();
+  
+  queryFactory
+    .delete(member)
+    .where(member.age.gt(18))
+    .execute();
+  ```
+- 주의사항
+  - JPQL 배치와 마찬가지로 영속성 컨텍스트에 있는 엔티티를 무시하고 실행되기 때문에 배치 쿼리를 실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
+
+### SQL function 호출
+- SQL function은 JPA와 같이 Dialect에 등록된 내용만 호출할 수 있다.
+- ```
+  String result = queryFactory
+    .select(Expressions.stringTemplate("function('replace', {0}, {1}, {2})", member.username, "member", "M"))
+    .from(member)
+    .fetchFirst();
+  ```
