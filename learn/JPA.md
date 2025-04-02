@@ -895,8 +895,7 @@
     }
 
     // 스프링 데이터 JPA 리포지토리에서 위의 인터페이스 상속 (구현체가 아닌 인터페이스를 상속 받아야한다.)
-    public interface MemberRepository
-      extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+    public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
     }
     ```
 
