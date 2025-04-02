@@ -874,6 +874,8 @@
     - 데이터베이스 커넥션 직접 사용 등등...
     - Querydsl 사용
     - 그리고 사용자 정의 인터페이스!
+- 구성예시
+  - <img width="927" alt="image" src="https://github.com/user-attachments/assets/99750ac2-3aa8-402b-b761-f710f967fb58" />
 - 사용자 정의 인터페이스 사용 예시
   - ```
     // 인터페이스 정의
