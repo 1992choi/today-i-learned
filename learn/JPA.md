@@ -1437,3 +1437,28 @@
     .from(member)
     .fetchFirst();
   ```
+
+### CountQuery 최적화
+- PageableExecutionUtils.getPage() 메서드를 사용하면, 카운트 쿼리를 최적화할 수 있다.
+  - count 쿼리가 생략 가능한 경우 생략해서 처리
+    - 페이지 시작이면서 컨텐츠 사이즈가 페이지 사이즈보다 작을 때
+    - 마지막 페이지이면서 컨텐츠 사이즈가 페이지 사이즈보다 작을 때
+- 사용예시
+  - ```
+    JPAQuery<Member> countQuery = queryFactory
+      .select(member)
+      .from(member)
+      .leftJoin(member.team, team)
+      .where(
+             usernameEq(condition.getUsername()), 
+             teamNameEq(condition.getTeamName()),
+             ageGoe(condition.getAgeGoe()),
+             ageLoe(condition.getAgeLoe())
+      );
+    
+    // 보통의 pagination 적용
+    // return new PageImpl<>(content, pageable, total);
+    
+    // 카운트 쿼리 최적화
+    return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+    ```
