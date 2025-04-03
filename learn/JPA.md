@@ -1462,3 +1462,42 @@
     // 카운트 쿼리 최적화
     return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     ```
+    
+### QuerydslPredicateExecutor
+- QuerydslPredicateExecutor 란?
+  - Spring Data JPA에서 제공하는 인터페이스로, QueryDSL을 활용한 동적 쿼리 실행을 쉽게 할 수 있도록 지원하는 기능을 한다.
+  - 이를 사용하면 `Predicate 객체를 기반으로 동적으로 쿼리를 작성하고 실행`할 수 있다.
+    - ```
+      public interface QuerydslPredicateExecutor<T> {
+        Optional<T> findById(Predicate predicate);
+        Iterable<T> findAll(Predicate predicate);
+        long count(Predicate predicate);
+        boolean exists(Predicate predicate);
+        // … more functionality omitted.
+      }
+      ```
+- 적용
+  - ```
+    interface MemberRepository extends JpaRepository<User, Long>, QuerydslPredicateExecutor<User> {
+    }
+    ```
+- 한계점
+  - 조인X (묵시적 조인은 가능하지만 left join이 불가능하다.)
+  - 클라이언트가 Querydsl에 의존해야하며, 서비스 클래스가 Querydsl이라는 구현 기술에 의존해야 한다.
+    - JpaRepository까지 Predicate를 넘겨야하기 때문
+  - 복잡한 실무환경에서 사용하기에는 한계가 명확하다.
+
+### QuerydslRepositorySupport
+- QuerydslRepositorySupport 란?
+  - Spring Data JPA에서 QueryDSL을 편리하게 사용할 수 있도록 도와주는 유틸리티 클래스이다.
+  - QuerydslPredicateExecutor가 제공하는 기능이 제한적인 반면, QuerydslRepositorySupport는 복잡한 쿼리(조인, 서브쿼리, 그룹핑 등)를 보다 쉽게 작성할 수 있도록 도와준다.
+- 한계점
+  - Querydsl 3.x 버전을 대상으로 만듬
+  - Querydsl 4.x에 나온 JPAQueryFactory로 시작할 수 없음
+    - select로 시작할 수 없음 (from으로 시작해야함)
+  - `QueryFactory` 를 제공하지 않음
+  - 스프링 데이터 Sort 기능이 정상 동작하지 않음
+
+### Querydsl 지원 클래스 직접 생성
+- 스프링 데이터가 제공하는 `QuerydslRepositorySupport` 가 지닌 한계를 극복하기 위해 직접 Querydsl 지원 클래스를 만들 수 있다.
+  - 소스코드 내 Querydsl4RepositorySupport.java 참고
