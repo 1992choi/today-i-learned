@@ -15,7 +15,7 @@
 <br>
 
 ### Git 저장소 구조
-![image](https://github.com/1992choi/git/assets/27760576/69e54cd4-b495-4b69-b3c8-861fc0d5d9fa)
+![image](https://github.com/user-attachments/assets/7b09f708-bcb3-44d8-895f-66b1728945eb)
 - 작업 공간(Working Directory)
   - 사용자가 실제로 작업하는 공간.
   - PC에서 프로젝트를 진행하는 폴더이다.
@@ -80,12 +80,12 @@
   - 병합(Merge)은 Git에서 두 개의 branch를 하나로 통합하는 과정이다.
   - 병합에는 Fast-Forward Merge 방식과 3-way Merge 방식이 있다.
 - Fast-Forward 방식
-  - ![image](https://github.com/1992choi/git/assets/27760576/d1491b31-3844-4790-8329-927fcb40ff9c)
+  - <img width="427" alt="image" src="https://github.com/user-attachments/assets/935852c5-b062-4acd-bca0-2ec0af3c55ab" />
   - 서로 다른 브랜치의 base 커밋에 내용이 변경되지 않았을 때 사용된다.   
     Ex) 기존 Main 브랜치에서 새로운 브랜치인 Feature를 생성 한 후, Main에서는 더 이상의 커밋이 없고 Feature에서만 커밋이 발생한 경우.
   - Merge에 의해서 새로운 커밋이 만들어지지않고, HEAD의 위치만 이동된다.
 - 3-way 방식
-  - ![image](https://github.com/1992choi/git/assets/27760576/a38d7358-d7eb-40cc-86d5-dab572659966)
+  - ![image](https://github.com/user-attachments/assets/3089a90a-aa9c-44bb-ae7b-b0b75cde1e2b)
   - 각 브랜치에서 새 커밋이 발생했을 때 사용된다.
   - 두 브랜치의 코드를 합쳐서 새로운 커밋을 자동 생성해준다.
 
@@ -100,10 +100,9 @@
   - 나아가 merge를 통해 발생하는 불필요한 병합 커밋을 제거할 수 있다.
 - Merge와의 차이점
   - Merge
-    - ![image](https://github.com/1992choi/git/assets/27760576/e403b5b7-2bfc-439c-94aa-0251354580e8)
-
+    - ![image](https://github.com/user-attachments/assets/5e09dbc1-4afa-4236-ab7b-e6f1b95a8702)
   - Rebase
-    - ![image](https://github.com/1992choi/git/assets/27760576/d28b1253-fef5-442f-baae-f4072ffc43d9)
+    - ![image](https://github.com/user-attachments/assets/99b622a6-29b8-4082-ac3f-024d513d12f3)
 
 <br>
  
