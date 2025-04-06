@@ -17,7 +17,7 @@
 <br>
 
 ### 가상화 방식의 변화
-- ![image](https://github.com/user-attachments/assets/e9568a0d-9f8e-46ca-ab6c-b60d1cfdade5)
+- ![image](https://github.com/user-attachments/assets/7490f5a4-cb92-45f4-9090-907ef110ed5a)
 - 하이퍼바이저와 컨테이너
   - 하이퍼바이저
     - 하나의 컴퓨터에서 다수의 독립적인 OS를 운영한다.
@@ -56,7 +56,7 @@
       - 태그 번호인 :0.1을 생략하면 최신버전을 뜻하는 latest가 된다.
       - 마지막 온점(.)은 현재 디렉토리를 의미하는 경로이다.
 - Docker Image의 생성과 사용 Flow
-  - ![image](https://github.com/user-attachments/assets/c2aa8969-e988-4334-9841-6d6c7b8489cd)
+  - ![image](https://github.com/user-attachments/assets/54304245-b3ba-42aa-9316-4b7da0ecb700)
 
 <br>
 
@@ -106,7 +106,7 @@
     - 기존 이미지에 태그를 수정하여 새로운 이미지명을 만들 목적
     - Ex) docker tag ubuntu:16.04 localhost:5001/ubuntu:16.04
     - localhost:5001를 생략하면, Docker Hub에서 가져오겠다는 의미이다.
-    - <img width="875" alt="image" src="https://github.com/user-attachments/assets/41df8ad5-1dd6-4167-ab3f-4b441e047a9a">
+    - ![image](https://github.com/user-attachments/assets/6a6a7d76-5303-4090-8ac0-6ed9f54495a7)
   - 이미지 업로드
     - docker push localhost:5001/ubuntu:16.04
     - 'curl http://localhost:5001/v2/_catalog' 명령어를 수행하면, Repositories 리스트에서 업로드한 이미지를 확인할 수 있다.
@@ -131,26 +131,26 @@
   - 인스턴스화 되어있는 상태
 - Lifecycle
   - 컨테이너의 실행과 중지에 따른 상태 변화를 의미한다.
-  - ![image](https://github.com/user-attachments/assets/f5aea19a-ed4e-4def-8ee6-905bc4f56b9d)
-  - create
-    - 컨테이너를 생성하는 명령어.
-    - 아직 실행상태는 아니다.
-  - start
-    - 생성된 컨테이너를 실행상태로 만든다.
-  - run
-    - 컨테이너 생성과 동시에 실행 시킨다.
-    - create와 start의 결합된 명령어
-  - pause
-    - 사용 중인 컨테이너를 일시중지한다.
-  - unpause
-    - 일시중지 시킨 컨테이너를 다시 실행한다.
-  - stop
-    - 컨테이너를 중지한다.
-    - 컨테이너가 삭제되면, 다시 실행 상태로 돌아갈 수 없다.
-  - start(Stopped 상태에서)
-    - 중지한 컨테이너를 다시 실행한다.
-  - rm
-    - 컨테이너를 삭제한다.
+  - ![image](https://github.com/user-attachments/assets/130ec0b3-693b-45f7-b134-bb8c98aa8708)
+    - create
+      - 컨테이너를 생성하는 명령어.
+      - 아직 실행상태는 아니다.
+    - start
+      - 생성된 컨테이너를 실행상태로 만든다.
+    - run
+      - 컨테이너 생성과 동시에 실행 시킨다.
+      - create와 start의 결합된 명령어
+    - pause
+      - 사용 중인 컨테이너를 일시중지한다.
+    - unpause
+      - 일시중지 시킨 컨테이너를 다시 실행한다.
+    - stop
+      - 컨테이너를 중지한다.
+      - 컨테이너가 삭제되면, 다시 실행 상태로 돌아갈 수 없다.
+    - start(Stopped 상태에서)
+      - 중지한 컨테이너를 다시 실행한다.
+    - rm
+      - 컨테이너를 삭제한다.
 
 <br>
 
@@ -324,7 +324,7 @@
     - 기본적인 파일명은 docker-compose.yml이지만, 다른 이름으로 작성할 수도 있다.
     - 기본 파일명으로 작성하면 실행 명령어에서 파일명을 기재하지 않아도 되지만, 기본 파일명이 아니라면 파일명을 명시해줘야한다.
     - 파일 예시
-      - ![image](https://github.com/user-attachments/assets/c32baee4-bbb6-4a72-8969-b5b64a99e400)
+      - ![image](https://github.com/user-attachments/assets/a0fee2f0-6197-41e7-9348-d364b7af2d4f)
     - 명령어
       - image
         - Docker Image를 지정한다.
@@ -584,7 +584,7 @@
 - Rolling Updates
   - 무중단 배포의 종류 중 하나이다.
   - 서비스의 각 태스크를 한 번에 업데이트하지 않고, 지연 시간을 설정하여 태스크를 순차적으로 업데이트한다.
-  - ![image](https://github.com/user-attachments/assets/2c92e28d-ce5a-46ed-b6c3-cd8787ba1f3d)
+  - ![image](https://github.com/user-attachments/assets/06932379-09b1-49e0-a86f-c9f95a838a23)
 - Rollback
   - 이전 버전으로 돌아가기 위한 작업이다. 
 - Updates 실습
@@ -967,7 +967,7 @@
 
 ### CI/CD
 - CI/CD Pipeline
-  - <img width="1414" alt="image" src="https://github.com/user-attachments/assets/ce759090-4e52-4606-81bf-733652cc2b3b">
+  - ![image](https://github.com/user-attachments/assets/b7d38a87-c0f8-4da4-b786-ad915f3b0f1b)
   - Github
     - 소스코드를 관리한다.
   - Harbor
@@ -1038,14 +1038,14 @@
       - Publish Over SSH
   - 환경설정
     - Jenkins 관리 > Tools
-      - <img width="1046" alt="image" src="https://github.com/user-attachments/assets/85f57e2e-18ac-4ccb-b751-8bc7cc024ab3">
-      - <img width="1053" alt="image" src="https://github.com/user-attachments/assets/8bf2a4e0-5c8e-4b02-b6dd-b34688a3c563">
+      - ![image](https://github.com/user-attachments/assets/3b3ab4eb-9f61-4b67-8c4f-9eb22ee9ba5c)
+      - ![image](https://github.com/user-attachments/assets/66c32b23-176d-4c10-8d98-360cf3578a66)
     - Jenkins 관리 > System
-      - <img width="1054" alt="image" src="https://github.com/user-attachments/assets/e44e4015-2144-4d5b-8071-bc5e80006ae2">
+      - ![image](https://github.com/user-attachments/assets/f5174e0e-a182-40c6-a189-07a5bcbdb1f3)
   - Credentials
     - Home > 계정 옆 메뉴 클릭 > Stores from parent > System 클릭 > Global credentials (unrestricted) 클릭 > Add Credentials 버튼 클릭
-      - <img width="1180" alt="image" src="https://github.com/user-attachments/assets/4702d348-88f9-4974-a454-4370f0f674f0">
-      - <img width="1081" alt="image" src="https://github.com/user-attachments/assets/d6c596aa-8cdd-4dbc-b735-1da36c035635">
+      - ![image](https://github.com/user-attachments/assets/c2368688-de7b-450c-a223-3c26242bde58)
+      - ![image](https://github.com/user-attachments/assets/23fa2d09-0eb2-4937-aae2-dbe4b533f882)
       - Username=user1 / Password=harbor12345 / ID=harbor-user
         - Harbor의 계정과 맞춰주면 된다.
 
