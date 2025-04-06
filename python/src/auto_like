@@ -1,0 +1,113 @@
+import random
+import time
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from stem import Signal
+from stem.control import Controller
+from datetime import datetime
+
+# 카운터 변수 초기화
+like_count = 0
+
+# Tor ControlPort와 비밀번호 설정
+TOR_CONTROL_PORT = 9051
+TOR_PASSWORD = "1234"  # torrc 파일에서 설정한 비밀번호
+
+# IP 변경 함수
+def change_tor_ip():
+    try:
+        with Controller.from_port(port=TOR_CONTROL_PORT) as controller:
+            controller.authenticate(password=TOR_PASSWORD)  # 비밀번호 인증
+            controller.signal(Signal.NEWNYM)  # IP 변경 신호 전송
+            print("Tor IP address has been changed.")
+            time.sleep(5)  # Tor 네트워크에서 새로운 IP를 받는 데 시간이 걸림
+    except Exception as e:
+        print(f"IP 변경 중 오류 발생: {e}")
+
+# 좋아요 버튼 클릭 함수
+def click_like_button(driver):
+    global like_count  # 전역 변수 선언
+    try:
+        # 좋아요 버튼 요소 찾기
+        like_button = driver.find_element(By.CSS_SELECTOR, "button.btn_post.uoc-icon[data-tiara-action-name='공감_클릭']")
+        like_button.click()
+        like_count += 1  # 클릭 횟수 증가
+        print(f"좋아요 버튼을 클릭했습니다. - {like_count}")
+    except NoSuchElementException:
+        print("좋아요 버튼을 찾을 수 없습니다.")
+    except ElementClickInterceptedException:
+        print("좋아요 버튼 클릭이 차단되었습니다.")
+    except Exception as e:
+        print(f"좋아요 버튼 클릭 중 오류 발생: {e}")
+
+# 셀레니움으로 Tor 네트워크 연결
+def access_website_with_tor():
+    driver = None
+    try:
+        # Tor 프록시 설정
+        proxy = "127.0.0.1:9050"  # Tor가 사용하는 SOCKS5 프록시
+
+        # Firefox 옵션 설정
+        options = Options()
+        options.set_preference("javascript.enabled", True)  # JavaScript 활성화
+        options.set_preference("network.cookie.cookieBehavior", 0)  # 모든 쿠키 허용
+        options.set_preference("network.proxy.type", 1)  # 수동 프록시 설정
+        options.set_preference("network.proxy.socks", "127.0.0.1")
+        options.set_preference("network.proxy.socks_port", 9050)
+        options.set_preference("network.proxy.socks_remote_dns", True)  # 원격 DNS 사용
+
+        # User-Agent 변경 (임의로 변경된 값으로 설정)
+        options.set_preference("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+
+        # WebDriver 실행 (Geckodriver 사용)
+        driver = webdriver.Firefox(options=options)
+
+        # 랜덤한 숫자 생성
+        random_number = random.randint(1, 98)
+        url = f"https://data-cloud.tistory.com/{random_number}"  # URL에 랜덤 숫자 추가
+
+        # 랜덤한 URL로 접속
+        driver.get(url)
+
+        # 페이지가 로드될 때까지 잠시 대기
+        time.sleep(10)
+
+        # 좋아요 버튼 클릭
+        click_like_button(driver)
+
+        # 한 페이지에 머무는 시간을 랜덤하게 설정
+        page_wait_time = random.randint(120, 300)
+        print(f"한 페이지에 {page_wait_time}초 동안 머뭄.")
+
+        # 자동 스크롤 제어
+        start_time = time.time()
+        while time.time() - start_time < page_wait_time:
+            driver.execute_script("window.scrollBy(0, -70)")
+            time.sleep(1)
+    except Exception as e:
+        print(f"웹사이트 접속 중 오류 발생: {e}")
+    finally:
+        # 드라이버가 활성화된 경우 종료
+        if driver is not None:
+            driver.quit()
+            print("브라우저를 종료했습니다.")
+
+# 10초에서 30초 사이로 랜덤하게 대기 후 반복 실행
+while True:
+    try:
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"\n\n======= [{current_time}] 좋아요 봇 시작 =======")
+
+        change_tor_ip()  # IP 변경
+        access_website_with_tor()  # 웹사이트 접속
+
+        # 랜덤한 시간 대기
+        sleep_time = random.randint(20, 40)
+        print(f"{sleep_time}초 후 다음 시도 실행.")
+        time.sleep(sleep_time)
+    except Exception as e:
+        print(f"전체 프로그램 실행 중 오류 발생: {e}")
+        # 오류 발생 시 10초 후 재시도
+        time.sleep(10)
