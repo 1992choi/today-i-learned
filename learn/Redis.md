@@ -87,7 +87,7 @@
     - 캐시에 데이터가 적재되어 있지 않은 상태
 - Cache-Aside pattern
   - 다양한 캐싱 전략 중 널리 사용되고 있는 패턴 중 하나이다.
-  - ![image](https://github.com/user-attachments/assets/f48c87b6-68d4-462a-ad27-ce3d62fd64af)
+  - ![image](https://github.com/user-attachments/assets/cf696d23-b6fb-4e97-a763-df3155aba8d6)
     - 1\. 애플리케이션에서 데이터의 수요가 발생하면 캐시에 먼저 데이터를 찾아 제공한다.
     - 2\. 캐시에 해당 데이터가 존재하지 않으면 DB에서 찾아 제공한다.
     - 3\. DB에서 찾은 데이터를 캐시에 적재한다. 
@@ -403,7 +403,7 @@
   - 명령어가 실행되면 고유 ID가 반환된다.
 - XRANGE events - +
   - 처음 들어간 데이터부터 마지막 들어간 데이터까지 확인 가능하다.
-  - <img width="930" alt="image" src="https://github.com/user-attachments/assets/f8eaf2f9-a1ae-4bd0-b4ae-346916208f96">
+  - ![image](https://github.com/user-attachments/assets/1ca7dc71-b829-491d-b458-d907b1b92e23)
 - XDEL events 1723849452521-0
   - evenets라는 이름의 Stream의 고유 ID에 해당하는 데이터를 삭제한다.
 

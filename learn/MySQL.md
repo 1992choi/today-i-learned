@@ -227,7 +227,7 @@
     EXPLAIN ANALYZE [SQL문]
     ```
 - 실행 계획 조회
-  - <img width="1285" alt="image" src="https://github.com/user-attachments/assets/704d33e5-9e0e-404e-b6aa-2dc239cb902a">
+  - ![image](https://github.com/user-attachments/assets/e8c1cdf9-cd70-4d8b-8657-2929607e7453)
   - id : 실행 순서
   - select_type : - (추후 학습)
   - table : 조회한 테이블 명
@@ -245,7 +245,7 @@
   - Extra : 부가적인 정보를 제공
     - Ex) `Using where`, `Using index`
 - 상세 실행 계획 조회
-  - <img width="769" alt="image" src="https://github.com/user-attachments/assets/513274bb-fa2f-4068-831d-4b394f034fb5">
+  - ![image](https://github.com/user-attachments/assets/142da6ca-3914-4017-850a-ed591e8589dd)
   - 안쪽 레벨(=아래 문장)부터 읽으면 된다.
   - 간략하게 time의 숫자 중 뒤에 위치한 숫자는 해당 쿼리를 실행한 숫자로 이해하면 된다.
     - Table scan이 완료된 시간 = 0.0772ms
@@ -257,30 +257,30 @@
 - 실행 계획(EXPLAIN)을 조회했을 때 나오는 결과값 중 하나인 type은 성능 최적화에 있어서 굉장히 중요한 값이다.
 - 종류
   - ALL
-    - ![image](https://github.com/user-attachments/assets/ad3c7a92-bb83-43d6-849d-cc570247408f)
+    - ![image](https://github.com/user-attachments/assets/67b583da-c1cc-46d4-97d1-e83d050672db)
     - 풀 테이블 스캔
     - 풀 테이블 스캔(Full Table Scan)이란 인덱스를 활용하지 않고 테이블을 처음부터 끝까지 전부 다 뒤져서 데이터를 찾는 방식이다.
     - 처음부터 끝까지 전부 다 뒤져서 필요한 데이터를 찾는 방식이다보니 비효율적이다.
   - index
-    - ![image](https://github.com/user-attachments/assets/b94546ef-7376-4437-84b1-611159c782a0)
+    - ![image](https://github.com/user-attachments/assets/e03b02c1-b6cb-4c71-9000-3971bea1eb0c)
     - 풀 인덱스 스캔
     - 풀 인덱스 스캔(Full Index Scan)이란 인덱스 테이블을 처음부터 끝까지 다 뒤져서 데이터를 찾는 방식이다.
     - 인덱스의 테이블은 실제 테이블보다 크기가 작기 때문에, 풀 테이블 스캔(Full Table Scan)보다 효율적이다.
     - 하지만 인덱스 테이블 전체를 읽어야 하기 때문에 아주 효율적이라고 볼 수는 없다.
   - const
-    - ![image](https://github.com/user-attachments/assets/ddef8261-886f-488a-8d5d-915e1b3023d2)
+    - ![image](https://github.com/user-attachments/assets/d2fec88b-527f-4ab8-a5b8-101a713557d3)
     - 1건의 데이터를 바로 찾을 수 있는 경우
     - 조회하고자 하는 1건의 데이터를 헤매지 않고 단번에 찾아올 수 있을 때 const가 출력된다.
     - 고유 인덱스 또는 기본 키를 사용해서 1건의 데이터만 조회한 경우에 const가 출력된다.
     - 이 방식은 아주 효율적인 방식이다.
   - range
-    - ![image](https://github.com/user-attachments/assets/bd1dc195-f615-45a9-9043-727d641e60b0)
+    - ![image](https://github.com/user-attachments/assets/127cd68d-350c-474d-9794-6b8e30139cf2)
     - 인덱스 레인지 스캔(Index Range Scan)은 인덱스를 활용해 범위 형태의 데이터를 조회한 경우를 의미한다.
     - 범위 형태란 `BETWEEN`, `부등호(<, >, ≤, ≥)`, `IN`, `LIKE`를 활용한 데이터 조회를 뜻한다.
     - 이 방식은 인덱스를 활용하기 때문에 효율적인 방식이다.
     - 하지만 인덱스를 사용하더라도 데이터를 조회하는 범위가 클 경우 성능 저하의 원인이 되기도 한다.
   - ref
-    - ![image](https://github.com/user-attachments/assets/f00ab948-096b-49a4-a65d-2e3726409e2a)
+    - ![image](https://github.com/user-attachments/assets/8568f7d7-6be5-49eb-b53c-ceb529d1e014)
     - 비고유 인덱스를 사용한 경우 (= UNIQUE가 아닌 컬럼의 인덱스를 사용한 경우) type에 ref가 출력된다.
     - 비고유 인덱스이다보니, 중복되는 값이 있을 수도 있어서 값을 찾고 바로 결과를 반환하는 것이 아니라 계속해서 탐색을 진행하게 된다.
       - 중복되는 값이 있어도 정렬되어있기 때문에 값들이 순차적으로 모여있기는 하다.
@@ -321,7 +321,7 @@
   SELECT * FROM users LIMIT 10;
   ```
 - 조회결과
-  - <img width="616" alt="image" src="https://github.com/user-attachments/assets/62dcaaf1-1576-4f3b-8ed2-92d95177d75e">
+  - ![image](https://github.com/user-attachments/assets/8ae1ba48-9431-4d4a-a3cb-4528426be335)
   - 10,000건을 조회할 때와 10건을 조회할 때의 시간 차이를 확인해보면 조회하는 데이터의 개수에 따라 성능이 달라지는 것을 볼 수 있다.
   - 조회하는 데이터의 개수가 성능에 많은 영향을 끼치기 때문에 LIMIT, WHERE문 등을 활용해서 한 번에 조회하는 데이터의 수를 줄이는 방법을 고려해볼 필요가 있다.
 
@@ -377,9 +377,9 @@
   ```
 - 조회결과
   - 인덱스 생성 전
-    - <img width="1314" alt="image" src="https://github.com/user-attachments/assets/edc4df4d-81a9-416e-b7ae-8a71bc9dff7c">
+    - ![image](https://github.com/user-attachments/assets/704bcf6f-f415-4547-ad2f-64b23706b0bc)
   - 인덱스 생성 후
-    - <img width="1378" alt="image" src="https://github.com/user-attachments/assets/d6ac1db9-863f-4f7d-93b5-846aaba32c7a">
+    - ![image](https://github.com/user-attachments/assets/89d3c92b-e36e-4c9f-8e98-f3074a3e6555)
   - created_at으로 인덱스를 생성하여 정렬시킴에 따라 성능이 향상된 것을 볼 수 있다.
     - 소요시간이 단축되었으며, type 또한 ALL에서 range로 변경되었다.
   - WHERE문의 부등호(>, <, ≤, ≥, =), IN, BETWEEN, LIKE와 같은 곳에서 사용되는 컬럼은 인덱스를 사용했을 때 성능이 향상될 가능성이 높다. 
@@ -424,10 +424,10 @@
   FROM cte;
   ```
 - 튜닝 전
-  - <img width="1309" alt="image" src="https://github.com/user-attachments/assets/f0925eb6-82fb-45d3-9c40-04b61d3c2edd">
+  - ![image](https://github.com/user-attachments/assets/6a3492f0-51c3-47b7-8a4a-57ad4ff64964)
     - 대략 200ms 소요.
     - type은 ALL로 풀 테이블 스캔이 일어난 것을 알 수 있다.
-  - <img width="1044" alt="image" src="https://github.com/user-attachments/assets/8e6bb177-8b29-4691-9b64-7d1c112baa74">
+  - ![image](https://github.com/user-attachments/assets/453dfe0b-6346-4358-bc45-eda85393bc52)
     - rows의 1e+6은 10의 6승을 의미한다.
 - 튜닝 후
   - 성능 향상을 위해 인덱스를 생성할 때, department / created_at / 멀티 컬럼 인덱스(순서도 고려)를 고민해봐야한다.
@@ -491,7 +491,7 @@
   ORDER BY name DESC;
   ```
 - 실행결과
-  - <img width="1287" alt="image" src="https://github.com/user-attachments/assets/00f6d8c0-fb88-47ce-8fe9-02af02e97c05">
+  - ![image](https://github.com/user-attachments/assets/37e55cbb-2695-466e-b1be-c0afc76f8e5d)
   - type이 ALL 인 것으로 보아 인덱스가 작동하지 않는 것을 볼 수 있다.
   - SELECT * 로 작성했기 때문에 옵티마이저는 넓은 범위의 데이터를 조회할 때는 인덱스를 활용하는 것보다 풀 테이블 스캔이 더 효율적이라 판단하여 이와 같은 계획이 나온 것이다.
     - 즉, 굳이 인덱스를 거쳤다가 각 원래 테이블의 데이터를 일일이 하나씩 찾아내는 것보다, 바로 원래 테이블에 접근해서 모든 데이터를 통째로 가져와서 정렬하는 게 효율적이라고 판단한 것이다.

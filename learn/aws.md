@@ -145,7 +145,7 @@
   - RDS 백업 복원시 도메인 변경
     - 원본 RDS 인스턴스를 가지고 새로운 DB를 복원시 새로운 인스턴스와 Endpoint가 생성된다.
     - 원본 DNS는 앞에 original인 반면, 복원된 것은 앞에 restored가 붙게된다.
-    - <img width="737" alt="image" src="https://github.com/1992choi/aws/assets/27760576/580dfa94-358b-4981-8ce5-ba5732a71d8d">
+    - ![image](https://github.com/user-attachments/assets/e55cce27-f1d1-4d11-8fe6-93da00e85686)
 
 <br>
 
@@ -287,7 +287,7 @@
     - 원본 데이터를 가지고 있는 서버.
     - 보통 Origin Server에는 S3, EC2 instance 등이 있다.
 - 데이터 전달 과정
-  - ![image](https://github.com/1992choi/aws/assets/27760576/f4b01eaa-39a8-48b8-a0b9-3358c04368c9)
+  - ![image](https://github.com/user-attachments/assets/2591425f-ece2-4e1c-940a-48a16e29effc)
 
 <br>
 
@@ -297,7 +297,7 @@
   - Auto-Scaling 기능을 탑재하고 있다.
   - SSD 스토리지 사용하여 읽고 쓰는 속도가 빠르다.
 - 구조
-  - ![image](https://github.com/1992choi/aws/assets/27760576/0d96cf40-0444-4eb3-90ed-6fa4de3772a5)
+  - ![image](https://github.com/user-attachments/assets/b29dd79f-7803-4f0d-b53e-dfcb3590f268)
   - 아이템(Items)
     - 행(row)과 유사한 개념.
   - 특징(Attributes)
@@ -377,7 +377,7 @@
   - 메디에이션(Mediation)
     - Message Exchange Pattern
       - 동기호출을 비동기호출로 변환 가능.
-      - ![image](https://github.com/1992choi/aws/assets/27760576/741d285c-c376-47af-8c56-f0240b620239)
+      - ![image](https://github.com/user-attachments/assets/2880575b-8508-48bf-a84e-af10f93a33ab)
     - Message Format Transformation
       - 클라이언트의 요청을 하위 서비스가 처리할 수 있도록 데이터 형식을 변형하거나, 하위 서비스의 응답 표준 포맷으로 데이터 형식을 변형.
 
@@ -415,11 +415,11 @@
     - 배포 중 실패가 감지되면 이전 버전으로 자동으로 롤백할 수 있어 안정성을 확보할 수 있다.
   - 배포 전략
     - Rolling 배포
-      - ![image](https://github.com/1992choi/aws/assets/27760576/8617d592-e4c9-4151-bdfe-11daaf7ea77c)
+      - ![image](https://github.com/user-attachments/assets/744b03a1-f096-44e9-9706-2d9390fee155)
       - 여러 개의 가동중인 서버 (인스턴스)를 갖춘 환경에서 한 번에 정해진 수만큼의 서버에 새로운 변경 사항이 포함된 어플리케이션을 배포하는 방법.
       - 서버 수의 제약이 있을 경우에는 유용한 방법.
     - Blue/Green 배포
-      - ![image](https://github.com/1992choi/aws/assets/27760576/d7ba3a22-df01-4071-b90b-5dd2720657e3)
+      - ![image](https://github.com/user-attachments/assets/dbf37ec0-45d6-4f9a-9e5f-1e4b38b1fa71)
       - 새로운 변경사항이 포함된 어플리케이션을 위한 새로운 환경을 구축하고 교체하는 방법.
       - 버전 관리 문제를 방지할 수 있고, 운영 환경에 영향을 주지 않고 실제 서비스 환경으로 새 버전 테스트가 가능하다.
       - 롤백도 Rolling 배포에 비해 수월하다.
