@@ -107,4 +107,32 @@
       - 네이티브 서블릿 객체(HttpServletRequest) 에 접근할 수 있는 인터페이스
     - ServletWebRequest
       - HttpServletRequest 와 HttpServletResponse 를 감싸며 Spring 자체 추상화된 요청/응답 기능을 제공하는 구현체
-      
+
+### HttpServletRequest - 요청 처리
+- HttpServletRequest는 클라이언트의 다양한 데이터 포맷과 요청 유형에 따라 정보를 읽고 처리할 수 있는 API를 제공한다.
+- 요청을 처리하는 방식으로 URL 쿼리 파라미터, 폼 데이터(GET/POST), REST API 처리 등 세 가지로 나누어 구분 할 수 있다.
+  - URL 쿼리 파라미터
+    - URL 쿼리 파라미터는 HTTP 요청의 쿼리 문자열(Query String)에 포함되어 전달되며, 이는 보통 GET 요청에서 사용된다.
+    - 주요 API
+      - request.getParameter(String name)
+        - 단일 파라미터 값을 반환한다.
+      - request.getParameterValues(String name)
+        - 다중 파라미터 값을 배열로 반환한다.
+      - request.getParameterMap()
+        - 모든 파라미터를 Map<String, String[]> 형식으로 반환한다.
+  - FORM 데이터 처리
+    - FORM 데이터는 HTML <form> 태그를 통해 클라이언트에서 서버로 전달되며 데이터는 요청 메서드에 따라 다르게 처리된다.
+      - GET 방식
+        - 요청 데이터가 URL의 쿼리 문자열에 포함된다
+        - 전송 데이터의 크기는 URL 길이 제한에 의해 제약을 받지 않고 URL이 노출되므로 민감한 데이터 전송에 적합하지 않다
+      - POST 방식
+        - 요청 데이터가 HTTP 요청 본문에 포함된다
+    - 주요 API
+      - 위의 'URL 쿼리 파라미터'와 동일
+  - REST API 데이터 처리
+    - REST API 요청은 클라이언트가 JSON 또는 Plain Text 형태의 데이터를 HTTP 요청 본문에 포함하여 서버로 전송하는 방식으로서 getParameter() 와 같은 방법이 아닌 InputStream 으로부터 본문 데이터를 직접 읽어야 한다.
+    - 주요 API
+      - request.getReader()
+        - 요청 본문을 문자 스트림으로 읽는다
+      - request.getInputStream()
+        - 요청 본문을 바이너리 스트림으로 읽는다
