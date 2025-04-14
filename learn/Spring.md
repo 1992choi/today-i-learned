@@ -79,3 +79,32 @@
         - 즉시 서블릿이 로딩되면 값이 낮을수록 더 높은 우선 순위를 가지며 1이 가장 먼저 로된다.
       - 0 값
         - 애플리케이션 시작 시 서블릿을 로드하지만 양수 값들보다 우선하지 않을 수 있다.
+
+### HttpServletRequest
+- HttpServletRequest 란?
+  - HttpServletRequest 는 클라이언트로부터 Http 요청이 들어오면 요청 데이터를 분석하고, 분석한 정보들이 저장되어 HttpServletResponse 와 함께 서블릿으로 전달되는 객체이다.
+- HttpServletRequest 구조
+  - HTTP 메서드
+  - 요청 URI
+  - 요청 프로토콜
+  - 요청 파라미터
+  - 헤더 정보 등으로 구성된다.
+- HttpServletRequest 생성
+  - HTTP 요청이 시작되면 총 3개의 Request 객체가 생성된다.
+    - org.apache.coyote.Request 객체 생성
+      - 낮은 수준의 HTTP 요청 처리를 담당하여 서블릿 컨테이너와 독립적으로 동작.
+    - org.apache.catalina.connector.Request 객체 생성
+      - 서블릿 API 규격을 구현하여 고수준 요청 데이터를 처리
+      - 서블릿 컨테이너에서는 coyote.Request를 직접 사용할 수 없어서, 그것보다 고수준의 Request가 필요하고 이러한 이유로 생성되는 객체이다.
+    - org.apache.catalina.connector.RequestFacade 객체 생성
+      - 캡슐화를 통해 서블릿 API 사용을 표준화하고 내부 구현을 보호
+      - org.apache.catalina.connector.Request 객체를 한 번 더 감싸고 있는 개념이다.
+- 스프링의 Request
+  - 앞서 살펴본 Request 이외에도 스프링에서만 특화된 Request 객체가 존재한다. (하지만 스프링에서도 위 Request 객체들을 주로 사용한다.)
+    - WebRequest
+      - HTTP 요청의 파라미터, 헤더 등 메타데이터에 대한 추상화된 접근을 제공하는 인터페이스
+    - NativeWebRequest
+      - 네이티브 서블릿 객체(HttpServletRequest) 에 접근할 수 있는 인터페이스
+    - ServletWebRequest
+      - HttpServletRequest 와 HttpServletResponse 를 감싸며 Spring 자체 추상화된 요청/응답 기능을 제공하는 구현체
+      
