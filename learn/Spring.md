@@ -90,7 +90,7 @@
   - 요청 파라미터
   - 헤더 정보 등으로 구성된다.
 - HttpServletRequest 생성
-  - HTTP 요청이 시작되면 총 3개의 Request 객체가 생성된다.
+  - HTTP 요청이 시작되면 총 3개의 Request 객체가 순서대로 생성된다.
     - org.apache.coyote.Request 객체 생성
       - 낮은 수준의 HTTP 요청 처리를 담당하여 서블릿 컨테이너와 독립적으로 동작.
     - org.apache.catalina.connector.Request 객체 생성
@@ -136,3 +136,33 @@
         - 요청 본문을 문자 스트림으로 읽는다
       - request.getInputStream()
         - 요청 본문을 바이너리 스트림으로 읽는다
+
+### HttpServletResponse
+- HttpServletResponse 란?
+  - 서버가 클라이언트의 요청에 대한 응답을 생성하고 반환할 때 사용되며, HTTP 응답의 상태 코드, 헤더, 본문 데이터를 설정하고 제어하는 다양한 메서드를 제공한다.
+- 주요 API
+  - setStatus(int sc)
+    - 응답 상태 코드를 설정
+  - sendError(int sc, String msg)
+    - 상태 코드와 메시지를 설정하여 에러 응답을 전송
+  - setHeader(String name, String value)
+    - 응답 헤더 설정
+    - name이 동일할 경우, 덮어써진다.
+  - addHeader(String name, String value)
+    - 응답 헤더 추가
+  - setContentType(String type)
+    - 응답 본문의 콘텐츠 타입 설정
+  - getWriter()
+    - 응답 본문 작성을 위한 PrintWriter 반환
+  - sendRedirect(String location)
+    - 클라이언트를 다른 URL로 리다이렉트
+  - addCookie(Cookie cookie)
+    - 쿠키 추가
+- HttpServletResponse 생성
+  - HTTP 요청이 시작되면 총 3 개의 Response 객체가 순서대로 생성된다.
+    - org.apache.coyote.Response 객체 생성
+      - 낮은 수준의 HTTP 응답 처리를 담당하여 서블릿 컨테이너와 독립적으로 동작
+    - org.apache.catalina.connector.Response 객체 생성
+      - 서블릿 API 규격을 구현하여 고수준 응답 데이터를 처리
+    - org.apache.catalina.connector.ResponseFacade 객체 생성
+      - 캡슐화를 통해 서블릿 API 사용을 표준화하고 내부 구현을 보호
