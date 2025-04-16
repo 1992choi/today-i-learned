@@ -208,3 +208,27 @@
   - 스프링 애플리케이션이 구동되면 WebApplicationInitializer 타입의 클래스가 실행되고 여기서 스프링 컨테이너 초기화 및 설정 작업이 이루어진다.
 - 전체 구성도
   - <img width="1047" alt="image" src="https://github.com/user-attachments/assets/47755dbb-7c38-496f-9f36-092ec0ebb50f" />
+
+### 초기화 클래스들
+- 스프링 부트는 웹 MVC 초기화와 실행을 위한 여러 빈들을 생성하고 초기 값들을 설정하기 위한 여러 클래스들을 정의하고 있다.
+  - WebMvcProperties
+    - 스프링 MVC 의 여러 속성들을 환경설정파일(properties, yml) 을 통해 설정할 수 있다.
+  - DispatcherServletAutoConfiguration
+    - DispatcherServlet 자동 설정 클래스
+  - WebMvcAutoConfiguration
+    - 메시지 컨버터, 뷰 리졸버, 포맷터, 인터셉터, 리소스 핸들러 등 Web MVC에서 자주 사용하는 Bean들이 이 클래스를 통해 자동 구성된다.
+    - 내부적으로 WebMvcAutoConfigurationAdapter와 EnableWebMvcConfiguration 등의 클래스를 가지고 있다.
+      - WebMvcAutoConfigurationAdapter
+        - WebMvcConfigurer 인터페이스를 구현한 추상 클래스로서 스프링 부트에서 제공하는 여러 기본 MVC 설정을 제공하며, 사용자가 직접 WebMvcConfigurer 인터페이스를 직접 구현하여 커스트 마이징 할 수 있다.
+      - EnableWebMvcConfiguration
+        - 전통적인 스프링 MVC에서 @EnableWebMvc 를 사용할 때 MVC 구성에 필요한 핵심 Bean 등록(핸들러 매핑, 핸들러 어댑터, 뷰 리졸버 등)을 담당하는 추상 클래스로서 스프링 MVC의 ‘기본 골격’이라고 볼 수 있다
+        - 주요 기능
+          - 핸들러 매핑 및 핸들러 어댑터 설정
+          - 뷰 리졸버(ViewResolver) 설정
+          - MessageConverters 설정
+          - Validator와 Formatting 설정
+          - 인터셉터(Interceptors) 및 기타 커스터마이징 포인트
+          - 정적 리소스 제공 설정
+  - WebMvcConfigurer
+    - WebMvcConfigurer 는 Web MVC 관련 설정을 커스터마이징할 수 있는 다양한 메서드를 정의하고 있으며 스프링 부트가 기본적으로 제공하는 자동 구성을 유지하면서 필요한 부분만 맞춤형으로 설정할 수 있다.
+    - 예를 들어 정적 리소스 매핑(addResourceHandlers), CORS 설정(addCorsMappings), 메시지 컨버터 등록(configureMessageConverters), 인터셉터 추가(addInterceptors) 등 MVC 전반에 걸친 세부 설정들을 손쉽게 추가하거나 변경할 수 있다.
