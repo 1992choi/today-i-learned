@@ -176,3 +176,35 @@
     - HTML 컨텐츠를 렌더링하여 브라우저가 화면에 표시하도록 전송
   - HTTP 본문 응답
     - JSON, XML, 바이너리 데이터 등 다양한 형식의 HTTP 응답 본문 데이터를 전송
+   
+### 서블릿 컨테이너 & 스프링 컨테이너
+- 서블릿 컨네이너 & 스프링 컨테이너 연결
+  1. WAS 가 구동되면 서블릿 컨테이너가 META-INF/services/jakarta.servlet.ServletContainerInitializer 파일을 검색하여 ServletContainerInitializer 인터페이스를 구현한 클래스(ex. MyServletContainerInitializer)를 로드한다.
+    - jakarta.servlet.ServletContainerInitializer 파일의 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어있다.
+  2. ServletContainerInitializer 구현체는 @HandlesTypes(MyWebAppInitializer.class)와 같이 설정을 할 수 있으며, MyWebAppInitialize를 호출하여 스프링 어플리케이션을 초기화 한다.
+- ServletContainerInitializer
+  - 웹 애플리케이션이 시작될 때 자동으로 실행되는 초기화 코드를 작성하고 싶을 때 사용하는 인터페이스이다.
+  - 동작방식
+    1. /META-INF/services/jakarta.servlet.ServletContainerInitializer 에 클래스 정보를 입력 하면 초기화 시 해당 파일이 있는지 검색한 후 실행한다.
+       - META-INF/services/javax.servlet.ServletContainerInitializer 파일 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어 있음.
+    2. ServletContainerInitializer 클래스(이 때 구현체는 MyServletContainerInitializer라 가정)에 @HandlesTypes 어노테이션을 붙이면 주어진 타입에 대해 컨테이너가 자동으로 스캐닝을 수행한다.
+       - ```
+         @HandlesTypes(MyWebAppInitializer.class) // 여기서 선언되었기 때문에 아래 메서드인 onStartup()에 의해서 MyWebAppInitializer를 구현한 서블릿이 로드 된다.
+         public class MyServletContainerInitializer implements ServletContainerInitializer {
+           @Override
+           public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
+             for (Class<?> initClass : c) {
+               MyWebAppInitializer initializer
+                 = (MyWebAppInitializer) initClass.getDeclaredConstructor().newInstance();
+               initializer.onStartup(ctx);
+              }
+           }
+         }
+         ```
+- SpringServletContainerInitializer
+  - 스프링은 SpringServletContainerInitializer 라는 구현체를 제공하며 이는 스프링 애플리케이션에서 서블릿 컨테이너와의 초기 상호작용을 담당한다.
+  - SpringServletContainerInitializer는 @HandlesTypes 어노테이션에 WebApplicationInitializer 타입이 선언되어 있으며 이는 WebApplicationInitializer 인터페이스를 구현한 클래스를 자동으로 탐색하고 이를 호출하여 스프링 어플리케이션을 초기화 한다.
+- WebApplicationInitializer
+  - 스프링 애플리케이션이 구동되면 WebApplicationInitializer 타입의 클래스가 실행되고 여기서 스프링 컨테이너 초기화 및 설정 작업이 이루어진다.
+- 전체 구성도
+  - <img width="1047" alt="image" src="https://github.com/user-attachments/assets/47755dbb-7c38-496f-9f36-092ec0ebb50f" />
