@@ -251,3 +251,68 @@
     - 화면을 렌더링 하는 객체
 - 흐름도
   - ![image](https://github.com/user-attachments/assets/d0899653-fa1b-40e1-b155-e0d0581d2ddf)
+
+### DispatcherServlet
+- DispatcherServlet 란?
+  - 스프링 MVC의 핵심 프론트 컨트롤러로 모든 HTTP 요청을 중앙에서 받아 처리하는 역할을 한다.
+  - 요청을 적절한 핸들러(일반적으로 컨트롤러)로 라우팅하고 요청 처리 후에는 적절한 뷰를 선택하여 응답을 반환한다.
+  - 핸들러 매핑, 뷰 리졸버, 인터셉터 등을 조정하여 요청 처리 흐름을 관리하고 스프링 MVC 애플리케이션에서 중심적인 역할을 수행한다.
+- init() / service()
+  - DispatcherServlet 은 요청이 시작되면 서블릿의 생명주기에 따라 init() 메서드와 service() 메서드가 실행되어 초기화 작업 및 실제 요청을 처리하게 된다.
+  - init()
+    - 요청이 시작되면 DispatcherServlet 의 init() 메서드가 호출되며 최초 한번 실행된다.
+      - DispatcherServlet의에는 실제로 init()이라고 구현된 메서드는 없다.
+        - 하지만 DispatcherServlet은 HttpServlet을 상속한 FrameworkServlet의 하위 클래스이고, 그 부모 클래스에서 init() 메서드를 오버라이드하고 있다.
+        - HttpServlet에는 init() 메서드가 존재하며, FrameworkServlet에서 이 init() 메서드를 오버라이드하여 Spring의 초기화 로직을 처리한다. 
+        - DispatcherServlet은 FrameworkServlet의 서브 클래스이기 때문에 init() 메서드를 직접 정의하지 않더라도 상속받아 사용할 수 있다.
+        - 즉, DispatcherServlet의 초기화 로직은 실제로 init() → initServletBean() → onRefresh() → initStrategies() 순서로 연결된다.
+          - ```
+            protected void initStrategies(ApplicationContext context) {
+              this.initMultipartResolver(context);
+              this.initLocaleResolver(context);
+              this.initThemeResolver(context);
+              this.initHandlerMappings(context);
+              this.initHandlerAdapters(context);
+              this.initHandlerExceptionResolvers(context);
+              this.initRequestToViewNameTranslator(context);
+              this.initViewResolvers(context);
+              this.initFlashMapManager(context);
+            }          
+            ```
+    - WebApplicationContext 를 생성 및 초기화하며 HandlerMapping, HandlerAdapter, ViewResolver 등의 필수 구성요소를 초기화하고 모든 요청을 처리할 준비를 완료한다.
+  - service()
+    - 매 요청 마다 실행되는 메서드로 HTTP 요청을 분석하여 적합한 핸들러(Controller)를 찾고 실행하는 역할을 한다.
+    - 실행 결과를 기반으로 뷰(View)를 렌더링하여 클라이언트에게 응답을 반환한다.
+    - init()과 비슷하게 실제로 service() 메서드는 없고 doService() 메서드가 존재한다.
+- doDispatch()
+  - 실제 핸들러로 요청을 디스패치하는 작업을 처리한다.
+  - 모든 HTTP 메서드는 doDispatch() 메서드에 의해 처리가 이루어진다.
+  - doDispatch()는 doService() 내부에서 호출된다.
+  - 대략적인 코드 예시
+    - ```
+      protected void doDispatch(HttpServletRequest request, HttpServletResponse response) {
+        //현재 요청을 처리할 핸들러 검색
+        HandlerExecutionChain mappedHandler = getHandler(request);
+          
+        // 현재 요청에 대한 핸들러 어댑터를 결정
+        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+          
+        // 전 처리 인터셉터 수행
+        if (!mappedHandler.applyPreHandle(request, response)) return;
+          
+        // 실제 핸들러 호출 후 ModelAndView 반환
+        ModelAndView mv = ha.handle(request, response, mappedHandler.getHandler());
+          
+        // 후 처리 인터셉터 수행
+        mappedHandler.applyPostHandle(request, response, mv);
+          
+        // 뷰 이름 확인
+        String viewName = mv.getViewName();
+          
+        // 뷰 리졸버를 통해 뷰 선택
+        View view = resolveViewName(viewName, mv.getModelInternal(), locale, request);
+          
+        // 뷰 렌더링
+        view.render(mv.getModelInternal(), request, response);
+      }
+      ```
