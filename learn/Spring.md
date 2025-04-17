@@ -232,3 +232,20 @@
   - WebMvcConfigurer
     - WebMvcConfigurer 는 Web MVC 관련 설정을 커스터마이징할 수 있는 다양한 메서드를 정의하고 있으며 스프링 부트가 기본적으로 제공하는 자동 구성을 유지하면서 필요한 부분만 맞춤형으로 설정할 수 있다.
     - 예를 들어 정적 리소스 매핑(addResourceHandlers), CORS 설정(addCorsMappings), 메시지 컨버터 등록(configureMessageConverters), 인터셉터 추가(addInterceptors) 등 MVC 전반에 걸친 세부 설정들을 손쉽게 추가하거나 변경할 수 있다.
+
+### 스프링 웹 MVC 기본 아키텍처
+- 구성
+  - DispatcherServlet
+    - 모든 클라이언트의 요청을 한 곳에서 받아 공통으로 처리하는 객체
+  - HandlerMapping
+    - 여러 요청 핸들러 중 현재 요청을 처리하기 적합한 핸들러를 탐색하고 선택하는 객체
+  - HandlerAdapter
+    - 선택한 요청 핸들러를 실제 호출하는 객체
+  - Handler
+    - 실질적으로 현재 요청을 처리하는 객체
+  - ModelAndView
+    - 요청 처리 중 생성되거나 전달받은 데이터와 뷰 정보를 저장하는 객체
+  - ViewResolver
+    - 여러 뷰 중 현재 응답을 처리하기 적합한 뷰를 선택하는 객체
+  - View
+    - 화면을 렌더링 하는 객체
