@@ -249,3 +249,5 @@
     - 여러 뷰 중 현재 응답을 처리하기 적합한 뷰를 선택하는 객체
   - View
     - 화면을 렌더링 하는 객체
+- 흐름도
+  - ![image](https://github.com/user-attachments/assets/d0899653-fa1b-40e1-b155-e0d0581d2ddf)
