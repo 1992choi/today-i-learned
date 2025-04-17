@@ -288,7 +288,6 @@
   - 실제 핸들러로 요청을 디스패치하는 작업을 처리한다.
   - 모든 HTTP 메서드는 doDispatch() 메서드에 의해 처리가 이루어진다.
   - doDispatch()는 doService() 내부에서 호출된다.
-  - 대략적인 코드 예시
     - ```
       protected void doDispatch(HttpServletRequest request, HttpServletResponse response) {
         //현재 요청을 처리할 핸들러 검색
