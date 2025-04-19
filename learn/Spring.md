@@ -315,3 +315,60 @@
         view.render(mv.getModelInternal(), request, response);
       }
       ```
+      
+### HandlerMapping
+- HandlerMapping 이란?
+  - 요청 URL과 이를 처리할 핸들러(Handler, 일반적으로 Controller)를 매핑하는 인터페이스이다.
+  - 클라이언트 요청이 들어오면 DispatcherServlet 은 등록된 모든 HandlerMapping 구현체를 탐색하여 적합한 핸들러를 찾아 반환하고 이후 적절한 HandlerAdapter 를 통해 실행한다.
+  - HandlerMapping 은 핸들러를 검색해서 찾는 역할만 할 뿐 핸들러를 실행하지는 않는다. 핸들러 실행은 HandlerAdapter 가 담당한다.
+- HandlerMapping의 종류 중 일부
+  - BeanNameUrlHandlerMapping
+   - Bean 이름을 URL로 매핑
+   - 현재는 잘 사용되지 않는 이전 방식
+   - ```
+     @Component("/beanHandler") // Bean 이름이 요청 URL과 매핑됨
+     public class BeanNameHandler implements Controller {
+       @Override
+       public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse res) throws Exception {
+         response.getWriter().write("BeanNameUrlHandlerMapping!");
+         return null;
+       }
+     }
+     ```
+  - SimpleUrlHandlerMapping
+    - 명시적으로 URL 패턴을 핸들러와 매핑하는 방식으로서 간단한 URL 매핑에 사용된다.
+    - ```
+      public class MyHttpRequestHandler implements HttpRequestHandler {
+        @Override
+        public void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+          response.setContentType("text/plain");
+          response.getWriter().write("SimpleUrlHandlerMapping!");
+        }
+      }
+      
+      // 위 동작을 위해 bean으로 등록이 필요하다.
+      @Bean
+      public SimpleUrlHandlerMapping simpleUrlHandlerMapping() {
+        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+        Properties urlMappings = new Properties();
+        urlMappings.setProperty("/simpleUrl", "myHttpRequestHandler");
+        mapping.setMappings(urlMappings);
+        mapping.setOrder(1);
+        return mapping;
+      }
+      
+      @Bean
+      public MyHttpRequestHandler myHttpRequestHandler() {
+        return new MyHttpRequestHandler();
+      }
+      ```
+  - RequestMappingHandlerMapping
+    - 가장 우선순위가 높고 대부분 이 방식을 사용
+    - @RequestMapping 또는 @GetMapping, @PostMapping 과 같은 애노테이션을 기반으로 URL과 핸들러를 매핑한다.
+- Handler 구현 방식
+  - @Controller, @RestController
+    - Spring MVC 에서 가장 널리 사용되는 요청 처리 방식으로서 클래스에 @Controller 를 붙이고 메서드에 @RequestMapping 과 같은 어노테이션을 사용하여 요청을 처리한다.
+  - Controller 인터페이스
+    - Spring 2.5 이전에 사용되던 요청 처리 방식으로서 Controller 인터페이스를 구현하여 요청을 처리한다.
+  - HttpRequestHandler
+    - HttpRequestHandler 인터페이스를 구현하여 요청을 처리하는 방식으로서 Spring의 가장 저수준 API 중 하나로 서블릿에 가까운 형태로 동작한다.
