@@ -372,3 +372,43 @@
     - Spring 2.5 이전에 사용되던 요청 처리 방식으로서 Controller 인터페이스를 구현하여 요청을 처리한다.
   - HttpRequestHandler
     - HttpRequestHandler 인터페이스를 구현하여 요청을 처리하는 방식으로서 Spring의 가장 저수준 API 중 하나로 서블릿에 가까운 형태로 동작한다.
+
+### @RequestMapping
+- 개요
+  - @RequestMapping은 특정 URL 경로에 대한 요청을 처리할 메서드를 매핑하는 데 사용되는 어노테이션이다.
+  - @RequestMapping은 @Controller 및 @RestController로 선언된 클래스에서 사용되며 내부적으로 RequestMappingHandlerMapping 클래스가 처리하고 있다
+- 매핑 종류
+  - URL 매핑
+    - 경로 매핑 URI 는 예를 들어 "/profile"과 같은 형태를 가진다.
+    - Ant 스타일의 경로 패턴("/user/**") 지원한다.
+    - 다중 설정({"/user/**“, "/mypage"})도 가능하다.
+    - 클래스 레벨에도 작성 가능하다.
+      - 클래스에 /user, 메서드에 /edit으로 명명되어있다면, 실제 메서드는 /user/edit으로 호출 가능
+    - 매핑 URI는 플레이스홀더(예: "/${profile_path}")를 포함할 수 있다.
+  - HTTP 메서드 매핑
+    - GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE 메서드를 설정할 수 있다.
+      - @RequestMapping(value = "/user", method = RequestMethod.GET) 에서 method = RequestMethod.GET에 해당
+    - 클래스 수준에서 사용되는 경우 모든 메서드 수준 매핑은 해당 HTTP 메서드 설정을 상속받는다.
+    - 클래스 수준과 메서드 수준이 함께 설정되었을 경우 메서드 수준의 HTTP 메서드 설정이 타입 수준의 설정을 덮어쓴다. 즉, 메서드 수준의 설정이 우선 적용된다.
+  - param 매핑
+    - 사용예시
+      - @RequestMapping(value = "/order", params = "type=pizza")
+    - 표현식은 != 연산자를 사용하여 부정할 수 있다.
+    - "myParam" 표현식도 지원되며 요청에 존재해야 하지만 어떤 값이라도 가질 수 있다.
+    - "!myParam" 표현식은 해당 매개변수가 요청에 포함되지 않아야 함을 나타낸다.
+  - headers 매핑
+    - 사용예시
+      - @RequestMapping(value = "/json", method = RequestMethod.POST, headers = "content-type=application/json")
+  - produces 와 consumes
+    - produces
+      - @RequestMapping(value = "/report", method = RequestMethod.GET, produces = "application/json")
+      - 클라이언트가 서버에 요청을 보낼 때 서버가 어떤 형식의 데이터를 반환할지를 지정한다.
+    - consumes
+      - @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = "application/json")
+      - 클라이언트가 서버로 전송하는 데이터의 형식을 제한한다
+- @RequestMapping 축약 어노테이션
+  - URL 매핑 +  HTTP 메서드 매핑을 아래와 같이 축약한 어노테이션도 제공한다.
+    - @GetMapping
+    - @PostMapping
+    - @PutMapping
+    - @DeleteMapping
