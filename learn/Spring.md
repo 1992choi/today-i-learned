@@ -449,3 +449,56 @@
       - @RequestMapping 어노테이션으로 매핑된 메서드를 처리하는 클래스로서 대부분 이 클래스가 사용된다.
     - SimpleControllerHandlerAdapter
       - 일반적인 Controller 인터페이스를 구현하여 요청을 처리할 수 있도록 해 준다.
+
+### Method Arguments
+- Method Arguments란?
+  - 스프링의 메서드 매개변수(Method Arguments)는 컨트롤러 메서드에서 HTTP 요청 데이터를 직접 접근하고 처리할 수 있도록 다양한 매개변수를 지원한다
+  - 요청의 URL, 헤더, 본문, 쿠키, 세션 데이터 등과 같은 정보를 자동으로 매핑하여 개발자가 이를 쉽게 활용할 수 있도록 제공한다.
+- HandlerMethodArgumentResolver
+  - HTTP 요청과 관련된 데이터를 컨트롤러 메서드의 파라미터로 변환하는 작업을 담당하는 클래스이다.
+  - 다양한 유형의 파라미터 (예: @RequestParam, @PathVariable, @RequestBody 등)를 처리하기 위해 여러 HandlerMethodArgumentResolver 기본 구현체를 제공한다.
+
+### 메서드 기본 매개변수
+- 스프링 MVC 에서 메서드 파라미터에 공통적으로 선언할 수 있는 기본 인자들이 있으며 요청 및 응답 처리, 세션 관리, 인증 정보 접근 등 다양한 상황에서 적절하게 사용될 수 있다.
+- 종류
+  - WebRequest / NativeWebRequest
+    - WebRequest 와 NativeWebRequest 는 웹 요청에 대한 다양한 정보를 제공하는 객체로서 HttpServletRequest 보다 더 많은 메서드와 웹 요청 전반에 쉽게 접근한다
+    - ```
+      @GetMapping("/example")
+      public String handleWebRequest(WebRequest webRequest, NativeWebRequest nativeWebRequest) {
+        // ...
+      }
+      ```
+  - HttpSession
+    - HttpSession은 서버에 저장된 세션 데이터를 다룰 수 있게 해주는 객체로서 사용자의 세션 정보를 읽거나 설정할 수 있다.
+    - ```
+      @GetMapping("/example")
+      public String handleHttpSession(HttpSession session) {
+        // ...
+      }
+      ```
+  - Principal
+    - Principal은 현재 인증된 사용자의 정보를 나타내는 객체로서 사용자 이름이나 인증된 사용자와 관련된 데이터를 제공해 준다.
+    - 스프링 시큐리티와 통합되어 제공하는 기능이다.
+    - ```
+      @GetMapping("/example")
+      public String handlePrincipal(Principal principal) {
+        // ...
+      }
+      ```
+  - HttpMethod
+    - HttpMethod 는 요청 메서드(GET, POST 등)를 나타내며 현재 요청이 어떤 HTTP 메서드인지 확인할 수 있다.
+    - ```
+      @PostMapping("/checkMethod")
+      public String handleHttpMethod(HttpMethod method) {
+        // ...
+      }
+      ```
+  - InputStream&Reader / OutputStream&Writer
+    - Reader는 요청 본문을 읽는 데 사용되며 Writer는 응답 본문에 데이터를 작성하는 데 사용된다.
+    - ```
+      @PostMapping("/readwrite")
+      public String handleReader(Reader reader, Writer writer) throws IOException {
+        // ...
+      }
+      ```
