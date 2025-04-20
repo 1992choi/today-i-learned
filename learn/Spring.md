@@ -412,3 +412,21 @@
     - @PostMapping
     - @PutMapping
     - @DeleteMapping
+- 핵심 클래스
+  - RequestMappingHandlerMapping
+    - @RequestMapping 이 선언된 모든 핸들러를 검사하고 해당 핸들러와 URL 경로를 매핑하여 저장소에 저장한다.
+    - 요청이 들어오면 매핑 저장소로부터 URL 패턴과 일치하는 핸들러를 검색하고 적합한 핸들러를 찾아 반환한다.
+  - HandlerMethod
+    - 핸들러 객체로서 최종 호출할 컨트롤러와 메서드 정보를 포함하고 있다.
+    - 메서드의 매개변수, 반환 값, 메서드에 정의된 어노테이션 등에 쉽게 접근할 수 있는 기능을 제공한다.
+  - RequestMappingInfo
+    - @RequestMapping 에 선언된 여러 속성들의 값들을 추출해서 가지고 있는 객체
+    - Map 형태이며 key로는 RequestMappingInfo 클래스를, value로는 HandlerMethod를 사용한다.
+    - RequestMappingInfo는 uri path와 method param 등을 정보로 가지고 있다.
+      - Ex. path=/api/user, method=POST, param=[]
+    - HandlerMethod는 빈, 메서드 등을 정보로 가지고 있다.
+      - Ex. bean=RestApiController, method=user(), parameters=AccountDto
+  - MappingRegistry
+    - 모든 HandlerMethod 및 매핑된 경로를 저장하고 관리하는 클래스로서 요청을 처리할 핸들러를 조회할 수 있다.
+  - HandlerExecutionChain
+    - HandlerMethod 와 HandlerIntercepter 를 포함하고 있으며 HandlerAdapter 에게 전달된다.
