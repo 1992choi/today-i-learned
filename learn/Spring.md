@@ -429,4 +429,23 @@
   - MappingRegistry
     - 모든 HandlerMethod 및 매핑된 경로를 저장하고 관리하는 클래스로서 요청을 처리할 핸들러를 조회할 수 있다.
   - HandlerExecutionChain
-    - HandlerMethod 와 HandlerIntercepter 를 포함하고 있으며 HandlerAdapter 에게 전달된다.
+    - HandlerMethod 와 HandlerIntercepter 를 포함하고 있으며 HandlerAdapter에게 전달된다.
+
+### HandlerAdapter
+- HandlerAdapter란?
+  - HandlerAdapter 는 스프링 MVC에서 핸들러(Handler)를 호출하는 역할을 하는 인터페이스이다.
+  - HandlerAdapter 는 다양한 타입의 핸들러들이 일관된 방식으로 호출 될 수 있도록 해 주며 핸들러가 다양한 타입으로 정의되더라도 그에 맞는 호출 방식을 제공해 준다.
+  - 요청이 들어왔을 때 어떤 핸들러가 해당 요청을 처리할지 결정하는 것이 HandlerMapping 이라면 HandlerAdapter 는 결정된 핸들러를 호출하여 실행하는 역할을 한다.
+- 구조
+  - HandlerAdapter는 인터페이스로 아래 메서드를 갖는다.
+    - boolean supports(Object handler);
+      - 어댑터가 해당 핸들러를 지원하는지 결정
+    - ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
+      - supports가 true를 반환하면 해당 메서드가 실행되며, 실제적인 처리를 담당한다.
+  - HandlerAdapter는 아래와 같은 구현체를 갖는다.
+    - HttpRequestHandlerAdapter
+      - HttpRequestHandler 인터페이스를 구현하여 요청을 처리할 수 있도록 해 준다.
+    - RequestMappingHandlerAdapter
+      - @RequestMapping 어노테이션으로 매핑된 메서드를 처리하는 클래스로서 대부분 이 클래스가 사용된다.
+    - SimpleControllerHandlerAdapter
+      - 일반적인 Controller 인터페이스를 구현하여 요청을 처리할 수 있도록 해 준다.
