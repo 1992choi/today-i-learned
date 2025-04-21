@@ -553,3 +553,27 @@
       public String getProjectDetails(@PathVariable("projectId") String projectId) {
       }
       ``` 
+      
+### @ModelAttribute
+- @ModelAttribute란?
+  - @ModelAttribute는 스프링 MVC에서 주로 폼 데이터나 요청 파라미터를 모델 객체에 바인딩할 때 사용하는 어노테이션이다.
+  - 이 어노테이션은 요청 파라미터를 특정 객체의 각 필드(요청 파라미터명과 일치)에 바인딩하고 이후 자동으로 모델에 추가하여 뷰에서 사용할 수 있게 한다.
+  - 일반적으로 기본형 타입(int, long, String ..)의 바인딩은 @RequestParam이 처리하고 객체 타입은 @ModelAttribute가 처리한다고 보면 된다.
+- @BindParam
+  - @ModelAttribute 는 요청 파라미터와 일치하는 생성자를 통해 객체를 생성할 수도 있으며, 생성자 바인딩을 사용할 때는 @BindParam을 이용해 요청 파라미터의 이름을 매핑할 있다.
+  - Ex. 요청이 /account?first-name=leaven 일 때
+    - ```
+      // DTO
+      public class Account {
+        private final String firstName;
+        
+        public Account(@BindParam("first-name") String firstName) {
+          this.firstName = firstName;
+        }
+      }
+      
+      // Controller
+      @PostMapping("/account")
+      public String processAccount(@ModelAttribute Account account) {
+      }
+      ```
