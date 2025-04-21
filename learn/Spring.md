@@ -502,3 +502,30 @@
         // ...
       }
       ```
+      
+### @RquestParam
+- @RquestParam이란?
+  - @RequestParam 어노테이션은 HTTP 요청의 파라미터를 메서드의 매개변수에 바인딩 되도록 해준다.
+  - @RequestParam 은 URL 쿼리 파라미터, 폼 데이터, 그리고 멀티파트 요청을 매핑하며 HTTP 본문 요청은 처리하지 않는다.
+    - HTTP 본문 요청은 HttpMessageConvertter가 처리
+  - 주로 int, long 과 같은 기본형, 기본형 래퍼 클래스, String 형 매개변수를 바인딩할 때 사용하며 대부분의 객체 타입은 처리하지 않는다.
+    - 객체 타입은 @ModelAttribute가 처리
+  - 내부적으로 RequestParamMethodArgumentResolver 구현체가 사용되며, request.getParameterValues() 와 같은 API 를 사용하여 바인딩을 해결하고 있다.
+- 속성
+  - required
+    - 요청 시 파라미터를 반드시 포함해야하는지를 설정한다.
+      - Ex. @RequestParam(name = "param", required = true) String param
+        - 요청 파라미터에 param가 없으면 오류 발생
+  - defaultValue
+    - 요청 시 파라미터가 없는 경우의 기본 값으로 설정할 때 사용할 수 있다.
+      - Ex. @RequestParam(name = "param", defaultValue = "default") String param
+        - param이 없다면, 기본값으로 default로 셋팅.
+  - Map과 MultiValueMap
+    - 모든 요청을 Map 또는 MultiValueMap으로 받고 싶을 때 사용한다.
+    - Map과 MultiValueMap의 차이는 동일한 key에 value가 1개인지 2개 이상인지의 차이이다.
+      - Ex. @RequestParam Map<String, String> params
+        - 요청 : /map?key1=value1&key2=value2
+        - 결과 : {key1=value1, key2=value2}
+      - Ex. @RequestParam MultiValueMap<String, String> params
+        - 요청 : /multivalue-map?key1=value1&key1=value2
+        - 결과 :  {key1=[value1, value2]}
