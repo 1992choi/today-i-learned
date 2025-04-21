@@ -528,4 +528,28 @@
         - 결과 : {key1=value1, key2=value2}
       - Ex. @RequestParam MultiValueMap<String, String> params
         - 요청 : /multivalue-map?key1=value1&key1=value2
-        - 결과 :  {key1=[value1, value2]}
+        - 결과 : {key1=[value1, value2]}
+
+### @PathVariable
+- @PathVariable이란?
+  - @PathVariable 은 @RequestMapping 에 지정한 URI 템플릿 변수에 포함된 값을 메서드의 매개변수로 전달하기 위해 사용하는 어노테이션이다.
+  - @PathVariable 은 GET, DELETE, PUT, POST 요청에서 사용 할 수 있다.
+- 사용 예시
+  - 기본 예시
+    - ```
+      @GetMapping("/projects/{project}")
+      public String getProjectVersions(@PathVariable("project") String project) {
+      }
+      ```
+  - 여러 군데 지정
+    - ```
+      @GetMapping("/projects/{project}/versions/{version}")
+      public String getProjectVersions(@PathVariable("project") String project, @PathVariable("version") String version) {
+      }
+      ```
+  - 정규 표현식과 함께 사용
+    - ```
+      @GetMapping("/projects/{projectId:[a-z]+}/details")
+      public String getProjectDetails(@PathVariable("projectId") String projectId) {
+      }
+      ``` 
