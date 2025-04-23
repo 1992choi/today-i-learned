@@ -634,3 +634,28 @@
     - MultipartFile 이나 @RequestPart 를 사용하면 HttpMessageConverter가 작동하지 않으며, 이 경우에는 MultipartResolver가 요청을 처리한다.
   - 컨트롤러에서 단순 문자열(String) 반환 시 @ResponseBody나 @RestController가 없는 경우
     - @ResponseBody나 @RestController가 없는 경우, 반환된 String은 뷰 이름으로 간주되며 이 경우에는 ViewResolver가 요청을 처리한다.
+
+### @RequestHeader / @RequestAttribute / @CookieValue
+- @RequestHeader
+  - 클라이언트의 요청 헤더를 컨트롤러의 메서드 인자에 바인딩 하기 위해 @RequestHeader 애노테이션을 사용할 수 있다.
+  - RequestHeaderMethodArgumentResolver 클래스가 사용된다.
+  - ```
+    @RequestHeader("Accept-Encoding") String encoding // 기본 예시
+    @RequestHeader("Accept-Encoding", required=false, defaultValue="none") String encoding // 옵션 사용
+    @RequestHeader Map<String, String> headers // 맵 사용
+    @RequestHeader MultiValueMap<String, String> headers // MultiValueMap 사용
+    @RequestHeader("Accept") List<String> acceptHeaders // 리스트 사용
+    ```
+- @RequestAttribute
+  - HTTP 요청 속성(request attribute)을 메서드 파라미터에 바인딩할 때 사용하는 어노테이션.
+  - 주로 필터나 인터셉터에서 설정한 값을 컨트롤러 메서드에서 사용할 때 유용하다.
+  - RequestAttributeMethodArgumentResolver 클래스가 사용 된다.
+  - ```
+    @RequestAttribute("myAttribute") String myAttribute
+    ```
+- @CookieValue
+  - HTTP 요청의 쿠키 값을 메서드 파라미터에 바인딩할 때 사용하는 어노테이션.
+  - 클라이언트에서 전송한 쿠키 값을 쉽게 받아 처리할 수 있다.
+  - ```
+    @CookieValue(value = "userSession", defaultValue = "defaultSession") String session
+    ```
