@@ -577,3 +577,60 @@
       public String processAccount(@ModelAttribute Account account) {
       }
       ```
+
+### @RequestBody
+- @RequestBody란?
+  - HTTP 요청 본문(HTTP Body)을 자동으로 객체로 매핑하는데 사용되며, 내부적으로 HttpMessageConverter 객체가 작동되어 본문을 처리한다.
+  - @Valid 애너테이션과 함께 사용하면 요청 본문의 유효성을 쉽게 검증할 수 있다.
+  - @RequestBody는 반드시 요청 본문이 있어야 하며 요청 본문이 없을 경우 HttpMessageNotReadableException 이 발생한다.
+  - @RequestBody는 요청의 Content-Type 헤더를 기반으로 적절한 HttpMessageConverter를 선택하기 때문에 Content-Type 헤더가 올바르게 설정되어야 한다.
+  - @RequestBody 는 생략하면 안된다.
+    - 생략할 경우 기본형은 @RequestParam, 객체 타입은 @ModelAttribute가 작동하게 되지만 정확한 결과를 보장할 수 없다.
+
+### HttpMessageConverter
+- 개요
+  - HttpMessageConverter는 HTTP 요청과 응답의 바디(body) 내용을 객체로 변환하고 객체를 HTTP 메시지로 변환하는데 사용되는 인터페이스이다.
+  - HttpMessageConverter는 클라이언트와 서버 간의 데이터를 직렬화/역직렬화하는 기능을 담당하며, 주로 JSON, XML, Plain Text와 같은 다양한 데이터 포맷을 지원한다.
+  - HttpMessageConverter는 주로 Rest API 통신에서 사용된다.
+- HttpMessageConverter 요청 처리 흐름
+  1. 클라이언트의 Content-Type 헤더
+     - 클라이언트가 서버로 데이터를 전송한다. 이때 HTTP 헤더에 Content-Type 을 포함하여 서버에 데이터 형식을 알린다.
+     - Ex. Content-type=application/json
+  2. ArgumentResolver 실행
+     - Spring은 컨트롤러의 메서드 매개변수에 @RequestBody 혹은 HttpEntity 등이 선언 되었는지 확인한다.
+     - 선언이 되었다면 HTTP 요청 본문 ArgumentResolver가 선택되고, ArgumentResolver는 HttpMessageConverter 를 실행한다.
+  3. HttpMessageConverter 작동
+     - HttpMessageConverter는 클라이언트의 Content-Type 헤더를 기준으로 요청 본문 데이터를 특정 객체로 변환한다.
+     - Ex. Text는 StringHttpMessageConverter, JSON은 MappingJackson2HttpMessageConverter
+- HttpMessageConverter 응답 처리 흐름
+  1. 클라이언트의 Accept 헤더
+    - 클라이언트는 Accept 헤더를 통해 서버가 어떤 형식의 데이터를 반환해야 하는지 명시한다.
+    - Ex. Accept: application/json
+  2. ReturnValueHandler 실행
+    - Spring은 컨트롤러의 반환 타입에 @ResponseBody 또는 ResponseEntity가 선언되었는지 확인한다.
+    - 선언이 되었다면 HTTP 응답 본문 ReturnValueHandler가 선택되고 ReturnValueHandler는 HttpMessageConverter 를 실행한다.
+  3. HttpMessageConverter 작동
+    - HttpMessageConverter는 클라이언트의 Accept 헤더를 기준으로 데이터를 응답 본문에 기록한다.
+    - Ex. Text는 StringHttpMessageConverter, JSON은 MappingJackson2HttpMessageConverter
+- HttpMessageConverter 주요 구현체
+  - ByteArrayHttpMessageConverter
+    - application/octet-stream 과 같은 바이너리 데이터를 처리하며 주로 파일 전송에 사용된다.
+  - StringHttpMessageConverter
+    - text/plain 과 같은 문자열 데이터를 String 객체로 변환하거나 String 객체를 text/plain 형식으로 변환하여 HTTP 본문에 넣는다.
+  - ResourceHttpMessageConverter
+    - Resource 타입의 데이터를 HTTP 요청과 응답으로 변환하거나 처리하는데 사용된다.
+  - MappingJackson2HttpMessageConverter
+    - application/json 형식의 데이터를 파싱하여 Java 객체를 JSON으로 변환하거나 JSON을 Java 객체로 변환한다.
+  - FormHttpMessageConverter
+    - MultiValueMap + application/x-www-form-urlencoded 형식의 데이터를 파싱하여 MultiValueMap 형태로 변환한다.
+- HttpMessageConverter 가 작동하지 않는 요청
+  - GET 요청과 같은 본문이 없는 요청
+    - GET, DELETE와 같은 HTTP 메서드는 일반적으로 본문을 포함하지 않으므로 HttpMessageConverter가 작동하지 않는다.
+  - Content-Type 헤더가 지원되지 않는 요청
+    - POST, PUT 등의 본문이 포함된 HTTP 요청이라도 Content-Type 헤더가 지원되지 않는 미디어 타입일 경우 HttpMessageConverter가 작동하지 않는다.
+  - @RequestParam, @ModelAttribute를 사용하는 경우
+    - @RequestParam, @ModelAttribute 와 같은 어노테이션을 사용하여 쿼리 파라미터를 처리하는 경우에는 HttpMessageConverter가 필요하지 않다.
+  - 파일 업로드 요청 중 @RequestPart 또는 MultipartFile을 사용한 경우
+    - MultipartFile 이나 @RequestPart 를 사용하면 HttpMessageConverter가 작동하지 않으며, 이 경우에는 MultipartResolver가 요청을 처리한다.
+  - 컨트롤러에서 단순 문자열(String) 반환 시 @ResponseBody나 @RestController가 없는 경우
+    - @ResponseBody나 @RestController가 없는 경우, 반환된 String은 뷰 이름으로 간주되며 이 경우에는 ViewResolver가 요청을 처리한다.
