@@ -675,3 +675,39 @@
 - BindingAwareModelMap
   - BindingAwareModelMap은 Model 구현체이다.
   - @ModelAttribute로 바인딩된 객체를 가지고 있으며, 바인딩 결과를 저장하는 BindingResult를 생성하고 관리한다.
+
+### @SessionAttributes
+- @SessionAttributes란?
+  - @SessionAttributes는 세션(Session)에 속성 값을 저장하고 그 값을 다른 요청에서도 사용할 수 있도록 하기 위해 사용되는 어노테이션이다.
+  - @SessionAttributes는 컨트롤러 클래스 레벨에 선언되며, 특정 모델 속성 이름을 지정하면 세션에 자동으로 저장된다.
+  - @SessionAttributes는 모델에 저장된 객체를 세션에 저장하는 역할과 세션에 저장된 객체를 모델에 저장하는 역할을 한다.
+- 예시
+  - ```
+    @Controller
+    @SessionAttributes("user") // 클래스 레벨에 선언
+    public class UserController {
+    
+    @GetMapping("/users")
+    public String users (Model model) {
+      model.addAttribute("user",new User("springmvc","a@a.com")); // 모델에 담기는 동시에 속성명(="user")과 동일하다면, 클래스 레벨에 선언된 세션에 담긴다. 
+      return "redirect:/getUser";
+    }
+    
+    @GetMapping("/getUser")
+      public String getUser(@ModelAttribute("user") User user) { // 세션에 있는 값을 가져온다. 만약 지금처럼 @ModelAttribute와 @SessionAttributes의 속성명이 같다면, 모델에서 먼저 찾고 없다면 세션에서 찾는다. 하지만 둘다 없다면 오류를 발생시킨다.
+      return "redirect:/getUser2";
+    }
+    ```
+- 세션 초기화 예시
+  - ```
+    @Controller
+    @SessionAttributes("user")
+    public class UserController {
+    
+      @PostMapping("/clearSession")
+      public String clearSession(SessionStatus sessionStatus) {
+        sessionStatus.setComplete(); // 세션 초기화 범위는 컨트롤러에서 @SessionAttributes로 선언된 세션 속성들에 한정된다.
+        return "redirect:/userForm";
+      }
+    }
+    ```
