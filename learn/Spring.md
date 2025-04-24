@@ -711,3 +711,23 @@
       }
     }
     ```
+- @SessionAttribute
+  - @SessionAttribute는 세션에 저장된 특정 속성을 메서드 파라미터로 가져오기 위해 사용되는 어노테이션이다.
+  - 세션에 저장된 속성 값을 컨트롤러의 메서드에서 직접 접근할 수 있도록 해주며 전역적으로 관리되는 세션 속성에 접근할 때 유용하게 사용할 수 있다.
+  - required = true(기본값)로 설정하면 해당 속성이 세션에 반드시 있어야 하며 없으면 예외가 발생한다.
+  - 사용 예시
+    - ```
+      @GetMapping("/getUser")
+      public String getUser(@SessionAttribute(name = "user", required = false) User user) {
+        // ...
+      }
+      ```
+
+### RedirectAttributes & Flash Attributes
+- 개요
+  - 리다이렉트를 사용하여 다른 URL로 이동시키는 동시에 데이터를 전달해야 하는 상황에 사용할 수 있다.
+  - URL에 포함하거나 세션을 이용해서 데이터를 전달할 수 있지만, 실용적이지 못하다.
+- RedirectAttributes와 Flash Attributes의 등장
+  - 위와 같은 상황을 위하여 등장한 기술.
+  - RedirectAttributes는 리다이렉트 요청 시 데이터를 안전하고 효율적으로 전달할 수 있도록 돕는 인터페이스로서, 리다이렉트에서 필요한 데이터를 URL에 포함할 수 있으며 Flash Attributes를 통해 URL에 표시되지 않도록 임시 데이터를 세션을 통해 전달할 수 있다.
+    - 실제 세션을 사용해서 구현하면 세션 데이터가 방대해지며 이를 해결하기 위해서는 개발자가 세션을 모두 관리해야하는데, `RedirectAttributes & Flash Attributes`을 사용한다면 쉽게 해결할 수 있게 되는 것이다. 
