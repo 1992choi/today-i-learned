@@ -659,3 +659,19 @@
   - ```
     @CookieValue(value = "userSession", defaultValue = "defaultSession") String session
     ```
+    
+### Model
+- Model이란?
+  - Model은 컨트롤러와 뷰 사이의 데이터를 전달하는 역할을 하며, 컨트롤러에서 데이터를 Model 객체에 추가하면 그 데이터는 뷰에서 접근할 수 있게 된다.
+  - Model 인터페이스는 주로 HTML 렌더링을 위한 데이터 보관소 역할을 하며 Map과 유사한 방식으로 동작한다.
+  - 내부적으로 ModelMethodProcessor 클래스가 사용된다.
+- 주요 메서드
+  - addAttribute(String attributeName, Object attributeValue)
+    - 모델에 데이터를 추가할 때 사용한다.
+  - addAllAttributes(Map<String, ?> attributes)
+    - 여러 개의 속성을 한 번에 추가할 수 있다.
+  - asMap()
+    - 모델 데이터를 Map으로 변환하여 반환한다.
+- BindingAwareModelMap
+  - BindingAwareModelMap은 Model 구현체이다.
+  - @ModelAttribute로 바인딩된 객체를 가지고 있으며, 바인딩 결과를 저장하는 BindingResult를 생성하고 관리한다.
