@@ -752,3 +752,32 @@
     - 스프링에서는 컨트롤러에서 @Valid 및 @Validated 어노테이션을 사용해 자동으로 검증을 수행할 수 있다.
   - 커스텀 검증 어노테이션 (Custom Validation Annotations)
     - 스프링은 기본 제공 어노테이션 외에도 커스텀 검증 어노테이션을 구현할 수 있는 기능을 제공하며, ConstraintValidator 인터페이스를 구현하여 적용할 수 있다.
+
+### BindingResult
+- 스프링의 검증
+  - 스프링의 검증은 데이터 바인딩 과정과 밀접하게 연관되어 있다.
+  - 데이터 바인딩은 요청 데이터를 객체로 변환하는 과정인데, 이 과정에서 데이터를 검증함으로써 어플리케이션의 안정성과 데이터 무결성을 보장하게 된다.
+  - 스프링에서는 크게 두 가지로 구분해서 검증이 이루어진다.
+    - 스프링은 데이터 바인딩 시 검증 로직을 자동으로 실행하도록 설계되었으며 BindingResult 통해 오류 정보 및 검증 결과를 저장하고 관리한다.
+    - 컨트롤러에서 사용자가 직접 BindingResult 를 통해 오류 데이터를 추가하고 검증을 진행할 수 있다.
+- Errors / BindingResult 구조
+  - Errors
+    - 검증 과정에서 기본적인 오류를 추가하고 확인하는 인터페이스이다.
+  - BindingResult
+    - Errors 인터페이스를 상속받은 인터페이스이다.
+    - 컨트롤러에서 데이터 바인딩과 검증을 동시에 처리해야 하는 상황에서 주로 사용된다.
+    - 메시지 코드 해석과 세부적인 오류 관리 기능 등 보다 정교하고 확장된 기능을 제공한다.
+- BindingResult 기본 전략
+  - 스프링의 BindingResult 는 세 가지 기본 전략을 가진다.
+    - 스프링은 데이터 바인딩 시 발생하는 모든 오류 정보를 자동으로 BindingResult 의 errors 속성에 저장 한다.
+    - 사용자가 BindingResult 의 오류 정보를 활용하기 위해서는 컨트롤러 메서드 매개변수로 지정 해야 한다.
+      - Ex. public String method(@ModelAttribute User user, BindingResult bindingResult)
+        - 매개변수로 지정 시 BindingResult 는 @ModelAttribute 객체 바로 뒤에 위치해야 한다.
+    - BindingResult API 를 사용해서 추가적인 검증을 진행하거나 검증 결과를 클라이언트에게 전달할 수 있다.
+- BindingResult 선언 여부에 따른 동작 방식
+  - BindingResult를 메서드에 선언하지 않는 경우
+    - 스프링은 MethodArgumentNotValidException 예외를 발생시키고 요청한 컨트롤러는 실행되지 않는다. 
+  - BindingResult를 메서드에 선언한 경우
+    - MethodArgumentNotValidException 예외를 건너뛰고 컨트롤러 메서드가 호출된다.
+  - 정리
+    - 스프링은 BindingResult의 메서드 선언 여부에 따라 요청을 계속 진행시킬지 아니면 MethodArgumentNotValidException 예외로 요청을 중단할지 결정한다.
