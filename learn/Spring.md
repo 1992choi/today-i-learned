@@ -787,6 +787,40 @@
   - 필드 수준 오류
     - 구체적으로 어떤 객체의 어떤 필드에서 오류가 났는지를 표현한다.
     - FieldError를 사용한다.
+      - FieldError(String objectName, String field, Object rejectedValue, boolean bindingFailure, String[] codes, Object[] arguments, String defaultMessage)
+        - objectName
+          - 오류가 발생한 객체 이름
+        - field
+          - 오류가 발생한 필드 이름
+        - rejectedValue
+          - 클라이언트가 입력한 잘못된 값
+          - 오류가 발생하면 클라이언트가 입력한 값이 다 사라지는데, FieldError 객체의 rejectedValue 속성을 활용하면 이 문제를 해결할 수 있다.
+        - bindingFailure
+          - 데이터 바인딩 실패 여부 (true면 바인딩 실패)
+          - 스프링에서 바인딩 하다가 발생한 오류인지 아닌지를 구분할 수 있다.
+        - codes
+          - 오류 코드 목록
+          - 메시지 소스에서 사용
+        - arguments
+          - 메시지에 사용될 인자 목록
+        - defaultMessage
+          - 기본 오류 메시지
   - 객체 수준 오류
     - 필드가 아닌 객체 혹은 전역 수준에서의 오류 사항을 표현한다.
     - ObjectError를 사용한다.
+- MessageSource 연동
+  - BindingResult의 유효성 검증 오류가 발생했을 때, MessageSource를 사용해서 해당 오류메시지를 사용자에게 제공할 수 있다.
+  - 사용 예시
+    - 오류 메시지 직접 입력
+      - bindingResult.addError(new FieldError("order", "productName", "상품명은 필수입니다.");
+    - message properties 사용
+      - Ex 1. bindingResult.addError(new FieldError("order", “item", null, false, new String[]{"required.order.item"}, null, null));
+        - required.order.item=상품명은 필수입니다
+      - Ex 2. bindingResult.addError(new FieldError("order", "price", order.getPrice(), false, new String[]{"range.order.price"}, new Object[]{100, 10000}, "가격은 100 이상 10000 이하여야 합니다."));
+        - range.order.price=가격은 {0} 이상 {1} 이하여야 합니다.
+  - reject() / rejectValue()를 사용하면, 조금 더 간편하게 조작할 수 있다.
+    - Ex 1. bindingResult.rejectValue("price", "range", new Object[]{100, 10000}, "가격은 100 이상 10000 이하여야 합니다.");
+      - range.order.price=가격은 {0} 이상 {1} 이하여야 합니다.
+      rejectValue에 설정한 오류 코드 'range'와 메시지 파일에 입력한 오류 코드 'range.order.price' 의 값이 서로 일치하지 않는데, 정상동작 하는 이유는 MessageCodesResolver 덕분이다.
+        - MessageCodesResolver 오류 메시지 전략은 기록 생략.
+
