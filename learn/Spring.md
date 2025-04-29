@@ -824,3 +824,44 @@
       rejectValue에 설정한 오류 코드 'range'와 메시지 파일에 입력한 오류 코드 'range.order.price' 의 값이 서로 일치하지 않는데, 정상동작 하는 이유는 MessageCodesResolver 덕분이다.
         - MessageCodesResolver 오류 메시지 전략은 기록 생략.
 
+### Validator
+- Validator란?
+  - Spring 의 Validator 는 객체의 유효성을 검증하기 위해 설계된 인터페이스로 데이터 유효성 검증을 단순화하면서 비즈니스 로직과 검증 로직을 분리하는 데 사용된다.
+- 구조
+  - supports()
+    - 해당 Validator가 특정 객체 타입을 지원하는지 확인하는 메서드이다.
+  - validate()
+    - 주어진 대상 객체가 supports(Class) 메서드에서 true를 반환하는 클래스여야만 검증할 수 있다.
+    - 실제 유효성 검사를 수행하는 메서드이며, 유효성 검사에 실패한 경우 Errors 객체를 사용하여 오류를 추가한다.
+- 사용이점
+  - 검증 로직과 비즈니스 로직을 완벽하게 분리할 수 있다.
+    - 사용 전
+      - ```
+        @PostMapping("/order")
+        public String submitOrder(@ModelAttribute("order") Order order, BindingResult bindingResult) {
+          if (!StringUtils.hasText(order.getProductName())) {
+            bindingResult.addError(new FieldError("order", “item", null, false, new String[]{"required.order.item"}, null, null));
+          }
+          if (... 다양한 검증 로직 ...) {
+          }
+        
+          if (bindingResult.hasErrors()) {
+            // ...
+          }
+        
+          // 비즈니스 로직
+        }
+        ```
+    - 사용 후
+      - ```
+        @PostMapping("/order")
+        public String submitOrder(@ModelAttribute("order") Order order, BindingResult bindingResult) {
+          orderValidator.validate(order, result); // validate에서 검증로직은 수행한다.
+        
+          if (bindingResult.hasErrors()) {
+            // ...
+          }
+          
+          // 비즈니스 로직
+        }
+        ```
