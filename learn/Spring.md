@@ -865,3 +865,74 @@
           // 비즈니스 로직
         }
         ```
+
+### Bean Validation
+- Bean Validation이란?
+  - Bean Validation은 Java 애플리케이션에서 객체의 유효성 검증을 위해 도입된 기술로서, 데이터 검증 로직을 일관되게 적용할 수 있도록 하는 표준화 된 API를 제공한다.
+- Spring 폼 검증과 Bean Validation
+  - Spring 폼 검증
+    - 개발자가 직접 검증 로직을 작성해야 하며, 각각의 필드에 대한 조건을 수동으로 명시해야한다.
+    - 검증 중 발생한 오류는 Errors 객체에 기록되며 사용자는 어떤 필드에서 어떤 오류가 발생했는지 확인할 수 있다.
+    - 검증 조건이 복잡하거나 커스텀 검증이 필요할 때 유용하다.
+    - Ex.
+      - ```
+        if (user.getUsername() == null) {
+          errors.rejectValue("username", "required ");
+        }
+        if (user.getAge() <= 0 || user.getAge() > 120) {
+          errors.rejectValue("age", “range");
+        }
+        ```
+  - Bean Validation
+    - 어노테이션을 사용해 검증 규칙을 선언적으로 정의할 수 있으며 개발자는 별도로 검증 로직을 작성할 필요가 없다.
+    - 객체의 필드에 선언된 어노테이션을 기반으로 자동으로 검증이 수행된다.
+    - 객체가 중첩된 경우에도 중첩된 객체에 대한 검증을 함께 수행할 수 있다.
+    - Ex.
+      - ```
+        @NotNull(message = "Username is required")
+        private String username;
+        
+        @Range(min = 1, max = 120, "Age must be between 1 and 120")
+        private Integer age;
+        ```
+        
+### Bean Validation + Spring
+- 개요
+  - org.springframework.validation.Validator를 통해 Spring 의 자체 검증 메커니즘과 Java Bean Validation을 통합하고 이를 통해 Bean Validation 표준 검증을 Spring에서 바로 활용할 수 있다.
+  - Spring MVC 는 컨트롤러 계층에서 @Valid 또는 @Validated 를 사용하여 자동으로 Bean Validation 을 수행하며 검증 실패 시 발생하는 오류를 BindingResult 를 통해 보관하고 프로그램적으로 처리할 수 있다.
+  - Bean Validation 표준의 그룹(Group)화를 지원하여 특정 조건에서만 검증을 수행할 수 있으며, Bean Validation을 확장하여 커스텀 Validator를 생성할 수 있다.
+- @Valid와 @Validated
+  - @Valid
+    - 기본적인 검증 어노테이션으로서 객체의 필드뿐만 아니라 중첩된 객체(nested object)에서도 유효성 검사를 수행할 수 있다.
+    - 주로 단순한 유효성 검사를 수행하는데 사용되며 jakarta.validation 패키지에 속해 있다.
+    - @RequestBody와 함께 사용할 수 있다.
+      - ```
+        @PostMapping("/users")
+        public String addUser(@Valid @RequestBody User user, BindingResult result, Model model) {
+        }
+        ```
+  - @Validated
+    - Spring 프레임워크에서 제공하는 어노테이션으로서 그룹 기반 검증(validation group)을 지원하며 복잡한 검증 요구사항이 있는 경우 유용하다.
+      - ```
+        public interface Vgroups {
+          interface CreateGroup {}
+          interface UpdateGroup {}
+        }
+        
+        public class User {
+          @NotEmpty(message = "Username is required", groups = VGroups.CreateGroup.class)
+          private String username;
+          
+          @Email(message = "Email should be valid", groups = {VGroups.CreateGroup.class, VGroups.UpdateGroup.class})
+          private String email;
+        }
+        
+        @PostMapping("/users")
+        public String addUser(@Validated(VGroups.CreateGroup.class) @ModelAttribute User user, BindingResult result, Model model) {
+        }
+        
+        @PutMapping("/users")
+        public String modUser(@Validated(VGroups.UpdateGroup.class) @ModelAttribute User user, BindingResult result, Model model) {
+        }
+        ```
+        
