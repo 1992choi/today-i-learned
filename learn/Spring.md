@@ -995,3 +995,35 @@
     1. 클라이언트의 요청 헤더에 포함된 MediaType (Accept 헤더) 목록과 View 의 Content-Type 을 비교해서 서로 호환이 되는 MediaType 이 존재하는지 확인한다
     2. MediaType 이 호환되는 첫 번째 View 가 최종 선택되어 반환되고 적합한 View 가 없으면 다음 View 로 넘어간다. 만약 View 가 없으면 예외가 발생한다
     3. 만약 ThymeleafView 와 InternalResourceView 모두 선택 대상인데 ThymeleafView 가 먼저 선택되면 InternalResourceView 는 호환 여부를 검사하지 않는다
+
+### Interceptor
+- 개요
+  - 인터셉터(Interceptor)는 핸들러의 실행 전후 또는 뷰 렌더링 이후 특정 로직을 실행할 수 있으며, HandlerInterceptor 인터페이스를 구현하여 사용할 수 있다.
+  - 주로 여러 컨트롤러에서 공통으로 사용하는 기능을 구현하거나 재사용성을 높이고자 할 때 사용한다.
+- 주요 메서드
+  - preHandle
+    - 컨트롤러 실행 전에 호출되며, 호출 할 Handler 객체가 인자로 전달된다.
+    - Boolean 반환값으로 True를 반환하면 다음 단계로 진행하고,  false 를 반환하면 요청 처리를 즉시 중단한다.
+  - postHandle
+    - 컨트롤러 실행 후 뷰 렌더링 전에 호출되며, 호출된 Handler 및 ModelAndView 객체가 인자로 전달된다.
+  - afterCompletion
+    - 뷰 렌더링이 완료된 후 호출되며, 호출된 Handler 및 예외 발생 시 예외타입이 인자로 전달된다.
+    - afterCompletion 은 예외가 발생해도 무조건 호출되므로, 반드시 해야 할 공통 작업이 있다면 여기서 수행하도록 한다.
+- Interceptor 사용 방법
+  - HandlerInterceptor 인터페이스 또는 HandlerInterceptorAdapter 클래스를 상속하여 구현한다.
+  - WebMvcConfigurer 를 사용하여 인터셉터를 등록한다.
+    - 특정 URL 패턴에만 인터셉터를 적용하거나 제외 할 수 있다.
+    - order 속성을 통해 인터셉터의 호출 순서를 지정할 수 있다.
+- 다중 인터셉터 실행 호출 순서
+  - 가정
+    - firstInterceptor와 secondInterceptor가 존재하며, firstInterceptor의 우선순위가 높음.
+  - 호출 순서
+    - 여러 개의 인터셉터를 등록할 경우 등록된 순서대로 preHandle이 호출되고, 등록된 역순으로 postHandle 및 afterCompletion이 호출된다.
+      1. firstInterceptor의 preHandle
+      2. SecondHandlerInterceptor의 preHandle
+      3. (Controller)
+      4. SecondHandlerInterceptor의 postHandle
+      5. FirstHandlerInterceptor의 postHandle
+      6. (View)
+      7. SecondHandlerInterceptor의 afterCompletion
+      8. FirstHandlerInterceptor의 afterCompletion
