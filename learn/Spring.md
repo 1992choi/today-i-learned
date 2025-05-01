@@ -982,3 +982,16 @@
   - ResponseEntity<T>는 HTTP 응답을 나타내는 클래스로서 주로 응답 상태 코드, 헤더, 본문을 제어하고 반환하는데 사용되며 HttpEntity<T>를 상속하고 있다.
   - ResponseEntity<T>는 @ResponseBody와 비슷하지만 @ResponseBody는 메서드 반환 값을 HTTP 응답 본문으로 기록하는 반면, ResponseEntity는 상태 코드와 헤더 그리고 본문까지 세밀하게 제어할 수 있는 기능을 제공한다.
   - ResponseEntity<T>는 @RestController 나 @ResponseBody 가 없어도 적절한 HTTP 응답을 반환할 수 있다.
+
+### View / ViewResolver
+- View
+  - 스프링 MVC 에서 View 는 웹 페이지를 사용자에게 보여주는 역할을 한다.
+  - View 는 컨트롤러가 처리한 데이터를 사용자에게 보여주는 화면이며 사용자가 볼 수 있는 HTML, JSON 같은 결과물을 만들어주는 역할을 한다.
+- ViewResolver
+  - ViewResolver는 특정 URL 요청에 따라 어떤 View를 사용할지를 결정하는 역할을 한다. (View는 최종적으로 데이터를 렌더링하여 클라이언트에 반환한다.)
+- ViewResolver의 View 결정 기준
+  - ContentNegotiatingViewResolver(=ViewResolver의 구현체 중 하나)는 각 ViewResolver 에 의해 생성된 View 객체들을 순회하며 가장 적합한 View 를 결정해서 반환한다.
+  - 결정 순서
+    1. 클라이언트의 요청 헤더에 포함된 MediaType (Accept 헤더) 목록과 View 의 Content-Type 을 비교해서 서로 호환이 되는 MediaType 이 존재하는지 확인한다
+    2. MediaType 이 호환되는 첫 번째 View 가 최종 선택되어 반환되고 적합한 View 가 없으면 다음 View 로 넘어간다. 만약 View 가 없으면 예외가 발생한다
+    3. 만약 ThymeleafView 와 InternalResourceView 모두 선택 대상인데 ThymeleafView 가 먼저 선택되면 InternalResourceView 는 호환 여부를 검사하지 않는다
