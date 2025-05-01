@@ -968,3 +968,17 @@
     - HTTP 응답(헤더와 본문 모두)을 구성할 수 있다. ResponseEntity는 상태 코드, 헤더, 본문을 모두 포함할 수 있어 더 정밀한 응답 구성이 가능하다.
   - Callable<V>, ListenableFuture<V>, CompletableFuture<V>
     - 비동기 작업의 결과로 반환되는 타입을 사용할 수 있다.
+
+### @ResponseBody
+- 개요
+  - @ResponseBody 는 메서드의 반환 값을 HTTP 응답 본문에 직접 직렬화하여 클라이언트에 전송하며 HttpMessageConverter 를 사용하여 변환이 이루어진다.
+  - 일반적으로 컨트롤러는 HTTP 요청을 처리하고 뷰(View)를 반환하는 방식으로 동작하는데, @ResponseBody 를 사용하면 뷰를 반환하는 대신 메서드가 반환하는 객체를 바로 HTTP 응답 본문에 직렬화하여 전송한다.
+- @ResponseBody & @RestController
+  - ResponseBody 는 메서드뿐만 아니라 클래스 수준에서도 사용될 수 있으며 이와 같은 효과를 가진 것이 바로 @RestController 라 할 수 있다.
+  - @RestController는 @Controller 와 @ResponseBody 를 결합한 메타 어노테이션으로서 @RestController 가 선언된 클래스는 모든 메서드에서 반환되는 값이 자동으로 @ResponseBody 처럼 처리가 이루어진다.
+
+### ResponseEntity<T>
+- 개요
+  - ResponseEntity<T>는 HTTP 응답을 나타내는 클래스로서 주로 응답 상태 코드, 헤더, 본문을 제어하고 반환하는데 사용되며 HttpEntity<T>를 상속하고 있다.
+  - ResponseEntity<T>는 @ResponseBody와 비슷하지만 @ResponseBody는 메서드 반환 값을 HTTP 응답 본문으로 기록하는 반면, ResponseEntity는 상태 코드와 헤더 그리고 본문까지 세밀하게 제어할 수 있는 기능을 제공한다.
+  - ResponseEntity<T>는 @RestController 나 @ResponseBody 가 없어도 적절한 HTTP 응답을 반환할 수 있다.
