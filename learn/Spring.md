@@ -1073,3 +1073,34 @@
       }
       ```
   - 다중 @ControllerAdvice 가 있을 경우 @Order 숫자가 낮을수록 높은 우선순위를 가진다.
+
+### 예외 처리
+- 서블릿에서의 예외처리 방식
+  - 클라이언트 요청 처리 중 발생한 예외는 컨트롤러, 필터, 서블릿, DispatcherServlet 등에서 처리되지 않을 경우 상위 계층으로 전파되어 최종 WAS까지 전달된다.
+- WAS 표준 오류 정책과 ErrorPage
+  - ErrorPage 는 WAS 에서 발생하는 예외나 특정 HTTP 상태 코드에 대해 오류 페이지를 설정하고 렌더링하는 기능을 제공하는 클래스이다.
+  - 어플리케이션이 초기화 되면 스프링의 ErrorPage와 WAS의 ErrorPage를 각각 생성하고 기본값들로 채우게 되며, WAS에는 기본 오류 페이지 한 개가 생성된다.
+  - 스프링 부트에서는 Java Config 방식 또는 빈으로 만들어 추가할 수 있다.
+  - 오류 페이지 기본 이동 위치는 /error 이다.
+    - 설정을 통해 /error 이외의 값들을 설정할 수 있다.
+      - /error/401 or /error/404 or /error/500 등
+- 스프링의 기본 오류 처리
+  - BasicErrorController는 Spring Boot 에서 제공하는 기본적인 오류 처리 컨트롤러로, 어플리케이션에서 발생하는 예외 또는 오류를 처리하고 기본적인 오류 페이지 및 JSON 형식의 오류 응답을 반환한다.
+  - BasicErrorController는 기본적으로 /error 경로로 요청하는 모든 오류를 처리하고 있으며 이는 WAS 에서 오류 페이지를 요청하는 기본 경로인 /error 와 일치한다.
+  - 오류 처리 방식
+    - View 방식의 오류 처리
+      - ErrorViewResolver는 오류가 발생했을 때 보여줄 화면(오류 페이지)을 찾는 역할을 한다.
+      - 기본적으로 /error/ 경로 아래에서 오류 코드(예: 404, 500) 나 오류의 종류에 맞는 템플릿 파일이나 정적 리소스를 찾아서 적절한 화면을 보여주는 역할을 한다.
+      - 오류 화면 우선 순위
+        1. 뷰 템플릿
+           - resources/templates/error/400.html
+           - resources/templates/error/4xx.html (400과 2개가 있다고 가정할 때 400 오류가 발생하면 400.html이 호출된다. 구체적일수록 우선순위가 높음.)
+        2. 정적 리소스
+           - resources/static/error/400.html
+           - resources/static/error/4xx.html
+        3. 적용 대상이 없을 때
+           - resources/templates/error.html
+    - Rest API 방식의 오류 처리
+      - Spring Boot 는 REST 요청(Accept: application/json)이 발생했을 때, BasicErrorController를 사용해 JSON 형식의 오류 응답을 자동으로 생성해 준다.
+      - BasicErrorController 는 기본적인 화면 오류 처리에는 매우 유용하지만 API 오류 처리를 위한 세밀한 요구사항을 충족하는 데는 한계가 있다.
+        - 이를 보완하기 위하여 @ExceptionHandler를 사용할 수 있다.
