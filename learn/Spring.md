@@ -1188,4 +1188,31 @@
   - @ControllerAdvice 는 여러 컨트롤러에서 발생하는 예외를 전역적으로 처리할 수 있는 어노테이션으로 ExceptionHandlerExceptionResolver 와 결합하여 작동한다.
   - @ControllerAdvice 를 사용하면 어플리케이션의 모든 컨트롤러에서 발생하는 예외를 하나의 클래스에서 통합적으로 처리할 수 있으며 이를 통해 중복 코드를 제거하고 예외 흐름을 컨트롤러로부터 분리할 수 있어 유지보수에도 유리하다.
     - 특정 영역에서만 @ControllerAdvice를 적용할 수도 있다.
-      
+
+### Multipart
+- 개요
+  - Multipart 는 일반 텍스트 형식이 아니라 하나의 HTTP 요청/응답 바디 내에서 여러 개의 파트를 나누어 전송하는 형식으로서, 파일 업로드나 여러 데이터 파트(텍스트 파트, 바이너리 파트 등)를 함께 전송해야 할 때 주로 사용한다.
+  - 웹 브라우저에서 <form> 태그에 enctype="multipart/form-data" 를 지정하고 파일 업로드를 수행하면 ‘multipart/form-data’ 형식의 HTTP 요청이 전송된다.
+- MultiPart 지원 도구
+  - Spring(특히 Spring Boot 3.x 기준)에서 Multipart(파일 업로드)를 처리하기 위한 도구로서 MultipartResolver, MultipartFile, MultipartHttpServletRequest 그리고 이를 사용하는 Controller/Service 구조가 유기적으로 연결되어 있다.
+    - MultipartAutoConfiguration
+      - Spring Boot 에서 multipart/form-data 요청 처리를 자동으로 구성해주는 설정 클래스로서 추가적인 설정 없이도 @RequestParam("file") MultipartFile file 을 사용하면 자동으로 멀티파트 요청을 처리하도록 구성된다.
+    - MultipartHttpServletRequest
+      - HttpServletRequest를 상속(혹은 래핑)하여 멀티파트 폼 데이터를 처리할 수 있는 추가 메서드를 제공하는 인터페이스로서 기본 구현제로 StandardMultipartHttpServletRequest 클래스가 제공된다.
+    - MultipartResolver
+      - multipart/form-data 요청을 해석하여 MultipartHttpServletRequest 를 만들어주는 인터페이스로서 기본 구현제로 StandardServletMultipartResolver 가 제공된다.
+    - MultipartFile
+      - 업로드된 파일을 다루기 위한 인터페이스로서 getName(), getOriginalFilename(), getSize(), transferTo(File dest) 와 같은 API 가 있다.
+    - MultipartProperties
+      - Spring Boot 에서 멀티파트 설정을 위한 구성 설정 클래스이다.
+    - @RequestPart
+      - multipart 요청의 특정 파트를 직접 바인딩하기 위한 어노테이션으로서, @RequestParam 보다 좀 더 확장된 기능을 제공한다.
+- Multipart Process
+  1. MultiPart 요청 체크
+     - 사용자가 multipart/form-data 형식으로 파일을 업로드 하면 MultipartResolver 를 통해 'multipart' 형태인지 판단한다.
+  2. MultipartResolver 파싱
+     - MultipartResolver 가 MultipartHttpServletRequest 를 생성하고 이 클래스는 요청 바디를 분석하여 각 파일 파트(바이너리 데이터)와 일반 Form 필드를 분리하고 파일 파트는 MultipartFile 맵에 저장한다.
+  3. ArgumentResolver 요청 처리
+     - 각 ArgumentResolver 클래스는 MultipartHttpServletRequest 의 MultipartFile 맵으로부터 MultipartFile 객체를 가져와서 반환한다.
+  4. Controller 에서 MultipartFile 접근
+     - @RequestParam, @ModelAttribute, @RequestPart 로 컨트롤러 메서드의 파라미터(MultipartFile, List<MultipartFile>)를 선언하고 파일 데이터에 접근 및 업로드 처리한다.
