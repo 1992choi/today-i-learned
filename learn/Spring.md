@@ -181,7 +181,7 @@
 - 서블릿 컨네이너 & 스프링 컨테이너 연결
   1. WAS 가 구동되면 서블릿 컨테이너가 META-INF/services/jakarta.servlet.ServletContainerInitializer 파일을 검색하여 ServletContainerInitializer 인터페이스를 구현한 클래스(ex. MyServletContainerInitializer)를 로드한다.
     - jakarta.servlet.ServletContainerInitializer 파일의 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어있다.
-  2. ServletContainerInitializer 구현체는 @HandlesTypes(MyWebAppInitializer.class)와 같이 설정을 할 수 있으며, MyWebAppInitialize를 호출하여 스프링 어플리케이션을 초기화 한다.
+  2. ServletContainerInitializer 구현체는 @HandlesTypes(MyWebAppInitializer.class)와 같이 설정을 할 수 있으며, MyWebAppInitialize를 호출하여 스프링 애플리케이션을 초기화 한다.
 - ServletContainerInitializer
   - 웹 애플리케이션이 시작될 때 자동으로 실행되는 초기화 코드를 작성하고 싶을 때 사용하는 인터페이스이다.
   - 동작방식
@@ -203,7 +203,7 @@
          ```
 - SpringServletContainerInitializer
   - 스프링은 SpringServletContainerInitializer 라는 구현체를 제공하며 이는 스프링 애플리케이션에서 서블릿 컨테이너와의 초기 상호작용을 담당한다.
-  - SpringServletContainerInitializer는 @HandlesTypes 어노테이션에 WebApplicationInitializer 타입이 선언되어 있으며 이는 WebApplicationInitializer 인터페이스를 구현한 클래스를 자동으로 탐색하고 이를 호출하여 스프링 어플리케이션을 초기화 한다.
+  - SpringServletContainerInitializer는 @HandlesTypes 어노테이션에 WebApplicationInitializer 타입이 선언되어 있으며 이는 WebApplicationInitializer 인터페이스를 구현한 클래스를 자동으로 탐색하고 이를 호출하여 스프링 애플리케이션을 초기화 한다.
 - WebApplicationInitializer
   - 스프링 애플리케이션이 구동되면 WebApplicationInitializer 타입의 클래스가 실행되고 여기서 스프링 컨테이너 초기화 및 설정 작업이 이루어진다.
 - 전체 구성도
@@ -756,7 +756,7 @@
 ### BindingResult
 - 스프링의 검증
   - 스프링의 검증은 데이터 바인딩 과정과 밀접하게 연관되어 있다.
-  - 데이터 바인딩은 요청 데이터를 객체로 변환하는 과정인데, 이 과정에서 데이터를 검증함으로써 어플리케이션의 안정성과 데이터 무결성을 보장하게 된다.
+  - 데이터 바인딩은 요청 데이터를 객체로 변환하는 과정인데, 이 과정에서 데이터를 검증함으로써 애플리케이션의 안정성과 데이터 무결성을 보장하게 된다.
   - 스프링에서는 크게 두 가지로 구분해서 검증이 이루어진다.
     - 스프링은 데이터 바인딩 시 검증 로직을 자동으로 실행하도록 설계되었으며 BindingResult 통해 오류 정보 및 검증 결과를 저장하고 관리한다.
     - 컨트롤러에서 사용자가 직접 BindingResult 를 통해 오류 데이터를 추가하고 검증을 진행할 수 있다.
@@ -1079,13 +1079,13 @@
   - 클라이언트 요청 처리 중 발생한 예외는 컨트롤러, 필터, 서블릿, DispatcherServlet 등에서 처리되지 않을 경우 상위 계층으로 전파되어 최종 WAS까지 전달된다.
 - WAS 표준 오류 정책과 ErrorPage
   - ErrorPage 는 WAS 에서 발생하는 예외나 특정 HTTP 상태 코드에 대해 오류 페이지를 설정하고 렌더링하는 기능을 제공하는 클래스이다.
-  - 어플리케이션이 초기화 되면 스프링의 ErrorPage와 WAS의 ErrorPage를 각각 생성하고 기본값들로 채우게 되며, WAS에는 기본 오류 페이지 한 개가 생성된다.
+  - 애플리케이션이 초기화 되면 스프링의 ErrorPage와 WAS의 ErrorPage를 각각 생성하고 기본값들로 채우게 되며, WAS에는 기본 오류 페이지 한 개가 생성된다.
   - 스프링 부트에서는 Java Config 방식 또는 빈으로 만들어 추가할 수 있다.
   - 오류 페이지 기본 이동 위치는 /error 이다.
     - 설정을 통해 /error 이외의 값들을 설정할 수 있다.
       - /error/401 or /error/404 or /error/500 등
 - 스프링의 기본 오류 처리
-  - BasicErrorController는 Spring Boot 에서 제공하는 기본적인 오류 처리 컨트롤러로, 어플리케이션에서 발생하는 예외 또는 오류를 처리하고 기본적인 오류 페이지 및 JSON 형식의 오류 응답을 반환한다.
+  - BasicErrorController는 Spring Boot 에서 제공하는 기본적인 오류 처리 컨트롤러로, 애플리케이션에서 발생하는 예외 또는 오류를 처리하고 기본적인 오류 페이지 및 JSON 형식의 오류 응답을 반환한다.
   - BasicErrorController는 기본적으로 /error 경로로 요청하는 모든 오류를 처리하고 있으며 이는 WAS 에서 오류 페이지를 요청하는 기본 경로인 /error 와 일치한다.
   - 오류 처리 방식
     - View 방식의 오류 처리
@@ -1132,7 +1132,7 @@
       - 주로 Spring MVC 내부에서 발생하는 예외들을 처리하며 특정 예외를 HTTP 상태 코드에 매핑시켜 클라이언트로 반환하는 역할을 한다.
       - 이 클래스는 예외를 sendError(code, msg) 로 처리하기 때문에 뷰 렌더링 없이 WAS 의 ErrorPage 전략에 의해 예외 처리가 이루어지도록 한다.
     - SimpleMappingExceptionResolver
-      - SimpleMappingExceptionResolver 는 특정 예외와 View 이름을 매핑하여 예외 발생 시 지정된 뷰(View)로 전환해 주는 클래스로서 어플리케이션 전역적으로 작동하며 모든 컨트롤러에 동일한 예외 처리 로직을 적용할 수 있다.
+      - SimpleMappingExceptionResolver 는 특정 예외와 View 이름을 매핑하여 예외 발생 시 지정된 뷰(View)로 전환해 주는 클래스로서 애플리케이션 전역적으로 작동하며 모든 컨트롤러에 동일한 예외 처리 로직을 적용할 수 있다.
       - REST API 보다는 주로 HTML 기반의 전통적인 웹 애플리케이션에서 사용하기 적합하다.
     - ExceptionHandlerExceptionResolver
       - 가장 많이 사용되어 별도로 요약.
@@ -1186,7 +1186,7 @@
       ```
 - ExceptionHandlerExceptionResolver와 @ControllerAdvice
   - @ControllerAdvice 는 여러 컨트롤러에서 발생하는 예외를 전역적으로 처리할 수 있는 어노테이션으로 ExceptionHandlerExceptionResolver 와 결합하여 작동한다.
-  - @ControllerAdvice 를 사용하면 어플리케이션의 모든 컨트롤러에서 발생하는 예외를 하나의 클래스에서 통합적으로 처리할 수 있으며 이를 통해 중복 코드를 제거하고 예외 흐름을 컨트롤러로부터 분리할 수 있어 유지보수에도 유리하다.
+  - @ControllerAdvice 를 사용하면 애플리케이션의 모든 컨트롤러에서 발생하는 예외를 하나의 클래스에서 통합적으로 처리할 수 있으며 이를 통해 중복 코드를 제거하고 예외 흐름을 컨트롤러로부터 분리할 수 있어 유지보수에도 유리하다.
     - 특정 영역에서만 @ControllerAdvice를 적용할 수도 있다.
 
 ### Multipart
@@ -1216,3 +1216,27 @@
      - 각 ArgumentResolver 클래스는 MultipartHttpServletRequest 의 MultipartFile 맵으로부터 MultipartFile 객체를 가져와서 반환한다.
   4. Controller 에서 MultipartFile 접근
      - @RequestParam, @ModelAttribute, @RequestPart 로 컨트롤러 메서드의 파라미터(MultipartFile, List<MultipartFile>)를 선언하고 파일 데이터에 접근 및 업로드 처리한다.
+
+### RestClient
+- 개요
+  - RestClient는 Spring 6에서 새롭게 도입된 동기식 HTTP 클라이언트로서, 기존의 RestTemplate 을 대체하거나 보완할 수 있는 보다 모던한 API를 제공한다.
+  - 내부적으로 다양한 HTTP 클라이언트 라이브러리위에 추상화를 제공하며 개발자가 손쉽게 HTTP 요청과 응답을 다룰 수 있도록 지원한다.
+- 특징
+  - 메서드 체이닝 방식의 API
+    - get(), post(), put() 등 HTTP 메서드를 코드상에서 직관적으로 체이닝할 수 있으며, retrieve(), exchange() 등을 통해 설정 → 요청 → 응답 흐름을 명확히 표현할 수 있다.
+  - 동기식 처리
+    - 내부 동작이 동기식이므로 블로킹 모델을 따른다.
+  - Builder 기반 설정
+    - RestClient.builder()에서 baseUrl, 기본 헤더, 인터셉터, requestFactory 등을 간편하게 설정할 수 있으며, 한 번 만들어진 RestClient 는 여러 스레드에서 안전하게 사용할 수 있다.
+  - 다양한 HTTP 라이브러리 연동
+    - 자동으로 Apache HttpClient, Jetty HttpClient, java.net.http 등을 감지하여 활용하며 직접 requestFactory(…)를 지정하여 원하는 라이브러리를 명시적으로 선택할 수도 있다.
+  - 편리한 메시지 변환
+    - body(Object), body(ParameterizedTypeReference) 등을 제공해 제네릭 구조를 포함한 다양한 타입 변환을 지원하며 accept(), contentType() 등으로 헤더를 설정할 수 있다.
+  - 유연한 오류 처리
+    - 4xx, 5xx 상태 코드를 받으면 기본적으로 RestClientException 계열 예외를 던지지만, onStatus()를 사용해 특정 상태 코드에 대한 맞춤 예외 처리가 가능하다.
+    - exchange() 메서드를 사용하면 요청과 응답을 더 세밀하게 다루면서 상태 코드별로 직접 처리를 구성할 수 있다.
+- Exchange
+  - exchange()는 retrieve()와 달리 HTTP 요청(Request)과 응답(Response)을 모두 직접 제어할 수 있게 해 주는 기능으로서, 람다 형태의 콜백 함수를 인자로 받는다.
+- 오류처리
+  - RestClient 에서 오류 처리는 기본적으로 retrieve() 또는 exchange() 메서드에서 수행할 수 있으며, HTTP 4xx 및 5xx 오류 발생 시 자동으로 예외(RestClientException)를 던진다.
+  - 기본 동작을 커스터마이징 하려면 onStatus() 또는 exchange()를 활용하여 오류 상태 코드를 직접 처리해야 한다.
