@@ -192,6 +192,9 @@
 > - **인코딩 변경 후 다른이름으로 저장**   
 >   \- iconv -c -f utf-8 -t euc-kr test.log > test2.log
 
+### HTTP 요청의 소요시간 측정
+>  \- curl -s -o /dev/null -w %{time_total}\\n http://test.com
+
 <br><br><br><br><br><br><br>
 
 # macOS
