@@ -21,6 +21,12 @@
 - 어제 날짜
     - SELECT NOW()- INTERVAL 1 DAY
 
+### json 형태 포맷에서 특정 값 추출
+- json 문자열에서 memberName 필드의 값을 추출 (MySQL 8 버전에서는 컬럼타입이 Json 이거나 varchar 이거나 상관없이 사용가능)
+    - SELECT JSON_UNQUOTE(JSON_EXTRACT(your_column, '$.memberName')) FROM your_table;
+
+
+
 <hr>
 
 # Oracle
