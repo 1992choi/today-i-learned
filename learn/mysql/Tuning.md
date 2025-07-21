@@ -96,3 +96,22 @@
       
       // 지도교수 테이블의 WHERE 절에 학생 테이블의 컬럼이 사용된다.
       ```
+- 반환결과에 따른 서브쿼리
+  - 단일행 서브쿼리
+    - ```
+      SELETE ...
+      FROM 학생
+      WHERE 학번 = (SELECT MAX(학번) 최대학번 FROM 학생)
+      ```
+  - 다중행 서브쿼리
+    - ```
+      SELETE ...
+      FROM 학생
+      WHERE 학번 IN (SELECT MAX(학번) 전공별 최대학번 FROM 학생 GROUP BY 전공코드)
+      ```
+  - 다중열 서브쿼리
+    - ```
+      SELETE ...
+      FROM 학생
+      WHERE (이름, 전공코드) IN (SELECT 이름, 전공코드 FROM 학생 WHERE 이름 LIKE '김%')
+      ```
