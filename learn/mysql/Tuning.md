@@ -310,3 +310,25 @@
           - 인덱스의 모든 값을 비교하는 것이 아닌, 필요한 값만 건너뛰면서 스캔하는 방식
         - FirstMatch()
           - 인덱스 스캔 시에 첫 번째로 일치하는 레코드만 찾으면 검색을 중단하는 방식
+
+### 실행계획 판단 기준과 실행 계획의 확장 
+- 실헹계획 판단
+  - 실행계획을 토대로 튜닝 대상을 판단할 수 있다.
+    - 아래 항목에 대해서 왼쪽에 있는 값일수록 좋고, 오른쪽에 가까운 값일수록 튜닝대상으로 간주할 수 있다.
+      - select_type
+        - simple, primary (좋음) <---> dependent, uncacheable (나쁨)
+      - type
+        - system, const, eq_ref <---> index, all
+      - extra
+        - using index <---> using filesort, using temporary
+- 실행 계획의 확장
+  - explain에 옵션을 추가하여 더 많은 정보를 얻을수도 있다.
+  - 옵션 종류
+    - explain format = traditional
+      - format = traditional은 default 옵션으로 생략하고 explain만 사용하는 것과 동일하다.
+    - explain format = tree
+      - 트리형태로 출력한다.
+    - explain format = json
+      - json형태로 출력한다.
+    - explain analyze
+      - 나머지 옵션은 통계정보 기반으로 실행계획을 출력하는데, analyze는 옵티마이저가 실제 쿼리를 수행해보고 측정된 값을 보여주기 때문에 보다 정확한 값을 확인할 수 있다. (하지만 실제 쿼리가 수행되기 때문에 속도가 느릴 수 있다.)
