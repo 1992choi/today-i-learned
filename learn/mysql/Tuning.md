@@ -214,3 +214,45 @@
         - SELECT 'a' = 'A'; -- 결과: true
       - 정렬순서
         - A = a → B = b
+
+### 실행계획 항목
+- `explain SQL`을 실행하면 실행계획 항목이 표시되며 이를 분석해 튜닝 포인트를 잡을 수 있다.
+  - ex. explain SELECT COUNT(1) FROM dept;
+  - 이 항목들 중 select_type, type, key, Extra는 더더욱 중요 지표가 될 수 있다.
+- 실행계획 항목
+  - id
+    - 최소한의 단위 Select 문마다 부여되는 식별자
+    - id는 1부터 시작하며, 값이 작을수록 먼저 접근한 테이블이다.
+    - 값이 같다면 같은 값끼리 join을 하고 있다는 의미이다.
+  - select_type
+    - 쿼리문의 Select 유형을 나타내는 항목
+    - 유형
+      - simple
+        - 서브쿼리 또는 Union 구문이 없는 단순 Select문
+      - primary
+        - 서브쿼리 또는 Union 구문이 포함된 쿼리문에서 최초 접근한 테이블
+      - subquery
+        - 독립적인 서브쿼리
+      - derived
+        - 단위 쿼리를 메모리나 디스크에 생성한 임시 테이블
+      - union
+        - Union 또는 Union All 구문에서 첫 번째 이후의 테이블
+      - union result
+        - Union 구문에서 중복을 제거하기 위해 메모리나 디스크에 생성한 임시 테이블
+      - dependent subquery 또는 dependent union 
+        - Union 또는 Union All 구문에서 메인 테이블의 영향을 받는 테이블
+      - materialized
+        - 조인 등의 가공 작업을 위해서 생성한 임시 테이블
+  - table
+    - 테이블명이 표시되며, alias를 사용하였다면 alias 값이 표시된다.
+    - 서브쿼리 등을 사용하여 임시 테이블로 만들어진 경우, <derived2> 등과 같이 다른 형태로 표시가 된다.
+      - select_type이 derived이며 id가 2인 테이블에 의해 만들어진 임시 테이블
+  - partitions
+  - type
+  - possible_keys
+  - key
+  - key_len
+  - ref
+  - rows
+  - filtered
+  - Extra
