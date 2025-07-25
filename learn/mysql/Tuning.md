@@ -376,3 +376,24 @@
       - 이는 GROUP BY에 있는 함수를 실행하기 때문이다.
     - 실제 emp 테이블의 gender는 M과 F 값만 갖으며 NOT NULL 조건을 갖는 컬럼이다.
     - 함수를 사용하지 않고 단순 GROUP BY만 사용하더라도 동일한 결과가 반환되므로 불필요한 함수를 제거하여 임시테이블이 생성되지 않도록 변경한다.
+- 인덱스를 활용하지 못하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT COUNT(*) count
+      FROM salary
+      WHERE is_yn = 1
+      ```
+    - 변경 전 실행계획
+      - type = index (=인덱스 풀 스캔)
+      - key = I_IS_YN  
+      - filtered = 10.0 (=MySQL엔진에서 추가 필터링을 90%나 진행)
+  - 변경 후
+    - ```
+      SELECT COUNT(*) count
+      FROM salary
+      WHERE is_yn = '1'
+      ```
+  - 튜닝 포인트
+    - is_yn은 char 형인데, 숫자로 비교를 하다보니 묵시적 형변환 발생.
+      - 이 때문에 데이터를 모두 가져온 후 MySQL에서 필터링을 하고 있음.
+    - 적절하게 문자로 비교하여 'filtered = 100'으로 성능 개선 (=MySQL이 아닌 스토리지엔진에서 모두 필터링되는 좋은 케이스)
