@@ -416,3 +416,22 @@
     - 쿼리의 목적은 1994년도에 해당하는 데이터를 가져오는게 목적.
     - 해당 컬럼은 date 타입이므로 between을 사용하여 날짜 범위를 조건으로 주도록 변경
       - type = range / key = I_HIRE_DATE 로 인덱스를 타도록 변경
+- 컬럼을 결합해서 사용하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT *
+      FROM emp
+      WHERE CONCAT(gender,' ',last_name) = 'M Radwan'
+      ```
+    - 변경 전 실행계획
+      - type = ALL
+  - 변경 후
+    - ```
+      SELECT *
+      FROM emp
+      WHERE gender = 'M'
+      AND last_name =  'Radwan'
+      ```
+  - 튜닝 포인트
+    - 굳이 컬럼을 결합하지 않아도, 원하는 조건으로 조회가 가능하다.
+    - 그렇기 때문에 이미 존재하는 I_GENDER_LAST_NAME 인덱스를 사용할 수 있도록 쿼리를 수정한다.
