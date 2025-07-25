@@ -332,3 +332,23 @@
       - json형태로 출력한다.
     - explain analyze
       - 나머지 옵션은 통계정보 기반으로 실행계획을 출력하는데, analyze는 옵티마이저가 실제 쿼리를 수행해보고 측정된 값을 보여주기 때문에 보다 정확한 값을 확인할 수 있다. (하지만 실제 쿼리가 수행되기 때문에 속도가 느릴 수 있다.)
+
+### 튜닝
+- 기본키를 변경하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT *
+      FROM emp
+      WHERE SUBSTRING(emp_id,1,4) = 1100
+      AND LENGTH(emp_id) = 5
+      ```
+  - 변경 후
+    - ```
+      SELECT emp_id, birth, first_name, last_name, gender, hire_date
+      FROM emp
+      WHERE emp_id BETWEEN 11000 AND 11009
+      ```
+  - 정리
+    - 변경 전 실행계획을 보면 type이 ALL로써, 테이블 풀 스캔으로 조회를 하고 있다.
+    - 조회하고자 하는 데이터가 궁극적으로는 emp_id가 11000 ~ 11009인 데이터이므로, 조건절을 단순하게 변경하여 PK를 활용할 수 있게 변경한다.
+    - 또한 필요한 필드만 SELECT 절에 남기는 것이 좋다.
