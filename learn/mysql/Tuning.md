@@ -342,6 +342,8 @@
       WHERE SUBSTRING(emp_id,1,4) = 1100
       AND LENGTH(emp_id) = 5
       ```
+    - 변경 전 실행계획
+      - type = ALL (=테이블 풀 스캔)
   - 변경 후
     - ```
       SELECT emp_id, birth, first_name, last_name, gender, hire_date
@@ -349,7 +351,6 @@
       WHERE emp_id BETWEEN 11000 AND 11009
       ```
   - 튜닝 포인트
-    - 변경 전 실행계획을 보면 type이 ALL로써, 테이블 풀 스캔으로 조회를 하고 있다.
     - 조회하고자 하는 데이터가 궁극적으로는 emp_id가 11000 ~ 11009인 데이터이므로, 조건절을 단순하게 변경하여 PK를 활용할 수 있게 변경한다.
     - 또한 필요한 필드만 SELECT 절에 남기는 것이 좋다.
 - 불필요한 함수를 포함하는 나쁜 SQL
@@ -360,6 +361,10 @@
       FROM emp
       GROUP BY IFNULL(gender,'NO DATA')
       ```
+    - 변경 전 실행계획
+      - type = index (=인덱스 풀 스캔)
+      - I_GENDER_LAST_NAME
+      - Extra = Using temporary
   - 변경 후
     - ```
       SELECT gender, COUNT(1) count
@@ -367,8 +372,7 @@
       GROUP BY gender
       ```
   - 튜닝 포인트
-    - 변경 전 실행계획을 보면 I_GENDER_LAST_NAME index만 활용한다.
-      - 하지만 Extra를 보면 Using temporary(임시테이블 생성) 정보를 확인할 수 있다.
-      - 이는 GROUP BY에 있는 함수를 실행하기 위함이다.
-      - 실제 emp 테이블의 gender는 M과 F 값만 갖으며 NOT NULL 조건을 갖는 컬럼이다.
+    - 인덱스를 잘 타고 있지만, Extra를 보면 Using temporary(임시테이블 생성) 정보를 확인할 수 있다.
+      - 이는 GROUP BY에 있는 함수를 실행하기 때문이다.
+    - 실제 emp 테이블의 gender는 M과 F 값만 갖으며 NOT NULL 조건을 갖는 컬럼이다.
     - 함수를 사용하지 않고 단순 GROUP BY만 사용하더라도 동일한 결과가 반환되므로 불필요한 함수를 제거하여 임시테이블이 생성되지 않도록 변경한다.
