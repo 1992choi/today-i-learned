@@ -397,3 +397,22 @@
     - is_yn은 char 형인데, 숫자로 비교를 하다보니 묵시적 형변환 발생.
       - 이 때문에 데이터를 모두 가져온 후 MySQL에서 필터링을 하고 있음.
     - 적절하게 문자로 비교하여 'filtered = 100'으로 성능 개선 (=MySQL이 아닌 스토리지엔진에서 모두 필터링되는 좋은 케이스)
+- FTS(Full Table Scan) 방식으로 수행하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT first_name, last_name
+      FROM emp
+      WHERE hire_date LIKE '1994%'
+      ```
+    - 변경 전 실행계획
+      - type = ALL
+  - 변경 후
+    - ```
+      SELECT first_name, last_name
+      FROM emp
+      WHERE hire_date BETWEEN '1994-01-01' AND '1994-12-31'
+      ```
+  - 튜닝 포인트
+    - 쿼리의 목적은 1994년도에 해당하는 데이터를 가져오는게 목적.
+    - 해당 컬럼은 date 타입이므로 between을 사용하여 날짜 범위를 조건으로 주도록 변경
+      - type = range / key = I_HIRE_DATE 로 인덱스를 타도록 변경
