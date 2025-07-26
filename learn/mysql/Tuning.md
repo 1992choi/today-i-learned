@@ -530,3 +530,26 @@
     - group by는 그룹핑을 하기 위해서는 기본적으로 인덱스를 활용하려고하는데, 현재는 last_name을 먼저 우선순위로 group by하고 gender를 다음 순서로 그룹핑하고 있다.
     - 이미 만들어진 인덱스를 활용한다고하면, I_GENDER_LAST_NAME을 제대로 활용하기 위해서 gender를 먼저 우선순위로 group by 할 수 있게 변경해준다.
       - Using temporary가 제거되어 성능 향상.
+- 엉뚱한 인덱스를 사용하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT emp_id
+      FROM emp
+      WHERE hire_date LIKE '1989%'
+      AND emp_id > 100000
+      ```
+    - 변경 전 실행계획
+      - type = ragne
+      - key = PK
+      - extra = Using index, Using temporary
+  - 변경 후
+    - ```
+      SELECT emp_id
+      FROM emp
+      WHERE hire_date BETWEEN '1989-01-01' AND '1989-12-31'
+      AND emp_id > 100000
+      ```
+  - 튜닝 포인트
+    - hire_date 조건으로만 봤을 때 3만건 미만, emp_id 조건으로 봤을 때 21만건이 존재한다.
+    - hire_date 와 관련된 인덱스인 I_HIRE_DATE를 사용하게 변경하면 더 효율적으로 튜닝할 수 있다. (모수를 줄이기 때문)
+      - 1989년에 해당하는 조건을 LIKE로 잘못 걸고 있어서 인덱스를 제대로 활용하지 못한 케이스. 날짜 범위를 적절하게 비교할 수 있도록 LIKE에서 BETWEEN으로 변경.
