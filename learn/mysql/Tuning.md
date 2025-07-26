@@ -461,3 +461,51 @@
   - 튜닝 포인트
     - EMP_ID는 PK이기 때문에 중복제거를 하기위한 DISTINCT 키워드가 불필요하다.
     - DISTINCT 키워드를 제거하면 extra에서 식별되었던 Using temporary가 제거되어 성능이 향상된다.
+- UNION 문으로 쿼리를 합치는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT 'M' AS gender, emp_id
+      FROM emp
+      WHERE gender = 'M'
+      AND last_name ='Baba'
+      
+      UNION
+      
+      SELECT 'F', emp_id
+      FROM emp
+      WHERE gender = 'F'
+      AND last_name = 'Baba'
+      ```
+    - 변경 전 실행계획
+      - 첫번째 emp
+        - select_type = PRIMARY
+        - type = ref
+        - key = I_GENDER_LAST_NAME
+      - 두번째 emp
+        - select_type = UNION
+        - type = ref
+        - key = I_GENDER_LAST_NAME
+      - 세번째
+        - select_type = UNION RESULT
+        - type = ALL
+        - extra = Using temporary
+  - 변경 후
+    - ```
+       SELECT 'M' AS gender, emp_id
+       FROM emp
+       WHERE gender = 'M'
+       AND last_name ='Baba'
+
+      UNION ALL
+      
+      SELECT 'F', emp_id
+      FROM emp
+      WHERE gender = 'F'
+      AND last_name = 'Baba'
+      ```
+  - 튜닝 포인트
+    - 쿼리의 목적은 last_name이 'Baba' 라는 직원을 조회하기 위함이다.
+    - gender는 M과 F만 있기 때문에 위의 쿼리와 아래의 쿼리에서 동일한 값이 나올 가능성이 없기 때문에 UNION을 사용할 이유가 없다.
+      - UNION은 정렬 후 중복을 제거하는데, 중복이 일어날 가능성이 없기 때문에 사용할 이유 없음.
+      - 즉, UNION ALL을 써도 무방.
+    - 튜닝 후에 실행계획을 보면, 정렬 후 제거 작업이 없어지기 때문에 세번째로 식별되었던 UNION RESULT에 대한 작업이 없어진 것을 확인할 수 있다.
