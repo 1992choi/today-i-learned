@@ -553,3 +553,35 @@
     - hire_date 조건으로만 봤을 때 3만건 미만, emp_id 조건으로 봤을 때 21만건이 존재한다.
     - hire_date 와 관련된 인덱스인 I_HIRE_DATE를 사용하게 변경하면 더 효율적으로 튜닝할 수 있다. (모수를 줄이기 때문)
       - 1989년에 해당하는 조건을 LIKE로 잘못 걸고 있어서 인덱스를 제대로 활용하지 못한 케이스. 날짜 범위를 적절하게 비교할 수 있도록 LIKE에서 BETWEEN으로 변경.
+- 잘못된 드라이빙 테이블로 수행되는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT de.emp_id, d.dept_id
+      FROM dept_emp_mapping de,
+           dept d
+      WHERE de.dept_id = d.dept_id
+      AND de.start_date >= '2002-03-01'
+      ```
+    - 변경 전 실행계획
+      - dept 테이블
+        - type = index
+        - key = UI_DEPT_NAME
+        - 먼저 접근하고 있음
+        - 총 9건 존재
+      - dept_emp_mapping 테이블
+        - type = ref
+        - key = I_DEPT_ID
+        - 총 33만건 존재
+  - 변경 후
+    - ```
+      SELECT straight_join de.emp_id, d.dept_id
+      FROM dept_emp_mapping de,
+           dept d
+      WHERE de.dept_id = d.dept_id
+      AND de.start_date >= '2002-03-01'
+      ```
+  - 튜닝 포인트
+    - 위 쿼리는 일반적인 조인방식이며, 일반적인 조인은 nested 조인 방식을 사용한다.
+      - 현재 dept 테이블을 먼저 접근하고 있기 때문에, 1개의 row에 접근한 후 33만건을 접근. 즉 9*33만 정도의 액세스가 발생함.
+    - 만약 dept_emp_mapping에 걸려있는 start_date 조건으로 먼저 필터링이 된다면 1341건으로 줄게됨.
+      - 이를 위해 dept_emp_mapping 테이블을 드라이빙 테이블로 지정할 수 있도록 튜닝.
