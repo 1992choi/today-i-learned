@@ -509,3 +509,24 @@
       - UNION은 정렬 후 중복을 제거하는데, 중복이 일어날 가능성이 없기 때문에 사용할 이유 없음.
       - 즉, UNION ALL을 써도 무방.
     - 튜닝 후에 실행계획을 보면, 정렬 후 제거 작업이 없어지기 때문에 세번째로 식별되었던 UNION RESULT에 대한 작업이 없어진 것을 확인할 수 있다.
+- 인덱스를 생각하지 않고 작성한 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT last_name, gender, COUNT(1) as count
+      FROM emp
+      GROUP BY last_name, gender
+      ```
+    - 변경 전 실행계획
+      - type = index
+      - key = I_GENDER_LAST_NAME
+      - extra = Using index, Using temporary
+  - 변경 후
+    - ```
+      SELECT last_name, gender, COUNT(1) as count
+      FROM emp
+      GROUP BY gender, last_name
+      ```
+  - 튜닝 포인트
+    - group by는 그룹핑을 하기 위해서는 기본적으로 인덱스를 활용하려고하는데, 현재는 last_name을 먼저 우선순위로 group by하고 gender를 다음 순서로 그룹핑하고 있다.
+    - 이미 만들어진 인덱스를 활용한다고하면, I_GENDER_LAST_NAME을 제대로 활용하기 위해서 gender를 먼저 우선순위로 group by 할 수 있게 변경해준다.
+      - Using temporary가 제거되어 성능 향상.
