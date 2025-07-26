@@ -435,3 +435,29 @@
   - 튜닝 포인트
     - 굳이 컬럼을 결합하지 않아도, 원하는 조건으로 조회가 가능하다.
     - 그렇기 때문에 이미 존재하는 I_GENDER_LAST_NAME 인덱스를 사용할 수 있도록 쿼리를 수정한다.
+- 습관적으로 중복을 제거하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT DISTINCT e.EMP_ID, e.FIRST_NAME, e.LAST_NAME, s.ANNUAL_SALARY  
+      FROM emp e
+      JOIN salary s ON (e.emp_id = s.emp_id)
+      WHERE s.is_yn = '1'
+      ```
+    - 변경 전 실행계획
+      - salary 테이블
+        - type = ref
+        - key = I_IS_YN
+        - extra = Using temporary
+      - emp 테이블
+        - type = eq_Ref
+        - key = PK
+  - 변경 후
+    - ```
+      SELECT e.EMP_ID, e.FIRST_NAME, e.LAST_NAME, s.ANNUAL_SALARY  
+      FROM emp e
+      JOIN salary s ON (e.emp_id = s.emp_id)
+      WHERE s.is_yn = '1'
+      ```
+  - 튜닝 포인트
+    - EMP_ID는 PK이기 때문에 중복제거를 하기위한 DISTINCT 키워드가 불필요하다.
+    - DISTINCT 키워드를 제거하면 extra에서 식별되었던 Using temporary가 제거되어 성능이 향상된다.
