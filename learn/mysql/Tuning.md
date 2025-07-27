@@ -755,8 +755,123 @@
           employee e
       WHERE
           e.emp_id BETWEEN 10001 AND 10100;
-
       ```
   - 튜닝 포인트
     - 최종적으로는 emp_id 기준으로 100건에 해당하는 데이터만 필요한 상황이다.
     - 튜닝 전에는 FROM절에서 모든 데이터를 join하고 있는데, 불필요한 연산만 많아지고 있으므로 필요한 데이터만 조회하여 계산하도록 튜닝한다.
+- 비효율적인 페이징을 수행하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT e.emp_id, e.first_name, e. last_name, e.hire_date
+      FROM emp e,
+           salary s
+      WHERE e.emp_id = s.emp_id
+      AND e.emp_id BETWEEN 10001 AND 50000
+      GROUP BY e.emp_id
+      ORDER BY SUM(s.annual_salary) DESC
+      LIMIT 150,10
+      ```
+    - 변경 전 실행계획
+      - salary 테이블의 rows가 280만건이 넘는 상황
+  - 변경 후
+    - ```
+      SELECT e.emp_id, e.first_name, e. last_name, e.hire_date
+      FROM emp e,
+           ( SELECT emp_id
+               FROM salary
+              WHERE emp_id BETWEEN 10001 AND 50000
+              GROUP BY emp_id
+              ORDER BY SUM(annual_salary) DESC
+              LIMIT 150,10
+           ) s
+      WHERE e.emp_id = s.emp_id
+      ```
+  - 튜닝 포인트
+    - salary 테이블에는 280만건정도의 데이터가 있는데, 모수를 줄여주기 위해 emp_id 조건절을 emp 테이블이 아닌 salary 테이블로 변경해준다.
+      - 280만 -> 38만으로 줄어듦.
+    - 많은 건수에서 페이징을 하는 것보다 salary 테이블의 모수를 줄인 후에 페이징을 한 결과를 사용하는 것이 효율적이다.
+- 불필요한 정보를 가져오는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT COUNT(emp_id) AS count
+      FROM (SELECT e.emp_id, m.dept_id
+              FROM (SELECT *
+                      FROM emp
+                     WHERE gender = 'M'
+                       AND emp_id > 300000
+                    ) e
+              LEFT JOIN manager m
+                     ON e.emp_id = m.emp_id
+            ) sub
+      ```
+    - 변경 전 실행계획
+      - salary 테이블의 rows가 280만건이 넘는 상황
+  - 변경 후
+    - ```
+      SELECT COUNT(emp_id) AS count
+      FROM emp
+      WHERE gender = 'M'
+      AND emp_id > 300000
+      ```
+  - 튜닝 포인트
+    - manager 테이블에서 dept_id를 가져왔지만 실제 사용하지는 않는다.
+    - 즉 emp 테이블의 gender와 emp_id 조건만 있으면 원하는 결과를 가져올 수 있으므로 쿼리를 단순화시키는 것이 좋다.
+- 비효율적인 조인을 수행하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT DISTINCT de.dept_id
+      FROM manager m,
+           dept_emp_mapping de
+      WHERE m.dept_id = de.dept_id
+      ORDER BY de.dept_id
+      ```
+    - 변경 전 실행계획
+      - dept_emp_mapping
+        - type = index
+        - key = I_DEPT_ID
+        - driving 테이블
+      - manager
+        - type = ref
+        - key = I_DEPT_ID
+        - driven 테이블
+  - 변경 후
+    - ```
+      SELECT de.dept_id
+      FROM (SELECT DISTINCT dept_id FROM dept_emp_mapping) de
+      WHERE EXISTS (SELECT 1 FROM manager m WHERE m.dept_id = de.dept_id)
+      ```
+  - 튜닝 포인트
+    - 별도의 필터없이 JOIN을 수행하고 있는데, manager는 24건, dept_emp_mapping은 33만건이 존재한다.
+    - 그러므로 JOIN할 때, dept_emp_mapping 테이블의 건수를 줄여주는게 중요하다. 또한 dept_emp_mapping 테이블의 dept_id만 필요한 상황이므로, manager 테이블과 매번 JOIN을 할 필요성은 없다.
+      - FROM 절에서 중복을 제거하면 33만건의 데이터가 9건으로 줄어든다.
+    - dept_emp_mapping 테이블은 정렬되어있는 I_DEPT_ID 인덱스를 활용하고 있기 때문에 order by 절도 불필요하다.
+- 인덱스 없이 데이터를 조회하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT *
+      FROM emp
+      WHERE first_name = 'Georgi'
+      AND last_name  = 'Wielonsky'
+      ```
+    - 변경 전 실행계획
+      - type = ALL
+  - 튜닝 포인트
+    - 현재의 쿼리는 활용할 수 있는 인덱스가 없기 때문에 기존 인덱스를 수정해주거나 새로 인덱스를 추가해준다. 
+      - 인덱스를 추가하는 방법 : I_LAST_FIRST_NAME(last_name, first_name)
+        - 카디널리티가 더 높은 last_name을 선두컬럼으로 하여 인덱스를 생성
+      - 인덱스를 수정하는 방법 : 이미 존재하는 I_GENDER_LAST_NAME 인덱스를 LAST_NAME이 선두로 오게 변경
+        - GENDER는 2종류의 값 밖에 없으니 LAST_NAME이 선두에 오는게 좋을 수도 있다.
+        - 위 인덱스를 변경했을 때 영향 범위를 파악해서 변경해도 된다면, 변경해서 사용할 수도 있다.
+- 인덱스를 사용하지 않는 SQL
+  - 변겅 전
+    - ```
+      SELECT *
+      FROM emp
+      WHERE first_name = 'Matt'
+      OR hire_date = '1987-03-31'
+      ```
+    - 변경 전 실행계획
+      - type = ALL
+  - 튜닝 포인트
+    - 현재의 쿼리는 hire_date 컬럼이 인덱스로 있지만 이를 활용하지 못하고 Full Table Scan으로 조회되고 있는 상황이다.
+    - first_name 컬럼을 토대로 인덱스를 추가하여 first_name에 대한 인덱스와 hire_date에 대한 인덱스를 merge하여 사용할 수 있도록 튜닝한다.
