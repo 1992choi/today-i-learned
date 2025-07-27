@@ -585,3 +585,178 @@
       - 현재 dept 테이블을 먼저 접근하고 있기 때문에, 1개의 row에 접근한 후 33만건을 접근. 즉 9*33만 정도의 액세스가 발생함.
     - 만약 dept_emp_mapping에 걸려있는 start_date 조건으로 먼저 필터링이 된다면 1341건으로 줄게됨.
       - 이를 위해 dept_emp_mapping 테이블을 드라이빙 테이블로 지정할 수 있도록 튜닝.
+- 불필요한 조인을 수행하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT COUNT(DISTINCT e.emp_id) as COUNT
+      FROM emp e,
+           ( SELECT emp_id
+             FROM entry_record
+             WHERE gate = 'A'
+           ) record
+      WHERE e.emp_id = record.emp_id
+      ```
+    - 변경 전 실행계획
+      - entry_record 테이블
+        - type = ref
+        - key = I_GATE
+      - emp 테이블
+        - type = eq_ref
+        - key = PRIMARY
+  - 변경 후
+    - ```
+      SELECT COUNT(e.emp_id) as COUNT
+      FROM emp e
+      WHERE EXISTS ( SELECT emp_id
+                      FROM entry_record er
+                     WHERE gate = 'A'
+                       AND er.gate = e.emp_id
+                   )
+      ```
+  - 튜닝 포인트
+    - entry_record 테이블의 데이터를 알고 싶은게 아니라, 단순 entry_record의 조건을 만족하는 emp_id가 있는지의 여부만 알고 싶은 상태이다.
+    - 따라서 join을 활용하는 것보다는 조건절로 판별하는 것이 더 효율적이다.
+    - 또한, emp_id는 PK이므로 중복될 일이 없기 때문에 DISTINCT 키워드는 제거해도 된다.
+- HAVING 절로 추가적 필터를 수행하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT e.emp_id, e.first_name, e.last_name
+      FROM emp e,
+           salary s
+      WHERE e.emp_id > 450000
+      AND e.emp_id = s.emp_id
+      GROUP BY s.emp_id
+      HAVING MAX(s.annual_salary) > 100000
+      ```
+    - 변경 전 실행계획
+      - emp 테이블
+        - type = range
+        - key = PRIMARY
+        - Extra = Using temporary
+      - salary 테이블
+        - type = ref
+        - key = PRIMARY
+  - 변경 후
+    - ```
+      SELECT e.emp_id, e.first_name, e.last_name
+      FROM emp e
+      WHERE e.emp_id > 450000
+      AND ( SELCT MAX(annual_salary)
+             FROM salary s
+            WHERE e.emp_id = s.emp_id ) > 100000
+      ```
+  - 튜닝 포인트
+    - HAVING 절의 특성상 모든 데이터가 추출된 이후 필터링을 하는데, JOIN 시 필터링하는게 성능상 유리하므로 이 관점에서 튜닝을 진행한다.
+      - 때문에 HAVING 절은 MySQL엔진에서 필터링이 이뤄짐. -> 스토리지 엔진에서 필터링이 될 수 있도록 튜닝 필요.
+- 유사한 SELECT문을 여러 개 나열한 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT 'BOSS' grade_name, COUNT(*) cnt
+      FROM grade
+      WHERE grade_name = 'Manager' AND end_date = '9999-01-01'
+      
+      UNION ALL
+      
+      SELECT 'TL' grade_name, COUNT(*) cnt
+      FROM grade
+      WHERE grade_name = 'Technique Leader' AND end_date = '9999-01-01'
+      
+      UNION ALL
+      
+      SELECT 'AE' grade_name, COUNT(*) cnt
+      FROM grade
+      WHERE grade_name = 'Assistant Engineer' AND end_date = '9999-01-01'
+      ```
+    - 변경 전 실행계획
+      - 3개의 테이블이 rows가 모두 442,545
+  - 변경 후
+    - ```
+      SELECT CASE grade_name WHEN 'Manager' THEN 'BOSS'
+                             WHEN 'Technique Leader' THEN 'TL'
+                             WHEN 'Assistant Engineer' THEN 'AE'
+                             ELSE 'NA' END grade_name
+      FROM grade
+      WHERE grade_name IN ('Manager', 'Technique Leader', 'Assistant Engineer')
+      AND end_date = '9999-01-01'
+      ```
+  - 튜닝 포인트
+    - grade_name의 값만 다르고 모두 동일한 구조이므로, 매번 SELECT문을 수행할 필요가 없다.
+    - 한 번의 SELECT로 변경하여 442,545 row를 한 번만 접근하도록 튜닝. (이전에는 3번을 접근하였음.)
+- 소계/통계를 위한 쿼리를 반복하는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT region, null gate, COUNT(*) cnt
+      FROM entry_record
+      WHERE region <> ''
+      GROUP BY region
+      
+      UNION ALL
+      
+      SELECT region, gate, COUNT(*) cnt
+      FROM entry_record
+      WHERE region <> ''
+      GROUP BY region, gate
+      
+      UNION ALL
+      
+      SELECT null region, null gate, COUNT(*) cnt
+      FROM entry_record
+      WHERE region <> ''
+      ```
+  - 변경 후
+    - ```
+      SELECT region, gate, COUNT(*) count
+        FROM entry_record
+       WHERE region <> ''
+       GROUP BY ROLLUP(region, gate)
+      ```
+  - 튜닝 포인트
+    - 소계/집계을 할 때, 지원하는 함수가 있는지 확인하여 활용한다.
+- 처음부터 모든 데이터를 가져오는 나쁜 SQL
+  - 변겅 전
+    - ```
+      SELECT e.emp_id,
+             s.avg_salary,
+             s.max_salary,
+             s.min_salary
+      FROM emp e,
+           (SELECT emp_id,
+                   ROUND(AVG(annual_salary),0) avg_salary,
+                   ROUND(MAX(annual_salary),0) max_salary,
+                   ROUND(MIN(annual_salary),0) min_salary
+           FROM salary
+           GROUP BY emp_id
+           ) s
+      WHERE e.emp_id = s.emp_id
+      AND e.emp_id BETWEEN 10001 AND 10100
+      ```
+    - 변경 전 실행계획
+      - salary 테이블의 rows가 280만건이 넘는 상황
+  - 변경 후
+    - ```
+      SELECT
+          e.emp_id,
+          (
+              SELECT ROUND(AVG(annual_salary), 0)
+              FROM salary s1
+              WHERE s1.emp_id = e.emp_id
+          ) AS avg_salary,
+          (
+              SELECT ROUND(MAX(annual_salary), 0)
+              FROM salary s2
+              WHERE s2.emp_id = e.emp_id
+          ) AS max_salary,
+          (
+              SELECT ROUND(MIN(annual_salary), 0)
+              FROM salary s3
+              WHERE s3.emp_id = e.emp_id
+          ) AS min_salary
+      FROM
+          employee e
+      WHERE
+          e.emp_id BETWEEN 10001 AND 10100;
+
+      ```
+  - 튜닝 포인트
+    - 최종적으로는 emp_id 기준으로 100건에 해당하는 데이터만 필요한 상황이다.
+    - 튜닝 전에는 FROM절에서 모든 데이터를 join하고 있는데, 불필요한 연산만 많아지고 있으므로 필요한 데이터만 조회하여 계산하도록 튜닝한다.
