@@ -335,7 +335,7 @@
 
 ### 튜닝
 - 기본키를 변경하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT *
       FROM emp
@@ -354,7 +354,7 @@
     - 조회하고자 하는 데이터가 궁극적으로는 emp_id가 11000 ~ 11009인 데이터이므로, 조건절을 단순하게 변경하여 PK를 활용할 수 있게 변경한다.
     - 또한 필요한 필드만 SELECT 절에 남기는 것이 좋다.
 - 불필요한 함수를 포함하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT IFNULL(gender,'NO DATA') gender,
       COUNT(1) count
@@ -377,7 +377,7 @@
     - 실제 emp 테이블의 gender는 M과 F 값만 갖으며 NOT NULL 조건을 갖는 컬럼이다.
     - 함수를 사용하지 않고 단순 GROUP BY만 사용하더라도 동일한 결과가 반환되므로 불필요한 함수를 제거하여 임시테이블이 생성되지 않도록 변경한다.
 - 인덱스를 활용하지 못하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT COUNT(*) count
       FROM salary
@@ -398,7 +398,7 @@
       - 이 때문에 데이터를 모두 가져온 후 MySQL에서 필터링을 하고 있음.
     - 적절하게 문자로 비교하여 'filtered = 100'으로 성능 개선 (=MySQL이 아닌 스토리지엔진에서 모두 필터링되는 좋은 케이스)
 - FTS(Full Table Scan) 방식으로 수행하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT first_name, last_name
       FROM emp
@@ -417,7 +417,7 @@
     - 해당 컬럼은 date 타입이므로 between을 사용하여 날짜 범위를 조건으로 주도록 변경
       - type = range / key = I_HIRE_DATE 로 인덱스를 타도록 변경
 - 컬럼을 결합해서 사용하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT *
       FROM emp
@@ -436,7 +436,7 @@
     - 굳이 컬럼을 결합하지 않아도, 원하는 조건으로 조회가 가능하다.
     - 그렇기 때문에 이미 존재하는 I_GENDER_LAST_NAME 인덱스를 사용할 수 있도록 쿼리를 수정한다.
 - 습관적으로 중복을 제거하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT DISTINCT e.EMP_ID, e.FIRST_NAME, e.LAST_NAME, s.ANNUAL_SALARY  
       FROM emp e
@@ -462,7 +462,7 @@
     - EMP_ID는 PK이기 때문에 중복제거를 하기위한 DISTINCT 키워드가 불필요하다.
     - DISTINCT 키워드를 제거하면 extra에서 식별되었던 Using temporary가 제거되어 성능이 향상된다.
 - UNION 문으로 쿼리를 합치는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT 'M' AS gender, emp_id
       FROM emp
@@ -510,7 +510,7 @@
       - 즉, UNION ALL을 써도 무방.
     - 튜닝 후에 실행계획을 보면, 정렬 후 제거 작업이 없어지기 때문에 세번째로 식별되었던 UNION RESULT에 대한 작업이 없어진 것을 확인할 수 있다.
 - 인덱스를 생각하지 않고 작성한 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT last_name, gender, COUNT(1) as count
       FROM emp
@@ -531,7 +531,7 @@
     - 이미 만들어진 인덱스를 활용한다고하면, I_GENDER_LAST_NAME을 제대로 활용하기 위해서 gender를 먼저 우선순위로 group by 할 수 있게 변경해준다.
       - Using temporary가 제거되어 성능 향상.
 - 엉뚱한 인덱스를 사용하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT emp_id
       FROM emp
@@ -554,7 +554,7 @@
     - hire_date 와 관련된 인덱스인 I_HIRE_DATE를 사용하게 변경하면 더 효율적으로 튜닝할 수 있다. (모수를 줄이기 때문)
       - 1989년에 해당하는 조건을 LIKE로 잘못 걸고 있어서 인덱스를 제대로 활용하지 못한 케이스. 날짜 범위를 적절하게 비교할 수 있도록 LIKE에서 BETWEEN으로 변경.
 - 잘못된 드라이빙 테이블로 수행되는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT de.emp_id, d.dept_id
       FROM dept_emp_mapping de,
@@ -586,7 +586,7 @@
     - 만약 dept_emp_mapping에 걸려있는 start_date 조건으로 먼저 필터링이 된다면 1341건으로 줄게됨.
       - 이를 위해 dept_emp_mapping 테이블을 드라이빙 테이블로 지정할 수 있도록 튜닝.
 - 불필요한 조인을 수행하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT COUNT(DISTINCT e.emp_id) as COUNT
       FROM emp e,
@@ -618,7 +618,7 @@
     - 따라서 join을 활용하는 것보다는 조건절로 판별하는 것이 더 효율적이다.
     - 또한, emp_id는 PK이므로 중복될 일이 없기 때문에 DISTINCT 키워드는 제거해도 된다.
 - HAVING 절로 추가적 필터를 수행하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT e.emp_id, e.first_name, e.last_name
       FROM emp e,
@@ -649,7 +649,7 @@
     - HAVING 절의 특성상 모든 데이터가 추출된 이후 필터링을 하는데, JOIN 시 필터링하는게 성능상 유리하므로 이 관점에서 튜닝을 진행한다.
       - 때문에 HAVING 절은 MySQL엔진에서 필터링이 이뤄짐. -> 스토리지 엔진에서 필터링이 될 수 있도록 튜닝 필요.
 - 유사한 SELECT문을 여러 개 나열한 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT 'BOSS' grade_name, COUNT(*) cnt
       FROM grade
@@ -683,7 +683,7 @@
     - grade_name의 값만 다르고 모두 동일한 구조이므로, 매번 SELECT문을 수행할 필요가 없다.
     - 한 번의 SELECT로 변경하여 442,545 row를 한 번만 접근하도록 튜닝. (이전에는 3번을 접근하였음.)
 - 소계/통계를 위한 쿼리를 반복하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT region, null gate, COUNT(*) cnt
       FROM entry_record
@@ -713,7 +713,7 @@
   - 튜닝 포인트
     - 소계/집계을 할 때, 지원하는 함수가 있는지 확인하여 활용한다.
 - 처음부터 모든 데이터를 가져오는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT e.emp_id,
              s.avg_salary,
@@ -760,7 +760,7 @@
     - 최종적으로는 emp_id 기준으로 100건에 해당하는 데이터만 필요한 상황이다.
     - 튜닝 전에는 FROM절에서 모든 데이터를 join하고 있는데, 불필요한 연산만 많아지고 있으므로 필요한 데이터만 조회하여 계산하도록 튜닝한다.
 - 비효율적인 페이징을 수행하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT e.emp_id, e.first_name, e. last_name, e.hire_date
       FROM emp e,
@@ -791,7 +791,7 @@
       - 280만 -> 38만으로 줄어듦.
     - 많은 건수에서 페이징을 하는 것보다 salary 테이블의 모수를 줄인 후에 페이징을 한 결과를 사용하는 것이 효율적이다.
 - 불필요한 정보를 가져오는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT COUNT(emp_id) AS count
       FROM (SELECT e.emp_id, m.dept_id
@@ -817,7 +817,7 @@
     - manager 테이블에서 dept_id를 가져왔지만 실제 사용하지는 않는다.
     - 즉 emp 테이블의 gender와 emp_id 조건만 있으면 원하는 결과를 가져올 수 있으므로 쿼리를 단순화시키는 것이 좋다.
 - 비효율적인 조인을 수행하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT DISTINCT de.dept_id
       FROM manager m,
@@ -846,7 +846,7 @@
       - FROM 절에서 중복을 제거하면 33만건의 데이터가 9건으로 줄어든다.
     - dept_emp_mapping 테이블은 정렬되어있는 I_DEPT_ID 인덱스를 활용하고 있기 때문에 order by 절도 불필요하다.
 - 인덱스 없이 데이터를 조회하는 나쁜 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT *
       FROM emp
@@ -863,7 +863,7 @@
         - GENDER는 2종류의 값 밖에 없으니 LAST_NAME이 선두에 오는게 좋을 수도 있다.
         - 위 인덱스를 변경했을 때 영향 범위를 파악해서 변경해도 된다면, 변경해서 사용할 수도 있다.
 - 인덱스를 사용하지 않는 SQL
-  - 변겅 전
+  - 변경 전
     - ```
       SELECT *
       FROM emp
@@ -875,3 +875,56 @@
   - 튜닝 포인트
     - 현재의 쿼리는 hire_date 컬럼이 인덱스로 있지만 이를 활용하지 못하고 Full Table Scan으로 조회되고 있는 상황이다.
     - first_name 컬럼을 토대로 인덱스를 추가하여 first_name에 대한 인덱스와 hire_date에 대한 인덱스를 merge하여 사용할 수 있도록 튜닝한다.
+- 인덱스에 나쁜 영향을 주는 DML
+  - 변경 전
+    - ```
+      UPDATE entry_record
+      SET gate = 'X'
+      WHERE gate = 'B';
+      ```
+  - 튜닝 포인트
+    - 대량의 데이터를 UPDATE 할 때, 인덱스에도 변경이 일어나기 때문에 수행시간이 배로 늘어날 수도 있다.
+    - 이 경우에는 인덱스를 잠시 제거한 후에 UPDATE를 진행하고 다시 인덱스를 생성하는 것도 하나의 방법이 될 수 있다.
+- 비효율적인 인덱스를 사용하는 나쁜 SQL
+  - 변경 전
+    - ```
+      SELECT emp_id, first_name, last_name
+      FROM emp
+      WHERE gender = 'M'
+      AND last_name = 'Baba';
+      ```
+  - 튜닝 포인트
+    - 해당 쿼리는 I_GENDER_LAST_NAME 인덱스를 활용하고 있다.
+    - 겉으로 보기에는 큰 이상은 없어보이지만, 선두 컬럼이 gender이기 때문에 gender 컬럼에 먼저 접근을 하게 된다.
+      - 하지만 gender 컬럼의 값은 2개 중에 하나이기 때문에 많은 데이터를 가져올 수 밖에 없는 구조이다. 때문에 gender 컬럼이 선두에 있는 이 인덱스는 비효율적인 인덱스라고 볼 수 있다.
+      - 따라서 last_name이 선두컬럼에 올 수 있도록 인덱스를 변경한다.
+- 대소문자가 섞인 데이터와 비교하는 나쁜 SQL
+  - 변경 전
+    - ```
+      SELECT first_name, last_name, gender, birth
+      FROM emp
+      WHERE LOWER(first_name) = LOWER('MARY')
+      AND hire_date >= STR_TO_DATE('1990-01-01', '%Y-%m-%d')
+      ```
+    - 변경 전 실행계획
+      - type = ALL
+  - 튜닝 포인트
+    - 대소문자를 구별하지 않고 조회하기 위함인데, I_FIRST_NAME과 I_HIRE_DATE 인덱스 모두를 활용하고 있지 못하고 있다.
+    - hire_date 보다 first_name 조건이 모수를 더 줄일 수 있기 때문에 I_FIRST_NAME 인덱스를 활용하도록 변경이 필요하다.
+      - first_name 컬럼에 대소문자 구별이 필요하지 않다면, utf8mb3_general_ci로 변경해 줄 수 있다.
+      - 만약 대소문자 구별이 필요한 컬럼이라면, 대소문자 구분이 없는 컬럼을 추가하여 활용하는 방법도 있다.
+- 분산 없이 대량 데이터를 사용하는 나쁜 SQL
+  - 가정사항
+    - salary 테이블 대용량의 데이터를 가지고 있으며, 연도별로 레코드를 조회하는 횟수가 잦다고 가정
+  - 변경 전
+    - ```
+      SELECT COUNT(1)
+      FROM salary
+      WHERE start_date BETWEEN STR_TO_DATE('2000-01-01', '%Y-%m-%d')
+      AND STR_TO_DATE('2000-12-31', '%Y-%m-%d');
+      ```
+    - 변경 전 실행계획
+      - type = index
+  - 튜닝 포인트
+    - 인덱스를 활용해도 데이터가 많다면 조회 성능이 좋지 않을 수도 있다.
+    - 이럴때는 파티션을 사용하여 연도별 데이터를 분산시키는 방법도 좋은 대안이 될 수 있다.
