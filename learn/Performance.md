@@ -61,3 +61,79 @@
   - 연계서버
     - 연계되는 내 외부 서비스에서 성능이 나오지 않으면 우리 서비스의 장애로 이어질 수밖에 없다.
     - 연계서버의 성능 이슈나 장애 발생 시, 전파되지 않도록 연결관련 설정은 필수적으로 하는 것이 좋다.
+      - Ex. Timeout 설정
+
+### 성능 측정 도구
+- 성능 측정 도구는 아래와 같이 분류할 수 있다.
+  - 모니터링 도구
+    - 서버 리소스 모니터링 툴
+    - 서비스 모니터링 툴
+    - 종류
+      - Grafana
+      - Prometheus
+      - Zabbix
+      - Observium
+      - Cacti
+      - Nagios
+      - Icinga
+  - 성능 분석 도구
+    - Profiler
+      - CPU, Memory, Thread 등을 분석할 때 유용하게 사용 가능
+      - 종류
+        - jProfiler
+        - YourKit
+        - java flight recorder
+        - visual vm
+    - APM
+      - 종류
+        - PinPoint
+        - scouter
+        - Whatap
+        - DataDog
+        - Dynatrace
+        - AppDynamics
+        - New Relic
+  - 성능 테스트 도구
+    - Benchmark 테스트 툴
+      - 두개 이상의 대상에 대한 성능을 비교하기 위한 도구
+      - 종류
+        - SPEC
+        - JMH
+    - Performance 테스트 툴
+      - 성능 위주의 측정 도구
+      - 종류
+        - WebLoad
+        - LoadRunner
+        - Rational Performance Tester
+        - Gatling
+        - Apache
+        - Jmeter
+        - nGrinder
+        - Locust
+        - K6
+
+### 서버 성능에 영향을 주는 요소와 명령어
+- CPU
+  - uptime
+    - 서버의 현재 시간, 시스템 가동 시간, 로그인 사용자 수, 평균 부하(load average)를 확인한다.
+  - mpstat
+    - CPU 사용률을 모니터링하고, CPU별 사용 현황을 확인한다.
+- Memory
+  - netstat
+    - 네트워크 연결 상태, 라우팅 테이블, 인터페이스 상태 등을 확인한다.
+  - ss
+    - 소켓 통계 정보를 확인하며, netstat보다 더 빠르고 다양한 네트워크 상태를 볼 수 있다.
+- Network
+- Disk
+  - iostat
+    - CPU 사용량과 디스크 I/O 통계를 확인한다.
+  - du
+    - 디렉터리와 파일의 디스크 사용량을 확인한다.
+  - df
+    - 파일 시스템의 전체 및 남은 디스크 용량을 확인한다.
+- OS
+  - sysctl
+    - 커널 파라미터를 조회하거나 수정한다.
+- 정리
+  - 모든 서버는 최적화된 상태로 제공되지 않는다.
+  - 그렇기 때문에 성능 테스트를 하여 모든 서버의 리소스를 최대한 끌어올려 최적화된 상태로 운영하는 것이 중요하다.
