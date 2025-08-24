@@ -204,3 +204,53 @@
     - 음악이나 영상을 제공하는 서비스
     - 파일을 제공하는 서비스
     - 여기서 Disk를 많이 사용하는 서비스와 구분되는 점은 이미 서버에 저장되어있는 데이터를 단순 제공
+
+### GC
+- GC(Garbage Collection)란?
+  - JVM 에서 메모리를 관리해 주기 때문에 더 이상 사용하지 않는 객체를 청소해 주는 작업
+- GC
+  - GC는 크게 아래와 같이 구분할 수 있다.
+    - Minor GC
+      - = Young GC
+    - Major GC
+      - = Full GC
+  - 영역
+    - GC에는 Young 영역과 Old 영역이 존재한다.
+      - Young 영역
+        - Eden
+        - Survivor
+      - Old 영역
+        - Old
+- GC의 종류
+  - Serial Collector
+    - GC를 단일 스레드로 실행
+      - GC를 단일 스레드로 동작시키기 때문에, GC가 실행되는 동안 애플리케이션의 모든 사용자 스레드가 정지(Stop-The-World, STW) 상태에 들어간다.
+      - 즉, GC 이벤트가 발생하면 애플리케이션 로직은 잠시 멈추고, GC가 완료된 후 다시 실행된다는 단점이 있다.
+    - 스레드간 GC 오버헤드가 발생하지 않음
+    - 단일 프로세서 장비에 적합
+  - Parallel Collector
+    - GC를 여러 스레드로 실행
+    - Compaction 작업을 기본적으로 수행한다.
+      - Compaction 작업이란?
+        - 메모리가 조각나 있는 것들을 한 곳으로 모으는 작업
+        - 시간과 CPU 를 많이 사용한다.
+  - G1 GC
+    - 대용량 힙에서도 예측 가능한 짧은 GC 지연 시간을 제공
+    - 기존의 GC는 Eden, Survivor, Old 영역이 고정된 공간으로 나뉘었지만, G1 GC에서는 힙을 같은 크기의 Region 단위로 나누고, Young/Old 역할을 동적으로 할당하도록 변경되었다.
+    - 기존 Young GC 관련 동작과의 차이점
+      - Young GC
+        - Eden과 Survivor 영역이 고정된 공간으로 나뉘어 있음
+        - Minor GC 발생 시
+          - Eden 영역의 살아있는 객체를 Survivor로 카피(copy)
+          - Survivor가 가득 차면 Old 영역으로 승격(promote)
+        - 즉, 객체 이동이 필수적이었음 → 카피 비용 발생
+      - G1 GC
+        - 힙을 동일한 크기의 Region 단위로 나눔
+        - Young 영역 역할을 하는 Region만 Minor GC 대상으로 수집
+        - 살아있는 객체를 다른 Region으로 옮기지만, 기존처럼 Eden → Survivor → Old로 고정된 경로를 따르지 않음
+        - Region 단위로 필요한 곳에만 객체를 옮김 → 고정된 Young/Old 영역 전체를 복사하지 않는다
+          - 기존처럼 Eden과 Survivor가 고정된 공간이어서 항상 복사해야 했던 구조가 사라짐.
+  - ZGC
+    - 대규모 힙에서도 거의 멈춤 없는 GC를 목표로 설계된 Low-latency GC
+    - CPU와 메모리 오버헤드 존재
+      - 객체를 계속 추적(확인)하고 참조를 관리하기 때문
