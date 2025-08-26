@@ -282,3 +282,31 @@
 - Log
   - System.out.println()을 이용한 방식은 지양
   - Logger를 사용은 필수. 불필요한 것은 로그로 남길 필요 없음.
+
+### Troubleshooting
+- Troubleshooting이란?
+  - 문제의 원인을 파악하여 해결해 나아가는 것
+- 문제의 원인을 파악하는 방법
+  - 병목으로 인하여 이슈가 발생한 경우
+    - APM으로 병목 지점 파악
+      - 서버가 문제일 경우 서버 콘솔에 들어가서 파악
+      - 애플리케이션이 문제일 경우에는 쓰레드 문제, 메모리 문제, 기능상의 문제인지를 확인
+  - 사용자 증가로 이슈가 발생한 경우
+    - 근본적인 원인 파악이 필요함
+      - 일시적인 증가(=마케팅 혹은 이벤트로 인하여 일시적인 증가)라면,
+        - 웨이팅 룸 같은 기능 추가
+        - 서버 스펙 확장
+      - 절대적인 사용자 수의 증가라면,
+        - 튜닝 포인트가 있는지 확인
+        - 서버 스펙 확장
+  - Thread로 이슈가 발생한 경우
+    - Thread dump를 확인할 수 있는 다양한 방법
+      - jstack [pid] 명령어를 통해 확인
+      - kill -3 [pid]
+    - 덤프가 생성되었다면, TDA(Thread Dump Analyzer Tool)로 확인할 수 있다.
+  - Memory로 인한 이슈가 발생한 경우
+    - 명령어 혹은 jvm 옵션을 통해 다양한 방법으로 확인할 수 있다.
+      - jstat -gcutil [pid]
+      - -XX:+HeapDumpOnOutOfMemoryError (자동 Heap dump 옵션)
+      - jmap -histo [pid] (Heap 점유 객체 종류 확인)
+      - jmap -dump:live,format=b,file=heap.hprof [pid] (Memory Dump 생성)
