@@ -254,3 +254,31 @@
     - 대규모 힙에서도 거의 멈춤 없는 GC를 목표로 설계된 Low-latency GC
     - CPU와 메모리 오버헤드 존재
       - 객체를 계속 추적(확인)하고 참조를 관리하기 때문
+
+### Java 개발 시 유의사항
+- String
+  - String은 불변(immutable) 객체이기 때문에 새로운 값을 할당할 때마다 새로운 객체가 생성되고, 기존 객체는 메모리에 남아 있게된다.
+  - 따라서 문자열 결합 시에 StringBuilder, StringBuffer, StringJoiner를 사용하는게 좋다.
+- 반복문
+  - for 를 사용할 때에는 메소드 호출은 최대한 자제한다.
+    - AS IS
+      - ```
+        int array[] = new int[10];
+        for (int loop = 0; loop < array.length; loop++) {
+          ...
+        }
+        ```
+    - AS IS
+      - ```
+        int array[] = new int[10];
+        int arrayLength = array.length;
+        for (int loop = 0; loop < arrayLength; loop++) {
+          ...
+        }
+        ```
+- JSON
+  - 서버간 데이터를 주고 받을 때 JSON을 사용할 경우, 데이터를 받아 분석하는데 CPU만을 사용하며 데이터가 크면 클수록 그 시간은 비례하여 증가한다.
+  - JSON 대안으로 Protocol buffers(protobuf, gRPC), Thrift, Finalge, Avro 등을 고려하는 것도 좋은 방법이다.
+- Log
+  - System.out.println()을 이용한 방식은 지양
+  - Logger를 사용은 필수. 불필요한 것은 로그로 남길 필요 없음.
