@@ -1,4 +1,4 @@
-# Spring
+# Architecture
 - Fast Campus > 조대협의 대용량 아키텍처 설계 로드맵
 
 <br><br><br>
