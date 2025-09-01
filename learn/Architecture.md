@@ -162,6 +162,7 @@
     - TTL 설정
       - 메시지큐의 TTL을 적절히 설정
       - 만료된 메시지를 에러큐로 보내거나, 삭제
+
 ### 마이크로 서비스 아키텍처
 - 마이크로 서비스
   - 시스템을 여러개의 독립된 서비스로 나눠서 구현한후, 이 서비스를 조합함으로써 비즈니스 시나리오를 구현한 아키텍처 디자인 스타일.
@@ -283,3 +284,96 @@
     - 성능과 호출 흐름을 모니터링하고 추적한다.
   - Observability & Insight
     - 전체 시스템 상태를 가시화하고 분석한다.
+
+### REST API 설계
+- REST의 구성 요소
+  - 리소스(Resource)
+    - HTTP URI를 이용하여 자원을 정의한다.
+  - 동사 (Verb)
+    - HTTP Method를 이용하여 자원에 대한 행위를 정의한다.
+  - 표현 (representation)
+    - HTTP Body를 이용하여 자원에 대한 행위의 내용을 정의한다.
+- HTTP 메서드 설계
+  - GET
+    - 리소스 조회
+    - Ex. GET /users (모든 사용자 조회), GET /users/{userId} (특정 사용자 조회)
+  - POST
+    - 리소스 생성
+    - Ex. POST /users (새 사용자 생성)
+  - PUT
+    - 리소스 전체 수정
+    - Ex. PUT /users/{userId} (특정 사용자의 정보 전체 수정)
+  - PATCH
+    - 리소스 일부 수정
+    - Ex. PATCH /users/{userId} (특정 사용자의 일부 정보 수정)
+  - DELETE
+    - 리소스 삭제
+    - Ex. DELETE /users/{userId} (특정 사용자 삭제)
+- REST API 설계 원칙
+  - 명확한 Resource 식별
+    - URI는 계층적 구조를 따르고, 동작이 아닌 리소스 중심으로 설계되어야 한다.
+      - /users/{userId}와 같은 계층적 구조
+      - /getUser와 같은 동작으로 명명되면 안된다.
+  - HTTP 메서드 기반 리소스 조작
+    - REST는 HTTP 메서드(GET, POST, PUT, PATCH, DELETE)를 사용하여 리소스를 조작한다.
+  - 표준화된 응답 코드 사용
+    - REST API는 HTTP 상태 코드를 사용해 요청 결과를 알린다.
+      - 실패 케이스에서 200 OK와 함께 오류코드를 전달하는 방식은 잘못된 설계이다.
+  - 캐시 가능
+    - REST 응답은 캐시 가능 여부를 명시해야 한다.
+- REST API 단점
+  - De-facto 표준
+    - 명시적인 표준이 없다.
+    - 관리가 어렵다.
+    - 좋은 디자인을 가이드 하기가 어렵다.
+  - RESTful 한 설계가 필요
+    - RDBMS는 관계형으로 리소스를 표현하지 않기 때문에 REST한 테이블 구조 설계가 필요하다.
+      - 그래서 JSON을 그대로 저장하는 도큐먼트 기반의 NoSQL이 잘 맞음
+- REST API 설계 가이드
+  - 참고용 링크
+    - Microsoft REST API design guide :
+      - https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
+    - Google REST API design guide
+      - https://cloud.google.com/apis/design
+  - 리소스는 명사로 표현
+    - URI는 동작이나 행동보다는 리소스(대상)를 식별하는 데 초점을 맞춰야 한다. 
+    - 명사를 사용하여 리소스를 표현하는 것이 좋다.
+    - 올바른 예시) /users, /orders, /products
+    - 잘못된 예시) /getUsers, /createOrder, /deleteProduct [안티패턴/터널링]
+  - 리소스는 복수형으로 사용
+    - 리소스 이름은 일반적으로 복수형을 사용한다.
+    - 이는 리소스 컬렉션을 나타내며 RESTful API의 통일성을 높인다.
+    - 올바른 예시) /users, /products
+    - 잘못된 예시) /user, /product
+  - URI 경로는 계층 구조를 반영
+    - URI는 리소스 간의 관계를 표현할 수 있어야 하며, 경로는 계층 구조를 따르는 것이 좋다.
+    - 예시) /users/{userId}/orders/{orderId}
+  - 하이픈(-)과 밑줄(_)
+    - 하이픈(-)은 여러 단어로 된 URI를 구분할 때 사용하고, 밑줄(_)은 가독성을 떨어뜨릴 수 있으므로 지양한다.
+    - 올바른 예시) /order-items
+    - 잘못된 예시) /order_items
+- 에러 처리
+  - 에러가 발생했을 때는 클라이언트가 원인을 명확히 알 수 있도록 표준화된 에러 메시지 형식을 제공해야 한다.
+  - 일반적으로 JSON 형식을 사용한다.
+  - Error Stack은 response 메시지에 포함 시키지 않는게 좋다.
+    - 어떤 기술 스택을 사용하는지, 파일 위치등 해킹 가능한 자료가 유출될 수 있기 때문
+- 버전 관리
+  - 버저닝을 통해 다른 버전의 리소스를 응답할 수 있다.
+  - 방식은 아래와 크게 아래와 같이 분류할 수 있다.
+    - URI에 포함
+      - GET /v1/resource
+      - 명확하고 직관적, 테스트가 편함
+      - REST 디자인 원칙에서 다소 벗어남
+      - 가장 일반적인 방식
+    - Sub domain에 포함
+      - GET https://v1.api.example.com/resource
+      - API 서버를 물리적으로 분리하여, 독립 운영 가능
+      - DNS, 네트워크 설정 필요
+    - Header에 포함
+      - GET /resource Headers: Accept:   
+        application/vnd.myapi.v1+json
+      - 클라이언트 추가 작업이 필요하고, 브라우저에서 테스트하기 어려움
+    - Query Parameter에 포함
+      - GET /resource?version=1
+      - 간단한 버전 관리
+      - 캐싱이 복잡해짐
