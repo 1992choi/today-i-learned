@@ -3,3 +3,5 @@
   - Performance.md
 - [인프런] 업무에 바로 쓰는 SQL 튜닝
   - Tuning.md
+- [인프런] 5천억건이 넘는 금융 데이터를 처리하는 토스 개발자에게 배우는 MySQL
+  - Toss.md
