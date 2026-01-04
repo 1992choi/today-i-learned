@@ -429,3 +429,263 @@
     - 대용량 데이터에서도 매우 빠름
 - 주의 사항
   - DDL이므로 롤백 불가
+
+### MySQL의 내부 아키텍처와 스토리지 엔진
+- 내부 아키텍처
+  - Client / Connection Layer (접속 계층)
+    - 클라이언트 연결 요청 처리
+    - 사용자 인증 및 권한 확인
+    - 세션 생성 및 연결 관리
+  - SQL Interface Layer (SQL 처리 계층)
+    - SQL 문법 파싱
+    - 쿼리 유효성 검사
+    - 접근 권한 체크
+  - Optimizer Layer (쿼리 최적화 계층)
+    - 실행 계획(Execution Plan) 생성
+    - 인덱스 선택
+    - 조인 순서 및 방식 결정
+  - Execution Engine Layer (실행 엔진 계층)
+    - 실행 계획에 따라 쿼리 수행
+    - 스토리지 엔진에 데이터 요청
+  - Storage Engine Layer (스토리지 엔진 계층)
+    - 실제 데이터 저장 및 조회
+    - 인덱스 관리
+    - 트랜잭션 및 락 처리
+  - OS / File System Layer (운영체제 계층)
+    - 디스크 I/O 처리
+    - 파일 시스템 관리
+    - 메모리 및 캐시 관리
+- 스토리지 엔진
+  - InnoDB
+    - 기본 스토리지 엔진
+    - 트랜잭션 지원 (ACID)
+    - Row-level Lock 지원
+  - MyISAM
+    - 트랜잭션 미지원
+    - Table-level Lock 사용
+  - 사용 중인 스토리지 엔진 확인
+    ```
+    SELECT
+        TABLE_SCHEMA as 데이터베이스,
+        TABLE_NAME as 테이블명,
+        ENGINE as 스토리지엔진,
+        ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024, 2) as 크기_MB
+    FROM information_schema.TABLES
+    WHERE TABLE_SCHEMA = DATABASE()
+    ORDER BY (DATA_LENGTH + INDEX_LENGTH) DESC;
+    ```
+- InnoDB 버퍼 풀
+  - InnoDB 스토리지 엔진에서 사용하는 핵심 메모리 영역
+  - 데이터와 인덱스 페이지를 메모리에 캐시하여 디스크 I/O를 최소화
+  - 조회 성능에 직접적인 영향을 미침
+  - 디스크에서 읽은 페이지를 버퍼 풀에 적재 후 재사용
+  - 변경된 데이터는 즉시 디스크에 쓰지 않고 버퍼 풀에서 관리
+  - 주요 지표
+    - HIT RATE
+      - 메모리에서 바로 조회된 비율
+      - 값이 높을수록 디스크 접근이 적음
+    - FREE BUFFERS
+      - 사용되지 않은 여유 페이지 수
+    - MODIFIED DATABASE PAGES
+      - 수정되었지만 아직 디스크에 반영되지 않은 페이지 수
+  - 관련 설정
+    - innodb_buffer_pool_size
+      - 버퍼 풀 전체 크기 설정
+  - 버퍼 풀 기본 정보 확인하기
+    - ```
+      SELECT
+          POOL_SIZE as 전체페이지수,
+          ROUND(POOL_SIZE * 16384 / 1024 / 1024, 0) as 전체크기_MB,
+          FREE_BUFFERS as 빈페이지수,
+          DATABASE_PAGES as 데이터페이지수,
+          MODIFIED_DATABASE_PAGES as 수정된페이지수,
+          ROUND(HIT_RATE, 2) as 히트율_퍼센트
+      FROM information_schema.INNODB_BUFFER_POOL_STATS;
+      ```
+- 로그 버퍼
+  - 트랜잭션 변경 로그(Redo Log)를 임시로 저장하는 메모리 영역
+  - 디스크에 바로 기록하지 않고 메모리에 먼저 저장
+  - 디스크 I/O 감소를 통한 성능 향상 목적 
+  - 로그 버퍼 상태 확인
+    - ```
+      SELECT
+          '로그 버퍼 크기(MB)' as 항목,
+          @@innodb_log_buffer_size / 1024 / 1024 as 값
+      
+      UNION ALL
+      
+      SELECT
+          '로그 대기 횟수',
+          (SELECT VARIABLE_VALUE FROM performance_schema.global_status
+           WHERE VARIABLE_NAME = 'Innodb_log_waits')
+      
+      UNION ALL
+      
+      SELECT
+          '로그 쓰기 요청',
+          (SELECT VARIABLE_VALUE FROM performance_schema.global_status
+           WHERE VARIABLE_NAME = 'Innodb_log_write_requests')
+      
+      UNION ALL
+      
+      SELECT
+          '실제 로그 쓰기',
+          (SELECT VARIABLE_VALUE FROM performance_schema.global_status
+           WHERE VARIABLE_NAME = 'Innodb_log_writes');
+      ```
+
+### 메모리와 트랜잭션 및 락 메커니즘
+- 성능의 핵심은 메모리
+  - 디스크보다 메모리 접근 속도가 압도적으로 빠름
+  - InnoDB는 버퍼 풀을 통해 메모리에서 데이터 조회를 우선 시도
+  - 버퍼 풀 히트율이 높을수록 디스크 I/O가 줄어들어 성능이 향상됨
+  - 히트율 하락은 성능 저하의 직접적인 신호
+  - ```
+    -- 버퍼 풀 히트율 확인하기 (95% 이상이면 좋음)
+    SELECT
+        '버퍼 풀 성능 분석' as 분석항목,
+        bp_read_requests.VARIABLE_VALUE as 전체요청수,
+        bp_reads.VARIABLE_VALUE as 디스크읽기수,
+        ROUND(
+                (1 - bp_reads.VARIABLE_VALUE / bp_read_requests.VARIABLE_VALUE) * 100, 2
+        ) as 히트율_퍼센트,
+        CASE
+            WHEN (1 - bp_reads.VARIABLE_VALUE / bp_read_requests.VARIABLE_VALUE) * 100 >= 95
+                THEN '👍 매우 좋음'
+            WHEN (1 - bp_reads.VARIABLE_VALUE / bp_read_requests.VARIABLE_VALUE) * 100 >= 90
+                THEN '😊 양호'
+            WHEN (1 - bp_reads.VARIABLE_VALUE / bp_read_requests.VARIABLE_VALUE) * 100 >= 80
+                THEN '😐 보통'
+            ELSE '😱 개선 필요'
+            END as 상태
+    FROM
+        (SELECT VARIABLE_VALUE FROM performance_schema.global_status
+         WHERE VARIABLE_NAME = 'Innodb_buffer_pool_reads') bp_reads,
+        (SELECT VARIABLE_VALUE FROM performance_schema.global_status
+         WHERE VARIABLE_NAME = 'Innodb_buffer_pool_read_requests') bp_read_requests;
+    ```
+- 락 메커니즘
+  - 테이블 락 (Table Lock)
+    - 테이블 전체에 락을 설정
+    - 동시성은 낮지만 구조가 단순함
+  - 갭 락 (Gap Lock)
+    - 인덱스의 범위(값과 값 사이)에 락을 설정
+    - 동일 범위에 새로운 데이터 삽입을 방지
+  - Exclusive Lock (X Lock)
+    - 데이터 수정 시 사용하는 락
+    - 다른 트랜잭션의 읽기/쓰기 접근을 차단
+  - 읽기 락 (Shared Lock, S Lock)
+    - 데이터 조회 시 사용하는 락
+    - 다른 트랜잭션의 읽기는 허용, 쓰기는 차단
+
+### Replication & Distribution
+- Replication
+  - 읽기 성능 관점에서의 Replication 
+    - 읽기 요청의 부하를 분산하기 위해 사용
+    - Master는 쓰기(INSERT, UPDATE, DELETE) 처리
+    - Replica(Slave)는 읽기(SELECT) 요청 처리
+    - 읽기 트래픽을 여러 Replica로 분산하여 응답 속도 향상
+    - 읽기 부하 증가 시 Replica를 추가하여 수평 확장 가능
+    - 읽기와 쓰기를 분리하여 Master의 부하 감소
+  - Replication 지연
+    - Master와 Replica 간 데이터 반영 시점 차이 발생 가능
+    - 비동기 복제 구조로 인해 최신 데이터 조회가 보장되지 않을 수 있음
+    - 읽기 성능은 향상되지만, 데이터 정합성은 일부 포기해야 함
+  - Replication 지연 대응
+    - Master 직접 읽기 (비추천)
+      - 쓰기 직후 최신 데이터가 필요한 경우 Master에서 조회
+      - Replication 지연 문제는 해결되지만
+      - 읽기 부하가 Master로 집중되어 Replication의 장점이 사라짐
+    - 캐싱 활용
+      - 데이터 추가/수정/삭제 시 캐시에 함께 반영
+      - 조회 시 Replica 대신 캐시에서 읽도록 구성
+      - Replication 지연이 있어도 최신 데이터 조회 가능
+      - 읽기 성능과 데이터 정합성을 동시에 보완 가능 
+
+### Partitioning & Sharding
+- Partitioning
+  - 거대한 파일을 논리적인 기준을 잡고 나눠서 저장하는 기법
+  - 위에서 정리한 내용 참고
+- Sharding
+  - Sharding 이란?
+    - 데이터를 여러 DB로 수평 분할하여 저장하는 방식
+    - 단일 DB의 용량 한계 및 쓰기 성능 한계를 해결하기 위한 확장 전략
+    - Scale-up이 아닌 Scale-out을 가능하게 함
+    - 주로 대규모 트래픽, 대량 데이터 환경에서 사용됨
+  - Shard Key 선정
+    - 데이터가 여러 Shard에 균등하게 분산되는 값
+    - 특정 Shard에 트래픽이 몰리는 핫스팟 현상을 방지하는 것이 핵심
+    - 변경되지 않는 값이어야 하며, 변경 시 데이터 이동 비용이 매우 큼
+    - 주요 조회 조건과 잘 맞는 값이어야 Cross Shard 쿼리를 줄일 수 있음
+    - 보통 user_id, order_id 같은 고유 값이 적합
+  - Cross Shard
+    - 하나의 요청이 여러 Shard를 동시에 조회하거나 수정하는 문제
+    - 모든 Shard를 조회해야 하므로 성능 저하가 발생
+    - 분산 트랜잭션 처리로 인해 구현 난이도와 장애 대응 복잡도 증가
+    - 샤딩 설계의 핵심 목표는 Cross Shard 발생을 최소화하는 것
+  - 일관성 처리
+    - 샤딩 환경에서는 단일 DB 트랜잭션 보장이 불가능
+    - 여러 Shard에 걸친 데이터 변경 시 일관성 전략이 필요
+    - 일관성을 위한 전략의 종류
+      - 2PC (Two-Phase Commit)
+        - 여러 Shard의 트랜잭션을 하나의 트랜잭션처럼 처리
+        - 강한 일관성을 보장
+        - 락 유지 시간이 길고 성능 저하가 큼
+        - 장애 발생 시 복구가 어렵고 실무에서는 잘 사용하지 않음
+      - Saga 패턴
+        - 트랜잭션을 여러 로컬 트랜잭션으로 분리하여 처리
+        - 실패 시 보상 트랜잭션을 실행하여 상태를 되돌림
+        - 최종적 일관성(Eventual Consistency)을 허용
+        - 분산 환경과 마이크로서비스에서 현실적인 선택
+
+### 데이터 압축과 아카이빙
+- 목적
+  - 저장 공간 절약
+  - 디스크 I/O 감소를 통한 성능 개선
+  - 운영 데이터와 장기 보관 데이터의 분리
+- 데이터 압축
+  - 데이터를 디스크에 저장할 때 압축하여 저장하는 방식
+  - 디스크 사용량을 줄이고 I/O 비용을 감소시킴
+  - 읽기 시 압축 해제가 필요하므로 CPU 사용량은 증가
+  - 자주 조회되지 않는 데이터일수록 효과적
+  - InnoDB는 테이블/페이지 단위 압축을 지원
+  - 압축 테이블 사용예시
+    - ```
+      -- 압축 기능을 활성화하여 테이블 생성
+      CREATE TABLE logs_compressed (
+           log_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+           user_id INT,
+           message TEXT,
+           created_at TIMESTAMP
+      )
+          ROW_FORMAT=COMPRESSED
+          KEY_BLOCK_SIZE=8;
+      ```
+      - 장점
+        - 디스크 I/O 감소
+          - SELECT 시 읽어야 할 데이터 양이 줄어들어 디스크 접근 횟수 감소
+        - 버퍼 풀 히트율 개선
+          - 압축된 페이지 기준으로 더 많은 데이터가 메모리에 적재됨
+          - 동일한 버퍼 풀 크기에서도 캐시 효율 증가
+        - 대용량 조회 쿼리에 유리
+          - 로그 조회, 기간 조건 검색 등에서 효과적
+        - 스토리지 비용 절감
+          - 테이블 크기 감소로 백업 및 복제 비용도 함께 감소
+
+      - 단점
+        - 쿼리 실행 시 CPU 부담 증가
+          - SELECT 시 압축 해제 과정이 필요
+        - 쓰기 쿼리 성능 저하
+          - INSERT / UPDATE / DELETE 시 압축 처리 비용 발생
+        - 인덱스 효율 저하 가능
+          - 페이지 압축으로 인해 페이지 분할 및 재압축 발생 가능
+        - OLTP 성격 쿼리에 부적합
+          - 짧고 빈번한 트랜잭션 환경에서는 오히려 성능 저하
+- 아카이빙
+  - 오래된 데이터를 운영 DB에서 분리하여 별도 저장소로 이동
+  - 운영 DB의 데이터 크기를 줄여 성능과 관리성을 개선
+  - 주로 과거 로그, 이력성 데이터에 적용
+  - 읽기 빈도가 매우 낮은 데이터를 대상으로 함
+
+### 섹션 7
+- MySQL 보다 설계 관점의 강의내용이라 정리하지 않음
