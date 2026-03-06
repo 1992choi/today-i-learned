@@ -212,3 +212,51 @@
       - 이 예시에서는 앞 24bit가 Network ID이고, 뒤 8bit가 Host ID이다.
         - `1100 0000 . 1010 1000 . 0000 0000` → Network ID
         - `0000 1010` → Host ID
+
+### L3 IP Packet으로 외워라
+- Packet 이란?
+  - 네트워크에서 전송되는 데이터의 단위이다.
+  - 3계층(Network Layer)에서 다루는 데이터 단위를 Packet이라고 한다.
+  - 상위 계층에서 전달된 데이터를 목적지까지 전달하기 위해 주소 정보 등을 포함하여 구성된 데이터 구조이다.
+- 구성
+  - Packet은 Header와 Payload로 나뉜다.
+    - Header
+      - 패킷을 전달하기 위해 필요한 제어 정보가 담기는 영역이다.
+      - 대표적으로 다음과 같은 정보가 포함된다.
+        - 출발지 IP 주소
+        - 목적지 IP 주소
+        - 프로토콜 정보(TCP, UDP 등)
+        - TTL(Time To Live)
+      - 네트워크 장비는 Header 정보를 기준으로 패킷을 전달한다.
+    - Payload
+      - 실제 전달하려는 데이터가 들어 있는 영역이다.
+      - 상위 계층(예: TCP/UDP, HTTP 등)에서 전달된 데이터가 포함된다.
+- MTU (Maximum Transmission Unit)
+  - 한 번에 전송할 수 있는 최대 데이터 크기를 의미한다.
+  - 네트워크 장비나 인터페이스가 처리할 수 있는 패킷의 최대 크기이다.
+  - 일반적인 Ethernet 환경에서는 MTU가 1500 byte인 경우가 많다.
+  - 패킷의 크기가 MTU보다 크면 여러 개의 패킷으로 나누어 전송될 수 있다.
+
+### Encapsulation과 Decapsulation
+- 데이터 포함 구조
+  - 네트워크 데이터는 계층 구조로 감싸지는 형태로 구성된다.
+  - 예를 들어 다음과 같은 포함 관계로 이루어진다.
+    - `L2 Frame`은 Header와 Payload로 구성된다. Payload에는 L3 Packet이 포함된다.
+      - Header
+      - Payload
+        - `L3 Packet` (마찬가지로 Payload에 Segment 존재)
+          - Header
+          - Payload
+            - `L4 Segment`
+              - Header
+              - Payload
+                - L5 ~ L7 데이터 (Application Data)
+  - 즉, 상위 계층의 데이터가 하위 계층의 Payload 안에 포함되는 구조이다.
+- Encapsulation
+  - 데이터를 전송할 때 상위 계층 데이터에 하위 계층 Header가 하나씩 추가되는 과정을 의미한다.
+  - 각 계층이 자신의 제어 정보를 추가하면서 데이터를 감싸는 구조이다.
+  - 결과적으로 상위 계층 데이터가 하위 계층의 Payload 안에 포함된다.
+- Decapsulation
+  - 수신 측에서 하위 계층부터 Header를 하나씩 제거하면서 데이터를 상위 계층으로 전달하는 과정을 의미한다.
+  - 즉, Encapsulation의 반대 과정이다.
+  - 네트워크 장비나 호스트는 Header 정보를 확인한 뒤 제거하고 내부 데이터를 다음 계층으로 전달한다.
