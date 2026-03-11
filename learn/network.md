@@ -570,3 +570,85 @@
 - RTT (Round Trip Time)
   - 패킷이 송신자에서 목적지로 전달되고 다시 돌아오기까지 걸린 시간을 의미한다.
   - Ping은 이 RTT 값을 측정하여 네트워크 지연 시간을 확인하는 데 사용된다.
+
+### TCP와 UDP 개요
+- TCP (Transmission Control Protocol)
+  - 연결 지향(Connection-oriented) 프로토콜이다.
+  - 데이터를 전송하기 전에 송신자와 수신자 사이에 연결을 먼저 설정한다.
+  - 데이터의 순서를 보장하며, 유실된 데이터는 재전송한다.
+  - 수신 확인(ACK), 흐름 제어, 혼잡 제어 등의 기능을 제공한다.
+  - 신뢰성이 중요한 통신에서 사용된다.
+  - 예: 웹(HTTP/HTTPS), 파일 전송, 이메일 등
+- UDP (User Datagram Protocol)
+  - 비연결형(Connectionless) 프로토콜이다.
+  - 연결 설정 없이 데이터를 바로 전송한다.
+  - 데이터의 순서 보장이나 재전송 기능이 없다.
+  - 구조가 단순하여 속도가 빠르고 오버헤드가 적다.
+  - 실시간성이 중요한 통신에서 사용된다.
+  - 예: DNS, 스트리밍, 실시간 게임, VoIP 등
+
+### TCP 연결과정
+- 3-way Handshaking
+  - TCP에서 송신자와 수신자가 데이터를 주고받기 전에 연결을 설정하는 과정이다.
+  - 양쪽이 서로 통신 가능한 상태인지 확인하고 초기 시퀀스 번호를 교환한다.
+- 동작 과정
+  - 1. SYN
+    - 클라이언트가 서버에게 연결을 요청한다.
+    - 이때 SYN(Synchronize) 패킷을 전송한다.
+    - 패킷에는 클라이언트의 초기 Sequence Number가 포함된다.
+  - 2. SYN + ACK
+    - 서버는 연결 요청을 수신하면 응답을 보낸다.
+    - SYN과 ACK가 함께 설정된 패킷을 전송한다.
+    - ACK는 클라이언트의 SYN을 정상적으로 받았다는 의미이다.
+    - 동시에 서버의 초기 Sequence Number도 전달된다.
+  - 3. ACK
+    - 클라이언트가 서버의 SYN을 확인하고 ACK 패킷을 전송한다.
+    - 이 과정이 완료되면 TCP 연결이 성립된다.
+- 정리
+  - Client → Server : SYN
+  - Server → Client : SYN + ACK
+  - Client → Server : ACK
+- 이때 전송되는 세그먼트의 구조
+  - 3-way Handshaking에서 사용되는 세그먼트는 연결 설정을 위한 제어 패킷이다.
+  - 따라서 일반적인 데이터 전송과 달리 Payload는 포함되지 않는다.
+  - 보통 다음과 같은 구조로 전송된다.
+    - IP Header
+    - TCP Header
+    - Payload 없음
+  - 참고
+    - 이론적으로는 SYN 패킷에 데이터가 포함될 수도 있다.
+    - 하지만 일반적인 TCP 연결 과정에서는 Payload 없이 사용되는 것이 일반적이다.
+
+### TCP 연결종료 및 상태변화
+- 4-way Handshaking
+  - TCP 연결을 정상적으로 종료하기 위해 사용하는 과정이다.
+  - 연결은 양방향 통신이기 때문에 한쪽에서 종료 요청을 하더라도 반대 방향의 통신이 남아 있을 수 있다.
+  - 따라서 송신 방향과 수신 방향을 각각 종료하는 절차가 필요하며, 이 때문에 4단계 과정으로 진행된다.
+- 동작 과정
+  - 1. FIN
+    - 클라이언트가 연결 종료를 요청한다.
+    - TCP Header에 FIN 플래그가 설정된 세그먼트를 전송한다.
+    - 이 시점부터 클라이언트는 더 이상 데이터를 보내지 않는다.
+  - 2. ACK
+    - 서버는 클라이언트의 FIN을 수신하고 ACK로 응답한다.
+    - 이는 종료 요청을 정상적으로 받았다는 의미이다.
+    - 하지만 서버는 아직 데이터를 전송할 수 있는 상태이다.
+  - 3. FIN
+    - 서버도 데이터 전송이 끝나면 연결 종료를 요청한다.
+    - TCP Header에 FIN 플래그를 설정하여 클라이언트에게 전송한다.
+  - 4. ACK
+    - 클라이언트는 서버의 FIN을 수신하고 ACK로 응답한다.
+    - 이 과정이 완료되면 TCP 연결이 종료된다.
+- 정리
+  - Client → Server : FIN
+  - Server → Client : ACK
+  - Server → Client : FIN
+  - Client → Server : ACK
+- 상태 변화 예시 (간략)
+  - Client
+    - ESTABLISHED → FIN_WAIT_1 → FIN_WAIT_2 → TIME_WAIT → CLOSED
+  - Server
+    - ESTABLISHED → CLOSE_WAIT → LAST_ACK → CLOSED
+- TIME_WAIT 상태
+  - 마지막 ACK 이후 일정 시간 동안 연결 정보를 유지하는 상태이다.
+  - 네트워크 지연으로 인해 남아 있을 수 있는 패킷 문제를 방지하기 위한 상태이다.
