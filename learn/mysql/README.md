@@ -5,3 +5,5 @@
   - tuning.md
 - [인프런] 5천억건이 넘는 금융 데이터를 처리하는 토스 개발자에게 배우는 MySQL
   - toss.md
+- [인프런] `Real MySQL 시즌 1 - Part 1` + `Real MySQL 시즌 1 - Part 2`
+  - real-mysql.md
