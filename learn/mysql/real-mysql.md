@@ -373,3 +373,49 @@
     - 실행 계획
     - 인덱스 사용 여부
     - 전체 성능이 크게 달라짐
+
+### Lateral Derived Table
+- Lateral Derived Table 이란?
+  - FROM 절에서 사용하는 파생 테이블(Derived Table)의 확장 개념
+  - 일반 Derived Table은 바깥 테이블 컬럼을 참조할 수 없지만
+    - LATERAL을 사용하면 같은 FROM 절의 앞 테이블 컬럼을 참조 가능
+  - 즉, 각 행(row)마다 실행되는 상관 서브쿼리를 JOIN 형태로 표현한 것
+- 동작 방식
+  - 핵심
+    - 앞 테이블의 각 row를 기준으로
+    - LATERAL 서브쿼리가 반복 실행됨
+  - 예시 쿼리
+    - 일반 Derived Table (불가능)
+      - ```
+        SELECT *
+        FROM users u
+        LEFT JOIN (
+          SELECT * FROM orders o WHERE o.user_id = u.id
+        ) t ON TRUE
+        ```
+      - 결과
+        - 서브쿼리 내부에서 u.id 참조 불가 → 에러 발생
+    - LATERAL 사용 (가능)
+      - ```
+        SELECT u.id, o.order_id
+        FROM users u
+        LEFT JOIN LATERAL (
+          SELECT o.order_id
+          FROM orders o
+          WHERE o.user_id = u.id
+          ORDER BY o.created_at DESC
+          LIMIT 1
+        ) o ON TRUE
+        ```
+  - 포인트
+    - LATERAL을 사용하면 서브쿼리 내부에서 외부 컬럼(u.id) 사용 가능
+    - users의 각 row마다 orders 서브쿼리가 실행되는 구조
+- 활용 예제
+  - 종속 서브 쿼리의 다중 값 반환
+  - SELECT 절 내 연산 결과 반복 참조
+  - 선행 데이터를 기반으로 한 데이터 분석
+  - Top N 데이터 조회
+- 정리
+  - LATERAL은 FROM 절에서 사용하는 상관 서브쿼리
+  - 외부 컬럼 참조가 가능해지고 복잡한 서브쿼리를 JOIN 형태로 풀어낼 수 있음
+  - 특히 '그룹별 Top N', '행 기반 집계'에서 강력함
