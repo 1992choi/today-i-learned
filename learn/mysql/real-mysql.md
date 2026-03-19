@@ -419,3 +419,103 @@
   - LATERAL은 FROM 절에서 사용하는 상관 서브쿼리
   - 외부 컬럼 참조가 가능해지고 복잡한 서브쿼리를 JOIN 형태로 풀어낼 수 있음
   - 특히 '그룹별 Top N', '행 기반 집계'에서 강력함
+
+### SELECT ... FOR UPDATE
+- SELECT 구문
+  - MySQL에서는 SELECT 구문은 REPEATABLE-READ 을 지원한다
+    - 동일 트랜잭션 내에서는 같은 데이터를 여러 번 조회해도 동일한 결과를 보장
+  - Non-Locking consistent read (MVCC)
+    - SELECT는 기본적으로 Lock을 걸지 않고 데이터를 조회
+    - MVCC(Multi Version Concurrency Control)를 사용하여 과거 시점의 스냅샷 데이터를 읽음
+    - 즉, 다른 트랜잭션에서 수정 중인 데이터라도
+      - Lock 대기 없이 이전 커밋된 데이터를 조회 가능
+- SELECT ... FOR UPDATE
+  - 격리 수준과 무관하게 항상 최신 커밋 데이터를 조회한다.
+    - 일반 SELECT는 스냅샷(과거 데이터)을 읽지만
+    - FOR UPDATE는 현재 시점의 최신 커밋 데이터를 읽고 Lock을 건다
+    - 예시
+      - 트랜잭션 A
+        - UPDATE wallet SET balance = 50 WHERE user_id = 'A' (아직 커밋 안함)
+      - 트랜잭션 B
+        - SELECT balance FROM wallet WHERE user_id = 'A'
+          - 결과: 이전 값 (예: 100) → MVCC
+        - SELECT balance FROM wallet WHERE user_id = 'A' FOR UPDATE
+          - 트랜잭션 A 커밋까지 대기
+          - 이후 최신 값(50)을 조회
+  - 어느 상황에서 필요한가?
+    - 데이터를 조회 후 수정해야 하는 경우
+    - 동시성 제어가 필요한 경우
+    - 이유
+      - 단순 SELECT 후 UPDATE 하면
+        - 다른 트랜잭션이 동시에 수정 가능
+      - FOR UPDATE 사용 시
+        - 조회 시점에 Lock을 걸어 다른 트랜잭션 접근 차단
+  - FOR UPDATE 튜닝
+    - 튜닝 전 흐름
+      - SELECT * FROM wallet WHERE user_id = 'A' FOR UPDATE;
+      - 잔액 차감
+      - 문제
+        - 조건 없이 특정 사용자 row를 먼저 Lock
+        - 이후 잔액 체크 수행
+        - 불필요한 Lock 점유 발생
+    - 튜닝 후 흐름과 효과
+      - SELECT * FROM wallet WHERE user_id = 'A' AND balance >= {차감금액} FOR UPDATE;
+      - 효과
+        - 조건을 만족하는 경우에만 Lock 획득
+        - 잔액이 부족하면 아예 Lock을 잡지 않음
+      - 결과
+        - 불필요한 Lock 경쟁 감소
+        - 동시성 향상
+- SELECT ... FOR SHARE
+  - 개념
+    - 읽기 Lock(S-Lock)을 획득하는 SELECT
+  - 용도
+    - 다른 트랜잭션의 UPDATE / DELETE 차단
+    - 부모 데이터의 무결성 보장 (삭제 방지)
+  - 대표 예시 (게시글 - 댓글)
+    - 트랜잭션 A (댓글 생성)
+      - SELECT * FROM posts WHERE id = 1 FOR SHARE
+      - INSERT INTO comments (post_id, content) VALUES (1, '댓글')
+    - 트랜잭션 B (게시글 삭제)
+      - DELETE FROM posts WHERE id = 1
+      - 트랜잭션 A 종료까지 대기
+      - (비즈니스 로직에 따라) 댓글이 있는 경우 삭제 불가 처리 가능
+    - 의미
+      - 댓글 생성 과정 동안 해당 게시글이 삭제되지 않도록 보장
+  - 주의사항
+    - FOR SHARE 이후 UPDATE 또는 DELETE 가 실행될 경우, FOR SHARE 자제
+      - 이유
+        - 처음에는 S-Lock(공유락) 획득
+        - 이후 UPDATE/DELETE 시 X-Lock(배타락) 필요
+      - 문제
+        - Lock Upgrade 발생 (S → X)
+      - 위험성
+        - 여러 트랜잭션이 동일 패턴으로 동작하면
+          - 서로 S-Lock을 잡고 있다가
+          - X-Lock으로 승격하려고 대기
+        - 결과
+          - Deadlock 발생 가능성 증가
+      - 정리
+        - 수정/삭제가 예정된 경우
+          - 처음부터 FOR UPDATE 사용 권장
+- JPA 관점에서의 Lock (Optimistic vs Pessimistic)
+  - 낙관적 락 (Optimistic Lock)
+    - @Version 컬럼을 사용하여 동시성 제어
+    - UPDATE 시 version 조건으로 충돌 감지
+      - WHERE id = ? AND version = ?
+    - 충돌 발생 시 예외 발생
+      - ObjectOptimisticLockingFailureException
+    - 특징
+      - DB Lock 사용하지 않음
+      - 충돌 발생 시 재시도 필요
+  - 비관적 락 (Pessimistic Lock)
+    - 조회 시점에 DB Lock을 획득하여 다른 트랜잭션 접근 차단
+    - JPA → DB 쿼리 변환
+      - PESSIMISTIC_WRITE → SELECT ... FOR UPDATE
+      - PESSIMISTIC_READ → SELECT ... FOR SHARE
+    - 특징
+      - DB 레벨에서 실제 Lock 사용
+      - 충돌을 사전에 방지하지만 Lock 경합 가능
+  - 정리
+    - 낙관적 락 → JPA 레벨의 version 기반 충돌 감지
+    - 비관적 락 → DB 레벨의 실제 Lock 사용
