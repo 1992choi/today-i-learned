@@ -307,3 +307,69 @@
       - 뒤 페이지에서도 성능 유지
     - 주의사항
       - 정렬 기준 컬럼은 고유성과 정렬 가능성이 보장되어야 함
+
+### Stored Function
+- MySQL Function 종류
+  - Built-in Function
+    - MySQL에서 기본 제공하는 함수
+    - 별도 정의 없이 바로 사용 가능 (예: NOW(), COUNT(), CONCAT())
+  - User Defined Function (UDF)
+    - 사용자가 C/C++ 등으로 직접 구현하여 MySQL에 등록하는 함수
+    - 서버 레벨에서 동작하며 성능이 중요한 특수 로직에 사용
+  - Stored Function
+    - SQL 기반으로 DB 내부에 정의하는 함수
+    - 쿼리 내에서 재사용 가능하며 비즈니스 로직 일부를 DB에 캡슐화할 때 사용
+- DETERMINISTIC VS NOT DETERMINISTIC
+  - 함수의 "결과가 항상 동일한지 여부"를 나타내는 속성
+  - MySQL의 Stored Function은 반드시 두 속성 중 하나를 가져야 함
+  - DETERMINISTIC
+    - 동일한 입력 + 동일한 상태 → 항상 동일한 결과 반환
+    - 예
+      - 입력값만으로 결과가 결정되는 함수
+      - 단순 계산 함수 (a + b)
+  - NOT DETERMINISTIC
+    - 동일한 입력이어도 결과가 달라질 수 있음
+    - 예
+      - 시간, 랜덤, 외부 상태에 의존하는 함수 (NOW(), RAND())
+- NOT DETERMINISTIC 최적화 이슈
+  - NOT DETERMINISTIC 함수는 결과가 고정되지 않음
+    - 특징
+      - 호출 시점마다 결과가 달라질 수 있음
+      - 입력값 외의 요소(시간, 상태 등)에 영향을 받음
+    - 문제 발생 지점
+      - WHERE 조건에서 사용될 경우
+        - 예
+          - WHERE column = some_function()
+      - 이 경우
+        - 함수 결과가 매번 달라질 수 있기 때문에
+        - DB는 특정 값으로 확정해서 판단할 수 없음
+    - 결과
+      - 인덱스 활용 불가
+        - 어떤 값을 찾을지 미리 알 수 없음
+      - 실행 방식
+        - 레코드를 하나씩 읽으면서
+        - 매번 함수 실행 후 조건 평가
+      - 즉
+        - Full Scan 발생 가능성 증가
+        - 성능 저하 발생
+- Stored Function 주의사항
+  - Stored Function은 기본적으로 NOT DETERMINISTIC으로 간주됨
+  - 문제
+    - DB 옵티마이저 입장에서는
+      - 해당 함수의 결과를 신뢰할 수 없음
+      - 따라서 인덱스 최적화에 소극적으로 동작
+  - 해결 방법
+    - 함수가 항상 동일한 결과를 보장한다면
+      - 반드시 DETERMINISTIC 명시 필요
+    - 예
+      - CREATE FUNCTION ... DETERMINISTIC
+  - 효과
+    - 옵티마이저가 함수 결과를 예측 가능하다고 판단
+    - 인덱스 사용 가능성 증가
+    - 불필요한 반복 실행 감소
+- 정리
+  - Stored Function 자체보다 중요한 것은 "함수의 결정성"
+  - DETERMINISTIC 여부에 따라
+    - 실행 계획
+    - 인덱스 사용 여부
+    - 전체 성능이 크게 달라짐
