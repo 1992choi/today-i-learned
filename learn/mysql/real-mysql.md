@@ -519,3 +519,93 @@
   - 정리
     - 낙관적 락 → JPA 레벨의 version 기반 충돌 감지
     - 비관적 락 → DB 레벨의 실제 Lock 사용
+
+### Generated 컬럼 및 함수 기반 인덱스
+- Generated 컬럼이란?
+  - 표현식으로 정의된 컬럼
+  - 정의된 표현식에 따라 컬럼의 값이 자동으로 생성
+    - 예: 다른 컬럼들의 연산 결과 (col1 + col2 등)
+  - 사용자가 직접 값을 입력하거나 변경할 수 없음
+  - 두 가지 종류 존재
+    - Virtual Generated Column
+    - Stored Generated Column
+- Generated 컬럼 생성
+  - 문법
+    - ```
+      CREATE TABLE t (
+        col1 INT,
+        col2 INT,
+        gen_col INT [GENERATED ALWAYS] AS (col1 + col2) [VIRTUAL | STORED] [NOT NULL | NULL] [COMMENT '설명']
+      );
+      ```
+  - 특징
+    - 기본적으로 VIRTUAL 타입으로 생성
+    - NULL 값 허용
+    - PRIMARY KEY는 STORED 타입만 가능 (물리적으로 값이 저장되어야 하기 때문)
+    - 하나의 테이블에 Virtual / Stored 혼합 사용 가능
+- 가상 컬럼 (Virtual)
+  - 디스크에 값을 저장하지 않음
+  - 조회 시점에 계산됨
+    - 레코드 읽기 직전 또는 BEFORE 트리거 이후
+  - 인덱스 생성 가능
+- 스토어드 컬럼 (Stored)
+  - 디스크에 값을 저장
+  - INSERT / UPDATE 시점에 계산 후 저장
+  - 인덱스 생성 가능
+- Generated 컬럼 DDL 관련
+  - ALTER로 ADD / MODIFY / CHANGE / DROP / RENAME 가능
+  - 일반 컬럼 ↔ STORED 컬럼 변경 가능
+  - Virtual 컬럼 → 일반 컬럼 변경 불가
+  - Virtual ↔ Stored 상호 변경 불가
+  - 유효성 검사 옵션
+    - WITHOUT VALIDATION
+      - 옵션을 주지 않을경우의 기본값
+      - 기존 데이터 검증하지 않음
+      - 잘못된 값이 존재할 수 있음
+    - WITH VALIDATION
+      - 기존 데이터 전체 검증 수행
+      - 수행 중 메타데이터 락 발생 가능
+      - 범위를 벗어나면 명령 실패
+- Generated 컬럼과 인덱스
+  - 일반 컬럼처럼 인덱스 사용 가능
+  - 쿼리에서 컬럼명이 아니라 동일 표현식을 사용해도 인덱스 사용 가능
+    - 단, 표현식이 완전히 동일해야 함
+      - (col1 + col2) ≠ (col2 + col1)
+  - 조건 값의 타입도 동일해야 인덱스 사용 가능
+  - 제한사항
+    - 표현식에 사용 불가
+      - 비결정적 함수
+      - 변수, 스토어드 프로그램
+      - 서브쿼리
+    - INSERT / UPDATE 시 직접 값 지정 불가
+      - DEFAULT만 허용
+- Function Based Index
+  - 개념
+    - 표현식을 인덱스로 생성하는 기능
+    - 컬럼 가공 없이도 인덱스 활용 가능
+  - 동작 방식
+    - 내부적으로 Virtual Generated 컬럼 생성 후 인덱스 생성
+    - 해당 컬럼은 사용자에게 보이지 않는 hidden 컬럼
+- 활용 예시
+  - 대소문자 무시 검색
+    - CREATE INDEX ix_title ON books ((LOWER(title)));
+  - 계산된 값 조회
+    - CREATE INDEX ix_total ON orders ((price * quantity));
+  - 해시 기반 조회
+    - CREATE INDEX ix_hash_email ON users ((MD5(email)));
+- 주의사항
+  - 실행 계획 확인 필수
+  - 표현식 완전 일치 필요
+  - 데이터 타입 일치 필요
+    - WHERE MONTH(date_col) = 1 (O)
+    - WHERE MONTH(date_col) = '1' (X)
+  - 계산 비용 존재
+    - 변경이 잦고 표현식이 복잡하면 성능 저하 가능
+- 제한사항
+  - 비결정적 함수 사용 불가
+  - 일반 컬럼 + Prefix 컬럼 혼합 키 구성 불가
+  - 공간 / 전문검색 인덱스 지원 안함
+  - Primary Key에 표현식 포함 불가
+    - PK는 레코드를 식별하는 "실제 저장 값"이어야 함
+    - 표현식은 계산 결과이므로 값의 안정성 및 일관성 보장이 어려움
+      - 따라서 PK로 사용할 수 없음
