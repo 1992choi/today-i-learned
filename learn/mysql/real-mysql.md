@@ -609,3 +609,61 @@
     - PK는 레코드를 식별하는 "실제 저장 값"이어야 함
     - 표현식은 계산 결과이므로 값의 안정성 및 일관성 보장이 어려움
       - 따라서 PK로 사용할 수 없음
+
+### 에러 핸들링
+- MySQL 에러 구분
+  - Global Error
+    - Server-side / Client-side 공통으로 사용되는 에러
+  - Server Error
+    - MySQL 서버 내부에서 발생
+  - Client Error
+    - 클라이언트 라이브러리에서 발생
+- MySQL 에러 포맷
+  - 에러는 3가지 요소로 구성
+    - Error No
+    - SQL State
+    - Error Message
+  - Error No
+    - MySQL 전용 에러 코드
+    - 기존 4자리 → 최근 6자리 형태도 존재
+    - 범위
+      - 1 ~ 999 : Global Error
+      - 1000 ~ 1999 : Server Error
+      - 2000 ~ 2999 : Client Error
+      - 3000 ~ : Server Error 확장 영역
+      - MY-010000 ~ : 새로운 포맷의 Server Error
+  - SQL State
+    - 5자리 영문/숫자 코드
+    - ANSI SQL 표준 기반 (벤더 독립적)
+    - 구조
+      - 앞 2자리 (에러 분류)
+        - 00 : 정상
+        - 01 : 경고
+        - 02 : 결과 없음
+        - HY : 표준 미정 (벤더 의존)
+        - 그 외 : 에러
+      - 뒤 3자리
+        - 세부 에러 코드
+  - Error Message
+    - 사람이 이해할 수 있는 문자열 메시지
+- 에러 핸들링
+  - Error Message 기반
+    - 문제
+      - 버전, 스토리지 엔진에 따라 메시지 변경 가능
+      - 문자열 비교는 안정성 낮음
+  - Error No 기반
+    - 문제
+      - MySQL 내부 구현 및 스토리지 엔진에 의존적
+      - 환경 변경 시 영향 가능
+  - SQL State 기반
+    - 장점
+      - ANSI SQL 표준 기반
+      - 스토리지 엔진 간 호환성
+      - 타 DBMS와도 비교적 일관성 유지
+    - 한계
+      - 벤더별로 일부 차이 존재
+      - HY 계열은 버전 변화에 따라 재분류 가능
+- 정리
+  - Message → 가변적 (비추천)
+  - Error No → MySQL 종속
+  - SQL State → 가장 범용적이고 현실적인 선택 (하지만 100% 보장할 수는 없음)
