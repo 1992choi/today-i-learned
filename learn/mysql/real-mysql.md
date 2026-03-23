@@ -667,3 +667,30 @@
   - Message → 가변적 (비추천)
   - Error No → MySQL 종속
   - SQL State → 가장 범용적이고 현실적인 선택 (하지만 100% 보장할 수는 없음)
+
+### LEFT JOIN 주의사항 및 튜닝
+- LEFT JOIN이란?
+  - 왼쪽 테이블을 기준으로 모든 데이터를 조회
+  - 오른쪽 테이블은 매칭되는 데이터가 있을 경우에만 조인
+  - 매칭되지 않으면 NULL로 채워짐
+  - 예시
+    - SELECT u.id, o.id
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id;
+    - 의미
+      - users는 항상 조회
+      - orders는 존재할 때만 값이 채워짐
+- COUNT(*) with LEFT JOIN
+  - 불필요한 LEFT JOIN 제거
+    - JOIN 결과에 영향을 주지 않는 경우 제거 필요
+    - 특히 COUNT(*)에서는 성능 저하 원인이 될 수 있음
+  - 예시 (불필요한 LEFT JOIN)
+    - SELECT COUNT(*)
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id;
+    - 문제
+      - orders 테이블이 없어도 users 개수는 동일
+      - 불필요한 JOIN 수행
+  - 개선 쿼리
+    - SELECT COUNT(*)
+      FROM users;
