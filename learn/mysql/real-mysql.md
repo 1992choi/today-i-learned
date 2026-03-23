@@ -694,3 +694,80 @@
   - 개선 쿼리
     - SELECT COUNT(*)
       FROM users;
+
+### Prepared Statement
+- Prepared Statement 이란?
+  - SQL을 미리 준비(Prepare)하고, 이후 파라미터만 바꿔 실행하는 방식
+  - SQL 구조와 데이터(파라미터)를 분리하여 실행
+  - 예시
+    - ```
+      String sql = "SELECT * FROM users WHERE id = ?";
+      PreparedStatement ps = connection.prepareStatement(sql);
+      ps.setLong(1, 1L);
+      ```
+  - 장점
+    - SQL Injection 방지
+      - 쿼리 구조와 데이터가 분리되기 때문에 악의적인 문자열이 쿼리로 해석되지 않음
+    - 쿼리 파싱 비용 감소
+      - 일반 쿼리
+        - 매번 SQL 문자열을 파싱 → 실행 계획 생성
+      - Prepared Statement
+        - 최초 1회만 파싱
+        - 이후에는 파싱 결과(구조)를 재사용
+      - 즉, 반복 실행 시 CPU 사용량 감소
+  - 단점
+    - 메모리 사용량 증가
+      - Prepared Statement마다 서버에 파싱 결과를 저장
+      - 커넥션 수 × 쿼리 수 만큼 메모리 사용
+    - 2번의 Network round-trip 필요
+      - Prepare 요청 1번
+      - Execute 요청 1번
+      - 단일 쿼리보다 네트워크 비용 증가
+    - Execution Plan은 캐시되지 않음 (Parse Tree만 캐시)
+      - SQL 구조만 캐싱되고
+      - 실제 실행 계획은 실행 시점마다 다시 결정될 수 있음
+    - 커넥션 단위 캐시
+      - Prepared Statement는 커넥션 내에서만 유효
+      - 다른 커넥션에서는 재사용 불가
+- Prepared Statement의 비밀
+  - MySQL Prepared Statement 종류
+    - Client-side
+    - Server-side
+  - Client-side Prepared Statement
+    - JDBC에서 자체적으로 제공하는 기능
+    - 내부적으로는 일반 쿼리로 변환하여 실행
+    - 과거 MySQL 서버 미지원 시 이를 보완하기 위해 등장
+  - Server-side Prepared Statement
+    - MySQL 서버에서 직접 처리
+    - useServerPrepStmts=TRUE 일 때만 사용
+    - 기본값은 FALSE (환경에 따라 TRUE로 설정되기도 함)
+  - 공통점
+    - 둘 다 SQL Injection 방지 가능
+- PreparedStatement VS ConnectionPool
+  - 커넥션 단위 동작
+    - Prepared Statement는 커넥션별로 별도 관리
+    - 커넥션이 다르면 캐시도 공유되지 않음
+  - Re-parsing 비용 최소화
+    - 동일 커넥션에서 같은 쿼리를 반복 실행할 경우
+      - 이미 파싱된 구조를 재사용
+      - 매번 SQL 파싱하지 않아도 됨
+    - 단, 커넥션이 바뀌면 다시 파싱 필요
+  - 쿼리 복잡도 영향
+    - 복잡한 쿼리일수록 파싱 비용이 크기 때문에 효과 큼
+    - 단순 쿼리는 효과 미미
+  - 메모리 vs CPU 트레이드오프
+    - Prepared Statement
+      - CPU 사용 감소 (파싱 비용 절약)
+      - 메모리 사용 증가 (캐시 유지)
+    - 환경 고려 필요
+      - RDS처럼 메모리가 제한적인 경우
+        - Prepared Statement 캐시 부담 발생
+        - 대신 InnoDB Buffer Pool 활용이 더 중요할 수 있음
+- 정리
+  - Server-side Prepared Statement
+    - 기대만큼 성능 향상 크지 않음
+    - 커넥션 수 증가 시 메모리 사용 급증
+    - max_prepared_stmt_count 제한 존재
+  - 실무 권장
+    - 기본적으로 Client-side 사용
+    - 필요 시 Server-side 선택적으로 적용
