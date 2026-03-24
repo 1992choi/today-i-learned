@@ -771,3 +771,78 @@
   - 실무 권장
     - 기본적으로 Client-side 사용
     - 필요 시 Server-side 선택적으로 적용
+
+### SQL 문장의 가독성 향상
+- 가독성의 중요성
+  - 작성 의도를 쉽게 파악 가능
+  - 커뮤니케이션 비용 감소 및 업무 효율 증가
+  - 문제 원인 파악 속도 향상, 실수 감소
+  - 유지보수 용이
+- DISTINCT를 함수처럼 사용하는 형태를 지양한다
+  - DISTINCT는 함수가 아님
+  - 괄호 유무에 따른 결과 차이 없음
+  - 괄호 사용 시 함수처럼 오해 가능
+  - 좋은 예시
+    - SELECT DISTINCT col1, col2 FROM tab WHERE ...
+  - 나쁜 예시
+    - SELECT DISTINCT(col1), col2 FROM tab WHERE ...
+- LEFT JOIN 사용방법 준수
+  - 드리븐 테이블 조건은 ON절에 명시
+    - WHERE에 작성 시 INNER JOIN처럼 동작
+  - 예시 (잘못된 경우)
+    - SELECT *
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id
+      WHERE o.status = 'COMPLETE';
+  - 예시 (올바른 경우)
+    - SELECT *
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id AND o.status = 'COMPLETE';
+  - 불필요한 LEFT JOIN 제거
+    - COUNT 쿼리에서 자주 발생
+  - 나쁜 예시
+    - SELECT COUNT(*)
+      FROM users u
+      LEFT JOIN orders o ON u.id = o.user_id;
+  - 좋은 예시
+    - SELECT COUNT(*)
+      FROM users;
+- ORDER BY 없이 LIMIT 사용 지양
+  - 정렬 기준 없이 LIMIT 사용 시 결과 예측 불가
+  - 의도 파악 어려움
+  - 권장 방식
+    - SELECT *
+      FROM users
+      ORDER BY created_at DESC
+      LIMIT 0, 10;
+- FULL GROUP BY 형태 사용
+  - GROUP BY에 없는 컬럼을 SELECT에 사용하는 경우 의도 불명확
+  - 나쁜 예시
+    - SELECT col1, col2
+      FROM tab
+      GROUP BY col1;
+  - 문제
+    - col2 값이 어떤 기준으로 선택되는지 불명확
+    - DB가 임의의 값을 선택할 수 있음
+  - 좋은 예시
+    - SELECT col1, SUM(col2)
+      FROM tab
+      GROUP BY col1;
+- AND / OR 혼용 시 괄호 명시
+  - AND가 OR보다 우선순위 높음
+  - 괄호 없으면 의도와 다르게 동작 가능
+  - 나쁜 예시
+    - SELECT *
+      FROM users
+      WHERE status = 'ACTIVE' OR role = 'ADMIN' AND age > 30;
+  - 실제 해석
+    - status = 'ACTIVE' OR (role = 'ADMIN' AND age > 30)
+  - 좋은 예시
+    - SELECT *
+      FROM users
+      WHERE (status = 'ACTIVE' OR role = 'ADMIN') AND age > 30;
+- 데이터 건수 조회는 COUNT(*) 사용
+  - COUNT(col), COUNT(1) 등은 가독성 저하
+  - 특히 nullable 컬럼 사용 시 의도 혼동 가능
+  - 권장 방식
+    - SELECT COUNT(*) FROM users;
