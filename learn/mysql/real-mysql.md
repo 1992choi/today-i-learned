@@ -2,7 +2,7 @@
 
 <br><br>
 
-## 학습정리
+## Part 1 학습정리
 ### CHAR vs VARCHAR
 - 공통점
   - 문자열 저장용 컬럼
@@ -846,3 +846,92 @@
   - 특히 nullable 컬럼 사용 시 의도 혼동 가능
   - 권장 방식
     - SELECT COUNT(*) FROM users;
+
+## Part 2 학습정리
+### 콜레이션
+- 콜레이션이란?
+  - 문자열 비교 및 정렬 규칙
+  - 모든 문자열 컬럼은 문자집합 + 콜레이션을 가짐
+  - 별도 지정 없으면 서버 기본 콜레이션 사용
+- 콜레이션 종류
+  - 확인 방법
+    - SHOW COLLATION;
+  - 네이밍 컨벤션
+    - 구성 요소
+      - 문자집합_언어종속_UCA버전_민감도
+    - 구성 요소 설명
+      - 문자집합
+        - utf8mb4, latin1 등
+      - 언어종속
+        - general (범용)
+        - korean, unicode 등 특정 언어 규칙 반영
+      - UCA 버전
+        - unicode 정렬 규칙 버전 (예: 520 = UCA 5.2.0)
+      - 민감도
+        - ci (case insensitive, 대소문자 구분 안함)
+        - cs (case sensitive, 대소문자 구분)
+        - ai (accent insensitive, 악센트 무시)
+    - 예시
+      - utf8mb4_general_ci
+        - 범용, 대소문자 구분 안함
+      - utf8mb4_unicode_520_ci
+        - 유니코드 정렬 규칙(UCA 5.2), 대소문자 구분 안함
+      - utf8mb4_bin
+        - 이진 비교 (바이트 단위 비교)
+- 콜레이션 동작 방식
+  - 유니코드 기준으로 동작한다.
+    - 데이터 저장
+      - 문자 → 코드 포인트 → 인코딩 저장
+      - 예
+        - 'A' → U+0041 → UTF-8로 저장
+        - '가' → U+AC00 → UTF-8로 저장
+    - 데이터 비교
+      - 단순 코드값이 아니라 "가중치(weight)" 기반 비교
+      - DUCET (Default Unicode Collation Element Table) 사용
+      - 가중치 단계
+        - Primary (기본 문자)
+          - A == a
+        - Secondary (악센트)
+          - a ≠ á
+        - Tertiary (대소문자)
+          - A ≠ a
+      - 예시
+        - 'a' vs 'A'
+          - ci → 동일
+          - cs → 다름
+        - 'a' vs 'á'
+          - ai → 동일
+          - accent sensitive → 다름
+- 콜레이션 설정
+  - 데이터베이스
+    - ```
+      CREATE DATABASE db_name
+      DEFAULT CHARACTER SET utf8mb4
+      COLLATE utf8mb4_general_ci;
+      ```
+  - 테이블
+    - ```
+      CREATE TABLE t (
+        name VARCHAR(100)
+      ) CHARACTER SET utf8mb4
+        COLLATE utf8mb4_general_ci;
+      ```
+  - 컬럼
+    - ```
+      CREATE TABLE t (
+        name VARCHAR(100)
+        CHARACTER SET utf8mb4
+        COLLATE utf8mb4_general_ci
+      );
+      ```
+- 콜레이션 사용 시 주의사항
+  - 서로 다른 콜레이션 비교 시 에러
+  - WHERE 절에서 콜레이션 변경 시 인덱스 사용 불가
+    - SELECT * FROM users WHERE name COLLATE utf8mb4_bin = 'abc';
+  - 고유키(UNIQUE)에도 영향
+    - 콜레이션 기준으로 중복 판단
+    - 예 (ci 환경)
+      - 'abc' = 'ABC' → 동일 값으로 판단 : UNIQUE 컬럼에 둘 다 저장 불가
+  - 정리
+    - 콜레이션은 단순 정렬이 아니라
+      - 비교, 인덱스, 제약조건 모두에 영향
