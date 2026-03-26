@@ -935,3 +935,61 @@
   - 정리
     - 콜레이션은 단순 정렬이 아니라
       - 비교, 인덱스, 제약조건 모두에 영향
+
+### UUID 사용 주의사항
+- UUID Version
+  - Version 1 & 2
+    - Timestamp 기반 UUID
+    - 별도 입력 없이 생성 가능
+  - Version 3 & 5
+    - name + namespace 기반 해시 (MD5 / SHA-1)
+    - 동일 입력 → 동일 UUID
+  - Version 4
+    - 완전 랜덤 UUID
+    - 가장 많이 사용됨
+- UUID Version 1 포맷
+  - 01234567-89ab-11ee-8234-56789abcdef0
+    - 01234567 = timestamp 중 뒷자리
+    - 89ab = timestamp 중 중간자리
+    - 11ee 중 1 = Version
+    - 11ee 중 1ee = timestamp 중 앞자리 (최종적으로 timestamp는 1ee89ab01234567)
+    - 8234 = Variant & Clock sequence
+    - 56789abcdef0 = MacAddress (56:78:9a:bc:de:f0)
+  - 특징
+    - Timestamp의 비트 순서가 바뀌어서 UUID에 배치되기 때문에 생성 시점이 동일해도 정렬 순서가 보장되지는 않음
+- UUID vs B-Tree
+  - UUID 특징
+    - 랜덤 또는 비순차 값
+    - 길이가 긴 키 (보통 16byte or 문자열 36byte)
+  - B-Tree 인덱스 성능 저해 요소
+    - 정렬되지 않은 키
+      - 랜덤 삽입 → 페이지 분할(Page Split) 빈번
+      - 디스크 I/O 증가
+    - 긴 키 값
+      - 인덱스 크기 증가
+      - 메모리/캐시 효율 저하
+  - UUID + UNIQUE 제약이 성능에 미치는 영향
+    - UNIQUE 인덱스는 중복 체크 필요
+      - INSERT 시 기존 값 존재 여부 확인
+    - UUID는 랜덤 값
+      - 특정 범위가 아닌 전체 인덱스를 대상으로 탐색
+    - 결과
+      - 탐색 비용 증가 + 랜덤 I/O 증가
+      - 쓰기 성능 저하
+- UUID 대체 방법
+  - Auto Increment (Serial)
+    - 순차 증가 값 → B-Tree에 최적
+    - 단점
+      - 값 예측 가능 → 보안 이슈
+    - 보완 방법
+      - snowflake-uid
+      - sonyflake-uid
+      - 시간 + 노드 + 시퀀스 조합으로 유니크 값 생성
+  - 대체키 전략 (= Auto Increment + UUID 혼합사용)
+    - 내부 PK
+      - Auto Increment 사용 (성능 최적화)
+    - 외부 노출 키
+      - UUID 사용 (보안/식별 목적)
+    - 구조
+      - PK: BIGINT (clustered index)
+      - UNIQUE: UUID (secondary index)
