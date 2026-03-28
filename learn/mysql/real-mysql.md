@@ -993,3 +993,50 @@
     - 구조
       - PK: BIGINT (clustered index)
       - UNIQUE: UUID (secondary index)
+
+### 풀스캔 쿼리 패턴 및 튜닝
+- 컬럼이 가공되는 경우
+  - 문제
+    - 인덱스는 "컬럼 원본 값" 기준으로 정렬됨
+    - 컬럼에 연산/함수 적용 시 인덱스 활용 불가
+  - 연산
+    - SELECT * FROM tb WHERE count + 10 < 2000
+  - 함수
+    - WHERE MOD(id, 2) = 0
+  - 형변환
+    - 예시
+      - WHERE str_column = 12345
+    - 문제
+      - 타입 불일치 → 암묵적 형변환 → 인덱스 미사용
+    - 개선
+      - WHERE str_column = '12345'
+- 인덱싱 되지 않은 컬럼을 OR 조건과 함께 사용
+  - 예시
+    - WHERE account_type = 1 OR joined_at >= '2026-03-01 00:00:00'
+  - 문제
+    - account_type만 인덱스가 걸려있다고 가정할 때, jointed_at을 만족하는가를 보기위해서는 풀스캔이 일어날 수 밖에 없음
+- 복합 인덱스 선행 컬럼 누락
+  - 인덱스
+    - (account_type, joined_at)
+  - 예시
+    - WHERE joined_at >= '2026-03-01 00:00:00'
+  - 문제
+    - 선행 컬럼(account_type) 없이 인덱스 사용 불가
+- LIKE 연산에서 와일드카드 위치
+  - 나쁜 예시
+    - WHERE first_name LIKE '%choi'
+    - 앞부분이 고정되지 않아 인덱스 사용 불가
+  - 좋은 예시
+    - WHERE first_name LIKE 'choi%'
+    - prefix 기반 검색 → 인덱스 사용 가능
+- REGEXP 연산 사용
+  - 문제
+    - 정규식은 인덱스 활용 불가
+  - 예시
+    - WHERE first_name REGEXP '^[abc]...'
+- NOT Equal / IS NOT NULL (번외)
+  - 오해
+    - 항상 인덱스를 타지 않는 것은 아님
+  - 실제
+    - 데이터 분포 및 조건에 따라 인덱스 사용 가능
+    - 단, 범위가 넓으면 옵티마이저가 풀스캔 선택 가능
