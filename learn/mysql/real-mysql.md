@@ -1073,3 +1073,41 @@
   - 전체 카운트가 필요하다면 COUNT(*) 권장
     - COUNT(column)은 가독성 저하
       - NULL 제외 의도인지 실수인지 구분 어려움
+
+### SELECT ... FOR UPDATE [ NOWAIT | SKIP LOCKED ]
+- NOWAIT
+  - 잠금 대상 레코드가 이미 잠겨있으면 대기하지 않고 즉시 에러 반환
+  - 트랜잭션은 유지됨 (자동 롤백되지 않음)
+  - 활용
+    - 잠금 대기가 비정상 상황인 경우
+    - 빠른 실패 처리 필요 시
+- SKIP LOCKED
+  - 이미 잠긴 레코드는 제외하고 잠금 가능한 레코드만 조회 + 잠금
+  - 모든 레코드가 잠겨있으면 빈 결과 반환
+    - 이 경우에도 상황에 따라 Gap Lock 발생 가능
+  - 활용
+    - 선착순 처리 (쿠폰, 이벤트)
+    - 작업 큐(배치 처리) 병렬 처리
+- SELECT ... FOR UPDATE와 JOIN
+  - 기본 동작
+    - JOIN된 모든 테이블의 대상 레코드에 대해 잠금 발생
+  - OF 키워드
+    - 특정 테이블만 잠금 대상 지정 (즉, 명시된 테이블에만 Lock이 걸림)
+    - 불필요한 락 범위를 줄이기 위한 옵션
+  - 예시 (기본)
+    - SELECT *
+      FROM orders o
+      JOIN users u ON o.user_id = u.id
+      WHERE o.id = 1
+      FOR UPDATE;
+    - 결과
+      - orders, users 모두 잠금
+  - 예시 (OF 사용)
+    - SELECT *
+      FROM orders o
+      JOIN users u ON o.user_id = u.id
+      WHERE o.id = 1
+      FOR UPDATE OF o;
+    - 결과
+      - orders만 잠금
+      - users는 잠금 대상 아님
