@@ -1040,3 +1040,36 @@
   - 실제
     - 데이터 분포 및 조건에 따라 인덱스 사용 가능
     - 단, 범위가 넓으면 옵티마이저가 풀스캔 선택 가능
+
+### COUNT(*) vs COUNT(column)
+- COUNT(*) vs COUNT(column) 차이
+  - COUNT(*)
+    - 조건에 맞는 모든 행의 개수를 반환
+    - NULL 여부와 관계없이 모든 레코드 포함
+  - COUNT(column)
+    - 해당 컬럼이 NULL이 아닌 행만 카운트
+- 실행계획
+  - WHERE 조건이 있는 COUNT 쿼리
+    - Covering Index 또는 Non-Covering Index 사용
+      - Covering Index
+        - 인덱스만으로 쿼리 처리가 가능한 경우
+        - 테이블 데이터 접근 없이 인덱스만 읽음
+        - I/O 감소 → 성능 유리
+      - Non-Covering Index
+        - 인덱스만으로 부족하여 실제 테이블까지 조회
+        - 인덱스 → 테이블 추가 접근 필요
+        - I/O 증가 → 성능 불리
+  - WHERE 조건이 없는 COUNT 쿼리
+    - 스토리지 엔진 API 활용
+      - ha_records()
+        - 테이블의 전체 레코드 수를 빠르게 반환
+        - 메타 정보 기반으로 처리되는 경우 존재
+        - 매우 빠름 (특히 MyISAM)
+      - ha_index_next()
+        - 인덱스를 순차적으로 스캔하면서 카운트
+        - InnoDB에서는 정확한 건수를 위해 이 방식 사용
+        - 실제 데이터 접근 필요 → 상대적으로 느림
+- 권장되는 사용 방법
+  - 전체 카운트가 필요하다면 COUNT(*) 권장
+    - COUNT(column)은 가독성 저하
+      - NULL 제외 의도인지 실수인지 구분 어려움
