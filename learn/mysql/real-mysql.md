@@ -1140,3 +1140,113 @@
   - 정리
     - 기본은 UNION ALL
     - 정말 필요한 경우에만 UNION DISTINCT 사용
+
+#### JSON 타입 활용
+- JSON 타입
+  - JSON 형식의 데이터를 손쉽게 저장 및 조회, 관리 가능
+  - 다양한 빌트인 함수 제공
+  - 특정 키만 부분 업데이트 가능
+  - 특정 키 기준 인덱스 생성 가능
+- JSON 데이터 저장
+  - 저장 구조
+    - JSON 키 개수
+    - JSON 데이터 사이즈
+    - 키 주소
+      - 각 key가 저장된 위치(offset) 정보
+    - 값 주소
+      - 각 value가 저장된 위치(offset) 정보
+    - 키
+    - 값
+- JSON 데이터 조회
+  - JSON Path
+    - JSON 요소를 탐색하기 위한 표준 문법
+    - 대표 연산자
+      - $
+        - 루트 객체 의미
+        - 예) $ = {"key1":123,"key2":[10,20,30]}
+      - .
+        - 객체 하위 요소 접근
+        - 예) $.key1 = 123
+        - 예)$.key2 = [10,20,30]
+      - []
+        - 배열 접근
+        - 예) $.key2[0] = 10
+  - 함수
+    - JSON_EXTRACT
+      - JSON 값 추출
+      - 예
+        - SELECT JSON_EXTRACT('{"a":1,"b":2}', '$.a');
+      - -> 연산자
+        - SELECT col->'$.a' FROM tab;
+        - 1 (JSON 타입 그대로 반환, 따옴표 포함될 수 있음)
+      - ->> 연산자
+        - SELECT col->>'$.a' FROM tab;
+        - 1 (문자열 또는 일반 값으로 반환, JSON wrapping 제거)
+    - JSON_CONTAINS
+      - 특정 값 포함 여부 확인
+      - 예
+        - SELECT JSON_CONTAINS('[1,2,3]', '2');
+        - 결과: 1
+    - JSON_OVERLAPS
+      - 두 JSON 배열 간 공통 요소 존재 여부
+      - 예
+        - SELECT JSON_OVERLAPS('[1,2,3]', '[3,4]');
+        - 결과: 1
+- JSON 데이터 변경
+  - 특정 키 단위로 데이터 조작 가능
+  - 전체 JSON 재작성 없이 일부만 변경 → 성능 이점
+  - 종류
+    - JSON_INSERT()
+    - JSON_REPLACE()
+    - JSON_SET()
+    - JSON_REMOVE()
+  - 부분 업데이트 조건
+    - JSON_REPLACE / JSON_SET / JSON_REMOVE만 가능
+    - 동일 컬럼 대상이어야 함
+    - 기존 값 대체 형태여야 함
+    - 새 값 크기가 기존보다 작거나 같아야 함
+    - 새로운 key 추가는 부분 업데이트 불가
+- JSON 데이터 인덱싱
+  - 개념
+    - 특정 JSON key를 추출하여 인덱싱
+    - 함수 기반 인덱스 사용
+  - 생성 예시
+    - CREATE INDEX ix_user_age ON users ((JSON_EXTRACT(info, '$.age')));
+    - CREATE INDEX ix_user_name ON users ((info->>'$.name'));
+  - 주의사항
+    - 배열 인덱스 사용 가능 함수 제한
+      - MEMBER OF(), JSON_CONTAINS(), JSON_OVERLAPS()
+    - 기능 미성숙 (버그 존재 가능)
+    - 제한사항
+      - 온라인 인덱스 생성 불가
+      - 커버링 인덱스 불가
+      - 범위 스캔 불가
+      - 빈 배열 식별 어려움
+- TEXT 타입 VS JSON 타입
+  - TEXT
+    - 입력 문자열 그대로 저장
+    - 변환 없이 그대로 반환
+    - 전체 업데이트만 가능
+  - JSON
+    - 바이너리 포맷 저장 + 유효성 검사
+    - 조회 시 문자열 변환 필요
+    - 부분 업데이트 가능
+  - 선택 기준
+    - TEXT
+      - 단순 저장 + 전체 조회 중심
+      - JSON 구조가 아닐 수도 있는 경우
+    - JSON
+      - 특정 key 조회/수정이 많은 경우
+- 정규화된 컬럼 VS JSON 컬럼
+  - 정규화
+    - 구조 고정
+    - 데이터 일관성 높음
+    - 인덱스/쿼리 최적화 유리
+  - JSON
+    - 스키마 유연
+    - 개발 편의성 높음
+    - 쿼리/인덱스 복잡
+- JSON 컬럼 조회 시 주의사항
+  - JSON 크기가 클수록 성능 저하
+  - SELECT * 사용 시 불필요한 JSON까지 조회
+    - 필요한 컬럼만 명시적으로 조회 권장
