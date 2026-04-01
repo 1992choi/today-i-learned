@@ -1111,3 +1111,32 @@
     - 결과
       - orders만 잠금
       - users는 잠금 대상 아님
+
+### UNION vs UNION ALL
+- UNION
+  - 두 개 이상의 쿼리 결과를 하나로 합침
+  - 기본 동작은 중복 제거 (UNION = UNION DISTINCT)
+  - 내부적으로 임시 테이블 + 중복 제거 과정 수행
+- UNION ALL
+  - 두 집합을 그대로 합침 (중복 허용)
+  - 별도의 중복 제거 과정 없음 → 성능 유리
+- UNION DISTINCT
+  - UNION과 동일 (명시적 표현)
+  - 중복 제거 수행
+  - 중복 기준
+    - PK/인덱스 기준이 아닌
+    - 모든 컬럼 값 조합 기준
+  - 성능이 느린 이유
+    - 결과를 임시 테이블에 저장
+    - 정렬 또는 해시 기반 중복 제거 수행
+    - 모든 컬럼 비교 필요 → 비용 증가
+- UNION ALL VS UNION DISTINCT
+  - 차이
+    - UNION ALL → 단순 결합
+    - UNION DISTINCT → 중복 제거 포함
+  - 권장
+    - 결과 중복이 발생하지 않는 것이 보장된다면 UNION ALL 사용
+    - 불필요한 중복 제거는 성능 저하 원인
+  - 정리
+    - 기본은 UNION ALL
+    - 정말 필요한 경우에만 UNION DISTINCT 사용
