@@ -1329,3 +1329,46 @@
     - 인덱스 설계 명확화
     - 불필요한 범위 조회 최소화
     - 짧은 트랜잭션 유지
+
+### JOIN UPDATE & JOIN DELETE
+- JOIN UPDATE
+  - (아래 특징을 설명하고 있는 예시 쿼리 추가해줘)
+  - SET 절에 업데이트 대상 컬럼들을 명시
+  - 쿠리에서 참조하고 있는 테이블들 중 '전체' 또는 '일부'에 대해 컬럼 값 업데이트 가능
+  - LEFT JOIN 등 다른 유형의 JOIN들도 사용 가능
+  - ```
+    -- 일반적인 케이스
+    UPDATE user u
+        JOIN orders o ON u.id = o.user_id
+    SET u.status = 'ACTIVE'
+    WHERE o.status = 'PAID';
+    
+    -- 2개 테이블을 모두 변경하는 케이스
+    UPDATE user u
+        JOIN orders o ON u.id = o.user_id
+    SET u.status = 'ACTIVE',
+        o.status = 'COMPLETED'
+    WHERE o.status = 'PAID';
+    ```
+- JOIN DELETE
+  - (아래 특징을 설명하고 있는 예시 쿼리 추가해줘)
+  - DELETE ... FROM 절 사이에 데이터 삭제 대상 테이블 목록을 명시
+  - 쿼리에서 참조하고 있는 테이블 중 '전체' 또는 '일부'에 대해 삭제 가능
+  - LEFT JOIN 등 다른 유형의 JOIN들도 사용 가능
+  - ```
+    -- 일반적인 케이스
+    DELETE u
+    FROM user u
+        JOIN orders o ON u.id = o.user_id
+    WHERE o.status = 'CANCELLED';
+    
+    -- 2개 테이블을 모두 삭제하는 케이스
+    DELETE u, o
+    FROM user u
+        JOIN orders o ON u.id = o.user_id
+    WHERE o.status = 'CANCELLED';
+    ```
+- 주의사항
+  - 참조하는 테이블들의 데이터는 읽기 잠금(Shared Lock)이 발생하므로 잠금경합이 발생할 수 있음
+  - JOIN UPDATE의 경우 조인되는 테이블들의 관계가 1:N일 때, N 테이블의 컬럼 값을 1 테이블에 업데이트하는 경우 예상과는 다르게 처리될 수 있음 (N:M 관계도 마찬가지)
+  - 단일 UPDATE / DELETE 쿼리보다 쿼리 형태가 복잡하므로, 반드시 사전에 쿼리 실행계획 확인 필요 (부하 유발할 수 있으므로)
