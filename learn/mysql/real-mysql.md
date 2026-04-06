@@ -1482,3 +1482,92 @@
   - 주의
     - 파티셔닝 키 조건이 없으면
       - 모든 파티션 + 모든 인덱스 탐색 → 성능 저하
+
+### DBMS 활용
+- 대용량 작업에 대한 생각
+  - 개발자
+    - 최대한 굵고 짧게
+    - 동시에 많은 쓰레드로 빠르게 처리
+  - DBA
+    - 가능하면 가볍게
+    - 소수의 쓰레드로 최소한의 DBMS 자원 사용
+- DBMS 서버
+  - DBMS 서버는 공유 자원
+    - 특정 서비스가 과도하게 자원을 점유하면 다른 서비스 지연 발생
+    - 심한 경우 쿼리 실패 및 장애로 이어질 수 있음
+  - DBMS 서버의 처리 용량은 환경마다 다름
+    - CPU, 메모리, 디스크 성능에 따라 처리 가능한 동시성 수준이 다름
+  - 사용 시
+    - 적절한 동시성 제어 필수
+    - 작업이 밀린 경우
+      - 무작정 병렬 처리 증가 X
+      - 점진적으로 처리량 증가 + 모니터링 병행
+- Long Transaction & Query
+  - Long Transaction
+    - Idle long transaction
+      - auto_commit=OFF 또는 명시적 트랜잭션 사용 시 발생
+      - BEGIN 이후 아무 작업 없이 대기하거나 쿼리 수행 후 COMMIT/ROLLBACK 없이 방치된 상태
+    - Active long transaction
+      - 실행 시간이 긴 트랜잭션
+      - 대량 UPDATE/DELETE 또는 복잡한 SELECT 등
+  - MySQL 아키텍처
+    - Non-locking consistent read
+      - SELECT 시 락을 걸지 않고도 일관된 데이터를 읽는 방식
+    - MVCC (Multi Version Concurrency Control)
+      - 하나의 데이터에 대해 여러 버전을 유지
+      - 트랜잭션 시작 시점 기준으로 "과거 시점 데이터"를 읽음
+    - undo log 역할
+      - 데이터 변경 이전의 값을 저장
+      - 예:
+        - A → B로 UPDATE
+        - undo log에는 A 저장
+      - 다른 트랜잭션이 과거 시점을 조회하면 undo log를 참고해서 A를 읽음
+    - purge 과정
+      - 더 이상 참조되지 않는 undo log를 삭제하는 작업
+      - 즉, "과거 데이터 정리 작업"
+  - Undo log의 부작용
+    - 오래된 트랜잭션이 존재하면
+      - 해당 트랜잭션이 시작된 시점 이전의 undo log를 삭제할 수 없음
+    - 결과
+      - undo log 지속적으로 누적
+      - 디스크 사용량 증가
+      - undo log 조회 비용 증가 → SELECT 성능 저하
+      - purge 작업 지연 → 전체 시스템 부하 증가
+    - 핵심
+      - "Long Transaction 하나가 전체 DB 성능을 떨어뜨릴 수 있음"
+- MySQL Community vs Aurora MySQL
+  - MySQL Community version
+    - Long Transaction 영향이 해당 인스턴스에 국한됨
+    - Replica에서는 영향이 제한적
+      - (Replication은 binlog 기반이라 MVCC 영향이 상대적으로 적음)
+  - Aurora MySQL
+    - 스토리지를 공유하는 구조
+    - undo / MVCC 영향이 클러스터 전체에 전파됨
+    - Reader에서 발생한 Long Transaction도
+      - Writer 및 다른 Reader에 영향 가능
+    - 결과
+      - Read replica에서도 Long Transaction 주의 필요
+- DBMS 부하 격리
+  - 격리된 배치 서버 운영
+    - OLTP vs OLAP 분리
+      - OLTP (Online Transaction Processing)
+        - 실시간 트랜잭션 처리
+        - 예: 주문, 결제, 로그인
+        - 특징: 짧고 빠른 쿼리, 높은 동시성
+      - OLAP (Online Analytical Processing)
+        - 분석/집계용 쿼리
+        - 예: 통계, 리포트, 대량 집계
+        - 특징: 무겁고 오래 걸리는 쿼리
+    - 혼합 시 문제
+      - OLAP 쿼리가 자원 점유 → OLTP 성능 저하
+    - 해결
+      - 물리적으로 DB 분리
+      - 또는 클라우드 환경에서 Read Replica / Custom Endpoint 활용
+  - 트랜잭션 제어
+    - 작은 단위로 쪼개서 처리
+      - 대량 작업을 한 번에 처리 X
+      - 일정 건수 단위로 COMMIT 수행
+    - 효과
+      - undo log 누적 방지
+      - 락 점유 시간 감소
+      - 장애 발생 시 롤백 비용 감소
