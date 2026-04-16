@@ -105,3 +105,86 @@
   - Read Timeout
     - 연결된 서버로부터 응답을 받는 시간을 제한
     - 서버가 응답을 늦게 주거나 처리 지연이 발생할 경우 무한 대기를 방지하고, 장애 상황을 빠르게 인지할 수 있음
+
+### Circuit Breaker
+- Circuit Breaker 란?
+  - 연속적인 장애가 발생하는 외부 시스템 호출을 차단하여, 시스템 전체로 장애가 확산되는 것을 방지하는 패턴
+- 처리방식
+  - CLOSE
+    - 초기 상태로 모든 요청을 정상적으로 외부 시스템에 전달하며, 최근 호출 결과를 기준으로 실패율을 슬라이딩 윈도우 기반으로 집계함
+    - 일정 횟수 이상의 호출이 누적된 이후, 설정된 실패율 임계치를 초과하면 OPEN 상태로 전환됨
+  - OPEN
+    - 외부 시스템 호출을 완전히 차단하고, 즉시 예외를 발생시키거나 fallback 로직을 수행하여 불필요한 리소스 소모를 방지함
+    - 이 상태에서는 실제 호출이 발생하지 않기 때문에 장애가 있는 시스템에 부하를 더 이상 주지 않음
+  - HALF_OPEN
+    - 설정된 대기 시간이 지나면 일부 제한된 요청만 외부 시스템으로 전달하여 정상 동작 여부를 검증함
+    - 이때 허용된 요청 수(permitted calls) 내에서 성공 비율을 기준으로 상태를 판단함
+    - 일정 비율 이상 성공하면 CLOSE로 복구하고, 실패가 발생하면 즉시 OPEN으로 되돌아감
+  - 동작 순서
+    - CLOSE 상태에서 모든 요청을 처리하면서 실패율을 지속적으로 집계
+    - 최소 호출 수를 만족한 이후, 실패율이 임계치를 초과하면 OPEN 상태로 전환
+    - OPEN 상태에서는 외부 호출을 차단하고 설정된 시간 동안 대기
+    - 대기 시간이 지나면 HALF_OPEN 상태로 전환하여 일부 요청만 테스트 수행
+    - 테스트 요청이 일정 기준 이상 성공하면 CLOSE로 복구, 실패 시 다시 OPEN으로 전환
+- 설정
+  - 옵션
+    - failureRateThreshold
+      - 실패율 기준 (예: 50% 이상이면 OPEN 전환)
+    - slidingWindowType
+      - 실패율을 계산하는 기준 방식으로 COUNT_BASED(요청 개수 기반) 또는 TIME_BASED(시간 기반)으로 설정 가능
+    - slidingWindowSize
+      - 실패율을 계산하기 위한 요청 수 또는 시간 범위
+    - minimumNumberOfCalls
+      - Circuit Breaker가 동작하기 위한 최소 호출 수 (이 값 미만일 경우 실패율을 계산하지 않음)
+    - waitDurationInOpenState
+      - OPEN 상태에서 HALF_OPEN으로 전환되기까지 대기 시간
+    - permittedNumberOfCallsInHalfOpenState
+      - HALF_OPEN 상태에서 허용할 요청 수
+    - recordExceptions
+      - 어떤 예외를 실패로 간주할지 정의하며, 지정된 예외에 대해서만 실패율 계산에 포함됨
+  - 예시
+    - ```
+      @CircuitBreaker(
+        name = "externalService", // yml에 명시된 key (= resilience4j.circuitbreaker.instances.externalService)
+        fallbackMethod = "fallback"
+      )
+      public String call() {
+        return externalApi.call();
+      }
+
+      public String fallback(Throwable t) {
+        // 장애 발생 시 대체 로직 수행 (로그, 기본값 반환 등)
+        return "fallback response";
+      }
+      ```
+    - ```
+      // application.yml 예시 (Resilience4j)
+      resilience4j:
+        circuitbreaker:
+          instances:
+            externalService:
+              failureRateThreshold: 50
+              slidingWindowType: COUNT_BASED
+              slidingWindowSize: 10
+              minimumNumberOfCalls: 5
+              waitDurationInOpenState: 10s
+              permittedNumberOfCallsInHalfOpenState: 3
+              recordExceptions:
+                - java.io.IOException
+                - java.util.concurrent.TimeoutException
+      ```
+- 분산 환경에서 Circuit Breaker의 한계
+  - 애플리케이션 단위로 동작
+    - 여러 인스턴스 중 일부에서만 Circuit Breaker가 OPEN 되고, 다른 인스턴스는 계속 요청을 보내는 문제가 발생함
+  - 문제점
+    - 목적달성 실패
+      - 일부 인스턴스는 계속 외부 시스템에 요청을 보내 장애 차단 효과가 떨어짐
+    - 유저 경험 저하
+      - 어떤 사용자는 정상 응답을 받고, 어떤 사용자는 실패를 경험하는 불일치가 발생함
+- 해결 방법
+  - 외부 저장소 활용 (Redis 등)
+    - Circuit Breaker 상태를 중앙에서 공유하여 모든 인스턴스가 동일한 상태를 기준으로 동작하도록 만듦
+  - Service Mesh 활용
+    - 네트워크 레벨에서 Circuit Breaker를 적용하여 애플리케이션과 무관하게 일관된 제어 가능
+  - Kafka 활용
+    - 상태 변경 이벤트를 발행/구독하여 각 인스턴스가 Circuit Breaker 상태를 동기화함
