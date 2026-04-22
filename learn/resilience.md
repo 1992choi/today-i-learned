@@ -390,3 +390,29 @@
     - 엔티티에 @Version(낙관적 락)을 적용하여 데이터 변경 시 버전을 증가시키고, 동일한 데이터에 대한 중복 처리를 제어할 수 있음
     - 이미 처리된 이벤트라면 버전이 증가된 상태이기 때문에, 동일 이벤트가 다시 들어와도 업데이트가 반영되지 않도록 구성 가능
     - 즉, 버전을 기준으로 “이미 반영된 변경인지”를 판단하여 중복 처리나 역순 처리 문제를 방지하는 방식으로 활용할 수 있음
+
+### 트랜잭션과 @Transactional
+- 트랜잭션이란?
+  - 데이터베이스 작업을 하나의 논리적 단위로 묶어 모두 성공하거나 모두 실패하도록 보장하는 개념 (원자성, 일관성, 격리성, 지속성 - ACID)
+- @Transactional
+  - propagation
+    - 트랜잭션 전파 옵션으로, 기존 트랜잭션이 있을 때 참여할지 새로 생성할지 결정
+    - REQUIRED: 기존 트랜잭션 참여 (기본값)
+    - REQUIRES_NEW: 항상 새로운 트랜잭션 생성 (기존 트랜잭션과 분리)
+    - SUPPORTS: 트랜잭션이 있으면 참여, 없으면 비트랜잭션으로 실행
+  - isolation
+    - 트랜잭션 간 데이터 격리 수준을 설정
+    - READ_UNCOMMITTED: 커밋되지 않은 데이터 조회 가능 (Dirty Read 발생)
+    - READ_COMMITTED: 커밋된 데이터만 조회 가능
+    - REPEATABLE_READ: 같은 조회 결과 보장 (Non-repeatable read 방지)
+    - SERIALIZABLE: 가장 강력한 격리 수준 (성능 저하 가능)
+  - timeout
+    - 트랜잭션이 지정된 시간 내에 완료되지 않으면 롤백 처리
+  - readOnly
+    - 읽기 전용 트랜잭션으로 설정 시, 변경 감지(Dirty Checking)를 생략하여 성능 최적화 가능
+  - rollbackFor
+    - 지정한 예외 발생 시 롤백하도록 설정 (기본적으로 RuntimeException만 롤백)
+  - noRollbackFor
+    - 지정한 예외 발생 시 롤백하지 않도록 설정
+  - value / transactionManager
+    - 사용할 트랜잭션 매니저를 지정 (멀티 DB 환경에서 활용)
