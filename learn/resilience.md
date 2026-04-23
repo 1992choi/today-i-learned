@@ -416,3 +416,36 @@
     - 지정한 예외 발생 시 롤백하지 않도록 설정
   - value / transactionManager
     - 사용할 트랜잭션 매니저를 지정 (멀티 DB 환경에서 활용)
+
+### 데이터베이스 동시성 문제
+- 데이터베이스에서 발생할 수 있는 동시성 문제
+  - 데이터 일관성이 깨지는 케이스
+    - Dirty Read
+      - 다른 트랜잭션이 아직 커밋하지 않은 데이터를 읽는 현상으로, 이후 롤백되면 잘못된 데이터를 기반으로 로직이 수행될 수 있음
+    - Non-Repeatable Read
+      - 같은 트랜잭션 내에서 동일한 조회를 두 번 수행했을 때, 다른 트랜잭션의 커밋으로 인해 결과가 달라지는 현상
+    - Phantom Read
+      - 같은 조건으로 조회했을 때, 다른 트랜잭션의 INSERT/DELETE로 인해 결과 행의 개수가 달라지는 현상
+    - Lost Update
+      - 두 트랜잭션이 동일 데이터를 수정할 때, 먼저 반영된 변경이 이후 트랜잭션에 의해 덮어써지는 문제
+  - 실행 중단
+    - Deadlock
+      - 두 개 이상의 트랜잭션이 서로의 자원을 점유한 채 상대방의 자원을 기다리며 무한 대기 상태에 빠지는 현상
+    - Livelock
+      - 트랜잭션들이 서로 양보하며 계속 상태를 변경하지만 실제 작업은 진행되지 않는 상태
+- 트랜잭션 격리수준
+  - READ_UNCOMMITTED
+    - 커밋되지 않은 데이터도 조회 가능
+    - Dirty Read, Non-Repeatable Read, Phantom Read 모두 발생 가능
+  - READ_COMMITTED
+    - 커밋된 데이터만 조회 가능
+    - Dirty Read 방지
+    - Non-Repeatable Read, Phantom Read는 여전히 발생 가능
+  - REPEATABLE_READ
+    - 동일 트랜잭션 내에서 같은 조회 결과를 보장
+    - Dirty Read, Non-Repeatable Read 방지
+    - Phantom Read는 발생 가능 (DB 구현에 따라 일부 방지되기도 함, 예: InnoDB)
+  - SERIALIZABLE
+    - 트랜잭션을 순차적으로 실행한 것과 동일한 결과 보장
+    - Dirty Read, Non-Repeatable Read, Phantom Read 모두 방지
+    - 대신 성능 저하 및 락 경쟁 증가
