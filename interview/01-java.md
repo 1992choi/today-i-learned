@@ -143,7 +143,7 @@
         System.out.println(s1 == s3); // false
         
         // equals는 문자열을 비교하기 때문에 true
-        System.out.println(s1.eqauls(s3)); // true
+        System.out.println(s1.equals(s3)); // true
       }
       ```
   - 리터럴을 사용해서 만든 문자열에 추가 연산을 할 경우에는 String Pool이 아닌 Heap영역에 저장되기 때문에 문자열 연산이 필요한 경우에는 StringBuffer 또는 StringBuilder를 사용해야한다.
@@ -207,6 +207,7 @@
     int unbonxingNum = boxingNum.intValue();
     System.out.println("unbonxingNum = " + unbonxingNum); // 10
     ```
+  - ※ `new Integer(n)`는 Java 9부터 deprecated 되었으며, 캐싱을 활용하는 `Integer.valueOf(n)` 사용이 권장된다.
 - 오토 박싱(Auto Boxing) / 오토 언박싱(Auto UnBoxing)
   - JDK 1.5부터 지원하는 기능으로써, 명시적으로 표현하지 않아도 컴파일러가 자동으로 박싱과 언박싱을 처리를 해준다.
   - ``` java
@@ -431,7 +432,7 @@
     - 데이터의 중복을 허용한다.
     - 종류
       - ArrayList
-        - 단방향 포인터 구조이기 때문에 인덱스로 접근하므로 조회할 때는 유리하지만, 데이터의 삽입이나 삭제가 발생할 경우 인덱스를 조정하는 추가 작업이 필요하다.
+        - 내부적으로 Object[] 배열을 사용하는 구조(포인터로 연결된 구조가 아님)이기 때문에 인덱스로 접근하므로 조회할 때는 유리하지만, 데이터의 삽입이나 삭제가 발생할 경우 이후 요소들의 인덱스를 조정(이동)하는 추가 작업이 필요하다.
         - 메모리 고속 복사 연산을 사용한다.
           - 중간 위치에 데이터를 추가할 경우, 추가할 위치 이후의 데이터를 모두 한 칸씩 뒤로 이동시키는 작업을 해야한다.
           - 이 때, 배열의 요소 이동은 시스템 레벨에서 최적화된 메모리 고속 복사 연산을 사용하여 비교적 빠르게 수행된다.
@@ -439,7 +440,7 @@
       - LinkedList
         - 순차 접근만 가능하여 조회할 때는 불리하지만, 양방향 포인터 구조이기 때문에 데이터의 삽입, 삭제 시에는 유리하다.            
         - 마지막 노드에 대한 참조
-          - 순차 접근만 가능하여 배열의 가장 마지막에 데이터를 추가할 때는 이론상 O(n)이 소요되지만, 실제로는 마지막 노드에 대한 참조를 가지고 있어 O(1)의 성능을 제공한다.
+          - LinkedList는 first/last 노드에 대한 참조를 유지하는 이중 연결 리스트(doubly linked list)이므로, 순차 접근이 필요한 중간 삽입과 달리 리스트의 맨 끝에 데이터를 추가(addLast)하는 연산은 설계상 처음부터 O(1)의 성능을 제공한다.
         - 마지막 노드를 가지고 있으며 양방향 포인터 구조의 특징 덕분에 사이즈의 절반 크기 이상의 인덱스를 조회할 경우, 뒤에서부터 조회하여 성능을 최적화 할 수 있다.
       - Vector
         - ArrayList와 구현 원리와 기능적인 측면에서 동일하며, 동기화를 지원한다.
@@ -467,7 +468,7 @@
     - 키의 중복은 허용하지 않고, 값의 중복은 허용한다.
     - 종류
       - TreeMap
-        - 데이터를 이진 검색 트리(binary search tree)의 형태로 저장하므로 데이터의 삽입이나 삭제가 빠르다.
+        - 데이터를 이진 검색 트리(Red-Black Tree)의 형태로 저장하며, 삽입/삭제/검색이 O(log n)의 시간복잡도를 갖는다. 배열 기반 구조보다는 삽입/삭제가 빠르지만, 평균 O(1)인 HashMap보다는 느리다.
       - HashMap
         - 가장 많이 사용되는 클래스 중 하나이며, 해시 알고리즘을 사용하여 검색 속도가 매우 빠르다.
       - Hashtable
@@ -616,8 +617,8 @@
     - findFirst()
       - 스트림에서 지정한 첫 번째 요소를 찾는 메서드
     - findAny()
-      - 스트림에서 지정한 첫 번째 요소를 찾는 메서드
-      - parallelStream()와 함께 사용
+      - 스트림에서 조건을 만족하는 임의의 요소 하나를 반환하는 메서드로, 반드시 첫 번째 요소라는 보장은 없다.
+      - 병렬 스트림(parallelStream())에서는 순서 보장을 포기하는 대신 성능 이득을 얻을 수 있어, 순서가 중요하지 않다면 findFirst()보다 유리하다.
     - anyMatch()
       - 스트림의 요소 중 특정 조건을 만족하는 요소가 하나라도 있는지 검사
     - allMatch()
@@ -629,7 +630,7 @@
     - min() / max()
       - 스트림의 원소들로부터 최솟값 / 최댓값을 구하기 위한 메서드
     - sum() / average()
-      - 스트림 원소들의 합계 / 평균을 구하는 메서드
+      - 스트림 원소들의 합계 / 평균을 구하는 메서드로, `Stream<T>`가 아닌 IntStream, LongStream, DoubleStream과 같은 기본형 특화 스트림에만 존재한다. (예: `Stream<Integer>`.sum()은 컴파일 에러이며, mapToInt() 등으로 변환 후 사용해야 한다.)
     - collect()
       - 스트림의 결과를 모으기 위한 메서드
   - [샘플코드](https://github.com/1992choi/java/blob/master/src/basic/clazz/object/EqualsEx.java)
@@ -667,6 +668,7 @@
     - 확인시점 : Runtime 시점
     - 처리여부 : 명시적으로 하지 않아도 무관
     - 롤백여부 : 예외 발생 시, Rollback 수행
+  - ※ 위 롤백여부는 Java 언어 자체의 특성이 아니라, Spring @Transactional의 기본 정책(Unchecked/Error는 롤백, Checked는 커밋)이다. Java 언어 차원에서는 Checked/Unchecked 예외가 롤백 여부를 결정하지 않는다.
 - Checked Exception 문제점
   - Checked Exception은 반드시 예외를 처리한다는 특성 때문에 Exception을 던지게(throw)되면, 계층 간 종속이 발생할 수 있다.
   - 만약 아래의 그림과 같이 사용중인 JDBC를 JPA로 변경한다고 가정했을 때, 종속된 모든 계층을 수정해야 하는 상황이 발생한다.
@@ -847,7 +849,7 @@
       - Thread가 어떤 부분을 어떤 명령으로 실행해야할 지에 대한 기록을 하는 부분으로 현재 수행 중인 JVM 명령의 주소를 갖는다.
     - Native Stack
       - JAVA가 아닌 다른 언어로 작성된 코드를 위한 공간이다.
-      - Java Native Interface를 통해 바이트 코드로 전환하여 저장하게 된다.
+      - Java Native Interface(JNI)를 통해 호출되는, C/C++ 등으로 작성되어 컴파일된 네이티브(기계어) 코드의 실행을 위한 공간이다. 바이트코드가 아닌 네이티브 머신 코드를 다룬다.
     - 실행 엔진(Excution Engine)
       - 클래스를 실행시키는 역할이다.
       - 자바 바이트 코드(*.class)는 기계가 바로 수행할 수 있는 언어보다는 비교적 인간이 보기 편한 형태로 기술된 것이다. 그래서 실행 엔진은 이와 같은 바이트 코드를 실제로 JVM 내부에서 기계가 실행할 수 있는 형태로 변경한다.
@@ -895,7 +897,7 @@
   - Young Generation
     - 새롭게 객체가 생성되는 영역이다.
     - 대부분의 객체는 unreachable 상태가 되기 때문에 Young 영역에서 사라진다.
-    - Young 영역에서 사라질 때를 Minor CG라 한다.
+    - Young 영역에서 사라질 때를 Minor GC라 한다.
   - Old Generation
     - Young 영역에서 생존한 객체가 이 영역으로 이동된다.
     - Young 영역보다 크게 할당되고, 적은 GC가 발생한다.
@@ -938,7 +940,7 @@
 - HashMap 특징 및 동작원리
   - HashMap은 KEY - VALUE가 1:1로 매핑되는 자료구조이다.
   - 위와 같은 특성으로 인하여 삽입, 삭제, 검색이 평균적으로 O(1) 시간복잡도를 갖는다.
-  - HashMap의 내부구조는 배열로 되어있으며 배열의 인덱스는 hashcode() % M로 산출한다.
+  - HashMap의 내부구조는 배열로 되어있으며, 배열의 인덱스는 hashCode()를 그대로 사용하지 않고 상위 비트를 하위 비트에 섞는 스프레딩 연산(`h ^ (h >>> 16)`)을 거친 값을, 2의 거듭제곱으로 유지되는 테이블 크기 n에서 1을 뺀 값과 비트 AND 연산(`(n - 1) & hash`)하여 산출한다.
   - 하지만 동일 값이 발생하여 해시충돌이 일어날 수 있으며, 이를 방지하기 위한 방법에는 Open Addressing 방식과 Separate Chaining 방식이 있는데 자바에서는 Separate Chaining 방식을 채택했다.
 - Open Addressing
   - Open addressing 방식에도 여러가지 구현 방식이 존재한다.
@@ -1085,7 +1087,7 @@
   - [샘플코드](https://github.com/1992choi/java/blob/master/src/basic/clazz/object/EqualsEx.java)
 - hashCode()
   - 객체의 주소 값을 이용해서 해싱(hashing) 기법을 통해 해시 코드를 만든 후 반환한다.
-  - 해시코드는 주소값으로 기반으로 만든 고유한 숫자값이다. 이렇기 때문에 서로 다른 객체는 같은 해시 코드를 가질 수 없다.
+  - 해시코드는 주소값 등을 기반으로 만든 정수값이지만, int 범위(32비트)로 한정되어 있어 서로 다른 객체라도 같은 해시 코드를 가질 수 있다(해시 충돌). Object.hashCode()의 계약상으로도 서로 다른 객체가 동일한 해시코드를 가지는 것을 금지하지 않는다.
   - [샘플코드](https://github.com/1992choi/java/blob/master/src/basic/clazz/object/HashCodeEx.java)
 - equals()와 hashCode() 재정의의 필요성
   - 앞서 equals()를 재정의하면 값이 같은 객체는 동등한 객체로 판단되는 것을 확인할 수 있었다.
@@ -1183,14 +1185,12 @@
         - 메서드 앞에 붙임으로서 현재 메서드가 수퍼클래스의 메서드를 재정의 했음을 컴파일러에게 명시하고, 재정의 시 메서드명의 오탈자를 막아준다.
       - @Deprecated
         - 더 이상 사용하지 말아야 할 메서드를 표시한다.
-      - @SupressWarning
+      - @SuppressWarnings
         - 컴파일러가 주는 경고 메세지를 프로그래머가 의도적으로 무시하고자 할 때 사용한다.
         - 개발자가 경고 내용을 알고 있다는 가정하에 컴파일 로그로 인하여 지저분해진 로그에서 중요한 로그를 놓칠 수 있기에 사용하기도 한다.
-      - @NonNull
-        - 파라미터로 Null을 넣지 못하게 경고하는 의미에서 사용되는 어노테이션.
-        - 파라미터에 NonNull이 붙어있는 메서드를 호출 할 때 인자로 null을 넣으면 컴파일러가 경고를 표시한다.
-      - @FunctionalInterace
+      - @FunctionalInterface
         - 컴파일러에게 함수형 인터페이스라는 것을 알려 입력 실수를 방지한다.
+      - ※ @NonNull은 java.lang 표준(JDK 내장) 어노테이션이 아니라 Lombok, Spring(org.springframework.lang.NonNull), JSR-305(javax.annotation) 등 외부 라이브러리에서 제공하는 어노테이션이다. 참고로 파라미터로 Null을 넣지 못하게 경고하는 의미로 사용되며, 라이브러리에 따라 IDE나 정적 분석 도구가 경고를 표시해준다.
   - Meta 어노테이션
     - 어노테이션 정의시에 사용되는 어노테이션으로 어노테이션을 위한 어노테이션이라고 할 수 있다.
       - @Target

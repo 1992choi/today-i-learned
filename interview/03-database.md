@@ -21,7 +21,7 @@
     - GRANT : 권한 부여
     - REVOKE : 권한을 제한하거나 회수
 - TCL (Transaction Control Language)
-  - 트랜잭션을 제어하는 명령인 COMMIT과 ROLLBACK만을 따로 분리해서 TCL이라고 표현하고 있다.
+  - 트랜잭션을 제어하는 명령인 COMMIT, ROLLBACK, SAVEPOINT를 따로 분리해서 TCL이라고 표현하고 있다.
   - 종류
     - COMMIT : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 영구적으로 반영
     - ROLLBACK : 논리적인 작업의 단위를 묶어서 DML에 의해 조작된 결과를 작업 이전의 상태로 복구
@@ -52,8 +52,8 @@
     - 유일성은 만족하지만, 최소성은 만족하지 못하는 키
     - 릴레이션을 구성하는 모든 튜플에 대해 유일성은 만족하지만, 최소성은 만족시키지 못한다.
   - Foreign Key (외래키)
-    - 다른 릴레이션의 기본키를 그대로 참조하는 속성의 집합
-    - 외래키는 참조되는 릴레이션의 기본키와 대응되어 릴레이션 간에 참조 관계를 표현하는데 중요한 도구로 사용된다.
+    - 다른 릴레이션의 기본키 또는 유니크(UNIQUE) 제약이 걸린 속성을 참조하는 속성의 집합
+    - 외래키는 참조되는 릴레이션의 기본키(또는 유니크 키)와 대응되어 릴레이션 간에 참조 관계를 표현하는데 중요한 도구로 사용된다.
     - 외래키로 지정되면 참조 테이블의 기본키에 없는 값은 입력할 수 없다. (참조 무결성 조건)
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/122)
@@ -110,7 +110,7 @@
     - 기본키가 아닌 모든 속성이 기본키에 대하여 완전 함수적 종속을 만족한다.
     - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/8f19a508-0b6e-4746-a161-9036157582de)
   - 3NF
-    - 기본키를 제외한 속성들 간에 이행 종속성이 없다.
+    - 후보키를 제외한 속성들 간에 이행 종속성이 없다.
     - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/5d66af2e-fd92-41b9-831c-95b319523b41)
   - BCNF
     - 모든 결정자가 후보키일 때, 결정자이면서 후보키가 아닌 것을 제거한다.
@@ -134,9 +134,11 @@
 - JOIN의 종류
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/13aba6a1-b866-4772-a747-82c49d5e1b07)
   - INNER JOIN
-    - 기존테이블과 조인한 테이블의 중복값을 보여주는데 결과값은 교집합만 검색
+    - 조인 조건이 일치하는 행(교집합)만 반환한다.
+    - Ex) `SELECT * FROM A INNER JOIN B ON A.id = B.a_id`
   - LEFT / RIGHT OUTER JOIN
-    - 기존 테이블 값 + 교집합
+    - 기준이 되는 한쪽 테이블의 모든 행 + 교집합을 반환하며, 매칭되지 않는 반대편 테이블의 컬럼은 NULL로 채워진다.
+    - Ex) `SELECT * FROM A LEFT JOIN B ON A.id = B.a_id`
   - FULL OUTER JOIN
     - 합집합
   - CROSS JOIN
@@ -177,11 +179,11 @@
         - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/6bea3fb4-5c29-4335-a542-6f64434f3e55)
   - 레벨 1 (Read Committed)
     - 트랜잭션이 커밋되어 확정된 데이터를 읽는 것을 허용한다.
-    - 대부분의 DBMS가 기본 모드로 채택하고 있는 격리수준이다.
+    - 대부분의 DBMS가 기본 모드로 채택하고 있는 격리수준이다. (단, MySQL(InnoDB)은 REPEATABLE READ를 기본 격리수준으로 채택하고 있다.)
     - Non-Repeatable Read, Phantom Read 현상이 발생할 수 있다.
   - 레벨 2 (Repeatable Read)
     - 선행 트랜잭션이 읽은 데이터는 트랜잭션이 종료될 때가지 후행 트랜잭션이 갱신하거나 삭제하는 것은 불허함으로써 같은 데이터를 두 번 쿼리했을 때 일관성 있는 결과를 리턴한다.
-    - Phantom Read 현상이 발생할 수 있다.
+    - Phantom Read 현상이 발생할 수 있다. (단, MySQL InnoDB는 MVCC와 Next-Key Lock을 통해 대부분의 경우 Phantom Read를 방지한다.)
   - 레벨 3 (Serializable Read)
     - 선행 트랜잭션이 읽은 데이터를 후행 트랜잭션이 갱신하거나 삭제하지 못할 뿐만 아니라 중간에 새로운 레코드를 삽입하는 것도 막아준다.
     - 완벽하게 읽기 일관성 모드를 제공한다.
