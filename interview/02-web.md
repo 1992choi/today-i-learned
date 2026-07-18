@@ -17,14 +17,14 @@
   - 서블릿은 WAS내의 서블릿 컨테이너에서 동작하며, 요청(Request)을 받으면 요청에 맞는 로직을 실행하고 클라이언트에게 HTTP 형식으로 응답(Response)하게 된다.
 - Servlet(서블릿)의 주요 특징
   - 클라이언트의 요청에 동적으로 응답하는 웹 어플리케이션 컴포넌트이다.
-  - HTML을 사용하여 응답한다.
+  - HTML, JSON, XML 등 다양한 형태의 동적 컨텐츠를 생성하여 응답한다.
   - JAVA의 스레드를 이용한다.
   - MVC 패턴의 Controller 역할을 맡는다.
 - Servlet(서블릿) 동작 과정
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/2efde5cc-ccd1-499e-ac82-3cee4395f600)
     1. 클라이언트 요청
     2. HttpServletRequest, HttpServletResponse 객체 생성
-    3. Web.xml이 어느 서블릿에 대해 요청한 것인지 탐색
+    3. web.xml 또는 애노테이션(@WebServlet) 기반의 매핑 정보를 통해 어느 서블릿에 대해 요청한 것인지 탐색 (Spring MVC에서는 DispatcherServlet이 이 역할을 대신한다.)
     4. 해당하는 서블릿에서 service() 메서드 호출 
     5. doGet() 또는 doPost() 호출 
     6. 동적 페이지 생성 후 ServletResponse 객체에 응답 전송
@@ -49,7 +49,7 @@
     1. 클라이언트가 페이지를 요청한다.
     2. 서버는 접근한 클라이언트의 Request-Header 필드인 Cookie를 확인하고, 클라이언트가 해당 Session ID를 보냈는지 확인한다.
     3. Session ID가 존재하지 않는다면, 서버는 Session ID를 생성한 후 클라이언트에게 전달한다.
-    4. 서버에서 클라이언트로 돌려준 Session ID를 쿠키로 사용하여 서버에 저장한다.
+    4. 서버에서 클라이언트로 돌려준 Session ID를 클라이언트가 쿠키로 저장한다.
     5. 클라이언트 접속 시, 세션 쿠키를 이용하여 Session ID 값을 서버에 전달한다.
 - Cookie
   - 저장위치 : 클라이언트(=접속자 PC)
@@ -273,10 +273,10 @@
     - JointPoint가 실행되기 이전 시점에 실행된다.
   - @After
     - JointPoint의 정상 완료 여부에 상관없이 항상 실행된다.
-  - @AfterRetruning
+  - @AfterReturning
     - JointPoint가 정상 완료된 후 실행된다.
   - @Around
-    - 메서드 호출 전후에 실행된다.
+    - JoinPoint 실행 전/후 모두에 적용할 수 있으며, ProceedingJoinPoint.proceed()를 직접 호출하여 대상 메서드의 실행 여부, 실행 시점, 전달 인자, 반환값까지 제어할 수 있는 가장 강력한 Advice이다.
   - @AfterThrowing
     - 메서드가 예외를 던지는 경우 실행된다.
 - 장점
@@ -300,11 +300,11 @@
     - Reflection을 이용해 Proxy를 생성한다.
   - CGLib Proxy
     - Code Generator Libray의 약자로, JDK Dynamic Proxy와는 다르게 인터페이스가 아닌 클래스 기반으로 바이트코드를 조작하여 프록시를 생성하는 방식이다.
-    - Reflection이 아닌 바이트 조작을 사용하며, 타겟에 대한 정보를 알고 있기 때문에 JDK Dynamic Proxy에 비해 성능이 좋다.
+    - Reflection이 아닌 바이트코드 조작을 사용하기 때문에 메서드 호출 시점에 Reflection 오버헤드가 없어 일반적으로 JDK Dynamic Proxy보다 메서드 호출 성능이 좋다고 알려져 있다. 다만 프록시 객체 생성 비용은 CGLIB이 더 크며, 최신 JVM에서는 두 방식의 실제 성능 차이가 크지 않을 수 있다.
 - 스프링과 스프링부트에서의 채택
   - 스프링 AOP에서는 기본적으로 JDK Dynamic Proxy를 사용한다. 하지만 JDK Dynamic Proxy는 인터페이스가 있어야만 사용할 수 있기 때문에 인터페이스가 없는 경우에는 CGLIB Proxy를 사용한다.
   - 스프링 부트에서는 설정을 통해 프록시 방식을 선택할 수 있다.
-  - JDK 방식은 AOP 적용을 위해 반드시 인터페이스를 구현해야 된다는 점, 리플렉션은 Private에 접근이 가능하다는 점 때문에 스프링 부트 2.0에서는 기본 방식으로 CGLib 방식을 채택하였다.
+  - JDK 방식은 AOP 적용을 위해 반드시 인터페이스를 구현해야 한다는 제약이 있는데, 인터페이스가 있는 빈과 없는 빈이 혼재할 경우 프록시 방식이 서로 달라지면서 타입 캐스팅 이슈 등이 발생할 수 있다. 스프링 부트 2.0에서는 인터페이스 유무와 관계없이 일관된 프록시 전략을 제공하기 위해 기본 방식으로 CGLib 방식을 채택하였다.
 - Ref.
 [펲로그](https://suyeonchoi.tistory.com/81),
 [제이온](https://steady-coding.tistory.com/608)
@@ -388,6 +388,9 @@
   - @Transactional 어노테이션은 스프링에서 많이 사용되는 선언적 트랜잭션 방식이다.
   - 클래스 또는 메서드 위에 @Transactional을 붙이면 트랜잭션 기능이 적용된 프록시 객체가 생성되며, 트랜잭션 성공 여부에 따라 Commit 또는 Rollback 작업이 이루어진다.\
   - @Transactional에는 Spring AOP의 Proxy방식이 사용된다.
+  - Proxy 기반으로 동작하기 때문에 다음과 같은 제약사항이 있다.
+    - 기본적으로 public 메서드에만 적용되며, protected, private, package-private 메서드에는 트랜잭션이 적용되지 않는다.
+    - Self-Invocation(자기 자신 호출) 문제 : 같은 클래스 내부에서 this.method()와 같이 다른 메서드를 호출하면 프록시 객체를 거치지 않고 실제 객체가 직접 호출되기 때문에 트랜잭션이 적용되지 않는다.
 - 격리 수준 (Isolation Level)
   - DEFAULT
     - 데이터베이스에서 설정된 기본 격리 수준을 따른다. 
@@ -399,7 +402,7 @@
     - 나머지 부작용(Nonrepeatable read, Phantom read)은 여전히 발생할 수 있다.
   - REPEATABLE READ
     - 트랜잭션이 완료될 때까지 조회한 모든 데이터에 shared lock이 걸리므로 트랜잭션이 종료될 때까지 다른 트랜잭션은 그 영역에 해당하는 데이터를 수정할 수 없다.
-    - Phantom read 부작용은 여전히 발생한다.
+    - ANSI SQL 표준 기준으로는 Phantom read 부작용이 여전히 발생한다. 다만 DBMS 구현에 따라 다를 수 있는데, 예를 들어 MySQL InnoDB의 REPEATABLE READ는 next-key lock(레코드 락 + 갭 락)을 사용하여 대부분의 Phantom read를 방지한다.
   - SERIALIZABLE
     - 가장 엄격한 트랜잭션 격리 수준으로, 완벽한 읽기 일관성 모드를 제공한다.
     - 이 격리 수준에서는 PHANTOM READ 상태가 발생하지 않지만 동시성 처리 성능이 급격히 떨어질 수 있다.
@@ -573,8 +576,16 @@
 
 
 ## 테스트 커버리지
-- Title
-  - Contents
+- 테스트 커버리지(Test Coverage)란?
+  - 작성한 테스트 코드가 전체 소스 코드 중 얼마나 많은 부분을 실행(검증)했는지를 나타내는 지표이다.
+  - 커버리지가 높다고 해서 코드의 품질이나 정확성이 보장되는 것은 아니며, 어떤 로직을 어떻게 검증했는지가 더 중요하다.
+- 커버리지 측정 기준
+  - Line Coverage(라인 커버리지) : 전체 코드 라인 중 테스트가 실행한 라인의 비율
+  - Branch Coverage(분기 커버리지) : if, switch 등 조건문의 분기 중 테스트가 실행한 분기의 비율
+  - Condition Coverage(조건 커버리지) : 각 조건식이 true/false로 평가된 비율
+- 유의점
+  - 커버리지 수치를 억지로 높이기 위한 무의미한 테스트(Assert가 없는 테스트 등)는 오히려 유지보수 비용만 증가시킬 수 있다.
+  - 커버리지는 참고 지표로 활용하되, 핵심 비즈니스 로직과 예외 케이스 검증에 집중하는 것이 중요하다.
 - Ref.
 [GwanMtCat](https://velog.io/@xeropise1/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BB%A4%EB%B2%84%EB%A6%AC%EC%A7%80%EB%9E%80)
 <br><br><br>
@@ -672,7 +683,7 @@
       @Value("#{1 == 1}") // true
       private boolean boolTmp;
 
-      @Value("#{some.property != null ? some.perperty : 'test'}") // null인 경우 test 주입
+      @Value("#{some.property != null ? some.property : 'test'}") // null인 경우 test 주입
       private String strTmp;
       ``` 
 - Ref.
@@ -699,6 +710,12 @@
   - 부분 변경이 필요한 상황에서 PATCH를 사용할 수 없다면 POST를 사용한다.
 - DELETE
   - DELETE 메서드는 리소스를 제거한다.
+- 멱등성(Idempotent)과 안전성(Safe)
+  - 멱등성(Idempotent) : 동일한 요청을 여러 번 수행해도 결과가 동일하게 유지되는 성질을 의미한다.
+    - GET, PUT, DELETE는 멱등성을 만족한다.
+    - POST, PATCH는 멱등성을 만족하지 않는다.
+  - 안전성(Safe) : 요청을 수행해도 서버의 리소스 상태를 변경하지 않는 성질을 의미한다.
+    - GET, HEAD, OPTIONS는 안전한 메서드이다.
 - Ref.
 [woply](https://velog.io/@woply/HTTP-%EC%A3%BC%EC%9A%94-%EB%A9%94%EC%84%9C%EB%93%9C-5%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%ACGET-POST-PUT-PATCH-DELETE)
 <br><br><br>
@@ -762,6 +779,12 @@
   - 즉, 다른 출처란 Protocol, Host, Port 중 한 개라도 다른 것을 의미한다.
 - 동일 출처 정책(Same-Origin Policy)이란?
   - CORS policy 오류가 발생하는 이유는 브라우저가 동일 출처 정책(Same-Origin Policy, SOP)을 지켜서 다른 출처의 리소스 접근을 금지하기 때문이다.
+- Simple Request와 Preflighted Request
+  - Simple Request
+    - GET, HEAD, POST 중 하나의 메서드를 사용하고, Content-Type이 제한된 값(예: text/plain, multipart/form-data, application/x-www-form-urlencoded) 중 하나이며, 커스텀 헤더를 사용하지 않는 등 특정 조건을 만족하는 경우, Preflight 요청 없이 바로 본 요청을 전송한다.
+  - Preflighted Request
+    - 위 조건을 만족하지 않는 요청(PUT, DELETE 등의 메서드 사용, application/json Content-Type 사용, 커스텀 헤더 사용 등)의 경우, 브라우저가 실제 요청을 보내기 전에 OPTIONS 메서드로 서버에 해당 요청이 허용되는지 사전 확인(Preflight)을 한다.
+    - 서버가 Access-Control-Allow-Origin, Access-Control-Allow-Methods 등의 응답 헤더로 허용 여부를 응답해야 실제 요청이 전송된다.
 - Ref.
 [Beomy](https://beomy.github.io/tech/browser/cors/)
 <br><br><br>
@@ -835,7 +858,7 @@
     - 개발자가 작성한 소스코드(.java), 프로젝트에서 쓰인 각 각의 파일 및 자원(.xml, .jpa, .jpg, properties)을 jvm이나 톰캣 같은 WAS가 인식할 수 있도록 패키징하는 과정 및 결과물을 일컫는다.
   - 빌드 관리 도구(Build Tool)
     - 빌드 도구란, 소스코드에서 애플리케이션을 생성하면서 여러가지 외부 라이브러리를 사용하는데, 빌드 관리 도구를 사용하게 되면 사용자가 이를 관리하지 않아도 된다.
-    - 필드 관리 도구는 다음과 같은 작업을 수행한다.
+    - 빌드 관리 도구는 다음과 같은 작업을 수행한다.
       1. 종속성 다운로드 - 전처리(Preprocessing)
       2. 소스코드를 바이너리 코드로 컴파일(Compile)
       3. 바이너리 코드를 패키징(Packaging)
@@ -845,14 +868,17 @@
 - Maven
   - Maven은 Java 전용 프로젝트 관리 도구로써 Lifecycle 관리 목적 빌드 도구이며, Apache Ant의 대안으로 만들어졌다.
   - 정해진 Lifecycle에 의하여 작업을 수행하며, 전반적인 프로젝트 관리 기능을 포함하고 있다.
-  - clean - validate - compile - test - package - verify - install - site - deploy의 라이프 사이클을 가진다.
-    - clean : 빌드 시 생성되어있었던 파일들을 삭제한다.
+  - Maven은 clean, default(build), site라는 3개의 서로 독립된 Lifecycle을 가지며, 각 Lifecycle은 순차적인 여러 Phase로 구성된다. (하나로 이어지는 단일 체인이 아니다.)
+    - clean Lifecycle : 이전 빌드에서 생성된 파일들을 삭제한다. (pre-clean → clean → post-clean)
+    - default Lifecycle : 실제 프로젝트를 컴파일, 테스트, 패키징, 배포하는 핵심 Lifecycle이다.
+    - site Lifecycle : 프로젝트 문서(사이트)를 생성 및 배포한다. (pre-site → site → post-site → site-deploy)
+  - default Lifecycle의 주요 Phase (특정 Phase를 실행하면 그 이전의 모든 Phase가 순차적으로 함께 실행된다.)
     - validate : 프로젝트가 올바른지 확인하고 필요한 모든 정보를 사용할 수 있는지 확인하는 단계
     - compile : 프로젝트 소스코드를 컴파일 하는 단계
     - test : 단위 테스트를 수행하는 단계. 테스트 실패 시 빌드 실패로 처리하며, 스킵이 가능하다.
     - package : 실제 컴파일된 소스 코드와 리소스들을 jar, war 등의 파일의 배포를 위한 패키지로 만든다.
     - verify : 통합 테스트 결과에 대한 검사를 실행하여 품질 기준을 충족하는지 확인한다.
-    - site : 프로젝트 문서와 사이트 작성, 생성하는 단계
+    - install : 만들어진 package를 로컬 저장소(repository)에 설치하여, 다른 로컬 프로젝트에서 라이브러리로 참조할 수 있게 한다.
     - deploy : 만들어진 package를 원격 저장소에 release하는 단계
 - Gradle
   - Maven을 대체할 수 있는 프로젝트 구성 관리 및 범용 빌드 툴이며, Ant Builder와 Groovy script를 기반으로 구축되어 기존 Ant의 역할과 배포 스크립의 기능을 모두 사용가능하며 스프링부트와 안드로이드에서 사용된다.
@@ -913,8 +939,23 @@
 
 
 ## [JPA] N+1문제
-- Title
-  - Content
+- N+1 문제란?
+  - 연관관계가 설정된 엔티티를 조회할 때, 최초 1번의 쿼리(조회 대상 엔티티 조회)와는 별개로 연관된 엔티티를 조회하기 위한 쿼리가 N번 추가로 발생하는 문제이다.
+  - 예를 들어 팀(Team) 1개에 소속된 회원(Member)이 여러 명인 구조에서 팀 목록을 조회(1번 쿼리)한 후, 각 팀에 속한 회원을 조회하면 팀의 개수(N)만큼 추가 쿼리가 발생한다.
+- 발생 원인
+  - 즉시 로딩(EAGER) : JPQL은 글로벌 페치 전략을 무시하고 우선 대상 엔티티만 조회하는 쿼리를 실행한 뒤, 즉시 로딩으로 설정된 연관 엔티티를 조회하기 위해 각 엔티티마다 추가 쿼리를 실행한다.
+  - 지연 로딩(LAZY) : 조회 시점에는 프록시 객체만 반환되지만, 이후 반복문 등에서 연관 엔티티를 실제로 사용하는 순간마다 추가 쿼리가 발생한다.
+  - 즉, 페치 전략과 무관하게 연관 엔티티에 접근하는 시점에 N번의 추가 쿼리가 발생할 수 있다는 것이 핵심이다.
+- 해결 방법
+  - Fetch Join
+    - JPQL에서 `join fetch`를 사용하여 연관된 엔티티를 한 번의 쿼리로 함께 조회한다.
+    - 가장 널리 사용되는 방법이지만, 컬렉션을 Fetch Join할 경우 페이징 처리가 불가능하다는 제약이 있다.
+  - @EntityGraph
+    - 엔티티 조회 시점에 함께 로딩할 연관 엔티티를 지정하여, Fetch Join과 유사하게 한 번의 쿼리로 가져오도록 한다.
+  - Batch Size 설정 (hibernate.default_batch_fetch_size)
+    - 지연 로딩된 연관 엔티티를 조회할 때, N번의 개별 쿼리 대신 IN 절을 사용하여 지정한 size만큼 묶어서 조회한다.
+  - DTO 직접 조회
+    - 필요한 컬럼만 JPQL에서 DTO로 바로 조회하여 애초에 N+1이 발생할 여지를 없앤다.
 - Ref.
 [말 랑](https://ttl-blog.tistory.com/1135),
 [하얀종이개발자](https://jh2021.tistory.com/21)
@@ -923,8 +964,18 @@
 
 
 ## [JPA] 즉시 로딩과 지연 로딩
-- Title
-  - Content
+- 즉시 로딩(Eager Loading)
+  - 엔티티를 조회할 때 연관된 엔티티도 함께 조회하는 방식이다. (fetch = FetchType.EAGER)
+  - 연관 엔티티를 항상 사용하는 경우 쿼리 횟수를 줄일 수 있지만, 불필요한 연관 엔티티까지 함께 조회되어 성능 저하 및 N+1 문제를 유발할 수 있다.
+  - @ManyToOne, @OneToOne의 기본 전략이다.
+- 지연 로딩(Lazy Loading)
+  - 연관된 엔티티를 실제로 사용하는 시점에 조회하는 방식이다. (fetch = FetchType.LAZY)
+  - 조회 시점에는 프록시 객체를 반환하고, 프록시의 메서드를 최초로 호출하는 시점에 초기화(실제 쿼리 실행)가 이루어진다.
+  - 불필요한 연관 엔티티 조회를 방지할 수 있지만, 사용 시점마다 추가 쿼리가 발생할 수 있어 N+1 문제의 원인이 되기도 한다.
+  - @OneToMany, @ManyToMany의 기본 전략이다.
+- 실무에서의 권장 사항
+  - 모든 연관관계는 기본적으로 지연 로딩(LAZY)으로 설정하고, 필요한 경우에 한해 Fetch Join, @EntityGraph 등을 이용하여 필요한 시점에 명시적으로 함께 조회하는 것이 권장된다.
+  - 즉시 로딩은 예상치 못한 시점에 의도하지 않은 쿼리(N+1 등)를 발생시킬 수 있어 성능 예측이 어렵다.
 - Ref.
 [땡글이](https://velog.io/@ddangle/%EC%A6%89%EC%8B%9C-%EB%A1%9C%EB%94%A9%EA%B3%BC-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9-%EB%B9%84%EA%B5%90),
 [dev john](https://study-easy-coding.tistory.com/137)
@@ -978,7 +1029,7 @@
     - Command와 Query를 분리했기 때문에 OCP 를 준수하는 도메인 모델을 만들 수 있다.
     - 이를 통해 결국 도메인 로직에 비즈니스 로직을 집중시킬 수 있다.
   - 데이터소스의 독립적인 크기 조정이 가능하다.
-    - 보통 Read와 Write의 비율은 1000 : 1 이다.
+    - 시스템에 따라 다르지만, 일반적으로 Read 비중이 Write보다 훨씬 높은 경우가 많다.
     - 그러므로 Write DB가 물리적으로 나뉘어져 있다면, 해당 DB 인스턴스는 작게 유지하고 Read DB 인스턴스에 더 높은 투자를 할 수 있다.
   - 단순한 쿼리
     - Query side에서는 Materialized View를 이용할 수 있는데, 이를 통해서 복잡한 조인 쿼리 없이 단순한 쿼리를 이용해서 원하는 정보를 얻어 올 수 있다.
@@ -996,18 +1047,32 @@
 
 
 ## lombok
+- lombok이란?
+  - 어노테이션 기반으로 Getter, Setter, 생성자, toString 등 반복적인 보일러플레이트 코드를 컴파일 시점에 자동으로 생성해주는 라이브러리이다.
 - @Data, @Setter, @AllArgsConstructor 지양
-  - 내용
-- @Tostring 순환 참조
-  - 내용
+  - @Data는 @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor를 한 번에 포함하는 어노테이션인데, 이 중 @Setter가 포함되어 있어 객체의 불변성을 해치고 어디서든 상태를 변경할 수 있게 만들어 유지보수를 어렵게 한다.
+  - @Setter를 무분별하게 사용하면 의미 있는 메서드 없이 필드 값이 임의로 변경될 수 있어, 객체 지향적인 관점에서 지양하는 것이 좋다.
+  - @AllArgsConstructor는 필드가 추가/변경될 때마다 생성자의 파라미터 순서와 의미가 바뀔 수 있어, 어떤 필드에 어떤 값이 채워지는지 코드만으로 파악하기 어렵고 실수를 유발하기 쉽다. 이 대신 @Builder나 목적이 명확한 생성자를 사용하는 것이 권장된다.
+- @ToString 순환 참조
+  - 양방향 연관관계를 가진 엔티티에 @ToString을 사용하면, 서로의 toString()을 무한히 호출하게 되어 StackOverflowError가 발생할 수 있다.
+  - 이를 방지하기 위해서는 연관관계의 주인이 아닌 필드를 @ToString.Exclude로 제외하거나, 연관 엔티티 자체가 아닌 식별자(ID)만 출력하도록 구성해야 한다.
 - Ref.
 <br><br><br>
 
 
 
 ## Spring WebFlux
-- Title
-  - Content
+- Spring WebFlux란?
+  - Spring 5부터 지원하는 완전 비동기(Async) & Non-Blocking 방식의 리액티브 웹 프레임워크이다.
+  - Reactor 라이브러리를 기반으로 하며, Mono(0~1개의 데이터)와 Flux(0~N개의 데이터)라는 리액티브 타입을 이용해 데이터 스트림을 처리한다.
+- 기존 Spring MVC와의 차이
+  - Spring MVC는 요청마다 스레드를 하나씩 할당하는 Thread-per-Request(동기/블로킹) 모델을 사용하며, Servlet 기반 & Tomcat 등의 WAS 위에서 동작한다.
+  - Spring WebFlux는 적은 수의 스레드(이벤트 루프)가 Non-Blocking I/O를 기반으로 다수의 요청을 처리하며, Netty 등의 비동기 서버 위에서 동작한다.
+- 특징
+  - Non-Blocking 방식이므로 스레드가 I/O 작업을 기다리며 대기(블로킹)하지 않고 다른 요청을 처리할 수 있어, 적은 리소스로도 높은 처리량을 기대할 수 있다.
+  - 대량의 동시 커넥션(예: 스트리밍, 실시간 데이터)을 처리하는 환경에 적합하다.
+  - 내부적으로 Blocking I/O(예: JDBC)를 사용하면 WebFlux의 이점을 살릴 수 없기 때문에, R2DBC와 같은 Non-Blocking 드라이버와 함께 사용해야 진가를 발휘한다.
+  - 명령형(imperative) 코드에 비해 러닝 커브가 높고, 디버깅 및 트러블슈팅이 상대적으로 어렵다는 단점이 있다.
 - Ref.
 <br><br><br>
 
@@ -1041,8 +1106,19 @@
 
 
 ## HTTPS 통신
-- Title
-  - Content
+- HTTPS(HyperText Transfer Protocol Secure)란?
+  - HTTP에 데이터 암호화를 위한 SSL/TLS 계층이 추가된 프로토콜이다.
+  - 클라이언트와 서버 간 주고받는 데이터를 암호화하여 기밀성, 무결성, 인증을 보장한다.
+- HTTPS 통신 과정 (TLS Handshake)
+  1. 클라이언트가 서버에 접속하며 지원 가능한 암호화 방식(Cipher Suite) 목록과 함께 요청을 보낸다. (Client Hello)
+  2. 서버는 사용할 암호화 방식을 선택하고, 자신의 공개키가 담긴 인증서(Certificate)를 클라이언트에게 전달한다. (Server Hello)
+  3. 클라이언트는 인증서가 신뢰할 수 있는 CA(공인 인증기관)에 의해 서명되었는지 검증한다.
+  4. 클라이언트는 이후 통신에서 사용할 대칭키(세션키)를 생성하고, 서버의 공개키로 암호화하여 전달한다.
+  5. 서버는 자신의 개인키로 이를 복호화하여 대칭키를 얻는다.
+  6. 이후 클라이언트와 서버는 공유된 대칭키를 이용하여 데이터를 암호화/복호화하며 통신한다.
+- 비대칭키(공개키/개인키)와 대칭키를 함께 사용하는 이유
+  - 비대칭키 방식은 안전하지만 연산 비용이 커서 매 통신마다 사용하기에는 성능 저하가 크다.
+  - 따라서 최초 키 교환(핸드셰이크) 시에만 비대칭키를 이용해 안전하게 대칭키를 주고받고, 이후 실제 데이터 통신은 상대적으로 빠른 대칭키 방식으로 암호화하는 하이브리드 방식을 사용한다.
 - Ref.
 [Computing](https://computing-jhson.tistory.com/117)
 <br><br><br>
@@ -1081,12 +1157,25 @@
 
 
 ## MSA 환경에서의 분산 트랜잭션 관리
-- 2PC
-  - Content
-- SAGA
-  - Content
+- 배경
+  - MSA 환경에서는 서비스(도메인)마다 데이터베이스가 분리되어 있기 때문에, 하나의 비즈니스 트랜잭션이 여러 서비스에 걸쳐 처리되는 경우 단일 DB 트랜잭션(ACID)만으로는 데이터 정합성을 보장할 수 없다.
+- 2PC (Two-Phase Commit)
+  - 여러 서비스(리소스)에 걸친 트랜잭션을 하나의 코디네이터(Coordinator)가 조율하여 원자적으로 커밋 또는 롤백시키는 방식이다.
+    1. Prepare(준비) 단계 : 코디네이터가 모든 참여자에게 커밋 가능 여부를 묻고, 각 참여자는 준비를 마친 후 응답한다.
+    2. Commit(커밋) 단계 : 모든 참여자가 준비 완료를 응답하면 코디네이터가 전체 커밋을 지시하고, 하나라도 실패하면 전체 롤백을 지시한다.
+  - 강한 일관성을 보장할 수 있지만, 모든 참여자가 응답할 때까지 리소스를 잠근 채 대기해야 하므로 처리량이 낮고, 코디네이터 장애 시 전체 시스템이 블로킹될 수 있어 MSA 환경에서는 잘 사용되지 않는다.
+- SAGA 패턴
+  - 하나의 큰 트랜잭션을 여러 개의 로컬 트랜잭션으로 나누고, 각 로컬 트랜잭션이 성공할 때마다 다음 로컬 트랜잭션을 순차적으로 실행하는 방식이다.
+  - 중간에 실패가 발생하면, 이전에 성공한 로컬 트랜잭션들을 취소하는 보상 트랜잭션(Compensating Transaction)을 실행하여 데이터 정합성을 맞춘다.
+  - 구현 방식
+    - Choreography(코레오그래피) : 중앙 조정자 없이 각 서비스가 이벤트를 발행/구독하며 자율적으로 다음 단계를 진행하는 방식. 서비스 간 결합도는 낮지만, 전체 흐름 파악이 어렵다.
+    - Orchestration(오케스트레이션) : 중앙의 오케스트레이터가 각 서비스의 로컬 트랜잭션 실행 순서를 지시하고 관리하는 방식. 흐름 파악은 쉽지만, 오케스트레이터에 대한 의존도가 높아진다.
+  - 2PC와 달리 리소스를 장시간 잠그지 않으므로 처리량이 높지만, 즉시적인 일관성(Strong Consistency)이 아닌 최종적 일관성(Eventual Consistency)만 보장한다.
 - Outbox 패턴
-  - Content
+  - 로컬 DB 트랜잭션(비즈니스 데이터 변경)과 메시지 발행(이벤트 Publish)을 하나의 원자적 작업으로 묶기 위한 패턴이다.
+  - 비즈니스 데이터를 변경하는 트랜잭션 내에서, 발행할 이벤트를 별도의 Outbox 테이블에 함께 저장(같은 로컬 트랜잭션으로 커밋)한다.
+  - 이후 별도의 프로세스(예: 폴링, CDC(Change Data Capture))가 Outbox 테이블을 읽어 메시지 브로커로 이벤트를 발행한다.
+  - 비즈니스 로직 처리와 이벤트 발행이 하나의 로컬 트랜잭션으로 묶이기 때문에, DB 반영은 성공했는데 이벤트 발행에는 실패하는 등의 데이터 불일치 문제를 방지할 수 있다.
 - Ref.
 [dev_hwan.log](https://velog.io/@ch200203/MSA-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C%EC%9D%98-%EB%B6%84%EC%82%B0-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B4%80%EB%A6%AC2PC-SAGA-%ED%8C%A8%ED%84%B4),
 [RIDI](https://ridicorp.com/story/transactional-outbox-pattern-ridi/)
