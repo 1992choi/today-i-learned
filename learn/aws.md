@@ -37,7 +37,7 @@
 - 주요기능 및 특징
   - 세밀한 접근 권한 부여가 가능하다.
   - Multi-Factor 인증 기능을 제공한다.
-  - 사용자의 패스워드 정책을 관리한다. (=일정 주기마다 변경)
+  - 사용자의 패스워드 정책을 관리한다. (=최소 길이, 복잡도, 재사용 방지, 만료 주기 등 설정 가능)
   - 리전 서비스가 아닌 글로벌 서비스이다.
 - 구성요소
   - 사용자(User)
@@ -59,21 +59,22 @@
   - Amazon Elastic Compute Cloud의 줄임말로서 AWS에서 제공하는 클라우드 컴퓨팅이다.
   - Elastic이라는 이름은 가상서버를 사용한 만큼 비용을 탄력적으로 지불하고, 성능과 용량도 자유롭게 조절할 수 있다는 의미를 가지고 있다.
 - EC2의 특징
-  - Auto Scailing을 통해 사용량에 따라 인스턴스를 조절할 수 있다.
+  - Auto Scaling을 통해 사용량에 따라 인스턴스를 조절할 수 있다.
   - 사용한 만큼만 비용 지불한다.
   - 몇 분이면 전세계에 컴퓨터 수백여대를 생성할 수 있다.
   - 여러 다른 AWS 서비스와의 유기적인 연동이 가능하다.
 - 지불방식
   - On-Demand
     - 필요할 때 바로 생성해서 사용할 수 있는 방식이다.
-    - 과금은 1시간 단위로 이루어진다.
+    - 과금은 초 단위(최소 60초)로 이루어진다. (Windows 등 일부 OS는 여전히 시간 단위 과금)
     - 3가지 방식 중 요금이 가장 비싸다.
   - Reserved
-    - 일정한 예약금을 선불로 내면 인스턴스를 1년 또는 3년동안 예약할 수 있으며 시간당 요금이 대폭 할인된다.
+    - 인스턴스를 1년 또는 3년동안 예약하는 대신 시간당 요금이 대폭 할인되는 방식이다.
+    - 선결제 비중(전체 선결제/일부 선결제/선결제 없음)을 선택할 수 있으며, 선결제 비중이 클수록 할인율이 높아진다.
   - Spot
-    - 경매 방식의 인스턴스.
-    - 인스턴스의 스펙을 설정하고 원하는 가격을 입력하여 입찰하면 높게 입찰한 사람한테 인스턴스가 할당된다.
-    - 만약, 해당 스펙의 인스턴스를 다른 사람이 더 높은 가격으로 입찰했다면 내가 가지고 있는 인스턴스는 종료된다.
+    - 여유 컴퓨팅 용량을 저렴하게 사용하는 인스턴스.
+    - 과거에는 입찰(경매) 방식이었으나, 2017년 이후로는 입찰 없이 AWS가 수요와 공급에 따라 결정한 Spot 가격을 그대로 지불하는 방식으로 변경되었다.
+    - AWS가 해당 용량을 회수해야 할 경우(예: On-Demand 수요 증가) 2분의 경고 후 인스턴스가 중단될 수 있다.
 
 <br>
 
@@ -90,7 +91,7 @@
 - EBS 볼륨 타입
   - SSD군
     - General Purpose SSD(GP2)
-      - 최대 10K IOPS 지원하며, 1GB당 3IOPS 속도가 나온다.
+      - 최대 16,000 IOPS까지 지원하며, 1GB당 3IOPS 속도가 나온다.
     - Provisioned IOPS SSD(IO1)
       - 극도의 I/O률을 요구하는(예시 : 매우 큰 DB 관리) 환경에서 주로 사용된다.
       - 10K이상에서 IOPS 지원한다.
@@ -98,12 +99,12 @@
     - Throughput Optimized HDD(ST1)
       - 빅데이터 Datawarehouse, Log 프로세싱 시 주로 사용된다.
       - Boot volume으로 사용할 수 없다.
-    - CDD HDD(SC1)
+    - Cold HDD(SC1)
       - 파일 서버와 같이 드문 volume 접근 시 주로 사용된다.
       - Boot volume으로 사용할 수 없다.
     - Magnetic(Standard)
       - 디스크 1GB당 가장 싼 비용을 자랑한다.
-      - Boot volume으로 유일하게 가능하다.
+      - Magnetic/HDD군 중에서는 유일하게 Boot volume으로 사용 가능하다.
 
 <br>
 
@@ -115,7 +116,7 @@
 - ELB의 종류
   - Classic Load Balancer
     - OSI Layer 4계층, 7계층에서 동작한다.
-    - 현재는 Legacy로 간주되어 거의 사요되지 않는다.
+    - 현재는 Legacy로 간주되어 거의 사용되지 않는다.
   - Application Load Balancer
     - OSI Layer 7계층에서 동작한다.
     - HTTP, HTTPS와 같은 트래픽의 로드 밸런싱에 가장 적합하다.
@@ -131,7 +132,7 @@
 ### RDS(Relational Database Service)
 - RDS란?
   - 데이터 베이스 인프라 및 업데이트들을 AWS 측에서 관리해주고 데이터베이스의 설치, 운영 그리고 관리 등의 서비스들을 지원하는 AWS의 관계형 데이터베이스이다.
-  - AWS RDS는 MySQL, Oracle, SQL Server, PostgreSQL, MariaDB, Microsoft SQL Server 그리고 MySQL, PostgreSQL과 호환이 되는 Aurora DB를 제공한다.
+  - AWS RDS는 MySQL, Oracle, SQL Server, PostgreSQL, MariaDB 그리고 MySQL, PostgreSQL과 호환이 되는 Aurora DB를 제공한다.
 - RDS 백업 시스템
   - 종류
     - 자동 백업(Automated Backups, AB)
@@ -152,8 +153,8 @@
 ### Multi-AZ와 Read Replica
 - AWS RDS에는 가용성과 확장성을 위해 Multi-AZ라는 기능과 Read Replica라는 기능을 지원한다.
   - Multi-AZ
-    - DR(Disaster Recovery)을 위해 서로 다른 AZ에 2개 이상의 Master DB를 배치하는 것을 의미한다.
-    - Active - Standby 방식으로 동작한다.
+    - DR(Disaster Recovery)을 위해 서로 다른 AZ에 Primary DB와 하나 이상의 Standby DB를 배치하는 것을 의미한다.
+    - Active - Standby 방식으로 동작하며, Standby는 평소 읽기/쓰기 트래픽을 처리하지 않다가 장애 발생 시 Primary로 승격(Failover)된다.
     - 가용성이 주요 목적이다.
   - Read Replica
     - 서비스에서 읽기 위주의 작업이 많은 경우, Read Replica를 여러개 만들어 부하를 분산할 수 있다.
@@ -186,7 +187,7 @@
 - S3 특징
   - 객체만 업로드 가능하다.(이미지, 텍스트, 동영상 등만 가능. OS 등 불가능)
   - 파일 크기는 0KB ~ 5TB까지 업로드 가능하다.
-  - 전제 저장 공간에 대한 제약은 없다.(=무제한 용량)
+  - 전체 저장 공간에 대한 제약은 없다.(=무제한 용량)
   - Bucket이라는 단위로 구분된다.(디렉토리의 개념)
 - S3 객체의 구성
   - Key: 파일의 이름
@@ -276,7 +277,7 @@
 - CloudFront란?
   - CloudFront는 AWS에서 제공하는 CDN서비스이다.
   - 캐싱을 통해 사용자에게 좀 더 빠른 전송 속도를 제공함을 목적으로 한다.
-  - CloudFront는 전 세계 이곳저곳에 Edge Location를 두고 Client에 가장 가까운 Edge Location를를 찾아 Latency를 최소화시켜 빠른 데이터를 제공한다.
+  - CloudFront는 전 세계 이곳저곳에 Edge Location를 두고 Client에 가장 가까운 Edge Location를 찾아 Latency를 최소화시켜 빠른 데이터를 제공한다.
 - CloudFront 관련 용어
   - CDN(Content Delivery Network or Content Distribution Network, 콘텐츠 전송 네트워크)
     - 콘텐츠를 효율적으로 전달하기 위해 여러 노드를 가진 네트워크에 데이터를 저장하여 제공하는 시스템이다.
@@ -393,7 +394,7 @@
     - Downtime(서비스 중단 시간)을 최소화하여 사용자들이 서비스에 대한 연속적인 접근성을 유지하면서도 최신 버전의 소프트웨어를 이용할 수 있게 하는 것을 목적으로 한다.
 - CodeCommit
   - CodeCommit이란?
-    - 안전한 GIt 기반의 레포지토리를 클라우드 기반으로 제공하는 완전 관리형 소스 제어 서비스이다.
+    - 안전한 Git 기반의 레포지토리를 클라우드 기반으로 제공하는 완전 관리형 소스 제어 서비스이다.
   - CodeCommit의 장점
     - 관리형 서비스
       - 하드웨어, 소프트웨어 관리 부담없이 하드웨어 프로비저닝 및 확장이 가능하다.
@@ -401,7 +402,7 @@
     - 높은 보안
       - CodeCommit 레포지토리는 유휴 상태에서도 데이터를 암호화하며, IAM과 통합되어 레포지토리에 사용자별 권한 할당이 가능하다.
     - 공동 작업
-      - 브런치 병합 전 코드 변경사항 검토 및 설명 추가가 가능하며, 입력된 설명 내용을 이메일로 전송하는 알림 기능이 있다.
+      - 브랜치 병합 전 코드 변경사항 검토 및 설명 추가가 가능하며, 입력된 설명 내용을 이메일로 전송하는 알림 기능이 있다.
     - 타서비스 통합
       - 타 AWS 서비스와 다른 레포지토리와 함께 사용 가능하다.
     - 손쉬운 이전
