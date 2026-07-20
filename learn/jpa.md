@@ -138,6 +138,9 @@
   - 옵션
     - IDENTITY
       - 데이터베이스에 위임, MYSQL
+      - AUTO_INCREMENT는 DB에 INSERT SQL을 실행해봐야 PK 값을 알 수 있다.
+        - 따라서 IDENTITY 전략은 `em.persist()` 시점에 즉시 INSERT SQL을 실행해서 식별자를 확보한다.
+        - 결과적으로 트랜잭션을 지원하는 쓰기 지연(write-behind)이 동작하지 않는다.
     - SEQUENCE
       - 데이터베이스 시퀀스 오브젝트 사용, ORACLE
       - @SequenceGenerator 필요
@@ -296,6 +299,7 @@
   - 프록시 객체는 처음 사용할 때 한 번만 초기화.
   - 프록시 객체를 초기화 할 때, 프록시 객체가 실제 엔티티로 바뀌는 것은 아니다.
     - 초기화되면 프록시 객체를 통해서 실제 엔티티에 접근하는 형태
+  - 프록시 객체는 원본 엔티티를 상속받은 타입이므로, `==` 비교 대신 `instanceof`로 타입을 비교해야 한다.
 - 프록시가 중요한 이유
   - 이후 지연로딩의 기본 개념이 되기 때문.
 
@@ -396,6 +400,9 @@
         - 값 타입을 정의하는 곳에 표시
       - @Embedded
         - 값 타입을 사용하는 곳에 표시
+    - 값 타입 공유 참조 주의사항
+      - 임베디드 타입 같은 값 타입의 인스턴스를 여러 엔티티가 공유해서 참조하면, 한쪽에서 값을 변경했을 때 다른 엔티티에도 영향을 주는 부작용(side effect)이 발생할 수 있다.
+      - 항상 값(인스턴스)을 복사해서 대입해야 하며, 가장 안전한 방법은 값 타입에 setter를 제거해 불변(immutable) 객체로 설계하는 것이다.
   - 컬렉션 값 타입
     - 값 타입을 하나 이상 저장할 때 사용
     - @ElementCollection, @CollectionTable 사용
@@ -674,6 +681,7 @@
   - getOne(ID)
     - 엔티티를 프록시로 조회한다.
     - 내부에서 `EntityManager.getReference()` 호출
+    - Spring Data JPA 2.5부터 deprecated 되었으며, 대신 `getReferenceById(ID)` 사용을 권장한다.
   - findAll(…)
     - 모든 엔티티를 조회한다.
     - 정렬(`Sort` )이나 페이징(`Pageable` ) 조건을 파라미터로 제공할 수 있다.
@@ -741,6 +749,9 @@
     - Member findByUsername(String name);
   - 단건 Optional
     - Optional<Member> findByUsername(String name);
+- 단건 조회 시 주의사항
+  - 순수 JPA는 조회 결과가 없으면 `NoResultException`이 발생한다.
+  - 스프링 데이터 JPA는 단건 조회에서 결과가 없을 때 예외를 감싸서 `null`을 반환한다. (그럼에도 `Optional` 반환 타입 사용을 권장)
 
 ### 페이징과 정렬
 - 페이징과 정렬 사용 예제
@@ -814,7 +825,8 @@
   - org.hibernate.cacheable
     - 2차 캐시를 활성화
   - org.hibernate.fetchSize
-    - 한 번에 가져올 레코드 수를 조정하여 페이징 성능 개선
+    - JDBC Statement의 fetch size(한 번에 DB에서 가져올 레코드 수)를 조정하는 힌트
+    - setFirstResult/setMaxResults 같은 페이징 자체와는 무관하며, 대량의 결과를 조회할 때 네트워크 왕복 횟수를 줄여 성능을 개선한다.
   - org.hibernate.comment
     - 실행되는 SQL에 주석 추가
 - 사용예시
@@ -854,7 +866,7 @@
     - SELECT ... FOR UPDATE
   - PESSIMISTIC_FORCE_INCREMENT
     - PESSIMISTIC_WRITE + 버전 필드(@Version) 증가
-    - Hibernate 전용
+    - `javax(jakarta).persistence.LockModeType`에 정의된 JPA 표준 락 모드 (Hibernate 전용이 아님)
   - OPTIMISTIC
     - 낙관적 락.
     - @Version 필드를 사용하여 변경 감지
@@ -941,6 +953,8 @@
         ```
   - 사용하고자 하는 엔티티에서 BaseEntity 상속받아 사용
     - 만약 모든 엔티티에서 사용하고자하면 별도 설정을 통해서 전체 적용도 가능하다.
+  - @CreatedBy, @LastModifiedBy가 동작하려면 현재 사용자 정보를 제공하는 `AuditorAware` 구현체를 스프링 빈으로 등록해야 한다.
+    - 등록하지 않으면 등록자/수정자 필드는 채워지지 않는다.
 
 ### 스프링 데이터 JPA 구현체 분석
 - 스프링 데이터 JPA가 제공하는 공통 인터페이스의 구현체
@@ -1016,7 +1030,7 @@
     @Query(value = "select * from member where username = ?", nativeQuery = true)
     Member findByNativeQuery(String username);
     ```
-- 코드 복잡성이 올라갈 수 있으므로, 네이티브 쿼리보다는 차라리 dbcTemplate 또는 myBatis가 권장된다.   
+- 코드 복잡성이 올라갈 수 있으므로, 네이티브 쿼리보다는 차라리 JdbcTemplate 또는 myBatis가 권장된다.   
 
 <br><hr>
 
@@ -1082,6 +1096,8 @@
     - total count 쿼리 추가 실행
   - fetchCount()
     - count 쿼리로 변경해서 count 수 조회
+  - 참고: 최근 Querydsl 버전에서는 `fetchResults()`, `fetchCount()`가 deprecated 되었다. (distinct, groupBy 등이 섞인 복잡한 쿼리에서는 정확한 count를 보장하기 어렵기 때문)
+    - 최신 버전에서는 카운트 쿼리를 별도로 작성하는 방식(아래 `CountQuery 최적화` 참고)이 권장된다.
 - 사용 예시
   - ```
     // List
@@ -1279,6 +1295,7 @@
 - 서브쿼리의 한계와 해결방안
   - JPA JPQL 서브쿼리의 한계점으로 from 절의 서브쿼리(인라인 뷰)는 지원하지 않는다.
     - 때문에 QueryDSL에서도 지원하지 않는다.
+    - 참고: 하이버네이트6부터 HQL 자체는 FROM 절 서브쿼리를 확장 기능으로 지원하지만(위 JPQL 챕터의 `서브 쿼리 특이사항` 참고), QueryDSL의 JPQL 빌더 API는 아직 이를 지원하지 않는다.
   - from절에 서브쿼리가 필요하다면, 아래와 같은 방안도 고려해볼 수 있다.
     - 서브쿼리를 join으로 변경
     - 애플리케이션에서 쿼리를 2번 분리해서 실행
@@ -1293,7 +1310,7 @@
                 .when(10).then("열살")
                 .when(20).then("스무살")
                 .otherwise("기타"))
-       .from(membe)
+       .from(member)
        .fetch();
 
     // CaseBuilder() 사용하여 복잡한 조건 구현
@@ -1319,7 +1336,8 @@
     String result = queryFactory
       .select(member.username.concat("_").concat(member.age.stringValue()))
       .from(member)
-      .where(member.us
+      .where(member.username.eq("member1"))
+      .fetchOne();
     ```
   - 문자가 아닌 다른 타입들을 stringValue()를 사용해서 문자로 변환할 수 있다.
     - ENUM 처리 시 유용
