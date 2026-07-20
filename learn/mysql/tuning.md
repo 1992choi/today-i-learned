@@ -101,19 +101,19 @@
 - 반환결과에 따른 서브쿼리
   - 단일행 서브쿼리
     - ```
-      SELETE ...
+      SELECT ...
       FROM 학생
       WHERE 학번 = (SELECT MAX(학번) 최대학번 FROM 학생)
       ```
   - 다중행 서브쿼리
     - ```
-      SELETE ...
+      SELECT ...
       FROM 학생
       WHERE 학번 IN (SELECT MAX(학번) 전공별 최대학번 FROM 학생 GROUP BY 전공코드)
       ```
   - 다중열 서브쿼리
     - ```
-      SELETE ...
+      SELECT ...
       FROM 학생
       WHERE (이름, 전공코드) IN (SELECT 이름, 전공코드 FROM 학생 WHERE 이름 LIKE '김%')
       ```
@@ -222,7 +222,8 @@
 - 실행계획 항목
   - id
     - 최소한의 단위 Select 문마다 부여되는 식별자
-    - id는 1부터 시작하며, 값이 작을수록 먼저 접근한 테이블이다.
+    - id는 1부터 시작하며, 일반적으로 값이 작을수록 바깥쪽(상위) 쿼리를 의미한다.
+      - 다만 서브쿼리나 파생 테이블처럼 id가 더 큰 단위 쿼리가 먼저 처리(구체화)되는 경우도 있어, id가 실제 접근·실행 순서를 그대로 보장하지는 않는다.
     - 값이 같다면 같은 값끼리 join을 하고 있다는 의미이다.
   - select_type
     - 쿼리문의 Select 유형을 나타내는 항목
@@ -230,7 +231,7 @@
       - simple
         - 서브쿼리 또는 Union 구문이 없는 단순 Select문
       - primary
-        - 서브쿼리 또는 Union 구문이 포함된 쿼리문에서 최초 접근한 테이블
+        - 서브쿼리 또는 Union 구문이 포함된 쿼리문에서 가장 바깥쪽(최상위)에 있는 SELECT
       - subquery
         - 독립적인 서브쿼리
       - derived
@@ -240,7 +241,7 @@
       - union result
         - Union 구문에서 중복을 제거하기 위해 메모리나 디스크에 생성한 임시 테이블
       - dependent subquery 또는 dependent union 
-        - Union 또는 Union All 구문에서 메인 테이블의 영향을 받는 테이블
+        - 외부(메인) 쿼리의 값에 의존하는 서브쿼리(상관 서브쿼리)이거나, 그 서브쿼리에 속한 Union 구문의 두 번째 이후 SELECT
       - materialized
         - 조인 등의 가공 작업을 위해서 생성한 임시 테이블
   - table
@@ -304,7 +305,7 @@
               - 테이블의 실제 데이터를 읽지 않고 인덱스만으로 쿼리를 처리할 수 있는 경우.
         - Using filesort
           - order by가 인덱스를 활용하지 못하고, 메모리에 올려서 추가적인 정렬 작업을 수행
-        - using index for group-by
+        - Using index for group-by
           - 쿼리문에 Group by 구문이나 Distinct 구문이 포함될 때, 정렬된 인덱스를 순서대로 읽으면서 group by 연산 수행
         - Using index for skip scan
           - 인덱스의 모든 값을 비교하는 것이 아닌, 필요한 값만 건너뛰면서 스캔하는 방식
@@ -312,7 +313,7 @@
           - 인덱스 스캔 시에 첫 번째로 일치하는 레코드만 찾으면 검색을 중단하는 방식
 
 ### 실행계획 판단 기준과 실행 계획의 확장 
-- 실헹계획 판단
+- 실행계획 판단
   - 실행계획을 토대로 튜닝 대상을 판단할 수 있다.
     - 아래 항목에 대해서 왼쪽에 있는 값일수록 좋고, 오른쪽에 가까운 값일수록 튜닝대상으로 간주할 수 있다.
       - select_type
@@ -334,7 +335,7 @@
       - 나머지 옵션은 통계정보 기반으로 실행계획을 출력하는데, analyze는 옵티마이저가 실제 쿼리를 수행해보고 측정된 값을 보여주기 때문에 보다 정확한 값을 확인할 수 있다. (하지만 실제 쿼리가 수행되기 때문에 속도가 느릴 수 있다.)
 
 ### 튜닝
-- 기본키를 변경하는 나쁜 SQL
+- 기본키를 가공하는 나쁜 SQL
   - 변경 전
     - ```
       SELECT *
@@ -449,7 +450,7 @@
         - key = I_IS_YN
         - extra = Using temporary
       - emp 테이블
-        - type = eq_Ref
+        - type = eq_ref
         - key = PK
   - 변경 후
     - ```
@@ -539,7 +540,7 @@
       AND emp_id > 100000
       ```
     - 변경 전 실행계획
-      - type = ragne
+      - type = range
       - key = PK
       - extra = Using index, Using temporary
   - 변경 후
@@ -609,8 +610,8 @@
       FROM emp e
       WHERE EXISTS ( SELECT emp_id
                       FROM entry_record er
-                     WHERE gate = 'A'
-                       AND er.gate = e.emp_id
+                     WHERE er.gate = 'A'
+                       AND er.emp_id = e.emp_id
                    )
       ```
   - 튜닝 포인트
@@ -641,7 +642,7 @@
       SELECT e.emp_id, e.first_name, e.last_name
       FROM emp e
       WHERE e.emp_id > 450000
-      AND ( SELCT MAX(annual_salary)
+      AND ( SELECT MAX(annual_salary)
              FROM salary s
             WHERE e.emp_id = s.emp_id ) > 100000
       ```
@@ -752,7 +753,7 @@
               WHERE s3.emp_id = e.emp_id
           ) AS min_salary
       FROM
-          employee e
+          emp e
       WHERE
           e.emp_id BETWEEN 10001 AND 10100;
       ```
@@ -762,7 +763,7 @@
 - 비효율적인 페이징을 수행하는 나쁜 SQL
   - 변경 전
     - ```
-      SELECT e.emp_id, e.first_name, e. last_name, e.hire_date
+      SELECT e.emp_id, e.first_name, e.last_name, e.hire_date
       FROM emp e,
            salary s
       WHERE e.emp_id = s.emp_id
@@ -775,7 +776,7 @@
       - salary 테이블의 rows가 280만건이 넘는 상황
   - 변경 후
     - ```
-      SELECT e.emp_id, e.first_name, e. last_name, e.hire_date
+      SELECT e.emp_id, e.first_name, e.last_name, e.hire_date
       FROM emp e,
            ( SELECT emp_id
                FROM salary

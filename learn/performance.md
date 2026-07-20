@@ -106,8 +106,7 @@
         - LoadRunner
         - Rational Performance Tester
         - Gatling
-        - Apache
-        - Jmeter
+        - Apache JMeter
         - nGrinder
         - Locust
         - K6
@@ -119,11 +118,15 @@
   - mpstat
     - CPU 사용률을 모니터링하고, CPU별 사용 현황을 확인한다.
 - Memory
+  - free
+    - 시스템의 전체/사용/여유 메모리와 스왑 사용량을 확인한다.
+  - vmstat
+    - 가상 메모리, 프로세스, CPU 등 시스템 자원 사용 현황을 확인한다.
+- Network
   - netstat
     - 네트워크 연결 상태, 라우팅 테이블, 인터페이스 상태 등을 확인한다.
   - ss
     - 소켓 통계 정보를 확인하며, netstat보다 더 빠르고 다양한 네트워크 상태를 볼 수 있다.
-- Network
 - Disk
   - iostat
     - CPU 사용량과 디스크 I/O 통계를 확인한다.
@@ -268,7 +271,7 @@
           ...
         }
         ```
-    - AS IS
+    - TO BE
       - ```
         int array[] = new int[10];
         int arrayLength = array.length;
@@ -278,7 +281,7 @@
         ```
 - JSON
   - 서버간 데이터를 주고 받을 때 JSON을 사용할 경우, 데이터를 받아 분석하는데 CPU만을 사용하며 데이터가 크면 클수록 그 시간은 비례하여 증가한다.
-  - JSON 대안으로 Protocol buffers(protobuf, gRPC), Thrift, Finalge, Avro 등을 고려하는 것도 좋은 방법이다.
+  - JSON 대안으로 Protocol buffers(protobuf, gRPC), Thrift, FlatBuffers, Avro 등을 고려하는 것도 좋은 방법이다.
 - Log
   - System.out.println()을 이용한 방식은 지양
   - Logger를 사용은 필수. 불필요한 것은 로그로 남길 필요 없음.

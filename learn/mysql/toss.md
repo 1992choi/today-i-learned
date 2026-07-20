@@ -31,7 +31,9 @@
   -- 연결 수 조정 (즉시 적용, 재시작 시 my.cnf 설정이 우선)
   SET GLOBAL max_connections = 1000;
   
-  -- InnoDB 버퍼 풀 크기 설정 (일반적으로 재시작 필요)
+  -- InnoDB 버퍼 풀 크기 설정
+  -- MySQL 5.7.5부터는 동적(Dynamic) 변수라 재시작 없이 즉시 반영되지만,
+  -- 내부적으로 청크 단위 리사이징이 진행되는 동안 일시적으로 성능에 영향을 줄 수 있음
   SET GLOBAL innodb_buffer_pool_size = 4294967296;  -- 4GB
   
   -- max_connections 설정 변경 여부 확인
@@ -62,14 +64,14 @@
 
 ### 접근관리
 - ```
-  -- 데이터 베이스 생성
+  -- 데이터베이스 생성
   -- utf8mb4: 이모지 및 다국어(한글, 영어, 특수문자)까지 모두 지원
   -- utf8mb4_unicode_ci: 유니코드 표준 기반 정렬 규칙 (대소문자/악센트 구분 없음)
   CREATE DATABASE financial_app
       CHARACTER SET utf8mb4
       COLLATE utf8mb4_unicode_ci;
   
-  -- 데이터 베이스 확인
+  -- 데이터베이스 확인
   -- 현재 MySQL 서버에 존재하는 모든 데이터베이스 목록 조회
   SHOW DATABASES;
   
@@ -116,7 +118,9 @@
   SHOW GRANTS FOR 'app_user'@'%';
   
   -- 권한 적용
-  -- 사용자 및 권한 변경 사항을 즉시 반영
+  -- GRANT/REVOKE/CREATE USER 등 계정 관리 문(statement)은 실행 즉시
+  -- 메모리 상의 권한 캐시에도 반영되므로 FLUSH PRIVILEGES가 필수는 아님
+  -- (mysql.user 등 grant 테이블을 INSERT/UPDATE/DELETE로 직접 수정했을 때만 필요)
   FLUSH PRIVILEGES; 
   ```
 
@@ -170,7 +174,7 @@
   ```
 
 ### Database 설계
-- 실무에서는 정규화된 설계보다 성능을 위하여 비정규화된 설계를 선택하기도한다.
+- 실무에서는 정규화된 설계보다 성능을 위하여 비정규화된 설계를 선택하기도 한다.
   - ```
     /*
         완전 정규화된 주문 설계 (조인이 많이 필요)
@@ -409,7 +413,8 @@
   - IN
     - 서브쿼리 결과를 집합으로 생성 후 비교
     - 결과 집합이 클수록 메모리 및 처리 비용 증가
-    - 서브쿼리에 NULL 이 포함되면 결과가 달라질 수 있음
+    - IN 자체는 서브쿼리 결과에 NULL이 섞여 있어도 그 NULL이 매칭에 기여하지 않을 뿐 결과가 틀어지지는 않음
+    - 다만 NOT IN은 서브쿼리 결과에 NULL이 단 하나라도 있으면 전체 결과가 빈 값으로 반환되는 유명한 함정이 있어 주의가 필요함
     - 소량의 고정된 결과일 때는 큰 문제 없음
   - 성능 관점 정리
     - 데이터가 많고 중복이 많을수록 EXISTS 가 유리
@@ -572,11 +577,13 @@
     - 인덱스의 범위(값과 값 사이)에 락을 설정
     - 동일 범위에 새로운 데이터 삽입을 방지
   - Exclusive Lock (X Lock)
-    - 데이터 수정 시 사용하는 락
-    - 다른 트랜잭션의 읽기/쓰기 접근을 차단
+    - UPDATE/DELETE, SELECT ... FOR UPDATE 등 데이터 수정 시 사용하는 락
+    - 다른 트랜잭션의 쓰기 및 잠금 읽기(FOR UPDATE, FOR SHARE)를 차단
+    - InnoDB는 MVCC를 사용하므로 일반 SELECT(non-locking read)는 X Lock과 무관하게 스냅샷을 조회함 (차단되지 않음)
   - 읽기 락 (Shared Lock, S Lock)
-    - 데이터 조회 시 사용하는 락
-    - 다른 트랜잭션의 읽기는 허용, 쓰기는 차단
+    - SELECT ... LOCK IN SHARE MODE(FOR SHARE)처럼 명시적으로 잠금이 필요한 조회 시 사용하는 락
+    - 다른 트랜잭션의 S Lock(읽기 잠금)은 허용, X Lock(쓰기)은 차단
+    - 일반 SELECT는 락을 잡지 않고 MVCC 스냅샷으로 조회되므로 S Lock과 무관하게 동작함
 
 ### Replication & Distribution
 - Replication
@@ -604,7 +611,7 @@
 
 ### Partitioning & Sharding
 - Partitioning
-  - 거대한 파일을 논리적인 기준을 잡고 나눠서 저장하는 기법
+  - 거대한 테이블을 논리적인 기준을 잡고 나눠서 저장하는 기법
   - 위에서 정리한 내용 참고
 - Sharding
   - Sharding 이란?
