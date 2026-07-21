@@ -50,9 +50,9 @@
   - Dockerfile을 작성한다.
   - Dockerfile 작성 후 명령어를 사용하여 생성한다.
     - docker image build --tag [tag명] -f 파일명 .
-      - Ex) docker image build --tag [first-iamge:0.1] -f Dockerfile .
+      - Ex) docker image build --tag [first-image:0.1] -f Dockerfile .
       - build는 이미지에서만 사용되는 명령어기 때문에 image를 생략할 수 있다.
-      - --tage 대신 -t로 사용 가능하다.
+      - --tag 대신 -t로 사용 가능하다.
       - 태그 번호인 :0.1을 생략하면 최신버전을 뜻하는 latest가 된다.
       - 마지막 온점(.)은 현재 디렉토리를 의미하는 경로이다.
 - Docker Image의 생성과 사용 Flow
@@ -81,14 +81,15 @@
     - 이미지 파일 생성 시, 명령어가 실행 될 작업 디렉토리를 지정한다.
   - ENTRYPOINT
     - 컨테이너가 실행 될 때, 가장 먼저 실행될 프로그램을 지정한다.
-    - 컨테이너 실생 시, 명령어 overwrite 불가능
+    - 컨테이너 실행 시, 명령어 overwrite 불가능(단, docker run --entrypoint 옵션으로는 재정의 가능)
   - CMD
     - 컨테이너가 실행 될 때, 가장 먼저 실행될 프로그램을 지정한다.
-    - 컨테이너 실생 시, 명령어 overwrite 가능
+    - 컨테이너 실행 시, 명령어 overwrite 가능
   - ENV
     - 컨테이너 내의 환경변수를 설정한다.
   - EXPOSE
-    - 컨테이너의 특정 포트를 외부에 오픈한다.
+    - 컨테이너가 어떤 포트를 사용하는지 문서화(명시)하는 역할이다.
+    - 실제로 호스트에 포트를 개방하지는 않으며, 호스트에서 접근하려면 docker run 시 -p(--publish) 옵션이 필요하다.
 
 <br>
 
@@ -146,17 +147,17 @@
       - 일시중지 시킨 컨테이너를 다시 실행한다.
     - stop
       - 컨테이너를 중지한다.
-      - 컨테이너가 삭제되면, 다시 실행 상태로 돌아갈 수 없다.
     - start(Stopped 상태에서)
       - 중지한 컨테이너를 다시 실행한다.
     - rm
       - 컨테이너를 삭제한다.
+      - 삭제된 컨테이너는 다시 실행 상태로 돌아갈 수 없다.
 
 <br>
 
 ### Docker Container 명령어(1)
 - run 명령어
-  - docker run [OPTION] IMAGE:[:TAG|@DIGEST][COMMAND][ARG..]
+  - docker run [OPTION] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
   - OPTION
     - -d / --detach
       - Detached mode(=background mode)로 실행
@@ -173,7 +174,7 @@
     - -it
       - -i와 -t를 동시에 사용한 것으로 터미널 입력을 위한 옵션
       - 키보드에 의해서 입력된 명령어가 컨테이너 내부로 전달될 때 사용한다.
-    - -link
+    - --link
       - 컨테이너끼리 연결[컨테이너명:별칭]
 
 <br>
@@ -193,7 +194,7 @@
   - 컨테이너에게 명령어 전달
 - docker container inspect ${CONTAINER_ID}
   - 컨테이너의 세부 정보 조회 
-- docker image ls [OPTION] CONTAINER [REPOSITORY[:TAG]]
+- docker image ls [OPTION] [REPOSITORY[:TAG]]
   - 이미지 목록 조회
   - docker images와 동일
 - docker image rm [OPTION] IMAGE [IMAGE ...]
@@ -209,7 +210,7 @@
 
 ### Port Mapping
 - Port Mapping이란?
-  - 도커 컨테이너에서 사용하고자 하는 Port를 자요롭게 설정하는 기능이다.
+  - 도커 컨테이너에서 사용하고자 하는 Port를 자유롭게 설정하는 기능이다.
   - 호스트 시스템에서 도커 컨테이너 Port를 사용하기 위해서는 Post Mapping이 필요하다.
 - 명령어
   - docker run -p host_port:container_port [IMAGE_NAME]
@@ -247,7 +248,7 @@
     - 네트워크를 삭제한다.
   - docker network connect [NETWORK_NAME] [CONTAINER]
     - 실행 중인 컨테이너를 Network에 추가한다.
-  - docker network disconnect [NETWORK_NAME]}[CONTAINER]
+  - docker network disconnect [NETWORK_NAME] [CONTAINER]
     - Network에 추가된 컨테이너를 삭제한다.
 
 <br>
@@ -299,7 +300,7 @@
   - 삭제
     - docker volume rm [볼륨명]
   - 컨테이너 생성 시 볼륨 연결
-    - docker run -v [볼륨명]:[컨테이너 내부 디렉토리 경로] --name [컨테이너명][이미지 이름]
+    - docker run -v [볼륨명]:[컨테이너 내부 디렉토리 경로] --name [컨테이너명] [이미지 이름]
 - 실습내용
   - OS 실습
     - OS 실행 시 볼륨 옵션을 통해 파일 등의 데이터를 유지할 수 있다.
@@ -332,9 +333,11 @@
         - Dockerfile을 이용하여 이미지를 빌드할 때 사용할 수 있다.
       - command 또는 entrypoint
         - 컨테이너 안에서 작동하는 명령어 지정
-      - ports 또는 expose
-        - 컨테이너 간 통신을 위한 포트 설정
-      - depends on
+      - ports
+        - 호스트와 컨테이너의 포트를 연결(퍼블리시)하여, 호스트에서 컨테이너 포트로 접근할 수 있도록 설정한다.
+      - expose
+        - 컨테이너 간 통신을 위해 포트를 노출한다. (호스트에는 개방되지 않는다.)
+      - depends_on
         - 서비스의 의존 관계를 정의한다.
         - 컴포즈를 통해서 컨테이너가 기동될 때, 순차적으로 기동되는 것이 아니라 병렬로 기동된다.
           - 만약 B 컨테이너는 A 컨테이너 이후에 기동되야한다면, 이때 사용할 수 있는 명령어이다.
@@ -540,7 +543,7 @@
 - Stack 활용
   - Stack 배포
     - Manager에서 실행한다.
-    - docker stack deploy -c /stack/stack sample.yml my-stack
+    - docker stack deploy -c /stack/stack_sample.yml my-stack
   - 배포 확인
     - docker stack services my-stack
   - Stack에 배포 된 컨테이너 확인
@@ -600,12 +603,12 @@
         - docker service ps myweb 명령어로 중지, 실행 시간으로 확인 가능하다.
 - Rollback 실습
   - 서비스 생성
-    - docker service create --name myweb3 --replicas 4 --rollback-delay 10s --rollback-parallelistm 1 --rollback-failure-action pause nginx:latest
+    - docker service create --name myweb3 --replicas 4 --rollback-delay 10s --rollback-parallelism 1 --rollback-failure-action pause nginx:latest
       - rollback-delay 10s : 10초 주기로 롤백 진행
-      - rollback-parallelistm 1 : 1개씩 롤백 진행
+      - rollback-parallelism 1 : 1개씩 롤백 진행
       - rollback-failure-action pause : 롤백 실패 시, 중지
   - 업데이트
-    - docker service update --image nginx:1.24 myweb
+    - docker service update --image nginx:1.24 myweb3
       - 롤백 테스트를 위해 업데이트를 진행한다.
   - 롤백
     - docker service update --rollback myweb3
@@ -627,7 +630,7 @@
     - docker commit [CONTAINER_ID] [IMAGE_NAME:TAG]
     - Ex) docker commit 73caca0e41bd 1992choi/docker-server:1.0
   - save
-    - dokcer save [OPTION] [TAR_FILE_NAME] [IMAGE_NAME:TAG]
+    - docker save [OPTION] -o [TAR_FILE_NAME] [IMAGE_NAME:TAG]
     - Ex) docker save -o docker-server.tar 1992choi/docker-server:1.0
   - load
     - docker load -i [TAR_FILE_NAME]
@@ -713,7 +716,7 @@
     - echo "qwer1234" | docker secret create my_db_password -
     - 암호화가 되어있다지만 실제로 암호를 secret으로 사용하는 것은 좋은 방법이 아니다.
   - secret을 사용한 DB 컨테이너 실행
-    - docker service create --name my-db --replicas 1 --secret source=my_db_password, target=mariadb_root_password -e MARIADB_ROOT_PASSWORD_FILE="/run/secrets/mariadb_root_password" mariadb:latest
+    - docker service create --name my-db --replicas 1 --secret source=my_db_password,target=mariadb_root_password -e MARIADB_ROOT_PASSWORD_FILE="/run/secrets/mariadb_root_password" mariadb:latest
     - 생성한 secret을 사용하여 MariaDB의 패스워드를 설정한다.
   - MariaDB 접속
     - mariadb -h127.0.0.1 -uroot -p 명령어를 실행하면, 비밀번호를 입력하는 콘솔이 나타나며 이 때 qwer1234를 입력한다.
@@ -758,9 +761,10 @@
     - 마이크로 서비스로 작성되어 있는 서비스 구조에서 여러개로 분산되어 있는 서비스들에 대한 모니터링을 가능하게 지원해준다.
   - 적용
     - 리눅스 환경이라면 /etc/docker/daemon.json 파일에 메트릭스 정보를 추가한다.
+      - "metrics-addr"의 0.0.0.0은 Prometheus를 호출하는 모든 서비스에 대해 메트릭스를 수집하겠다는 설정이다. (JSON 파일이므로 주석은 포함할 수 없다)
     - ```
       {
-        "metrics-addr": "0.0.0.0:9323", # 0.0.0.0의 뜻은 Prometheus를 호출하는 모든 서비스에 대해 메트릭스를 수집하겠다는 설정.
+        "metrics-addr": "0.0.0.0:9323",
         "experimental": true
       }
       ```
@@ -833,8 +837,8 @@
       - 설치
         - Harbor 다운로드
         - harbor.yml 파일 생성 및 설정
-          - cp harbor.yml.tmp harbor.yml
-          - vi harvor.yml
+          - cp harbor.yml.tmpl harbor.yml
+          - vi harbor.yml
             - hostname(=IP)과 만들었던 인증서 관련 설정을 추가한다.
         - Deploy
           - ./prepare
@@ -856,7 +860,7 @@
             - vi v3ext.cnf
               - Key와 동일한 위치에서 작업
               - subjectAltName = IP:192.168.0.33, IP:127.0.0.1
-                - havor가 설치되고자하는 호스트 PC의 IP를 입력하면 된다.
+                - harbor가 설치되고자하는 호스트 PC의 IP를 입력하면 된다.
           - Cert파일 생성
             - openssl x509 -req -sha512 -days 365 -extfile v3ext.cnf -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
             - openssl x509 -inform PEM -in server.crt -out server.cert
