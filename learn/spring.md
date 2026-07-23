@@ -76,7 +76,7 @@
       - 음수 값 또는 설정하지 않은 경우
         - 서블릿은 지연 로딩된다.
       - 양수 값
-        - 즉시 서블릿이 로딩되면 값이 낮을수록 더 높은 우선 순위를 가지며 1이 가장 먼저 로된다.
+        - 즉시 서블릿이 로딩되면 값이 낮을수록 더 높은 우선 순위를 가지며 1이 가장 먼저 로딩된다.
       - 0 값
         - 애플리케이션 시작 시 서블릿을 로드하지만 양수 값들보다 우선하지 않을 수 있다.
 
@@ -124,7 +124,7 @@
     - FORM 데이터는 HTML <form> 태그를 통해 클라이언트에서 서버로 전달되며 데이터는 요청 메서드에 따라 다르게 처리된다.
       - GET 방식
         - 요청 데이터가 URL의 쿼리 문자열에 포함된다
-        - 전송 데이터의 크기는 URL 길이 제한에 의해 제약을 받지 않고 URL이 노출되므로 민감한 데이터 전송에 적합하지 않다
+        - 전송 데이터의 크기는 URL 길이 제한에 의해 제약을 받고 URL이 노출되므로 민감한 데이터 전송에 적합하지 않다
       - POST 방식
         - 요청 데이터가 HTTP 요청 본문에 포함된다
     - 주요 API
@@ -186,7 +186,7 @@
   - 웹 애플리케이션이 시작될 때 자동으로 실행되는 초기화 코드를 작성하고 싶을 때 사용하는 인터페이스이다.
   - 동작방식
     1. /META-INF/services/jakarta.servlet.ServletContainerInitializer 에 클래스 정보를 입력 하면 초기화 시 해당 파일이 있는지 검색한 후 실행한다.
-       - META-INF/services/javax.servlet.ServletContainerInitializer 파일 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어 있음.
+       - META-INF/services/jakarta.servlet.ServletContainerInitializer 파일 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어 있음.
     2. ServletContainerInitializer 클래스(이 때 구현체는 MyServletContainerInitializer라 가정)에 @HandlesTypes 어노테이션을 붙이면 주어진 타입에 대해 컨테이너가 자동으로 스캐닝을 수행한다.
        - ```
          @HandlesTypes(MyWebAppInitializer.class) // 여기서 선언되었기 때문에 아래 메서드인 onStartup()에 의해서 MyWebAppInitializer를 구현한 서블릿이 로드 된다.
@@ -262,8 +262,8 @@
   - init()
     - 요청이 시작되면 DispatcherServlet 의 init() 메서드가 호출되며 최초 한번 실행된다.
       - DispatcherServlet의에는 실제로 init()이라고 구현된 메서드는 없다.
-        - 하지만 DispatcherServlet은 HttpServlet을 상속한 FrameworkServlet의 하위 클래스이고, 그 부모 클래스에서 init() 메서드를 오버라이드하고 있다.
-        - HttpServlet에는 init() 메서드가 존재하며, FrameworkServlet에서 이 init() 메서드를 오버라이드하여 Spring의 초기화 로직을 처리한다. 
+        - 하지만 DispatcherServlet은 HttpServlet을 상속한 FrameworkServlet의 하위 클래스이고, FrameworkServlet의 부모 클래스인 HttpServletBean에서 init() 메서드를 오버라이드하고 있다.
+        - GenericServlet(HttpServlet의 상위)에는 init() 메서드가 존재하며, HttpServletBean이 이 init() 메서드를 final로 오버라이드하여 내부에서 initServletBean()을 호출하고, FrameworkServlet이 initServletBean()을 오버라이드하여 Spring의 초기화 로직을 처리한다.
         - DispatcherServlet은 FrameworkServlet의 서브 클래스이기 때문에 init() 메서드를 직접 정의하지 않더라도 상속받아 사용할 수 있다.
         - 즉, DispatcherServlet의 초기화 로직은 실제로 init() → initServletBean() → onRefresh() → initStrategies() 순서로 연결된다.
           - ```
@@ -381,7 +381,7 @@
   - URL 매핑
     - 경로 매핑 URI 는 예를 들어 "/profile"과 같은 형태를 가진다.
     - Ant 스타일의 경로 패턴("/user/**") 지원한다.
-    - 다중 설정({"/user/**“, "/mypage"})도 가능하다.
+    - 다중 설정({"/user/**", "/mypage"})도 가능하다.
     - 클래스 레벨에도 작성 가능하다.
       - 클래스에 /user, 메서드에 /edit으로 명명되어있다면, 실제 메서드는 /user/edit으로 호출 가능
     - 매핑 URI는 플레이스홀더(예: "/${profile_path}")를 포함할 수 있다.
@@ -411,6 +411,7 @@
     - @GetMapping
     - @PostMapping
     - @PutMapping
+    - @PatchMapping
     - @DeleteMapping
 - 핵심 클래스
   - RequestMappingHandlerMapping
@@ -533,7 +534,7 @@
 ### @PathVariable
 - @PathVariable이란?
   - @PathVariable 은 @RequestMapping 에 지정한 URI 템플릿 변수에 포함된 값을 메서드의 매개변수로 전달하기 위해 사용하는 어노테이션이다.
-  - @PathVariable 은 GET, DELETE, PUT, POST 요청에서 사용 할 수 있다.
+  - @PathVariable 은 특정 HTTP 메서드에 종속되지 않으며, URI 템플릿을 사용하는 매핑이라면 GET, POST, PUT, PATCH, DELETE 등 어떤 HTTP 메서드에서도 사용할 수 있다.
 - 사용 예시
   - 기본 예시
     - ```
@@ -630,8 +631,9 @@
     - POST, PUT 등의 본문이 포함된 HTTP 요청이라도 Content-Type 헤더가 지원되지 않는 미디어 타입일 경우 HttpMessageConverter가 작동하지 않는다.
   - @RequestParam, @ModelAttribute를 사용하는 경우
     - @RequestParam, @ModelAttribute 와 같은 어노테이션을 사용하여 쿼리 파라미터를 처리하는 경우에는 HttpMessageConverter가 필요하지 않다.
-  - 파일 업로드 요청 중 @RequestPart 또는 MultipartFile을 사용한 경우
-    - MultipartFile 이나 @RequestPart 를 사용하면 HttpMessageConverter가 작동하지 않으며, 이 경우에는 MultipartResolver가 요청을 처리한다.
+  - 파일 업로드 요청 중 MultipartFile을 사용한 경우
+    - MultipartFile 타입은 HttpMessageConverter 없이 MultipartResolver가 분리해 둔 파일 파트를 그대로 바인딩한다.
+    - 다만 @RequestPart 로 지정한 파트가 MultipartFile이 아닌 경우(예: JSON 파트를 객체로 바인딩)에는 내부적으로 HttpMessageConverter가 동작하여 파트 본문을 객체로 변환한다.
   - 컨트롤러에서 단순 문자열(String) 반환 시 @ResponseBody나 @RestController가 없는 경우
     - @ResponseBody나 @RestController가 없는 경우, 반환된 String은 뷰 이름으로 간주되며 이 경우에는 ViewResolver가 요청을 처리한다.
 
@@ -673,8 +675,8 @@
   - asMap()
     - 모델 데이터를 Map으로 변환하여 반환한다.
 - BindingAwareModelMap
-  - BindingAwareModelMap은 Model 구현체이다.
-  - @ModelAttribute로 바인딩된 객체를 가지고 있으며, 바인딩 결과를 저장하는 BindingResult를 생성하고 관리한다.
+  - BindingAwareModelMap은 ExtendedModelMap을 상속한 Model 구현체로서, 스프링 MVC가 핸들러 메서드에 Model로 노출하는 기본 구현체이다.
+  - 모델 속성이 Map의 put/putAll 같은 일반 연산으로 직접 교체(덮어쓰기)될 경우, 그 속성에 대응하여 별도의 키로 저장되어 있던 BindingResult는 더 이상 유효하지 않으므로 자동으로 제거하여 오래된 바인딩 결과가 남지 않도록 관리한다.
 
 ### @SessionAttributes
 - @SessionAttributes란?
@@ -812,9 +814,9 @@
   - BindingResult의 유효성 검증 오류가 발생했을 때, MessageSource를 사용해서 해당 오류메시지를 사용자에게 제공할 수 있다.
   - 사용 예시
     - 오류 메시지 직접 입력
-      - bindingResult.addError(new FieldError("order", "productName", "상품명은 필수입니다.");
+      - bindingResult.addError(new FieldError("order", "productName", "상품명은 필수입니다."));
     - message properties 사용
-      - Ex 1. bindingResult.addError(new FieldError("order", “item", null, false, new String[]{"required.order.item"}, null, null));
+      - Ex 1. bindingResult.addError(new FieldError("order", "item", null, false, new String[]{"required.order.item"}, null, null));
         - required.order.item=상품명은 필수입니다
       - Ex 2. bindingResult.addError(new FieldError("order", "price", order.getPrice(), false, new String[]{"range.order.price"}, new Object[]{100, 10000}, "가격은 100 이상 10000 이하여야 합니다."));
         - range.order.price=가격은 {0} 이상 {1} 이하여야 합니다.
@@ -840,7 +842,7 @@
         @PostMapping("/order")
         public String submitOrder(@ModelAttribute("order") Order order, BindingResult bindingResult) {
           if (!StringUtils.hasText(order.getProductName())) {
-            bindingResult.addError(new FieldError("order", “item", null, false, new String[]{"required.order.item"}, null, null));
+            bindingResult.addError(new FieldError("order", "item", null, false, new String[]{"required.order.item"}, null, null));
           }
           if (... 다양한 검증 로직 ...) {
           }
@@ -880,7 +882,7 @@
           errors.rejectValue("username", "required ");
         }
         if (user.getAge() <= 0 || user.getAge() > 120) {
-          errors.rejectValue("age", “range");
+          errors.rejectValue("age", "range");
         }
         ```
   - Bean Validation
@@ -892,7 +894,7 @@
         @NotNull(message = "Username is required")
         private String username;
         
-        @Range(min = 1, max = 120, "Age must be between 1 and 120")
+        @Range(min = 1, max = 120, message = "Age must be between 1 and 120")
         private Integer age;
         ```
         
@@ -1035,7 +1037,7 @@
 - 주요 어노테이션
   - @ExceptionHandler
     - 컨트롤러에서 발생한 예외를 전역적으로 처리할 수 있으며, 적절한 응답을 생성할 수 있다.
-    - 메서드 실행 후에 적용된다.
+    - @ModelAttribute/@InitBinder처럼 실행 시점이 고정된 것이 아니라, 요청 처리 과정(인자 바인딩, 핸들러 메서드 실행 등) 중 예외가 발생했을 때 호출된다.
   - @ModelAttribute
     - 컨트롤러의 모든 요청에 공통적으로 필요한 데이터를 추가할 수 있다.
     - 메서드 실행 전에 적용된다.
@@ -1122,7 +1124,9 @@
   - HandlerExceptionResolver 는 RequestMappingHandleAdapter 가 핸들러 실행 후 ModelAndView 객체를 반환하는 것과 동일한 구조를 가지고 있다.
   - 즉 예외 상황에서도 기존의 MVC 처리 흐름을 벗어나지 않고 정상적인 흐름 안에서 예외 처리를 구현할 수 있다.
 - HandlerExceptionResolver 기본 구현체들
-  - 구현체는 ExceptionHandlerExceptionResolver, ResponseStatusExceptionResolver, DefaultHandlerExceptionResolver, SimpleMappingExceptionResolver 로서 총 4개의 클래스가 제공된다.
+  - DispatcherServlet이 기본으로 자동 등록하는 구현체는 ExceptionHandlerExceptionResolver, ResponseStatusExceptionResolver, DefaultHandlerExceptionResolver 3개이다(DispatcherServlet.properties 기준).
+  - SimpleMappingExceptionResolver는 이 기본 3개에는 포함되지 않으며, 필요 시 개발자가 직접 빈으로 등록해서 사용하는 구현체이다.
+  - 각 구현체
     - ResponseStatusExceptionResolver
       - ResponseStatusExceptionResolver 는 예외에 대해 HTTP 상태 코드와 메시지를 매핑하여 클라이언트에게 반환할 수 있도록 설계된 예외 처리 전략이다.
       - 이 구현체는 두 가지 방식으로 예외 및 HTTP 상태 코드를 처리하는데 @ResponseStatus 와 ResponseStatusException 를 사용하여 구현한다.
@@ -1198,9 +1202,9 @@
     - MultipartAutoConfiguration
       - Spring Boot 에서 multipart/form-data 요청 처리를 자동으로 구성해주는 설정 클래스로서 추가적인 설정 없이도 @RequestParam("file") MultipartFile file 을 사용하면 자동으로 멀티파트 요청을 처리하도록 구성된다.
     - MultipartHttpServletRequest
-      - HttpServletRequest를 상속(혹은 래핑)하여 멀티파트 폼 데이터를 처리할 수 있는 추가 메서드를 제공하는 인터페이스로서 기본 구현제로 StandardMultipartHttpServletRequest 클래스가 제공된다.
+      - HttpServletRequest를 상속(혹은 래핑)하여 멀티파트 폼 데이터를 처리할 수 있는 추가 메서드를 제공하는 인터페이스로서 기본 구현체로 StandardMultipartHttpServletRequest 클래스가 제공된다.
     - MultipartResolver
-      - multipart/form-data 요청을 해석하여 MultipartHttpServletRequest 를 만들어주는 인터페이스로서 기본 구현제로 StandardServletMultipartResolver 가 제공된다.
+      - multipart/form-data 요청을 해석하여 MultipartHttpServletRequest 를 만들어주는 인터페이스로서 기본 구현체로 StandardServletMultipartResolver 가 제공된다.
     - MultipartFile
       - 업로드된 파일을 다루기 위한 인터페이스로서 getName(), getOriginalFilename(), getSize(), transferTo(File dest) 와 같은 API 가 있다.
     - MultipartProperties
@@ -1219,7 +1223,7 @@
 
 ### RestClient
 - 개요
-  - RestClient는 Spring 6에서 새롭게 도입된 동기식 HTTP 클라이언트로서, 기존의 RestTemplate 을 대체하거나 보완할 수 있는 보다 모던한 API를 제공한다.
+  - RestClient는 Spring Framework 6.1에서 새롭게 도입된 동기식 HTTP 클라이언트로서, 기존의 RestTemplate 을 대체하거나 보완할 수 있는 보다 모던한 API를 제공한다.
   - 내부적으로 다양한 HTTP 클라이언트 라이브러리위에 추상화를 제공하며 개발자가 손쉽게 HTTP 요청과 응답을 다룰 수 있도록 지원한다.
 - 특징
   - 메서드 체이닝 방식의 API
