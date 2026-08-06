@@ -34,7 +34,7 @@
 
 
 ## 객체지향의 5대 원칙(SOLID)
-- 단일 책임 원칙(Single Responsiblity Principle)
+- 단일 책임 원칙(Single Responsibility Principle)
   - 소프트웨어의 설계 부품(클래스, 함수 등)은 하나의 책임만 가진다.
   - 클래스의 기능(책임)이 많아지면 내부 함수끼리 강한 결합이 발생할 가능성이 높으므로 응집도는 높이고 결합도는 낮춰야 한다.
     - `결합도 : 모듈(클래스) 간의 상호 의존 정도로써, 결합도가 낮으면 상호 의존성이 줄어들어 객체의 재사용이나 수정, 유지보수가 용이해진다.`
@@ -44,7 +44,7 @@
   - 이를 위해 인터페이스를 사용하기도 한다.
 - 리스코프 치환 원칙(Liskov Substitution Principle)
   - 자식 클래스는 부모 클래스의 기능을 대체해서 수행할 수 있어야 한다.
-  - 부모 클래스의 인스턴스 대신에 자식 클래스의 인스터스를 사용해도 문제가 없어야 한다는 것을 의미한다.
+  - 부모 클래스의 인스턴스 대신에 자식 클래스의 인스턴스를 사용해도 문제가 없어야 한다는 것을 의미한다.
 - 인터페이스 분리 원칙(Interface Segregation Principle)
   - 자신이 사용하지 않는 메서드에 의존 관계를 맺으면 안된다.
   - 큰 덩어리의 인터페이스들을 작은 단위들로 분리시키고, 꼭 필요한 메서드들만 사용하여 내부 의존성 관계를 느슨하게 한다.
@@ -204,8 +204,8 @@
     System.out.println("boxingNum = " + boxingNum); // 10
     
     // 언박싱
-    int unbonxingNum = boxingNum.intValue();
-    System.out.println("unbonxingNum = " + unbonxingNum); // 10
+    int unboxingNum = boxingNum.intValue();
+    System.out.println("unboxingNum = " + unboxingNum); // 10
     ```
   - ※ `new Integer(n)`는 Java 9부터 deprecated 되었으며, 캐싱을 활용하는 `Integer.valueOf(n)` 사용이 권장된다.
 - 오토 박싱(Auto Boxing) / 오토 언박싱(Auto UnBoxing)
@@ -218,8 +218,8 @@
     System.out.println("autoBoxingNum = " + autoBoxingNum); // 10
     
     // 오토 언박싱
-    int autoUnbonxingNum = autoBoxingNum;
-    System.out.println("autoUnbonxingNum = " + autoUnbonxingNum); // 10
+    int autoUnboxingNum = autoBoxingNum;
+    System.out.println("autoUnboxingNum = " + autoUnboxingNum); // 10
     ```
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/123)
@@ -266,7 +266,7 @@
   - 생성자를 가질 수 있고, 일반 메서드도 가질 수 있다. (단, 생성자를 갖지만 객체 생성은 불가능하다.)
 - 추상클래스 장점
   - 추상클래스를 만든 후 상속을 받는다면 중복코드 제거 및 코드 재사용성 증대 효과를 얻을 수 있다.
-  - 추상클래스를 사용하여 상속을 통해 자식클래스를 구현한다면, 각 각의 클래스들을 그룹화하여 제어할 수 있다.
+  - 추상클래스를 사용하여 상속을 통해 자식클래스를 구현한다면, 각각의 클래스들을 그룹화하여 제어할 수 있다.
 - Ref.
 [Caffeine Overflow](https://caffeineoverflow.tistory.com/124)
 <br><br><br>
@@ -424,7 +424,7 @@
 ## 컬렉션 프레임워크(Collection Framework)
 - 컬렉션 프레임워크(Collection Framework)란?
   - 다수의 데이터를 쉽고 효과적으로 처리할 수 있는 표준화된 방법을 제공하는 클래스의 집합을 의미한다.
-  - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각 각의 인터페이스들은 구현체를 가지고 있다.
+  - 컬렉션 프레임워크의 주요 인터페이스에는 List, Set, Map이 있으며 각각의 인터페이스들은 구현체를 가지고 있다.
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c00b20fb-2031-4b27-ae67-1c0efa18e549)
 - 컬렉션 프레임워크의 종류
   - List
@@ -448,7 +448,7 @@
       - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/c3c4f910-beb9-4a2b-988b-30b5ad30d966)
     - 시간 복잡도와 실제 성능
       - 이론적으로 LinkedList의 중간 삽입 연산은 ArrayList보다 빠르다.
-      - 그러나 실제 성능은 요소의 순차적 접근 속도, 메모리 할당 및 해제 비용, CPU 캐시 활용도 등 다용한 요소에 의해 결정된다.
+      - 그러나 실제 성능은 요소의 순차적 접근 속도, 메모리 할당 및 해제 비용, CPU 캐시 활용도 등 다양한 요소에 의해 결정된다.
         - ArrayList의 경우 요소들이 메모리상에 연속적으로 위치하여 CPU 캐시 효율이 좋고 메모리 접근 속도가 빨라 LinkedList보다 빠를 수 있다.
       - 배열 첫 번째에서 삽입/삭제가 발생하는 경우를 제외하고는 실제 성능은 ArrayList가 더 나은 성능을 보여주는 경우가 많다.
   - Set
@@ -611,7 +611,7 @@
       - 결과 스트림의 요소를 사용해 추가로 동작을 수행 
   - 최종 연산(Terminal Operation)
     - forEach()
-      - 트림의 요소들을 순환하면서 반복해서 처리해야 하는 경우 사용
+      - 스트림의 요소들을 순환하면서 반복해서 처리해야 하는 경우 사용
     - reduce()
       - map과 비슷하게 동작하지만 개별연산이 아니라 누적연산이 이루어진다는 차이 존재
     - findFirst()
@@ -717,7 +717,7 @@
   - 프로세스는 각각의 프로세스 ID(PID)를 가지고, 프로세스 간 통신(IPC)을 이용하여 통신할 수 있다.
 - 스레드(Thread)란?
   - 프로세스 내에서 실행되는 작업 단위를 뜻한다.
-  - 한 프로세스 내에서 여러 개의 스레드가 동시에 실행될 수 있으며, 각 각의 스레드는 프로세스의 메모리 공간을 공유한다.
+  - 한 프로세스 내에서 여러 개의 스레드가 동시에 실행될 수 있으며, 각각의 스레드는 프로세스의 메모리 공간을 공유한다.
   - 즉, 스레드는 하나의 프로세스 내에서 독립적으로 실행되지 않으며, 다른 스레드와 메모리를 공유한다.
 - 차이점
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/fb645fff-1b25-45f4-93cd-cb8e9fcc0ca2)
@@ -751,7 +751,7 @@
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    // ingore
+                    // ignore
                 }
 	        	
                 System.out.println("MyThread1 run : " + i);
@@ -767,7 +767,7 @@
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    // ingore
+                    // ignore
                 }
 	    		
                 System.out.println("MyThread2 run : " + i);
@@ -791,7 +791,7 @@
 
 ## 스레드 가시성
 - 가시성(Visibility)이란?
-  - 스레드 환경에서 각 각의 스레드가 공유자원에 대해서 모두 같은 상태를 바라보고 있는 것을 의미한다.
+  - 스레드 환경에서 각각의 스레드가 공유자원에 대해서 모두 같은 상태를 바라보고 있는 것을 의미한다.
 - 가시성 문제
   - 공유하는 변수에 연산이 일어날 때 CPU를 점유하고 동작하는데, 이 때 main memory에만 존재하는 것이 아니라 CPU cache에도 공유하는 자원에 대한 데이터가 들어있다.
     - ![image](https://github.com/user-attachments/assets/7be992e1-badf-48d4-bda9-ce10412f109f)
@@ -850,7 +850,7 @@
     - Native Stack
       - JAVA가 아닌 다른 언어로 작성된 코드를 위한 공간이다.
       - Java Native Interface(JNI)를 통해 호출되는, C/C++ 등으로 작성되어 컴파일된 네이티브(기계어) 코드의 실행을 위한 공간이다. 바이트코드가 아닌 네이티브 머신 코드를 다룬다.
-    - 실행 엔진(Excution Engine)
+    - 실행 엔진(Execution Engine)
       - 클래스를 실행시키는 역할이다.
       - 자바 바이트 코드(*.class)는 기계가 바로 수행할 수 있는 언어보다는 비교적 인간이 보기 편한 형태로 기술된 것이다. 그래서 실행 엔진은 이와 같은 바이트 코드를 실제로 JVM 내부에서 기계가 실행할 수 있는 형태로 변경한다.
     - Garbage Collector
@@ -981,7 +981,7 @@
 ## 직렬화와 역직렬화
 - 직렬화와 역직렬화
   - 직렬화(serialize)란 자바 언어에서 사용되는 Object 또는 Data를 다른 컴퓨터의 자바 시스템에서도 사용할 수 있도록 바이트 스트림 형태의 연속적인 데이터로 변환하는 포맷 변환 기술을 일컫는다.
-  - 그 반대 개념인 역직렬화는(Deserialize)는 바이트로 변환된 데이터를 원래대로 자바 시스템의 Object 또는 Data로 변환하는 기술이다.
+  - 그 반대 개념인 역직렬화(Deserialize)는 바이트로 변환된 데이터를 원래대로 자바 시스템의 Object 또는 Data로 변환하는 기술이다.
 - 직렬화 사용처
   - 서블릿 세션(Servlet Session)
     - 단순히 세션을 서블릿 메모리 위에서 운용한다면 직렬화를 필요로 하지 않지만, 만일 세션 데이터를 저장하거나 공유가 필요할 때는 직렬화를 이용할 수 있다.
@@ -1003,7 +1003,7 @@
   - SerialVersionUID
     - Serializable 인터페이스를 구현하는 모든 직렬화된 클래스는 serialVersionUID(이하 SUID) 이라는 고유 식별번호를 부여 받는다.
     - 이 식별 ID는 클래스를 직렬화, 역직렬화 과정에서 동일한 특성을 갖는지 확인하는데 사용된다.
-    - 클래스 내부 구성이 수정될 경우, 기존에 직렬화한 SUID와 현재 클래스의 SUID 버전이 다르기 때문에 이를 인지하고 InvalidClassException 예외가 발생시켜 값 불일치 되는 현상을 미연에 방지할 수 있다.
+    - 클래스 내부 구성이 수정될 경우, 기존에 직렬화한 SUID와 현재 클래스의 SUID 버전이 다르기 때문에 이를 인지하고 InvalidClassException 예외를 발생시켜 값 불일치 되는 현상을 미연에 방지할 수 있다.
     - 위와 같은 특징으로 인해 클래스에 조그만한 변경사항이라도 있으면, 모든 사용자에게 재배포를 해야하는 애로사항이 있지만, serialVersionUID를 직접 명시해주어 클래스 버전을 수동으로 관리하게되면 이를 해결할 수 있다.
 - Ref.
 [인파](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EC%A7%81%EB%A0%AC%ED%99%94Serializable-%EC%99%84%EB%B2%BD-%EB%A7%88%EC%8A%A4%ED%84%B0%ED%95%98%EA%B8%B0)
