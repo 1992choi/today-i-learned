@@ -15,7 +15,10 @@
  
 * [Design Patterns](https://github.com/1992choi/today-i-learned/blob/main/interview/04-design-patterns.md)
 
-* [CS](https://github.com/1992choi/today-i-learned/blob/main/interview/05-etc.md)
+* [OS](https://github.com/1992choi/today-i-learned/blob/main/interview/05-os.md)
+
+* [Network](https://github.com/1992choi/today-i-learned/blob/main/interview/06-network.md)
+
 
 
 
