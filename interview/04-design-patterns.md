@@ -304,3 +304,242 @@
 [카일](https://velog.io/@kyle/%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4%EC%9D%B4%EB%9E%80),
 [밝은별 개발자](https://brightstarit.tistory.com/39)
 <br><br><br>
+
+
+
+## [GoF] 빌더 패턴
+- 빌더 패턴이란?
+  - 복잡한 객체를 생성하는 과정을 단계별로 분리하여, 동일한 생성 절차에서도 다양한 표현(구성)의 객체를 만들 수 있도록 하는 생성 패턴이다.
+  - 생성자에 전달해야 하는 필드가 많아질수록 생성자 오버로딩이 늘어나는 이른바 '텔레스코핑 생성자(Telescoping Constructor)' 문제를 해결하기 위해 고안되었다.
+- 빌더 패턴이 필요한 이유
+  - 생성자의 파라미터가 많아지면 순서를 착각하기 쉽고, 어떤 값이 어떤 필드에 매핑되는지 호출부만 보고 파악하기 어렵다.
+  - 선택적(optional)인 필드가 많은 객체를 생성자만으로 표현하려면 다양한 조합의 생성자를 오버로딩해야 하는 문제가 있다.
+- 빌더 패턴의 장점
+  - 필드에 이름을 붙여 값을 설정하므로 가독성이 높아지고, 필드 순서를 신경 쓰지 않아도 된다.
+  - 필요한 필드만 선택적으로 설정할 수 있다.
+  - 객체 생성이 완료되는 시점(build() 호출 시점)까지 필드값을 조합할 수 있어, 생성 이후에는 불변(Immutable) 객체로 만들기 용이하다.
+- 빌더 패턴의 단점
+  - 객체 하나를 만들기 위해 빌더 클래스를 별도로 만들어야 하므로 코드량이 늘어난다.
+  - 필드가 적은 단순한 객체에 적용하면 오히려 코드가 장황해질 수 있다.
+- 구현 예시
+  ``` java
+  public class Pizza {
+
+      private final String size;    // 필수
+      private final boolean cheese; // 선택
+      private final boolean bacon;  // 선택
+
+      private Pizza(Builder builder) {
+          this.size = builder.size;
+          this.cheese = builder.cheese;
+          this.bacon = builder.bacon;
+      }
+
+      public static class Builder {
+          private final String size; // 필수 값은 생성자에서 받는다.
+          private boolean cheese = false;
+          private boolean bacon = false;
+
+          public Builder(String size) {
+              this.size = size;
+          }
+
+          public Builder cheese(boolean value) {
+              this.cheese = value;
+              return this;
+          }
+
+          public Builder bacon(boolean value) {
+              this.bacon = value;
+              return this;
+          }
+
+          public Pizza build() {
+              return new Pizza(this);
+          }
+      }
+  }
+
+  // 사용
+  Pizza pizza = new Pizza.Builder("L")
+          .cheese(true)
+          .bacon(true)
+          .build();
+  ```
+  - Lombok의 `@Builder` 어노테이션을 사용하면 위와 같은 빌더 클래스를 직접 작성하지 않고도 컴파일 시점에 자동으로 생성할 수 있다.
+- Ref.
+<br><br><br>
+
+
+
+## [GoF] 어댑터 패턴
+- 어댑터 패턴이란?
+  - 서로 호환되지 않는 인터페이스를 가진 클래스들을 함께 동작할 수 있도록, 그 사이에서 인터페이스를 변환해주는 구조 패턴이다.
+  - 클라이언트가 사용하고자 하는 인터페이스(Target)와 실제로 필요한 기능을 제공하는 기존 클래스(Adaptee)가 다를 때, 그 차이를 흡수하는 중간 변환기 역할을 한다.
+- 어댑터 패턴의 구조
+  - Target
+    - 클라이언트가 사용하는 인터페이스.
+  - Adaptee
+    - 이미 존재하지만 Target 인터페이스와 호환되지 않는 기존 클래스.
+  - Adapter
+    - Target 인터페이스를 구현하면서, 내부적으로 Adaptee의 메서드를 호출하여 변환을 수행하는 클래스.
+- 어댑터 패턴의 장점
+  - 기존 코드(Adaptee)를 변경하지 않고도 클라이언트가 원하는 인터페이스로 재사용할 수 있다.
+  - 클라이언트 코드와 기존 클래스 간의 결합도를 낮출 수 있다.
+- 어댑터 패턴의 단점
+  - 어댑터 클래스가 추가되어 전체적인 코드 복잡도가 증가한다.
+  - 기존 인터페이스를 그대로 사용하는 것보다 우회하는 계층이 하나 더 생기므로 약간의 오버헤드가 발생할 수 있다.
+- 구현 예시
+  ``` java
+  // Target: 클라이언트가 사용하는 인터페이스
+  public interface ElectronicDevice {
+      void powerOn();
+  }
+
+  // Adaptee: 기존에 존재하던, Target과 호환되지 않는 클래스
+  public class Generator220V {
+      public void supply220V() {
+          System.out.println("220V 전력을 공급합니다.");
+      }
+  }
+
+  // Adapter: Target 인터페이스를 구현하면서 Adaptee를 감싼다.
+  public class VoltageAdapter implements ElectronicDevice {
+      private final Generator220V generator;
+
+      public VoltageAdapter(Generator220V generator) {
+          this.generator = generator;
+      }
+
+      @Override
+      public void powerOn() {
+          generator.supply220V(); // 내부적으로 Adaptee의 메서드를 호출
+      }
+  }
+  ```
+  - 자바 표준 라이브러리의 `InputStreamReader`가 대표적인 예시로, 바이트(byte) 기반의 `InputStream`을 문자(char) 기반의 `Reader`로 변환해준다.
+- Ref.
+<br><br><br>
+
+
+
+## [GoF] 데코레이터 패턴
+- 데코레이터 패턴이란?
+  - 객체에 새로운 책임(기능)을 동적으로 추가할 수 있게 해주는 구조 패턴이다.
+  - 상속 대신 위임(합성)을 이용해 기능을 확장하기 때문에, 기존 코드를 변경하지 않고도 다양한 기능 조합을 런타임에 구성할 수 있다.
+- 데코레이터 패턴의 구조
+  - Component
+    - 원본 객체와 장식된 객체가 공통으로 구현하는 인터페이스.
+  - ConcreteComponent
+    - 실제 기능을 수행하는 원본 객체.
+  - Decorator
+    - Component를 구현하면서 내부에 또 다른 Component를 참조(위임)하는 추상 클래스.
+  - ConcreteDecorator
+    - Decorator를 상속하여 원본 객체 호출 전/후에 부가 기능을 추가하는 클래스.
+- 데코레이터 패턴의 장점
+  - 상속보다 유연하게 기능을 추가할 수 있으며, 여러 데코레이터를 조합해서 다양한 기능 조합을 만들 수 있다.
+  - 각 데코레이터가 하나의 책임만 가지도록 분리할 수 있어 단일 책임 원칙(SRP)을 지킬 수 있다.
+  - 기존 클래스(ConcreteComponent)를 수정하지 않아도 되므로 개방 폐쇄 원칙(OCP)을 지킬 수 있다.
+- 데코레이터 패턴의 단점
+  - 장식이 많아질수록 유사한 소규모 클래스들이 많아져 코드 파악이 어려워질 수 있다.
+  - 여러 데코레이터가 중첩되면 어떤 순서로 어떤 기능이 적용되는지 추적하기 어려워질 수 있다.
+- 구현 예시
+  ``` java
+  // Component
+  public interface Coffee {
+      int cost();
+  }
+
+  // ConcreteComponent
+  public class Americano implements Coffee {
+      @Override
+      public int cost() {
+          return 3000;
+      }
+  }
+
+  // Decorator
+  public abstract class CoffeeDecorator implements Coffee {
+      protected final Coffee coffee;
+
+      protected CoffeeDecorator(Coffee coffee) {
+          this.coffee = coffee;
+      }
+  }
+
+  // ConcreteDecorator
+  public class MilkDecorator extends CoffeeDecorator {
+      public MilkDecorator(Coffee coffee) {
+          super(coffee);
+      }
+
+      @Override
+      public int cost() {
+          return coffee.cost() + 500; // 원본 기능에 부가 기능(가격)을 추가
+      }
+  }
+
+  // 사용
+  Coffee coffee = new MilkDecorator(new Americano());
+  System.out.println(coffee.cost()); // 3500
+  ```
+  - 자바 표준 라이브러리의 `BufferedReader(new InputStreamReader(...))`처럼 스트림을 겹겹이 감싸는 방식이 대표적인 예시이다.
+- 프록시 패턴과의 차이
+  - 위 프록시 패턴 항목에서 설명한 것처럼 구조는 유사하지만, 프록시는 접근 제어가 목적이고 데코레이터는 새로운 기능 추가가 목적이라는 점에서 의도가 다르다.
+- Ref.
+<br><br><br>
+
+
+
+## [GoF] 옵저버 패턴
+- 옵저버 패턴이란?
+  - 한 객체(Subject)의 상태가 변경되었을 때, 이를 구독하고 있는 다른 객체들(Observer)에게 자동으로 알림이 전달되도록 하는 행동 패턴이다.
+  - Subject와 Observer는 1:N의 의존 관계를 가지며, 발행-구독(Publish-Subscribe) 모델의 기반이 되는 패턴이다.
+- 옵저버 패턴의 구조
+  - Subject
+    - Observer 목록을 관리하며, 상태 변화가 생기면 등록된 Observer들에게 알림(notify)을 보내는 주체.
+  - Observer
+    - Subject를 구독하는 인터페이스로, 알림을 받았을 때 수행할 동작(update)을 정의한다.
+  - ConcreteSubject / ConcreteObserver
+    - 각각 Subject와 Observer 인터페이스를 구현한 실제 클래스.
+- 옵저버 패턴의 장점
+  - Subject와 Observer 간의 결합도가 낮아, 서로의 구체적인 구현에 영향을 주지 않고 독립적으로 확장할 수 있다.
+  - 새로운 Observer를 추가하더라도 Subject의 코드를 수정할 필요가 없어 개방 폐쇄 원칙(OCP)을 지킬 수 있다.
+- 옵저버 패턴의 단점
+  - Observer가 많아지면 알림이 전파되는 순서를 제어하기 어렵고, 알림 처리 과정에서 성능 저하가 발생할 수 있다.
+  - Subject와 Observer 간 알림 흐름이 여러 단계로 이어지면 전체 흐름을 추적하고 디버깅하기 어려워질 수 있다.
+  - Observer 해제를 누락하면 Subject가 불필요한 Observer 참조를 계속 들고 있어 메모리 누수로 이어질 수 있다.
+- 구현 예시
+  ``` java
+  public interface Observer {
+      void update(String message);
+  }
+
+  public class Subject {
+      private final List<Observer> observers = new ArrayList<>();
+
+      public void subscribe(Observer observer) {
+          observers.add(observer);
+      }
+
+      public void unsubscribe(Observer observer) {
+          observers.remove(observer);
+      }
+
+      public void notifyObservers(String message) {
+          for (Observer observer : observers) {
+              observer.update(message);
+          }
+      }
+  }
+
+  public class EmailObserver implements Observer {
+      @Override
+      public void update(String message) {
+          System.out.println("이메일 발송: " + message);
+      }
+  }
+  ```
+  - 스프링의 이벤트 처리 방식인 `ApplicationEventPublisher`와 `@EventListener`도 옵저버 패턴을 기반으로 동작한다. 특정 이벤트가 발행(publish)되면, 이를 구독(@EventListener)하고 있는 리스너들이 자동으로 호출되는 구조이다.
+- Ref.
+<br><br><br>
