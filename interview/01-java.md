@@ -1262,3 +1262,94 @@
 - Ref.
 [Manta Ray's](https://mantaray.tistory.com/69)
 <br><br><br>
+
+
+
+## synchronized 키워드와 모니터 락
+- synchronized란?
+  - 자바에서 임계 영역(Critical Section)에 하나의 스레드만 접근할 수 있도록 보장해주는 동기화 키워드이다.
+  - 메서드 전체 또는 특정 코드 블록에 적용할 수 있다.
+- 모니터 락(Monitor Lock)
+  - 자바의 모든 객체는 내부적으로 모니터(Monitor)라는 동기화 도구를 하나씩 가지고 있다.
+  - synchronized가 적용된 영역에 스레드가 진입하려면 해당 객체의 모니터 락을 획득해야 하며, 이미 다른 스레드가 락을 보유하고 있다면 락이 반납될 때까지 대기(Blocked)한다.
+  - 락을 보유한 스레드가 synchronized 블록/메서드를 빠져나가면 자동으로 락이 반납된다.
+- 적용 방식
+  - 인스턴스 메서드에 적용
+    - `public synchronized void method() { ... }`
+    - 해당 인스턴스(this) 객체의 모니터 락을 사용한다. 인스턴스가 다르면 서로 다른 락이므로 동시에 접근할 수 있다.
+  - 정적(static) 메서드에 적용
+    - `public static synchronized void method() { ... }`
+    - 인스턴스가 아닌 클래스(Class 객체) 자체의 모니터 락을 사용한다. 따라서 인스턴스가 여러 개여도 하나의 락을 공유한다.
+  - 특정 블록에 적용
+    - `synchronized (lockObject) { ... }`
+    - 메서드 전체가 아닌 필요한 코드 블록만 동기화하여, 락이 걸리는 범위를 최소화할 수 있다.
+- synchronized의 특징
+  - synchronized는 상호 배제(Mutual Exclusion)뿐만 아니라, 락을 해제하는 시점에 변경된 값을 메인 메모리에 반영하고, 락을 획득하는 시점에 메인 메모리의 최신 값을 읽어오도록 보장하기 때문에 가시성(Visibility) 문제도 함께 해결해준다.
+  - 하지만 락을 획득하지 못한 스레드는 계속 대기해야 하므로, 과도하게 사용할 경우 성능 저하나 데드락의 원인이 될 수 있다.
+- Ref.
+<br><br><br>
+
+
+
+## Optional
+- Optional이란?
+  - Java 8부터 제공되는 클래스로, null이 될 수 있는 값을 감싸는 컨테이너 객체이다.
+  - null을 직접 다루면서 발생하는 NullPointerException을 방지하고, 값이 없을 수 있다는 것을 코드(메서드 반환 타입)로 명시적으로 표현하기 위해 사용한다.
+- 주요 메서드
+  - `Optional.of(value)` : 값이 확실히 null이 아닐 때 Optional 객체를 생성한다. null을 전달하면 NullPointerException이 발생한다.
+  - `Optional.ofNullable(value)` : 값이 null일 수도 있을 때 사용하며, null이면 빈 Optional을 생성한다.
+  - `Optional.empty()` : 빈 Optional 객체를 생성한다.
+  - `isPresent()` / `isEmpty()` : 값이 존재하는지 / 존재하지 않는지 여부를 반환한다.
+  - `get()` : 값을 꺼내며, 값이 없을 경우 NoSuchElementException이 발생한다.
+  - `orElse(default)` : 값이 없을 경우 기본값을 반환한다.
+  - `orElseGet(Supplier)` : 값이 없을 경우 Supplier를 통해 대체값을 생성해서 반환한다. (orElse와 달리 값이 존재하면 Supplier가 실행되지 않는다.)
+  - `orElseThrow(Supplier)` : 값이 없을 경우 지정한 예외를 발생시킨다.
+  - `map(Function)` / `filter(Predicate)` : 값이 존재할 때만 함수를 적용하여 새로운 Optional을 반환한다.
+- 예제코드
+  ``` java
+  Optional<String> optional = Optional.ofNullable(findNameById(1L));
+
+  String name = optional
+          .filter(n -> !n.isBlank())
+          .map(String::toUpperCase)
+          .orElseThrow(() -> new IllegalArgumentException("이름이 존재하지 않습니다."));
+  ```
+- 사용 시 주의사항
+  - Optional은 메서드의 반환값으로 사용하기 위해 설계된 것으로, 필드나 메서드의 파라미터 타입으로 사용하는 것은 권장되지 않는다.
+  - get()으로 값을 꺼내기 전에는 반드시 isPresent() 등으로 값의 존재 여부를 확인해야 하며, 그렇지 않으면 null 체크를 Optional 체크로 바꾼 것에 불과하다.
+  - Optional 필드를 직렬화(Serializable)할 경우 문제가 발생할 수 있어 권장되지 않는다.
+- Ref.
+<br><br><br>
+
+
+
+## CompletableFuture
+- CompletableFuture란?
+  - Java 8부터 제공되는 비동기 프로그래밍을 위한 클래스로, 기존 Future의 한계를 보완한 클래스이다.
+  - 비동기 작업의 결과를 조합하거나, 작업이 완료되었을 때 후속 작업을 연결(콜백)할 수 있다.
+- 기존 Future와의 차이
+  - Future는 비동기 작업의 결과를 가져오려면 get()을 호출해서 블로킹 방식으로 기다려야 하며, 작업 완료 시 콜백을 등록하거나 여러 비동기 작업을 조합하는 기능을 제공하지 않는다.
+  - CompletableFuture는 작업이 완료되었을 때 실행할 콜백을 등록할 수 있고(non-blocking), 여러 비동기 작업을 순차적으로 연결하거나 병렬로 조합하는 것이 가능하다.
+- 주요 메서드
+  - `supplyAsync(Supplier)` : 반환값이 있는 비동기 작업을 실행한다.
+  - `runAsync(Runnable)` : 반환값이 없는 비동기 작업을 실행한다.
+  - `thenApply(Function)` : 이전 작업의 결과를 받아 변환한 값을 반환한다. (동기적으로 이어붙임, 콜백 스레드에서 실행)
+  - `thenAccept(Consumer)` : 이전 작업의 결과를 받아 소비만 하고 값을 반환하지 않는다.
+  - `thenCompose(Function)` : 이전 작업의 결과를 이용해 또 다른 CompletableFuture를 반환하는 작업을 이어붙인다. (flatMap과 유사)
+  - `thenCombine(CompletableFuture, BiFunction)` : 서로 독립적인 두 개의 비동기 작업 결과를 조합한다.
+  - `exceptionally(Function)` : 작업 도중 예외가 발생했을 때 처리할 로직을 등록한다.
+  - `join()` : 결과를 기다렸다가 반환한다. (get()과 달리 체크 예외를 던지지 않고 CompletionException으로 래핑해서 던진다.)
+- 예제코드
+  ``` java
+  CompletableFuture<String> future = CompletableFuture
+          .supplyAsync(() -> "Hello")
+          .thenApply(s -> s + " World")
+          .exceptionally(ex -> "Error: " + ex.getMessage());
+
+  System.out.println(future.join()); // Hello World
+  ```
+- 스레드 풀
+  - Async가 붙지 않은 메서드(thenApply 등)는 기본적으로 이전 단계를 실행한 스레드에서 그대로 실행된다.
+  - Async가 붙은 메서드(thenApplyAsync 등)는 별도의 스레드(기본적으로 ForkJoinPool.commonPool())에서 실행되며, Executor를 직접 지정할 수도 있다.
+- Ref.
+<br><br><br>
