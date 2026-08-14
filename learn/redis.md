@@ -70,7 +70,7 @@
   - CPU 캐시
     - CPU와 RAM의 속도 차이로 발생하는 지연을 줄이기 위해 L1, L2, L3 캐시 사용
   - 웹 브라우저
-    - 캐싱웹 브라우저가 웹 페이지 데이터를 로컬 저장소에 저장하여 해당 페이지 재방문시 사용
+    - 웹 브라우저가 웹 페이지 데이터를 로컬 저장소에 캐싱하여 해당 페이지 재방문시 사용
   - DNS 캐싱
     - 이전에 조회한 도메인 이름과 해당하는 IP 주소를 저장하여 재요청시 사용
   - 데이터베이스 캐싱
@@ -164,7 +164,7 @@
 
 ### Pub/Sub
 - Publisher와 Subscriber가 서로 알지 못해도 통신이 가능하도록 decoupling 된 패턴.
-- Publisher는 Subscriber에게 직접 메시지를 보내지 않고, Channel에 Publish Subscriber는 관심이 있는 Channel을 필요에 따라 Subscribe하며 메시지 수신.
+- Publisher는 Subscriber에게 직접 메시지를 보내지 않고, Channel에 Publish하며, Subscriber는 관심이 있는 Channel을 필요에 따라 Subscribe하며 메시지 수신.
 - Stream과의 차이는 메시지가 보관되는 Stream과 달리 Pub/Sub은 Subscribe 하지 않을 때 발행된 메시지 수신 불가.
 
 ### Pipeline
@@ -212,14 +212,14 @@
     - User1이 User2의 게시글에 좋아요를 누른다.
       - LPUSH user:2:feed "user1 liked a post"
     - User2는 자신의 피드 중 최근 10개를 조회한다.
-      - LRAGE user:2:feed 0 9
+      - LRANGE user:2:feed 0 9
 - Shopping Cart
   - 사용자가 구매를 원하는 상품을 임시로 모아두는 가상의 공간
   - 사용예시
     - 상품1 추가
       - SADD cart item1
     - 카트 조회
-      - SMEMBER cart
+      - SMEMBERS cart
 - Login Session
   - 사용자의 로그인 상태를 유지하기 위한 기술
   - 또는 동시 로그인 제한을 할 수 있다.

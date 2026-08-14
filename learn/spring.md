@@ -178,7 +178,7 @@
     - JSON, XML, 바이너리 데이터 등 다양한 형식의 HTTP 응답 본문 데이터를 전송
    
 ### 서블릿 컨테이너 & 스프링 컨테이너
-- 서블릿 컨네이너 & 스프링 컨테이너 연결
+- 서블릿 컨테이너 & 스프링 컨테이너 연결
   1. WAS 가 구동되면 서블릿 컨테이너가 META-INF/services/jakarta.servlet.ServletContainerInitializer 파일을 검색하여 ServletContainerInitializer 인터페이스를 구현한 클래스(ex. MyServletContainerInitializer)를 로드한다.
     - jakarta.servlet.ServletContainerInitializer 파일의 내용에는 study.choi.MyServletContainerInitializer 와 같이 기술되어있다.
   2. ServletContainerInitializer 구현체는 @HandlesTypes(MyWebAppInitializer.class)와 같이 설정을 할 수 있으며, MyWebAppInitialize를 호출하여 스프링 애플리케이션을 초기화 한다.
@@ -504,8 +504,8 @@
       }
       ```
       
-### @RquestParam
-- @RquestParam이란?
+### @RequestParam
+- @RequestParam이란?
   - @RequestParam 어노테이션은 HTTP 요청의 파라미터를 메서드의 매개변수에 바인딩 되도록 해준다.
   - @RequestParam 은 URL 쿼리 파라미터, 폼 데이터, 그리고 멀티파트 요청을 매핑하며 HTTP 본문 요청은 처리하지 않는다.
     - HTTP 본문 요청은 HttpMessageConvertter가 처리
