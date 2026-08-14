@@ -1156,6 +1156,82 @@
 
 
 
+## Spring Security
+- Spring Security란?
+  - 스프링 기반 애플리케이션의 인증(Authentication)과 인가(Authorization)를 담당하는 보안 프레임워크이다.
+  - 서블릿 필터(Servlet Filter) 체인을 기반으로 동작하며, DispatcherServlet에 요청이 도달하기 전(위 Filter vs Interceptor 항목에서 설명한 Filter 계층)에 보안 검증을 수행한다.
+- 동작 구조
+  - DelegatingFilterProxy
+    - 서블릿 컨테이너의 필터 체인과 스프링 컨테이너를 연결해주는 필터로, 실제 보안 처리는 스프링 빈으로 등록된 필터에 위임한다.
+  - FilterChainProxy
+    - 다수의 보안 필터(SecurityFilterChain)를 순서대로 실행시키는 필터로, DelegatingFilterProxy가 위임하는 대상이다.
+  - 주요 보안 필터
+    - UsernamePasswordAuthenticationFilter(폼 로그인 인증 처리), BasicAuthenticationFilter(HTTP Basic 인증), ExceptionTranslationFilter(인증/인가 예외 처리) 등 다양한 필터가 순차적으로 요청을 처리한다.
+  - SecurityContextHolder
+    - 인증에 성공한 사용자 정보(Authentication 객체)를 담고 있는 보관소이다.
+    - 기본적으로 ThreadLocal에 저장되기 때문에, 같은 스레드 내 어디서든 `SecurityContextHolder.getContext().getAuthentication()`으로 인증 정보를 조회할 수 있다.
+- 주요 구성요소
+  - AuthenticationManager
+    - 실제 인증(로그인) 처리를 담당하는 인터페이스로, 내부적으로 여러 AuthenticationProvider에게 인증을 위임한다.
+  - UserDetailsService
+    - 사용자 정보(아이디, 비밀번호, 권한 등)를 조회해오는 인터페이스로, 개발자가 직접 구현하여 DB 등에서 사용자 정보를 가져오도록 커스터마이징한다.
+  - PasswordEncoder
+    - 비밀번호를 암호화하고 검증하기 위한 인터페이스이다. (Ex. BCryptPasswordEncoder)
+- Ref.
+<br><br><br>
+
+
+
+## JWT(JSON Web Token)
+- JWT란?
+  - 당사자 간에 정보를 JSON 형태로 안전하게 주고받기 위한 토큰 기반의 인증 방식이다.
+  - `Header.Payload.Signature` 형태의 문자열로 구성되며, 각 부분은 Base64Url로 인코딩된다.
+    - Header : 토큰의 타입(JWT)과 서명에 사용된 알고리즘 정보를 담는다.
+    - Payload : 사용자 정보나 토큰의 클레임(claim, 예를 들어 만료 시간)을 담는다.
+    - Signature : Header와 Payload를 Secret Key로 서명한 값으로, 토큰이 변조되지 않았음을 검증하는 데 사용된다.
+- 세션 기반 인증과의 차이
+  - 세션 방식은 서버가 사용자의 로그인 상태(세션 정보)를 메모리나 DB에 직접 저장하는 Stateful 방식이다.
+  - JWT 방식은 사용자 정보 자체를 토큰 안에 담아 클라이언트에게 발급하고, 서버는 별도로 상태를 저장하지 않는 Stateless 방식이다.
+  - Stateless 특성 덕분에 여러 서버로 트래픽을 분산하는 환경(Scale-out)에서 세션 클러스터링이나 세션 스토리지 없이도 인증 상태를 유지할 수 있다.
+- 장점
+  - 서버가 상태를 저장하지 않아도 되므로 서버를 수평 확장하기 용이하다.
+  - 토큰 자체에 필요한 정보가 담겨 있어, 매번 DB를 조회하지 않고도 사용자 정보를 확인할 수 있다.
+- 단점
+  - Payload는 암호화가 아닌 인코딩(Base64Url)된 것이라 디코딩하면 내용을 그대로 볼 수 있으므로, 민감한 정보를 담으면 안 된다.
+  - 한 번 발급된 토큰은 만료 시간이 되기 전까지 서버에서 강제로 무효화(로그아웃 등)하기 어렵다. (블랙리스트 관리 등의 추가적인 구현이 필요하다.)
+  - 토큰 자체의 크기가 세션 ID보다 커서, 매 요청마다 전송되는 데이터량이 늘어난다.
+- Access Token과 Refresh Token
+  - Access Token : 실제 리소스에 접근할 때 사용하는 토큰으로, 탈취 위험을 줄이기 위해 만료 시간을 짧게 설정한다.
+  - Refresh Token : Access Token이 만료되었을 때 재발급을 요청하기 위한 토큰으로, 상대적으로 만료 시간을 길게 설정하고 안전한 저장소에 보관한다.
+- Ref.
+<br><br><br>
+
+
+
+## OAuth2
+- OAuth2란?
+  - 제3자 애플리케이션(Client)이 사용자(Resource Owner)를 대신하여, 사용자의 비밀번호를 직접 알지 못한 채로 다른 서비스(Resource Server)의 리소스에 접근할 수 있도록 권한을 위임하는 개방형 인가(Authorization) 표준 프로토콜이다.
+  - OAuth2는 인증(Authentication)이 아닌 인가(Authorization)를 위한 프로토콜이라는 점에 주의해야 한다. ("A라는 사용자다"를 증명하는 것이 아니라, "이 애플리케이션이 A 사용자의 리소스에 접근해도 된다"를 증명한다.)
+- 주요 참여자(Role)
+  - Resource Owner : 리소스의 소유자, 즉 사용자.
+  - Client : 사용자의 리소스에 접근하려는 제3자 애플리케이션.
+  - Authorization Server : 사용자의 동의를 받아 Client에게 Access Token을 발급하는 서버.
+  - Resource Server : 실제 사용자의 리소스를 보관하고 있으며, Access Token을 검증하여 리소스를 제공하는 서버.
+- Authorization Code Grant 흐름 (가장 널리 사용되는 방식)
+  1. Client가 사용자를 Authorization Server의 로그인/동의 화면으로 리다이렉트시킨다.
+  2. 사용자가 로그인하고 권한 위임에 동의하면, Authorization Server는 Client에게 Authorization Code를 발급한다.
+  3. Client는 전달받은 Authorization Code와 자신의 Client Secret을 이용해 Authorization Server에 Access Token을 요청한다.
+  4. Authorization Server는 검증 후 Access Token(및 Refresh Token)을 발급한다.
+  5. Client는 발급받은 Access Token을 이용해 Resource Server에 사용자의 리소스를 요청한다.
+- OAuth2와 OpenID Connect(OIDC)의 관계
+  - OAuth2 자체는 인가만을 위한 프로토콜이기 때문에, 로그인(인증) 용도로 사용하려면 별도의 표준이 필요하다.
+  - OpenID Connect(OIDC)는 OAuth2 위에 인증 계층을 추가한 프로토콜로, ID Token(사용자 신원 정보가 담긴 JWT)을 함께 발급하여 "누가 로그인했는지"까지 표준화된 방식으로 확인할 수 있게 해준다.
+  - 흔히 사용하는 '구글/카카오 소셜 로그인'은 OAuth2 기반 인가 절차 위에 OIDC를 결합하여 인증까지 처리하는 방식이다.
+- Ref.
+<br><br><br>
+
+
+
 ## MSA 환경에서의 분산 트랜잭션 관리
 - 배경
   - MSA 환경에서는 서비스(도메인)마다 데이터베이스가 분리되어 있기 때문에, 하나의 비즈니스 트랜잭션이 여러 서비스에 걸쳐 처리되는 경우 단일 DB 트랜잭션(ACID)만으로는 데이터 정합성을 보장할 수 없다.
