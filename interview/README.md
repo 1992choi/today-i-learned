@@ -19,7 +19,7 @@
 
 * [Network](https://github.com/1992choi/today-i-learned/blob/main/interview/06-network.md)
 
-
+* [etc](https://github.com/1992choi/today-i-learned/blob/main/interview/99-etc.md)
 
 
 
