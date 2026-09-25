@@ -826,6 +826,38 @@
 
 
 
+## ThreadLocal
+- ThreadLocal이란?
+  - 각 스레드마다 독립적인 저장 공간을 제공하는 클래스로, 여러 스레드가 동시에 접근하더라도 서로 다른 값을 저장하고 조회할 수 있게 해준다.
+  - 여러 스레드가 하나의 변수를 공유하는 것이 아니라 스레드별로 각자의 값을 가지므로, 별도의 동기화 없이도 Thread Safety를 확보할 수 있다.
+- 동작 원리
+  - 실제로는 각 Thread 객체가 내부적으로 `ThreadLocalMap`이라는 필드를 가지고 있으며, ThreadLocal 인스턴스를 key로, 저장한 값을 value로 하여 현재 스레드의 ThreadLocalMap에 값을 저장한다.
+  - 따라서 동일한 ThreadLocal 변수를 여러 스레드에서 `get()`/`set()`해도, 실제로는 각자의 스레드가 가진 ThreadLocalMap에 접근하는 것이므로 서로 값에 영향을 주지 않는다.
+- 사용 예시
+  - ``` java
+    public class ThreadLocalExample {
+        private static final ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
+
+        public static void increment() {
+            threadLocal.set(threadLocal.get() + 1);
+        }
+
+        public static int get() {
+            return threadLocal.get();
+        }
+    }
+    ```
+  - 스프링에서 요청(Request) 하나의 생명주기 동안 유지되어야 하는 정보(예: `RequestContextHolder`를 통한 트랜잭션/인증 정보 보관, MDC를 통한 로그 추적 ID 관리)를 다룰 때 자주 활용된다.
+- 사용 시 주의사항 (메모리 누수 위험)
+  - WAS의 스레드는 요청마다 새로 생성되는 것이 아니라 스레드 풀에서 재사용되는 경우가 많다.
+  - 요청 처리가 끝난 후 `remove()`를 호출하여 ThreadLocal에 저장된 값을 명시적으로 제거하지 않으면, 스레드가 풀로 반환되어 재사용될 때도 이전 요청에서 저장한 값이 ThreadLocalMap에 그대로 남아있게 된다.
+  - 이로 인해 다른 요청에서 의도치 않게 이전 데이터를 읽어오는 문제가 발생하거나, 스레드가 스레드 풀에 계속 유지되는 동안 참조가 해제되지 않아 메모리 누수로 이어질 수 있다.
+  - 따라서 ThreadLocal을 사용한 뒤에는 반드시 `finally` 블록 등에서 `remove()`를 호출하여 정리해주어야 한다.
+- Ref.
+<br><br><br>
+
+
+
 ## JVM
 - JVM이란
   - Java로 개발한 프로그램을 컴파일하여 만들어지는 바이트코드를 실행시키기 위한 가상머신이다.
@@ -1119,6 +1151,66 @@
 
 
 
+## 얕은 복사(Shallow Copy)와 깊은 복사(Deep Copy)
+- 객체 복사가 필요한 이유
+  - 자바에서 객체 변수를 다른 변수에 대입하면 객체 자체가 복사되는 것이 아니라 객체를 가리키는 참조(주소)만 복사된다.
+  - 따라서 복사된 변수를 통해 객체의 상태를 변경하면, 원본 변수가 가리키는 객체도 함께 변경되어버리는 문제가 발생할 수 있다. 이를 피하기 위해 객체 자체를 별도로 복제하는 것이 얕은 복사와 깊은 복사이다.
+- 얕은 복사(Shallow Copy)
+  - 객체의 필드 값을 그대로 복사하되, 필드가 참조 타입(다른 객체에 대한 참조)일 경우에는 그 참조값(주소)만 복사하는 방식이다.
+  - 즉 기본 타입 필드는 값 자체가 복사되어 독립적이지만, 참조 타입 필드는 원본과 복사본이 같은 객체를 함께 가리키게 된다.
+  - 따라서 복사본에서 참조 타입 필드가 가리키는 객체의 내부 상태를 변경하면, 원본 객체에도 그 변경 사항이 그대로 반영된다.
+  - Java의 `Object.clone()` 기본 구현이 얕은 복사에 해당한다.
+- 깊은 복사(Deep Copy)
+  - 객체의 필드 값을 복사할 때, 참조 타입 필드가 가리키는 객체까지 재귀적으로 새로 생성하여 복사하는 방식이다.
+  - 복사본과 원본이 내부의 참조 타입 필드까지 완전히 독립적인 객체를 가지게 되므로, 복사본을 변경해도 원본에는 전혀 영향을 주지 않는다.
+  - 자바는 깊은 복사를 언어 차원에서 기본 제공하지 않으므로, 개발자가 직접 참조 타입 필드마다 새로운 객체를 생성하는 로직을 작성하거나, 직렬화(Serialization)를 이용해 객체를 통째로 바이트로 변환했다가 복원하는 방식, 또는 라이브러리(Gson, Jackson 등으로 JSON 변환 후 역변환)를 활용하는 방식 등을 사용한다.
+- 예시
+  - ``` java
+    class Address {
+        String city;
+        Address(String city) { this.city = city; }
+    }
+
+    class Person implements Cloneable {
+        String name;
+        Address address;
+
+        Person(String name, Address address) {
+            this.name = name;
+            this.address = address;
+        }
+
+        // 얕은 복사
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
+        }
+
+        // 깊은 복사
+        public Person deepCopy() {
+            return new Person(this.name, new Address(this.address.city));
+        }
+    }
+    ```
+  - ``` java
+    Person original = new Person("Kim", new Address("Seoul"));
+
+    Person shallowCopied = (Person) original.clone();
+    shallowCopied.address.city = "Busan";
+    System.out.println(original.address.city); // "Busan" - 원본도 함께 변경됨
+
+    Person deepCopied = original.deepCopy();
+    deepCopied.address.city = "Incheon";
+    System.out.println(original.address.city); // "Busan" - 원본은 영향 없음 (깊은 복사이므로)
+    ```
+- 언제 깊은 복사가 필요한가?
+  - 원본 객체의 상태를 보존해야 하는 상황(예: Undo 기능 구현, 특정 시점의 데이터 스냅샷 보관)에서 복사본을 자유롭게 변경해도 원본에 영향이 없어야 할 때 깊은 복사가 필요하다.
+  - 반대로 단순히 참조를 여러 곳에서 공유해도 무방하거나, 필드가 모두 불변(Immutable) 객체로만 구성된 경우에는 얕은 복사만으로도 충분하며 굳이 깊은 복사로 인한 성능 비용을 감수할 필요가 없다.
+- Ref.
+<br><br><br>
+
+
+
 ## 블로킹과 논블로킹, 동기와 비동기
 - Blocking(블로킹)과 Non-blocking(논블로킹)
   - 블로킹과 논블로킹은 A 함수가 B 함수를 호출했을 때, 제어권을 어떻게 처리하느냐에 따라 달라진다.
@@ -1318,6 +1410,45 @@
   - Optional은 메서드의 반환값으로 사용하기 위해 설계된 것으로, 필드나 메서드의 파라미터 타입으로 사용하는 것은 권장되지 않는다.
   - get()으로 값을 꺼내기 전에는 반드시 isPresent() 등으로 값의 존재 여부를 확인해야 하며, 그렇지 않으면 null 체크를 Optional 체크로 바꾼 것에 불과하다.
   - Optional 필드를 직렬화(Serializable)할 경우 문제가 발생할 수 있어 권장되지 않는다.
+- Ref.
+<br><br><br>
+
+
+
+## ExecutorService와 스레드 풀
+- 스레드 풀(Thread Pool)이 필요한 이유
+  - 스레드는 생성하고 소멸시키는 데 상당한 비용(운영체제 자원 할당, 컨텍스트 스위칭 등)이 발생한다.
+  - 요청이 들어올 때마다 매번 새로운 스레드를 생성한다면, 대량의 요청이 몰릴 경우 스레드 생성 비용으로 인해 성능이 저하되고, 무분별하게 생성된 스레드가 시스템 자원을 고갈시켜 OutOfMemoryError로 이어질 수 있다.
+  - 스레드 풀은 미리 일정 개수의 스레드를 생성해두고 재사용함으로써, 매번 스레드를 생성/소멸하는 비용을 줄이고 동시에 실행되는 스레드 수를 제한하여 시스템 자원을 보호한다.
+- ExecutorService란?
+  - 자바에서 스레드 풀을 생성하고 관리할 수 있도록 제공하는 인터페이스로, `java.util.concurrent` 패키지에 포함되어 있다.
+  - 작업을 스레드 생성/실행 방법과 분리하여, 개발자는 `Runnable`이나 `Callable` 형태로 작업을 제출(submit)하기만 하면 되고, 실제 스레드 관리는 ExecutorService가 담당한다.
+- Executors가 제공하는 주요 스레드 풀 종류
+  - `newFixedThreadPool(int n)` : 고정된 개수(n개)의 스레드로 구성된 풀. 스레드 수가 고정되어 있어 부하가 일정한 서버 애플리케이션에 적합하다.
+  - `newCachedThreadPool()` : 필요할 때마다 스레드를 생성하고, 60초 이상 유휴 상태인 스레드는 회수하는 풀. 짧은 비동기 작업이 많을 때 적합하지만, 대량의 요청이 몰리면 스레드가 무한정 늘어날 수 있다.
+  - `newSingleThreadExecutor()` : 단 하나의 스레드로 작업을 순차적으로 처리하는 풀. 작업의 실행 순서 보장이 필요할 때 사용한다.
+  - `newScheduledThreadPool(int n)` : 지연 실행이나 주기적인 실행이 필요한 작업을 처리하는 풀.
+  - 다만 `Executors`의 팩토리 메서드들은 내부적으로 무제한 큐(`LinkedBlockingQueue`)를 사용하는 경우가 많아, 대량의 작업이 몰리면 큐에 작업이 계속 쌓여 메모리를 과도하게 사용할 위험이 있다. 이 때문에 실무에서는 `ThreadPoolExecutor`를 직접 생성해 큐 용량과 거부 정책(RejectedExecutionHandler)을 명시적으로 제어하는 것이 권장된다.
+- ThreadPoolExecutor의 핵심 파라미터
+  - `corePoolSize` : 스레드 풀에서 기본적으로 유지하는 스레드 수.
+  - `maximumPoolSize` : 스레드 풀이 늘어날 수 있는 최대 스레드 수.
+  - `keepAliveTime` : corePoolSize를 초과하여 생성된 유휴 스레드가 종료되기까지 대기하는 시간.
+  - `workQueue` : 스레드가 모두 작업 중일 때, 대기 중인 작업을 저장하는 큐.
+  - `RejectedExecutionHandler` : 큐도 가득 차고 maximumPoolSize만큼 스레드도 모두 사용 중일 때, 새로운 작업을 어떻게 처리할지 결정하는 정책이다. (예: 예외 발생, 호출한 스레드에서 직접 실행, 가장 오래된 작업 폐기 등)
+- 사용 예시
+  - ``` java
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+    executorService.submit(() -> {
+        System.out.println("작업 실행: " + Thread.currentThread().getName());
+    });
+
+    executorService.shutdown(); // 진행 중인 작업은 마무리하고, 새로운 작업은 받지 않는다.
+    ```
+  - `shutdown()`은 이미 제출된 작업은 완료될 때까지 기다리지만, `shutdownNow()`는 실행 중인 작업을 즉시 중단시키려 시도하고 아직 시작하지 않은 작업 목록을 반환한다.
+- CompletableFuture와의 관계
+  - `CompletableFuture.supplyAsync()`, `thenApplyAsync()` 등 Async가 붙은 메서드에 별도의 Executor를 지정하지 않으면, 기본적으로 `ForkJoinPool.commonPool()`을 공유해서 사용한다.
+  - 여러 비동기 작업이 하나의 공용 스레드 풀을 함께 사용하면, 하나의 무거운 작업이 다른 작업의 처리를 지연시킬 수 있으므로 운영 환경에서는 용도에 맞는 별도의 ExecutorService를 만들어 명시적으로 전달하는 것이 권장된다.
 - Ref.
 <br><br><br>
 
