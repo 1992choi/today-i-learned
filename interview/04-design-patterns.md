@@ -210,6 +210,105 @@
 
 
 
+## [GoF] 추상 팩토리 패턴
+- 추상 팩토리 패턴이란?
+  - 서로 관련이 있거나 의존적인 객체들의 집합(제품군, Product Family)을 구체적인 클래스를 지정하지 않고 생성할 수 있도록 인터페이스를 제공하는 생성 패턴이다.
+  - 팩토리 메서드 패턴이 하나의 제품을 생성하는 데 초점을 둔다면, 추상 팩토리 패턴은 서로 연관된 여러 제품을 하나의 팩토리에서 일관되게 생성하는 데 초점을 둔다.
+- 추상 팩토리 패턴의 구조
+  - AbstractFactory
+    - 관련된 제품들을 생성하는 메서드들을 선언하는 인터페이스.
+  - ConcreteFactory
+    - AbstractFactory를 구현하여 특정 제품군에 속하는 구체적인 제품들을 생성하는 클래스.
+  - AbstractProduct
+    - 제품군에 속하는 각 제품이 구현해야 하는 인터페이스.
+  - ConcreteProduct
+    - 특정 ConcreteFactory에서 생성되는 실제 제품 클래스.
+- 추상 팩토리 패턴의 장점
+  - 제품군 단위로 객체를 생성하므로, 서로 다른 제품군의 객체들이 섞여서 사용되는(호환되지 않는 조합) 것을 방지할 수 있다.
+  - 구체적인 클래스를 클라이언트 코드에서 분리할 수 있어 결합도가 낮아진다.
+  - 새로운 제품군을 추가할 때, 기존 코드를 수정하지 않고 새로운 ConcreteFactory와 ConcreteProduct들을 추가하기만 하면 되므로 개방 폐쇄 원칙(OCP)을 지킬 수 있다.
+- 추상 팩토리 패턴의 단점
+  - 새로운 종류의 제품(기존 제품군에 속하지 않는)을 추가하려면 AbstractFactory 인터페이스 자체를 변경해야 하고, 이는 모든 ConcreteFactory 구현체를 함께 수정해야 하는 부담으로 이어진다.
+  - 제품군이 늘어날수록 팩토리와 제품 클래스의 수가 함께 늘어나 코드 복잡도가 증가한다.
+- 팩토리 메서드 패턴과의 차이
+  - 팩토리 메서드 패턴은 메서드 오버라이딩을 통해 하나의 제품을 생성하는 방법을 서브클래스에 위임하는 반면, 추상 팩토리 패턴은 객체 합성을 통해 여러 제품(제품군 전체)을 생성하는 책임을 팩토리 객체에 위임한다.
+  - 팩토리 메서드 패턴에 여러 개의 팩토리 메서드가 모이면 자연스럽게 추상 팩토리 패턴의 형태가 되기도 하여, 두 패턴은 종종 함께 사용된다.
+- 구현 예시
+  ``` java
+  // AbstractProduct
+  public interface Button {
+      void render();
+  }
+  public interface Checkbox {
+      void render();
+  }
+
+  // ConcreteProduct (Windows 제품군)
+  public class WindowsButton implements Button {
+      @Override
+      public void render() {
+          System.out.println("Windows 스타일 버튼");
+      }
+  }
+  public class WindowsCheckbox implements Checkbox {
+      @Override
+      public void render() {
+          System.out.println("Windows 스타일 체크박스");
+      }
+  }
+
+  // ConcreteProduct (Mac 제품군)
+  public class MacButton implements Button {
+      @Override
+      public void render() {
+          System.out.println("Mac 스타일 버튼");
+      }
+  }
+  public class MacCheckbox implements Checkbox {
+      @Override
+      public void render() {
+          System.out.println("Mac 스타일 체크박스");
+      }
+  }
+
+  // AbstractFactory
+  public interface GUIFactory {
+      Button createButton();
+      Checkbox createCheckbox();
+  }
+
+  // ConcreteFactory
+  public class WindowsFactory implements GUIFactory {
+      @Override
+      public Button createButton() {
+          return new WindowsButton();
+      }
+      @Override
+      public Checkbox createCheckbox() {
+          return new WindowsCheckbox();
+      }
+  }
+  public class MacFactory implements GUIFactory {
+      @Override
+      public Button createButton() {
+          return new MacButton();
+      }
+      @Override
+      public Checkbox createCheckbox() {
+          return new MacCheckbox();
+      }
+  }
+
+  // 사용
+  GUIFactory factory = new MacFactory(); // OS에 따라 팩토리만 교체하면 제품군 전체가 일관되게 바뀐다.
+  Button button = factory.createButton();
+  Checkbox checkbox = factory.createCheckbox();
+  ```
+- Ref.
+<br><br><br>
+
+
+
 ## [GoF] 프록시 패턴
 - 프록시 패턴이란?
   - 프록시 (Proxy)란 대리자, 대변인의 의미를 가지고 있다. 말 그대로 원본 객체를 바로 호출하는 것이 아니라, 원본 객체에 접근할 수 있는 대리자를 호출하는 패턴이다.
@@ -541,5 +640,134 @@
   }
   ```
   - 스프링의 이벤트 처리 방식인 `ApplicationEventPublisher`와 `@EventListener`도 옵저버 패턴을 기반으로 동작한다. 특정 이벤트가 발행(publish)되면, 이를 구독(@EventListener)하고 있는 리스너들이 자동으로 호출되는 구조이다.
+- Ref.
+<br><br><br>
+
+
+
+## [GoF] 파사드 패턴
+- 파사드 패턴이란?
+  - 여러 클래스(서브시스템)로 이루어진 복잡한 내부 구조를, 클라이언트가 사용하기 쉬운 단순한 하나의 인터페이스(파사드)로 감싸서 제공하는 구조 패턴이다.
+  - '파사드(Facade)'는 건물의 정면이라는 뜻으로, 클라이언트는 파사드 뒤에 숨겨진 복잡한 서브시스템들의 구현 세부사항을 몰라도 파사드가 제공하는 단순한 메서드만 호출하면 된다.
+- 파사드 패턴의 구조
+  - Facade
+    - 서브시스템의 여러 클래스를 내부에서 조합하여, 클라이언트가 사용할 단순화된 메서드를 제공하는 클래스.
+  - Subsystem Classes
+    - 실제 기능을 수행하는 기존의 여러 클래스들. 파사드의 존재와 무관하게 독립적으로도 사용될 수 있다.
+- 파사드 패턴의 장점
+  - 클라이언트는 복잡한 서브시스템의 세부 구현을 몰라도 되므로, 클라이언트 코드와 서브시스템 간의 결합도가 낮아진다.
+  - 서브시스템 내부 구현이 변경되어도, 파사드가 제공하는 인터페이스만 유지된다면 클라이언트 코드는 영향을 받지 않는다.
+  - 복잡한 로직을 한 곳에 모아두므로 코드 가독성과 사용 편의성이 높아진다.
+- 파사드 패턴의 단점
+  - 파사드 클래스가 여러 서브시스템에 대한 의존성을 모두 가지게 되어, 서브시스템이 많아질수록 파사드 클래스 자체가 비대해질 수 있다(신 클래스, God Class가 될 위험).
+  - 서브시스템에 대한 세밀한 제어가 필요한 경우, 파사드가 제공하지 않는 기능은 여전히 서브시스템에 직접 접근해야 한다.
+- 실무에서의 예시
+  - 스프링에서 개발자가 트랜잭션 관리, 커넥션 획득/반납, 예외 변환 등 JDBC의 복잡한 절차를 직접 다루지 않고 `JdbcTemplate`의 메서드 하나만 호출하면 되는 것도 파사드 패턴이 적용된 예로 볼 수 있다.
+  - 여러 개의 Repository/외부 API 호출을 조합해야 하는 로직을 Service 계층 하나로 감싸서, Controller가 Service의 단순한 메서드 하나만 호출하도록 하는 구조도 넓은 의미의 파사드라 할 수 있다.
+- 구현 예시
+  ``` java
+  // Subsystem Classes
+  public class CPU {
+      public void freeze() { System.out.println("CPU 정지"); }
+      public void jump(long position) { System.out.println("CPU 점프: " + position); }
+      public void execute() { System.out.println("CPU 실행"); }
+  }
+  public class Memory {
+      public void load(long position, byte[] data) { System.out.println("메모리 적재: " + position); }
+  }
+  public class HardDrive {
+      public byte[] read(long lba, int size) {
+          System.out.println("하드디스크 읽기");
+          return new byte[size];
+      }
+  }
+
+  // Facade
+  public class ComputerFacade {
+      private final CPU cpu = new CPU();
+      private final Memory memory = new Memory();
+      private final HardDrive hardDrive = new HardDrive();
+
+      public void start() {
+          cpu.freeze();
+          memory.load(0, hardDrive.read(0, 1024));
+          cpu.jump(0);
+          cpu.execute();
+      }
+  }
+
+  // 사용
+  ComputerFacade computer = new ComputerFacade();
+  computer.start(); // 클라이언트는 CPU, Memory, HardDrive의 존재를 몰라도 된다.
+  ```
+- 어댑터 패턴과의 차이
+  - 어댑터 패턴은 기존 인터페이스를 클라이언트가 원하는 다른 인터페이스로 '변환'하는 것이 목적이지만, 파사드 패턴은 여러 인터페이스(서브시스템)를 하나로 '단순화'하는 것이 목적이라는 점에서 의도가 다르다.
+- Ref.
+<br><br><br>
+
+
+
+## [GoF] 책임 연쇄 패턴(Chain of Responsibility)
+- 책임 연쇄 패턴이란?
+  - 하나의 요청을 처리할 수 있는 객체(핸들러)들을 사슬(체인)처럼 연결해두고, 요청이 들어오면 체인을 따라 순차적으로 전달하면서 각 핸들러가 스스로 처리할지, 다음 핸들러에게 넘길지를 판단하도록 하는 행동 패턴이다.
+  - 요청을 보내는 클라이언트는 어떤 핸들러가 실제로 요청을 처리하는지 알 필요가 없다.
+- 책임 연쇄 패턴의 구조
+  - Handler
+    - 요청을 처리하는 메서드와, 다음 핸들러로 요청을 전달하는 참조(next)를 정의하는 인터페이스(또는 추상 클래스).
+  - ConcreteHandler
+    - Handler를 구현하며, 자신이 처리할 수 있는 요청인지 판단해서 처리하거나, 처리할 수 없다면 다음 핸들러(next)에게 요청을 위임하는 클래스.
+  - Client
+    - 체인의 첫 번째 핸들러에게 요청을 전달하는 주체.
+- 책임 연쇄 패턴의 장점
+  - 요청을 보내는 클라이언트와 요청을 처리하는 핸들러 사이의 결합도를 낮출 수 있다.
+  - 체인에 새로운 핸들러를 추가하거나 순서를 변경하기 쉬워, 기존 코드를 수정하지 않고도 처리 로직을 확장할 수 있다(개방 폐쇄 원칙).
+  - 하나의 거대한 if-else/switch 문으로 여러 처리 조건을 분기하는 대신, 각 핸들러가 단일 책임만 갖도록 분리할 수 있다.
+- 책임 연쇄 패턴의 단점
+  - 요청이 체인의 여러 핸들러를 거치면서 처리되기 때문에, 어떤 핸들러가 실제로 요청을 처리했는지 추적하고 디버깅하기 어려워질 수 있다.
+  - 체인 어딘가에서 다음 핸들러로 요청을 전달하는 코드를 빠뜨리면, 요청이 끝까지 처리되지 못하고 누락될 수 있다.
+  - 체인이 길어지면 매 요청마다 여러 핸들러를 순차적으로 거쳐야 하므로 성능에 영향을 줄 수 있다.
+- 구현 예시
+  ``` java
+  public abstract class Handler {
+      protected Handler next;
+
+      public Handler setNext(Handler next) {
+          this.next = next;
+          return next;
+      }
+
+      public abstract void handle(int level, String message);
+  }
+
+  public class InfoHandler extends Handler {
+      @Override
+      public void handle(int level, String message) {
+          if (level <= 1) {
+              System.out.println("[INFO] " + message);
+          } else if (next != null) {
+              next.handle(level, message);
+          }
+      }
+  }
+
+  public class ErrorHandler extends Handler {
+      @Override
+      public void handle(int level, String message) {
+          if (level <= 2) {
+              System.out.println("[ERROR] " + message);
+          } else if (next != null) {
+              next.handle(level, message);
+          }
+      }
+  }
+
+  // 사용
+  Handler chain = new InfoHandler();
+  chain.setNext(new ErrorHandler());
+  chain.handle(2, "요청 처리 실패"); // ErrorHandler까지 전달되어 처리됨
+  ```
+- 실무에서의 예시
+  - 서블릿 필터(Filter)와 스프링 인터셉터(Interceptor)가 대표적인 예시로, 하나의 HTTP 요청이 여러 개의 필터/인터셉터를 순차적으로 거치면서 각자의 역할(인증, 로깅, 인코딩 변환 등)을 수행한 뒤 다음 체인으로 요청을 전달하는 구조가 책임 연쇄 패턴을 기반으로 한다.
+  - 스프링 시큐리티의 `FilterChain` 역시 여러 보안 필터가 체인 형태로 연결되어 순차적으로 요청을 처리하는 책임 연쇄 패턴의 예시이다.
 - Ref.
 <br><br><br>
