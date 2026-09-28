@@ -536,3 +536,21 @@
 [NKLCWDT](https://github.com/NKLCWDT/cs/blob/main/Database/Lock.md),
 [Hyun / Log](https://hstory0208.tistory.com/entry/%EB%9D%BDLock%EC%9D%B4%EB%9E%80-Lock%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EA%B5%90%EC%B0%A9%EC%83%81%ED%83%9CDeadLock)
 <br><br><br>
+
+
+
+## 뷰(View)
+- 정리필요
+<br><br><br>
+
+
+
+## Redis
+- 정리필요
+<br><br><br>
+
+
+
+## MongoDB
+- 정리필요
+<br><br><br>
