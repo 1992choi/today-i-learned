@@ -1,10 +1,16 @@
 ## JSP vs Servlet
-- JSP
-  - html 내에 자바코드를 블록화하여 삽입한 것.
-  - JAVA in HTML.
-- Servlet
-  - Container가 이해할 수 있도록 구성된 자바코드로 이루어진 것.
-  - HTML in JAVA.
+- Servlet이란?
+  - 자바 코드로 작성되어 요청을 처리하는 클래스로, HTML을 만들려면 `System.out.println("<html>...")`처럼 자바 코드 안에 HTML 문자열을 직접 작성(HTML in JAVA)해야 한다.
+  - 로직 처리에는 강점이 있지만, 화면(View)을 구성하는 HTML을 자바 코드 문자열로 다뤄야 해서 화면 구조가 복잡할수록 가독성과 유지보수성이 크게 떨어진다.
+- JSP(JavaServer Pages)란?
+  - HTML 문서 안에 `<% %>`와 같은 스크립트릿 태그로 자바 코드를 블록화하여 삽입한 것(JAVA in HTML)으로, 화면을 표현하는 데 특화되어 있다.
+  - 실행되기 전, JSP 컨테이너(웹 컨테이너)에 의해 내부적으로 서블릿 클래스(.java)로 변환되고 컴파일된 뒤 실행된다. 즉 JSP도 결국 서블릿의 한 형태이다.
+- 등장 배경과 발전
+  - 초기에는 서블릿 하나로 로직 처리와 화면 출력을 모두 담당했으나, 화면이 복잡해질수록 자바 코드 속에 섞인 HTML이 가독성을 심하게 해쳤다.
+  - 이를 개선하기 위해 화면 표현에 특화된 JSP가 등장했지만, 반대로 JSP 안에 비즈니스 로직(자바 코드)까지 섞어 쓰다 보면 화면과 로직이 뒤섞이는 문제가 다시 발생했다.
+  - 이러한 문제를 해결하기 위해 로직 처리는 서블릿(Controller)이, 화면 표현은 JSP(View)가 각자의 역할만 담당하도록 분리한 것이 Model 2(MVC 패턴)이며, 현재 스프링 MVC와 같은 프레임워크의 기본 구조가 되었다.
+- 정리
+  - Servlet은 로직 처리에 특화되어 있고, JSP는 화면(View) 표현에 특화되어 있다는 점에서 역할이 다르며, 실무에서는 각자의 역할에 맞게 서블릿(Controller)과 JSP/템플릿 엔진(View)을 분리하여 사용하는 것이 일반적이다.
 - Ref.
 [effiRin](https://velog.io/@effirin/Servlet%EA%B3%BC-JSP%EC%97%90-%EB%8C%80%ED%95%B4)
 <br><br><br>
@@ -156,11 +162,50 @@
 
 ## 스프링 DI
 - DI란?
-  - 의존성 주입(DI)이란, 객체를 직접 생성하는 것이 아니라 외부에서 객체를 생성한 후 주입 시켜주는 방식을 뜻한다.
+  - 의존성 주입(Dependency Injection)이란, 객체가 필요로 하는 의존 객체(협력 객체)를 직접 생성하는 것이 아니라, 외부(스프링 컨테이너)에서 생성한 객체를 주입받아 사용하는 방식을 뜻한다.
+  - 객체 스스로 의존 관계를 결정하지 않고 외부에서 결정해주기 때문에, 제어의 역전(IoC)의 한 형태로 볼 수 있다.
 - 주입 방법
-  1. 필드 주입
-  2. 수정자 주입(= Setter 주입)
-  3. 생성자 주입
+  - 필드 주입(Field Injection)
+    - ``` java
+      @Service
+      public class OrderService {
+          @Autowired
+          private OrderRepository orderRepository;
+      }
+      ```
+    - 필드에 직접 `@Autowired`를 붙이는 가장 간단한 방식이지만, 외부에서 필드를 변경할 방법이 없어 순수 자바 코드(테스트 코드 등)에서 DI 컨테이너 없이 객체를 생성하고 의존성을 주입하기 어렵다는 단점이 있다.
+    - 필드가 final로 선언될 수 없어 불변성을 보장할 수 없고, 순환 참조(A가 B를 의존하고 B가 A를 의존)가 있어도 애플리케이션 구동 시점에는 에러가 나지 않고 런타임에 문제가 드러날 수 있어 권장되지 않는다.
+  - 수정자 주입(Setter Injection)
+    - ``` java
+      @Service
+      public class OrderService {
+          private OrderRepository orderRepository;
+
+          @Autowired
+          public void setOrderRepository(OrderRepository orderRepository) {
+              this.orderRepository = orderRepository;
+          }
+      }
+      ```
+    - setter 메서드를 통해 의존성을 주입하는 방식으로, 선택적인 의존관계이거나 주입받은 이후에도 값을 변경할 가능성이 있는 경우에 사용한다.
+    - 객체 생성 이후에도 외부에서 의존성을 임의로 변경할 수 있어, 불변성을 보장하기 어렵고 실수로 값이 바뀔 위험이 있다.
+  - 생성자 주입(Constructor Injection)
+    - ``` java
+      @Service
+      public class OrderService {
+          private final OrderRepository orderRepository;
+
+          // 생성자가 1개뿐이면 @Autowired 생략 가능
+          public OrderService(OrderRepository orderRepository) {
+              this.orderRepository = orderRepository;
+          }
+      }
+      ```
+    - 생성자를 통해 의존성을 주입하는 방식으로, 스프링 공식 문서에서도 권장하는 방식이다.
+- 생성자 주입이 권장되는 이유
+  - 객체 생성 시점에 필요한 의존성이 모두 주입되어야 하므로, 필드를 `final`로 선언할 수 있어 불변성을 보장할 수 있다.
+  - 의존성이 누락되면 컴파일 시점에 바로 알 수 있고, 순환 참조가 있는 경우 애플리케이션 구동 시점(컨텍스트 초기화 시점)에 바로 예외가 발생하여 문제를 빠르게 발견할 수 있다.
+  - 순수 자바 코드(단위 테스트 등)에서도 스프링 컨테이너 없이 `new OrderService(mockRepository)`처럼 생성자를 직접 호출해 필요한 의존성을 주입할 수 있어 테스트가 용이하다.
 - 장점
   - 코드의 재사용성, 유연성이 높아진다.
   - 객체 간 결합도가 낮기 때문에 한 클래스를 수정했을 때, 다른 클래스도 수정해야 하는 상황을 막아준다.
@@ -437,16 +482,22 @@
 
 
 ## Spring Filter vs Interceptor
-- Filter vs Interceptor
+- 요청 처리 흐름에서의 위치
   - ![image](https://github.com/1992choi/today-i-learned/assets/27760576/d84d0e77-2367-4f49-ae76-4c102288cd41)
-  - Filter
-    - 관리 컨테이너 : 웹 컨테이너
-    - DispatcherServlet 이전에 실행된다.
-    - 일반적으로 인코딩 변환 처리, XSS방어 등에 대한 처리로 사용된다.
-  - Interceptor
-    - 관리 컨테이너 : 스프링 컨테이너
-    - Dispatcher servlet에서 Handler(Controller)로 가기 전에 정보를 처리한다.
-    - 로그인 체크, 권한 체크, 프로그램 실행시간 계산, 로그 확인 등에 대한 처리로 사용된다.
+  - 클라이언트의 요청은 `Filter → DispatcherServlet → Interceptor → Controller` 순서로 전달되며, 응답은 역순으로 되돌아간다.
+- Filter
+  - 관리 컨테이너: 서블릿(웹) 컨테이너. 스프링 컨텍스트가 아닌 서블릿 스펙(`javax.servlet.Filter`)에 정의된 기술이므로, 스프링과 무관하게 순수 서블릿 환경에서도 사용할 수 있다.
+  - DispatcherServlet에 요청이 도달하기 이전(더 바깥쪽)에 동작하기 때문에, 스프링이 관리하는 요청(HandlerMapping, Controller 등)과 무관하게 모든 요청에 적용되는 전역적인 처리에 적합하다.
+  - `init()`, `doFilter()`, `destroy()` 메서드를 가지며, `doFilter()` 내부에서 `chain.doFilter(request, response)`를 호출해야 다음 필터(또는 서블릿)로 요청이 전달된다. 호출하지 않으면 요청이 그 지점에서 중단된다.
+  - 주로 인코딩 변환 처리, CORS 처리, XSS 방어, 요청/응답 로깅 등 스프링의 비즈니스 로직과 무관한 공통 처리에 사용된다.
+- Interceptor
+  - 관리 컨테이너: 스프링 컨테이너. `HandlerInterceptor` 인터페이스를 구현하며, 스프링 빈으로 등록되기 때문에 스프링이 관리하는 다른 빈(서비스 등)을 자유롭게 주입받아 사용할 수 있다.
+  - DispatcherServlet이 요청을 받은 이후, 실제 Handler(Controller)로 요청을 전달하기 전/후 시점에 개입한다.
+  - `preHandle()`(컨트롤러 실행 전, false를 반환하면 요청이 중단된다), `postHandle()`(컨트롤러 실행 후, View 렌더링 전), `afterCompletion()`(View 렌더링까지 완료된 후, 예외 발생 여부와 무관하게 항상 호출됨) 세 시점에 로직을 끼워 넣을 수 있다.
+  - 어떤 Handler(Controller)로 요청이 전달되는지 알고 있기 때문에, 특정 컨트롤러/메서드 단위로 더 세밀하게 적용 여부를 설정할 수 있다.
+  - 주로 로그인 체크, 권한 체크, API 실행 시간 측정, 공통 로깅 등 스프링 비즈니스 로직과 연관된 공통 관심사 처리에 사용된다.
+- 어떤 경우에 무엇을 사용하는가?
+  - 서블릿 컨테이너 레벨에서 처리해야 하거나 스프링과 무관하게 항상 적용되어야 하는 기능(인코딩, CORS 등)은 Filter를, 스프링이 관리하는 빈이나 컨트롤러 정보에 접근해야 하는 기능(인증/인가, 로깅 등)은 Interceptor를 사용하는 것이 일반적이다.
 - Ref.
 [망나니개발자](https://mangkyu.tistory.com/173)
 <br><br><br>
@@ -793,13 +844,21 @@
 
 ## CI/CD
 - CI/CD란?
-  - CI/CD란 지속적 통합과 지속적 배포가 통합된 방식을 일컫는다.
-- CI(Continuous Integration)
-  - 어플리케이션에 대한 새로운 코드 변경사항이 주기적으로 빌드 및 테스트되어 공통 저장소에 통합되는 개념이다.
-  - 다수의 개발자가 형상관리 툴을 공유하는 경우라면, 자동화된 빌드 및 테스트는 원천 소스코드의 충돌을 방어할 수 있는 장점을 가지고 있다.
-- CD(Continuous Delivery 또는 Continuous Deployment)
-  - 배포 자동화 과정을 뜻한다.
-  - CI가 새로운 소스코드의 빌드, 테스트, 병합을 의미한다면 CD는 개발자의 변경 사항을 넘어 고객의 환경까지 릴리즈 되는 것을 의미한다.
+  - CI(지속적 통합)와 CD(지속적 제공/배포)를 합쳐 부르는 말로, 코드 변경 사항을 자주 통합하고 자동화된 과정을 통해 안정적으로 릴리즈까지 이어지도록 하는 개발 문화이자 파이프라인을 뜻한다.
+- CI(Continuous Integration, 지속적 통합)
+  - 여러 개발자가 작성한 코드 변경 사항을 하루에도 여러 번, 자주 공통 저장소(메인 브랜치)에 병합하고, 그때마다 자동으로 빌드와 테스트를 수행하는 것을 의미한다.
+  - 병합 주기가 짧을수록 코드 충돌이나 버그를 조기에(작은 단위로) 발견할 수 있어, 뒤늦게 대규모로 충돌이 발생하는 것을 방지할 수 있다.
+  - 일반적인 단계: 코드 커밋/푸시 → 자동 빌드 → 정적 분석(Lint) → 단위/통합 테스트 → 빌드 아티팩트(jar, war, Docker 이미지 등) 생성.
+- CD(Continuous Delivery / Continuous Deployment, 지속적 제공/배포)
+  - 이름은 같은 CD지만 두 용어는 "사람의 최종 승인이 개입하는지 여부"에서 차이가 있다.
+  - Continuous Delivery(지속적 제공): CI를 통과한 빌드 산출물을 언제든지 배포할 수 있는 상태로 만들어두되, 실제 운영 환경으로의 배포는 사람이 수동으로 승인(버튼 클릭 등)해야 진행되는 방식이다.
+  - Continuous Deployment(지속적 배포): 사람의 개입 없이, CI를 통과한 모든 변경 사항이 테스트를 거쳐 자동으로 운영 환경까지 배포되는 방식이다. 배포 자동화 수준이 가장 높지만, 그만큼 테스트 신뢰도가 충분히 확보되어야 안전하게 적용할 수 있다.
+- CI/CD 파이프라인과 도구
+  - 파이프라인(Pipeline)은 코드 커밋부터 운영 배포까지의 일련의 자동화된 단계를 정의한 것이다.
+  - 대표적인 도구로는 Jenkins, GitHub Actions, GitLab CI, CircleCI, ArgoCD(GitOps 기반 CD) 등이 있다.
+- CI/CD 도입의 이점
+  - 코드 통합/테스트/배포가 자동화되어 반복적인 수작업을 줄이고, 사람의 실수로 인한 배포 오류 가능성을 낮출 수 있다.
+  - 변경 사항을 자주, 작은 단위로 배포하게 되어 문제가 발생했을 때 원인 파악과 롤백이 더 쉬워진다.
 - Ref.
 [jung_ho9 개발일지](https://velog.io/@leejungho9/CICD-%EB%9E%80)
 <br><br><br>
