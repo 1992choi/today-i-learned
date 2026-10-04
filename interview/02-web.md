@@ -1315,3 +1315,111 @@
 [dev_hwan.log](https://velog.io/@ch200203/MSA-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C%EC%9D%98-%EB%B6%84%EC%82%B0-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B4%80%EB%A6%AC2PC-SAGA-%ED%8C%A8%ED%84%B4),
 [RIDI](https://ridicorp.com/story/transactional-outbox-pattern-ridi/)
 <br><br><br>
+
+
+
+## 스프링과 스프링 부트의 차이
+- 정리필요
+<br><br><br>
+
+
+
+## 스프링 부트의 자동 설정(Auto Configuration)
+- 정리필요
+<br><br><br>
+
+
+
+## 컴포넌트 스캔과 @Component, @Bean
+- 정리필요
+<br><br><br>
+
+
+
+## 빈 생명주기(Bean Lifecycle)와 콜백
+- 정리필요
+<br><br><br>
+
+
+
+## 전역 예외 처리 (@ControllerAdvice와 @ExceptionHandler)
+- 정리필요
+<br><br><br>
+
+
+
+## 요청 값 검증 (Bean Validation, @Valid와 @Validated)
+- 정리필요
+<br><br><br>
+
+
+
+## DTO, VO, Entity의 차이
+- 정리필요
+<br><br><br>
+
+
+
+## 계층형 아키텍처와 헥사고날 아키텍처
+- 정리필요
+<br><br><br>
+
+
+
+## [JPA] 연관관계 매핑과 연관관계의 주인
+- 정리필요
+<br><br><br>
+
+
+
+## [JPA] 기본키 생성 전략 (IDENTITY, SEQUENCE, TABLE)
+- 정리필요
+<br><br><br>
+
+
+
+## [JPA] 영속성 전이(Cascade)와 고아 객체(orphanRemoval)
+- 정리필요
+<br><br><br>
+
+
+
+## 커넥션 풀(Connection Pool)과 HikariCP
+- 정리필요
+<br><br><br>
+
+
+
+## 웹 보안 취약점 (XSS, CSRF, SQL Injection)
+- 정리필요
+<br><br><br>
+
+
+
+## 멱등성(Idempotency)과 API 재시도
+- 정리필요
+<br><br><br>
+
+
+
+## 세션 클러스터링과 Stateless 서버
+- 정리필요
+<br><br><br>
+
+
+
+## 메시지 큐와 Kafka
+- 정리필요
+<br><br><br>
+
+
+
+## REST, GraphQL, gRPC 비교
+- 정리필요
+<br><br><br>
+
+
+
+## 분산 락(Distributed Lock)
+- 정리필요
+<br><br><br>

@@ -1537,3 +1537,69 @@
   - Async가 붙은 메서드(thenApplyAsync 등)는 별도의 스레드(기본적으로 ForkJoinPool.commonPool())에서 실행되며, Executor를 직접 지정할 수도 있다.
 - Ref.
 <br><br><br>
+
+
+
+## Enum(열거형)
+- 정리필요
+<br><br><br>
+
+
+
+## 불변 객체(Immutable Object)
+- 정리필요
+<br><br><br>
+
+
+
+## 중첩 클래스와 내부 클래스(Nested Class, Inner Class)
+- 정리필요
+<br><br><br>
+
+
+
+## Comparable과 Comparator
+- 정리필요
+<br><br><br>
+
+
+
+## 제네릭의 타입 소거(Type Erasure)와 와일드카드
+- 정리필요
+<br><br><br>
+
+
+
+## 자바 컴파일 과정과 클래스 로더(Class Loader)
+- 정리필요
+<br><br><br>
+
+
+
+## 참조 유형(Strong, Soft, Weak, Phantom)과 메모리 누수
+- 정리필요
+<br><br><br>
+
+
+
+## java.util.concurrent와 원자적 연산(Atomic, CAS)
+- 정리필요
+<br><br><br>
+
+
+
+## 가상 스레드(Virtual Thread)
+- 정리필요
+<br><br><br>
+
+
+
+## Record와 Sealed Class
+- 정리필요
+<br><br><br>
+
+
+
+## 자바 버전별 주요 변화 (Java 8 / 11 / 17 / 21)
+- 정리필요
+<br><br><br>

@@ -344,3 +344,31 @@
   - 컨텐츠 협상으로 인해 같은 URI라도 클라이언트에 따라 다른 응답이 내려갈 수 있으므로, 서버는 응답에 `Vary` 헤더(예: `Vary: Accept-Language`)를 포함시켜, 캐시 서버나 브라우저가 어떤 요청 헤더 값에 따라 캐시를 구분해서 저장해야 하는지 알려준다.
 - Ref.
 <br><br><br>
+
+## HTTP 버전별 특징 (HTTP/1.0, 1.1, 2, 3)
+- 정리필요
+<br><br><br>
+
+## TCP 연결 상태와 TIME_WAIT
+- 정리필요
+<br><br><br>
+
+## 포워드 프록시와 리버스 프록시
+- 정리필요
+<br><br><br>
+
+## 서브네팅과 CIDR, DHCP
+- 정리필요
+<br><br><br>
+
+## MTU, MSS와 IP 단편화
+- 정리필요
+<br><br><br>
+
+## 네트워크 공격과 방어 (DDoS, SYN Flooding, 스푸핑, 스니핑)
+- 정리필요
+<br><br><br>
+
+## 네트워크 트러블슈팅 명령어 (ping, traceroute, netstat, tcpdump)
+- 정리필요
+<br><br><br>
