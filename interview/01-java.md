@@ -1541,65 +1541,331 @@
 
 
 ## Enum(열거형)
-- 정리필요
+- Enum이란?
+  - 서로 관련 있는 상수(constant)들의 집합을 하나의 타입으로 정의할 수 있는 특수한 클래스이다. `enum` 키워드로 선언한다.
+  - 내부적으로는 컴파일 시점에 `java.lang.Enum`을 상속하는 클래스로 변환되며, 각 열거 상수는 해당 Enum 타입의 유일한 인스턴스(싱글톤)이다.
+- 일반 상수(static final int)와의 차이
+  - 단순 int 상수는 타입 안전성이 없어, 전혀 다른 의미를 가진 정수값을 실수로 전달해도 컴파일 에러가 발생하지 않는다.
+  - Enum은 하나의 타입으로 취급되기 때문에, 정의되지 않은 값은 할당할 수 없어 컴파일 시점에 오류를 잡을 수 있다(타입 안전성, Type-Safety).
+- 예제코드
+  ``` java
+  public enum DayOfWeek {
+      MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+  }
+
+  DayOfWeek day = DayOfWeek.MONDAY;
+
+  switch (day) {
+      case MONDAY -> System.out.println("월요일");
+      default -> System.out.println("기타 요일");
+  }
+  ```
+- 필드와 메서드를 가지는 Enum
+  - Enum도 일반 클래스처럼 필드, 생성자, 메서드를 가질 수 있으며, 상수마다 필드 값을 다르게 초기화할 수 있다.
+  - ``` java
+    public enum Fruit {
+        APPLE(1000), BANANA(2000);
+
+        private final int price;
+
+        Fruit(int price) {
+            this.price = price;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+    }
+    ```
+  - 상수마다 다른 동작이 필요하다면, 추상 메서드를 선언하고 각 상수에서 이를 구현하는 방식(Constant-Specific Method Implementation)으로도 사용할 수 있다.
+- 주요 메서드
+  - `values()` : 정의된 모든 상수를 배열로 반환한다.
+  - `valueOf(String)` : 문자열과 일치하는 상수를 반환하며, 일치하는 상수가 없으면 IllegalArgumentException이 발생한다.
+  - `ordinal()` : 상수가 정의된 순서(0부터 시작)를 반환한다.
+  - `name()` : 상수의 이름을 문자열로 반환한다.
+- EnumMap과 EnumSet
+  - 일반 HashMap/HashSet 대신 Enum 전용으로 제공되는 컬렉션으로, 내부적으로 배열을 사용하기 때문에 성능과 메모리 효율이 더 좋다.
+- Ref.
 <br><br><br>
 
 
 
 ## 불변 객체(Immutable Object)
-- 정리필요
+- 불변 객체란?
+  - 객체가 생성된 이후에는 내부 상태(필드 값)를 변경할 수 없는 객체를 의미한다. 값을 바꾸려면 기존 객체를 수정하는 것이 아니라, 변경된 값을 가진 새로운 객체를 생성해야 한다.
+  - String, Integer 등 Wrapper 클래스, LocalDate/LocalDateTime 등이 대표적인 불변 객체이다.
+- 불변 객체를 만드는 방법
+  - 클래스를 `final`로 선언하여 상속을 막는다. (하위 클래스에서 가변 동작을 추가하는 것을 방지)
+  - 모든 필드를 `private final`로 선언한다.
+  - Setter를 제공하지 않고, 값 변경이 필요한 경우 변경된 값을 가진 새로운 객체를 반환하는 메서드를 제공한다.
+  - 필드가 배열이나 컬렉션, 다른 가변 객체를 참조한다면, 생성자와 Getter에서 방어적 복사(Defensive Copy)를 수행해 외부에서 내부 상태를 변경할 수 없도록 한다.
+- 예제코드
+  ``` java
+  public final class Point {
+      private final int x;
+      private final int y;
+
+      public Point(int x, int y) {
+          this.x = x;
+          this.y = y;
+      }
+
+      public Point withX(int newX) { // 값 변경이 필요하면 새 객체를 반환
+          return new Point(newX, this.y);
+      }
+  }
+  ```
+- 불변 객체의 장점
+  - Thread-Safe : 상태가 변하지 않으므로 여러 스레드가 동시에 접근해도 별도의 동기화 없이 안전하게 공유할 수 있다.
+  - 예측 가능성 : 객체가 생성된 이후 상태가 바뀌지 않으므로, 어디서 값이 바뀌었는지 추적할 필요가 없어 디버깅이 쉽다.
+  - 캐싱과 재사용에 유리하며, HashMap의 key처럼 값이 바뀌면 안 되는 용도로도 안전하게 사용할 수 있다.
+  - 실패 원자성(Failure Atomicity) : 생성 중 예외가 발생해도 기존 객체 상태에는 영향이 없어 일관성이 깨지지 않는다.
+- 단점
+  - 값이 바뀔 때마다 새로운 객체를 생성해야 하므로, 변경이 매우 빈번한 경우에는 메모리 사용량과 GC 부담이 늘어날 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## 중첩 클래스와 내부 클래스(Nested Class, Inner Class)
-- 정리필요
+- 중첩 클래스(Nested Class)란?
+  - 클래스 내부에 선언된 클래스를 의미하며, 관련된 클래스를 논리적으로 그룹화하고 캡슐화를 강화하기 위해 사용한다.
+  - 정적 여부에 따라 static nested class와 (non-static) inner class로 나뉜다.
+- 정적 중첩 클래스(Static Nested Class)
+  - `static` 키워드가 붙은 중첩 클래스로, 외부 클래스의 인스턴스 없이도 생성할 수 있다. (`Outer.Inner`)
+  - 외부 클래스의 인스턴스 멤버에는 접근할 수 없고, static 멤버에만 접근할 수 있다.
+  - 예: `Map.Entry`, 빌더 패턴에서 사용하는 정적 Builder 클래스 등.
+- 내부 클래스(Inner Class)
+  - static이 붙지 않은 중첩 클래스로, 바깥 클래스의 인스턴스에 종속된다. 내부 클래스를 생성하려면 먼저 바깥 클래스의 인스턴스가 필요하다. (`outer.new Inner()`)
+  - 바깥 클래스의 인스턴스 멤버(필드, 메서드)에 자유롭게 접근할 수 있는데, 내부적으로 바깥 인스턴스에 대한 참조를 암묵적으로 가지고 있기 때문이다.
+  - 이 암묵적 참조 때문에 내부 클래스 인스턴스가 바깥 클래스 인스턴스보다 오래 살아있으면 메모리 누수로 이어질 수 있다.
+- 지역 클래스(Local Class)
+  - 메서드나 블록 내부에서 선언되는 클래스로, 선언된 블록 안에서만 사용할 수 있다.
+- 익명 클래스(Anonymous Class)
+  - 이름 없이 클래스를 선언하면서 동시에 인스턴스를 생성하는 방식으로, 주로 인터페이스나 추상 클래스를 즉석에서 구현할 때 사용한다.
+  - ``` java
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("실행");
+        }
+    };
+    ```
+  - Java 8 이후로는 함수형 인터페이스를 구현하는 익명 클래스는 람다식으로 대체되는 경우가 많다.
+- Ref.
 <br><br><br>
 
 
 
 ## Comparable과 Comparator
-- 정리필요
+- Comparable이란?
+  - 객체 자신의 기본적인 정렬 기준(자연 순서, Natural Ordering)을 정의하기 위한 인터페이스로, `compareTo(T o)` 메서드를 구현한다.
+  - 정렬 기준을 클래스 자체에 구현하므로, 하나의 클래스는 하나의 정렬 기준만 가질 수 있다.
+  - ``` java
+    public class Member implements Comparable<Member> {
+        private int age;
+
+        @Override
+        public int compareTo(Member other) {
+            return Integer.compare(this.age, other.age); // 나이 기준 오름차순
+        }
+    }
+    ```
+- Comparator란?
+  - 클래스 외부에서 별도의 정렬 기준을 정의하기 위한 인터페이스로, `compare(T o1, T o2)` 메서드를 구현한다.
+  - 하나의 클래스에 대해 여러 가지 정렬 기준을 자유롭게 만들어 상황에 맞게 사용할 수 있다.
+  - ``` java
+    Comparator<Member> byName = Comparator.comparing(Member::getName);
+    Comparator<Member> byAgeDesc = Comparator.comparing(Member::getAge).reversed();
+    Comparator<Member> byAgeThenName = Comparator.comparing(Member::getAge).thenComparing(Member::getName);
+
+    members.sort(byAgeThenName);
+    ```
+- compareTo / compare의 반환값
+  - 음수 : 첫 번째 객체가 더 작음 / 0 : 같음 / 양수 : 첫 번째 객체가 더 큼. 반환값의 절대적인 크기는 의미가 없고 부호만 의미를 가진다.
+- Comparable vs Comparator
+  - Comparable은 `java.lang` 패키지, Comparator는 `java.util` 패키지에 속한다.
+  - Comparable은 정렬 기준을 클래스 내부에 직접 구현해야 하므로 이미 작성된 클래스(외부 라이브러리 클래스 등)에는 적용하기 어렵지만, Comparator는 외부에서 정의하므로 기존 클래스에도 자유롭게 다양한 정렬 기준을 적용할 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## 제네릭의 타입 소거(Type Erasure)와 와일드카드
-- 정리필요
+- 타입 소거(Type Erasure)란?
+  - 제네릭은 컴파일 시점에만 타입 검사를 수행하고, 컴파일이 끝나면 바이트코드에서는 제네릭 타입 정보가 제거(소거)되어 raw type으로 변환된다.
+  - 예를 들어 `List<String>`과 `List<Integer>`는 컴파일 후에는 모두 `List`로 동일하게 처리되며, 런타임에는 어떤 타입으로 선언되었는지 알 수 없다.
+  - 자바 5 이전부터 존재하던 코드(제네릭이 없던 레거시 코드)와의 하위 호환성을 유지하기 위해 이런 방식으로 설계되었다.
+- 타입 소거로 인한 제약
+  - 런타임에 타입 정보가 없으므로 `new T()`처럼 제네릭 타입 파라미터로 인스턴스를 직접 생성할 수 없고, `instanceof T` 같은 검사도 할 수 없다.
+  - 제네릭 타입의 배열(`new T[10]`)도 직접 생성할 수 없다.
+- 와일드카드(Wildcard)란?
+  - 제네릭 타입 파라미터의 구체적인 타입을 알 수 없거나, 특정 범위의 타입을 허용하고 싶을 때 `?`를 사용하는 문법이다.
+- Upper Bounded Wildcard (`? extends T`)
+  - T 또는 T의 하위 타입만 허용한다. 해당 타입의 값을 꺼내서 사용(읽기, Producer)하는 데 적합하다.
+  - 리스트에 값을 추가(쓰기)하는 것은 제한되는데, 실제로 어떤 하위 타입이 들어 있는지 알 수 없어 타입 안전성이 깨질 수 있기 때문이다.
+- Lower Bounded Wildcard (`? super T`)
+  - T 또는 T의 상위 타입만 허용한다. 해당 타입의 값을 리스트에 추가(쓰기, Consumer)하는 데 적합하다.
+- PECS 원칙(Producer-Extends, Consumer-Super)
+  - 데이터를 꺼내서 사용(생산자 역할)한다면 `extends`를, 데이터를 넣는(소비자 역할) 용도라면 `super`를 사용하라는 가이드라인이다.
+  - ``` java
+    void copy(List<? extends Number> src, List<? super Number> dest) {
+        for (Number n : src) { // src는 읽기(Producer)만 가능
+            dest.add(n);       // dest는 쓰기(Consumer)만 가능
+        }
+    }
+    ```
+- Ref.
 <br><br><br>
 
 
 
 ## 자바 컴파일 과정과 클래스 로더(Class Loader)
-- 정리필요
+- 자바 프로그램 실행 과정
+  - 1. 개발자가 작성한 `.java` 소스 파일을 `javac` 컴파일러가 컴파일하여, JVM이 이해할 수 있는 바이트코드(`.class` 파일)로 변환한다.
+  - 2. 클래스 로더가 `.class` 파일을 읽어 JVM의 메모리(Runtime Data Area)에 적재한다.
+  - 3. 실행 엔진(Execution Engine)이 적재된 바이트코드를 인터프리터 또는 JIT 컴파일러를 통해 실제 기계어로 변환하여 실행한다.
+- 클래스 로더(Class Loader)의 종류
+  - Bootstrap Class Loader : JVM 구동 시 가장 먼저 동작하며, `java.lang` 등 JDK의 핵심 클래스를 로딩한다. 네이티브 코드로 구현되어 있다.
+  - Platform(Extension) Class Loader : 확장 라이브러리를 로딩한다.
+  - Application(System) Class Loader : 애플리케이션의 classpath에 있는 클래스를 로딩한다. 개발자가 작성한 대부분의 클래스는 이 로더가 담당한다.
+  - 사용자 정의 클래스 로더 : `ClassLoader`를 상속해 직접 구현할 수 있으며, 특정 경로나 네트워크에서 클래스를 동적으로 로딩할 때 사용한다. (예: 플러그인 시스템, Tomcat의 웹 애플리케이션별 클래스 로더)
+- 클래스 로더 위임 모델(Parent Delegation Model)
+  - 클래스 로더가 클래스를 로딩할 때, 먼저 자신이 직접 로딩하지 않고 부모 클래스 로더에게 위임하여 부모가 먼저 로딩을 시도하고, 부모가 찾지 못한 경우에만 자신이 로딩하는 방식이다.
+  - 이 방식을 통해 `java.lang.String` 같은 핵심 클래스를 사용자가 임의로 재정의해서 덮어쓰는 것을 방지하여 보안성과 일관성을 확보할 수 있다.
+- 클래스 로딩 단계
+  - Loading : 클래스 파일을 읽어 메모리에 적재한다.
+  - Linking : Verify(바이트코드 유효성 검증) → Prepare(static 변수를 위한 메모리 할당 및 기본값 초기화) → Resolve(심볼릭 레퍼런스를 실제 메모리 참조로 변환, 선택적) 단계로 구성된다.
+  - Initialization : static 변수에 실제 값을 할당하고, static 초기화 블록을 실행한다.
+  - 클래스는 처음 실제로 사용되는 시점에 로딩되는 지연 로딩(Lazy Loading) 방식을 따른다.
+- Ref.
 <br><br><br>
 
 
 
 ## 참조 유형(Strong, Soft, Weak, Phantom)과 메모리 누수
-- 정리필요
+- 강한 참조(Strong Reference)
+  - 일반적으로 사용하는 참조 방식이다. (`Object obj = new Object();`) 해당 객체를 가리키는 강한 참조가 하나라도 남아있으면, GC는 절대 해당 객체를 수거하지 않는다.
+- 소프트 참조(Soft Reference)
+  - `SoftReference`로 감싼 객체는, 강한 참조가 없어진 이후에도 메모리가 충분하면 바로 수거되지 않고 유지된다. 메모리가 부족해지는 시점에 GC가 회수 대상으로 삼는다.
+  - 캐시처럼 "가능하면 유지하되, 메모리가 부족하면 비워도 되는" 용도에 적합하다.
+- 약한 참조(Weak Reference)
+  - `WeakReference`로 감싼 객체는, 강한 참조가 없어지면 다음 GC 사이클에서 메모리 상태와 무관하게 바로 수거 대상이 된다.
+  - `WeakHashMap`은 key를 약한 참조로 보관하여, 외부에서 key를 더 이상 참조하지 않으면 해당 엔트리가 자동으로 제거된다.
+- 팬텀 참조(Phantom Reference)
+  - `PhantomReference`로 감싼 객체는 `finalize()`가 호출된 이후에도 메모리에서 바로 제거되지 않고, `get()`은 항상 null을 반환한다.
+  - 객체가 실제로 메모리에서 제거되기 직전에 추가적인 정리 작업(리소스 해제 등)을 수행하기 위해 `ReferenceQueue`와 함께 사용된다.
+- 자바에서 메모리 누수가 발생하는 대표적인 사례
+  - Static 컬렉션에 객체를 계속 추가만 하고 제거하지 않는 경우 : static 필드는 애플리케이션 종료 전까지 GC Root로 간주되어, 참조된 객체가 계속 수거되지 않는다.
+  - ThreadLocal을 사용 후 `remove()`하지 않는 경우 : 특히 스레드 풀 환경에서는 스레드가 재사용되므로, 이전 요청에서 설정한 값이 계속 남아 메모리를 차지하거나 다음 요청에 영향을 줄 수 있다.
+  - 리스너, 콜백 등을 등록만 하고 해제하지 않는 경우 : 등록된 객체를 외부에서 계속 강한 참조로 들고 있어 GC가 수거하지 못한다.
+  - 이런 상황에서 WeakReference(또는 WeakHashMap)를 활용하면, 외부에서 더 이상 사용하지 않는 객체가 자동으로 GC 대상이 되도록 할 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## java.util.concurrent와 원자적 연산(Atomic, CAS)
-- 정리필요
+- java.util.concurrent 패키지 개요
+  - 멀티스레드 환경에서 안전하고 효율적으로 동시성을 다루기 위해 Java 5부터 제공되는 패키지이다.
+  - 동시성 컬렉션(ConcurrentHashMap, CopyOnWriteArrayList 등), 원자적 변수(Atomic 클래스), 명시적 락(ReentrantLock 등), 동기화 도구(CountDownLatch, Semaphore 등), 실행 프레임워크(ExecutorService)를 포함한다.
+- CAS(Compare-And-Swap)란?
+  - "현재 메모리의 값이 내가 예상한 값(expected)과 같다면, 새로운 값(new)으로 교체한다"는 동작을 하나의 원자적인 CPU 명령어로 수행하는 방식이다.
+  - synchronized처럼 락을 걸어 다른 스레드를 블로킹하는 대신, 값을 비교하고 교체하는 과정이 실패하면 재시도하는 방식(낙관적 락, Optimistic Lock)으로 동작해 락 없이도(Lock-Free) 동시성을 보장할 수 있다.
+- Atomic 클래스
+  - `AtomicInteger`, `AtomicLong`, `AtomicReference` 등은 내부적으로 CAS 연산을 이용해 해당 값에 대한 연산(증가, 비교 후 교체 등)의 원자성을 보장한다.
+  - ``` java
+    AtomicInteger counter = new AtomicInteger(0);
+
+    counter.incrementAndGet();      // 원자적으로 1 증가 후 값 반환
+    counter.compareAndSet(1, 10);   // 현재 값이 1이면 10으로 교체
+    ```
+  - synchronized를 사용한 동기화보다 가벼운 경우가 많은데, 스레드가 대기(블로킹)하지 않고 CPU 연산만으로 처리되기 때문이다. 단, 경쟁(Contention)이 매우 심한 환경에서는 계속되는 재시도 때문에 오히려 성능이 저하될 수 있다.
+- CAS의 한계 - ABA 문제
+  - 어떤 스레드가 값을 A → B → A로 변경했다면, 다른 스레드 입장에서는 값이 여전히 A이기 때문에 중간에 변경이 있었다는 사실을 알아채지 못하고 CAS가 성공해버리는 문제이다.
+  - `AtomicStampedReference`는 값과 함께 버전(스탬프)을 같이 비교함으로써, 값이 같아도 버전이 다르면 변경이 있었음을 감지해 ABA 문제를 해결한다.
+- Ref.
 <br><br><br>
 
 
 
 ## 가상 스레드(Virtual Thread)
-- 정리필요
+- 가상 스레드란?
+  - Java 21에서 정식으로 도입된(Project Loom) 경량 스레드로, JVM이 자체적으로 관리하며 운영체제 스레드(플랫폼 스레드)보다 훨씬 적은 비용으로 생성하고 실행할 수 있다.
+  - 수백만 개 단위로 생성해도 큰 부담이 없을 정도로 가벼워, 요청마다 스레드를 하나씩 할당하는 전통적인 방식(Thread-per-Request)을 그대로 유지하면서도 높은 처리량을 얻을 수 있도록 해준다.
+- 플랫폼 스레드와의 관계 (M:N 스케줄링)
+  - 기존 플랫폼 스레드(Platform Thread)는 OS 스레드와 1:1로 매핑되어, 스레드를 많이 생성하면 OS 자원과 컨텍스트 스위칭 비용이 급격히 커진다.
+  - 가상 스레드는 소수의 플랫폼 스레드(캐리어 스레드, Carrier Thread) 위에서 다수의 가상 스레드가 번갈아 실행되는 M:N 구조를 가진다.
+  - 가상 스레드가 블로킹 I/O 작업(네트워크, 파일 등)을 만나면, 캐리어 스레드를 점유한 채로 대기하는 것이 아니라 캐리어 스레드에서 내려오고(Unmount), 캐리어 스레드는 다른 가상 스레드를 실행할 수 있게 된다. I/O가 완료되면 가상 스레드는 어딘가의 캐리어 스레드에 다시 마운트되어 이어서 실행된다.
+- 사용 방법
+  - ``` java
+    Thread.ofVirtual().start(() -> System.out.println("virtual thread"));
+
+    try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+        executor.submit(() -> doWork());
+    }
+    ```
+  - 기존 코드를 블로킹 스타일로 그대로 작성해도, 가상 스레드 위에서 실행하면 WebFlux 같은 리액티브 프로그래밍 없이도 높은 동시성을 얻을 수 있다는 것이 핵심 장점이다.
+- 주의사항 - Pinning
+  - `synchronized` 블록/메서드 안에서 블로킹 작업을 수행하면, 가상 스레드가 캐리어 스레드에서 내려오지 못하고 캐리어 스레드를 그대로 점유(Pinning)하게 되어 가상 스레드의 이점이 사라진다.
+  - 이런 경우 `synchronized` 대신 `ReentrantLock` 같은 `java.util.concurrent.locks` 기반의 락을 사용하는 것이 권장된다.
+  - CPU 바운드(연산 집약적) 작업에는 가상 스레드가 플랫폼 스레드 대비 큰 이점이 없으며, 주로 I/O 바운드(대기 시간이 긴) 작업에 효과적이다.
+- Ref.
 <br><br><br>
 
 
 
 ## Record와 Sealed Class
-- 정리필요
+- Record란?
+  - Java 16부터 정식으로 제공되는 기능으로, 데이터를 담는 불변 객체를 간결하게 선언할 수 있도록 해준다.
+  - 필드(컴포넌트)를 선언하면, 생성자, 각 필드에 대한 접근자(단 `getX()`가 아닌 `x()` 형태), `equals()`, `hashCode()`, `toString()`을 컴파일러가 자동으로 생성해준다.
+  - ``` java
+    public record Point(int x, int y) {}
+
+    Point p = new Point(1, 2);
+    System.out.println(p.x());    // 1
+    System.out.println(p);        // Point[x=1, y=2]
+    ```
+  - 모든 필드가 `private final`로 선언되며, 별도의 Setter를 제공하지 않아 본질적으로 불변 객체이다. 컴팩트 생성자(Compact Constructor)를 통해 생성 시점에 유효성 검증이나 값 보정을 할 수 있다.
+  - DTO, 값 객체(Value Object)처럼 데이터 전달이 목적인 클래스를 작성할 때 보일러플레이트 코드를 크게 줄여준다.
+- Sealed Class란?
+  - Java 17부터 정식으로 제공되는 기능으로, 클래스나 인터페이스를 상속/구현할 수 있는 하위 타입을 `permits` 키워드로 명시적으로 제한한다.
+  - ``` java
+    public sealed interface Shape permits Circle, Square {}
+
+    public final class Circle implements Shape { }
+    public final class Square implements Shape { }
+    ```
+  - 허용된 하위 타입은 `final`, `sealed`(다시 하위 타입을 제한), `non-sealed`(제한을 풀어 자유롭게 상속 허용) 중 하나로 선언되어야 한다.
+  - 기존에는 상속을 막으려면 `final`을 쓰거나, 아예 확장을 자유롭게 허용하는 방법뿐이었는데, Sealed Class는 "정해진 몇 가지 타입으로만 확장을 허용"하는 중간 지점을 제공한다.
+- Record, Sealed Class와 패턴 매칭의 결합
+  - 하위 타입이 `permits`로 명확히 제한되어 있기 때문에, `switch` 표현식에서 모든 하위 타입을 다루면 별도의 `default` 분기 없이도 컴파일러가 완전성(Exhaustiveness)을 검증해줄 수 있다.
+  - Record는 Record 패턴(Java 21)을 통해 `case Circle(var radius)`처럼 필드를 바로 분해(Destructuring)해서 꺼내 쓸 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## 자바 버전별 주요 변화 (Java 8 / 11 / 17 / 21)
-- 정리필요
+- Java 8 (2014, LTS)
+  - 람다식(Lambda Expression)과 함수형 인터페이스를 도입하여 함수형 프로그래밍 스타일을 지원하기 시작했다.
+  - 스트림 API(Stream API)를 통해 컬렉션 데이터를 선언형으로 처리할 수 있게 되었다.
+  - `Optional`을 도입해 null을 다루는 방식을 개선했고, 인터페이스에 `default`/`static` 메서드를 추가할 수 있게 되었다.
+  - 기존 `Date`, `Calendar`의 문제(가변 객체, 스레드 불안전, 복잡한 API)를 개선한 `java.time` 패키지(LocalDate, LocalDateTime 등)가 추가되었다.
+- Java 11 (2018, LTS)
+  - `var`를 이용한 지역 변수 타입 추론(Java 10에서 도입)이 안정적으로 자리잡았다.
+  - 표준 HTTP Client API가 추가되어, 외부 라이브러리 없이도 비동기 HTTP 통신이 가능해졌다.
+  - String에 `isBlank()`, `strip()`, `repeat()` 등 편의 메서드가 추가되었다.
+  - `java` 명령어로 별도 컴파일 없이 단일 소스 파일을 바로 실행할 수 있게 되었다.
+- Java 17 (2021, LTS)
+  - Sealed Class가 정식으로 도입되어 클래스 상속 범위를 제한할 수 있게 되었다.
+  - Record(Java 16에서 정식 도입)를 이용해 불변 데이터 클래스를 간결하게 선언할 수 있게 되었다.
+  - 텍스트 블록(Text Block, Java 15에서 정식 도입)으로 여러 줄의 문자열(JSON, SQL 등)을 가독성 있게 작성할 수 있게 되었다.
+  - switch 표현식에 대한 패턴 매칭(Pattern Matching for switch)이 Preview로 제공되기 시작했다.
+- Java 21 (2023, LTS)
+  - 가상 스레드(Virtual Thread)가 정식으로 도입되어, 적은 비용으로 대량의 동시 작업을 처리할 수 있게 되었다.
+  - switch에 대한 패턴 매칭과 Record 패턴이 정식으로 도입되어, 타입에 따른 분기 처리와 Record 필드 분해를 간결하게 표현할 수 있게 되었다.
+  - 구조화된 동시성(Structured Concurrency)이 Preview로 제공되어, 여러 하위 작업을 하나의 단위로 묶어 생명주기를 관리할 수 있게 되었다.
+  - 순차 컬렉션(Sequenced Collection) API가 추가되어, 순서가 있는 컬렉션에서 첫/마지막 원소 접근 및 역순 뷰를 일관된 방식으로 제공한다.
+- Ref.
 <br><br><br>
