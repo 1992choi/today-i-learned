@@ -775,53 +775,395 @@
 
 
 ## [GoF] 커맨드 패턴
-- 정리필요
+- 커맨드 패턴이란?
+  - 요청(실행할 작업)을 하나의 객체로 캡슐화하여, 요청을 보내는 쪽(Invoker)과 요청을 실제로 처리하는 쪽(Receiver)을 분리하는 행동 패턴이다.
+  - 요청 자체가 객체이기 때문에, 요청을 큐에 저장하거나, 로그로 남기거나, 실행 취소(Undo) 기능을 구현하는 것이 가능해진다.
+- 커맨드 패턴의 구조
+  - Command
+    - 실행할 작업을 위한 `execute()` 메서드를 선언하는 인터페이스.
+  - ConcreteCommand
+    - Command를 구현하며, 실제 작업을 수행할 Receiver를 참조하여 `execute()`에서 Receiver의 메서드를 호출한다.
+  - Receiver
+    - 실제 비즈니스 로직을 수행하는 객체.
+  - Invoker
+    - Command 객체를 가지고 있다가, 필요한 시점에 `execute()`를 호출해 요청을 실행시키는 객체. Command의 구체적인 구현은 알지 못한다.
+- 예제코드
+  ``` java
+  public interface Command {
+      void execute();
+  }
+
+  public class Light { // Receiver
+      public void on() { System.out.println("불이 켜졌습니다."); }
+  }
+
+  public class LightOnCommand implements Command { // ConcreteCommand
+      private final Light light;
+
+      public LightOnCommand(Light light) {
+          this.light = light;
+      }
+
+      @Override
+      public void execute() {
+          light.on();
+      }
+  }
+
+  public class RemoteControl { // Invoker
+      private Command command;
+
+      public void setCommand(Command command) {
+          this.command = command;
+      }
+
+      public void pressButton() {
+          command.execute();
+      }
+  }
+  ```
+- 커맨드 패턴의 장점
+  - 요청을 보내는 객체와 처리하는 객체 사이의 결합도를 낮출 수 있다.
+  - 요청(Command) 객체를 큐에 저장하거나 로그로 남길 수 있어, 작업 이력 관리나 실행 취소(Undo)/재실행(Redo) 기능을 구현하기 쉬워진다.
+  - 새로운 Command를 추가하더라도 Invoker나 Receiver의 코드를 수정할 필요가 없다(개방 폐쇄 원칙).
+- 커맨드 패턴의 단점
+  - 각 요청마다 별도의 Command 클래스를 추가해야 하므로, 기능이 많아질수록 클래스 수가 함께 늘어난다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 상태 패턴
-- 정리필요
+- 상태 패턴이란?
+  - 객체의 내부 상태에 따라 행동이 달라져야 할 때, 상태를 별도의 클래스로 분리하고 객체는 현재 상태 객체에게 행동을 위임하는 행동 패턴이다.
+  - 상태 변화에 따른 로직을 하나의 거대한 if-else/switch 문으로 처리하지 않고, 각 상태를 독립된 클래스로 캡슐화하여 관리할 수 있다.
+- 상태 패턴의 구조
+  - Context
+    - 현재 상태(State) 객체를 참조하며, 클라이언트의 요청을 현재 상태 객체에게 위임한다.
+  - State
+    - 상태별 행동을 정의하는 인터페이스.
+  - ConcreteState
+    - State를 구현하며, 특정 상태에서의 구체적인 행동과, 다른 상태로의 전이 로직을 가진다.
+- 예제코드
+  ``` java
+  public interface OrderState {
+      void next(OrderContext context);
+  }
+
+  public class PaymentWaitingState implements OrderState {
+      @Override
+      public void next(OrderContext context) {
+          System.out.println("결제 완료");
+          context.setState(new ShippingState());
+      }
+  }
+
+  public class ShippingState implements OrderState {
+      @Override
+      public void next(OrderContext context) {
+          System.out.println("배송 완료");
+          context.setState(new DeliveredState());
+      }
+  }
+
+  public class OrderContext {
+      private OrderState state = new PaymentWaitingState();
+
+      public void setState(OrderState state) {
+          this.state = state;
+      }
+
+      public void next() {
+          state.next(this);
+      }
+  }
+  ```
+- 상태 패턴의 장점
+  - 상태별 로직이 각 State 클래스로 분리되어 응집도가 높아지고, 새로운 상태를 추가하기 쉬워진다(개방 폐쇄 원칙).
+  - 거대한 조건문을 제거하여 가독성과 유지보수성을 높일 수 있다.
+- 상태 패턴의 단점
+  - 상태가 많아질수록 그만큼 클래스 수가 늘어난다.
+  - 상태 전이 로직이 여러 State 클래스에 분산되어 있어, 전체 상태 흐름을 한눈에 파악하기 어려울 수 있다.
+- 전략 패턴과의 차이
+  - 구조적으로는 매우 유사하지만, 전략 패턴은 클라이언트가 알고리즘(전략)을 명시적으로 선택/교체하는 데 초점이 있고, 상태 패턴은 상태 객체 스스로가 상황에 따라 다음 상태로 전이하는 흐름 제어에 초점이 있다는 의도의 차이가 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 이터레이터 패턴
-- 정리필요
+- 이터레이터 패턴이란?
+  - 컬렉션(집합체)의 내부 구조(배열, 리스트, 트리 등)를 외부에 노출하지 않으면서도, 그 안에 담긴 원소들을 순차적으로 접근할 수 있는 방법을 제공하는 행동 패턴이다.
+  - 자바의 `Iterator` 인터페이스, 향상된 for문(for-each)이 내부적으로 이 패턴을 기반으로 동작한다.
+- 이터레이터 패턴의 구조
+  - Iterator
+    - 원소를 순회하기 위한 `hasNext()`, `next()` 같은 메서드를 선언하는 인터페이스.
+  - ConcreteIterator
+    - 특정 컬렉션에 대한 순회 로직을 구현한 클래스.
+  - Aggregate
+    - 이터레이터를 생성하는 `createIterator()` 메서드를 선언하는 인터페이스.
+  - ConcreteAggregate
+    - 실제로 원소들을 보관하고 있는 컬렉션 클래스.
+- 예제코드
+  ``` java
+  public class NameRepository implements Iterable<String> {
+      private final List<String> names = new ArrayList<>();
+
+      public void addName(String name) {
+          names.add(name);
+      }
+
+      @Override
+      public Iterator<String> iterator() {
+          return names.iterator(); // 내부 구조(List)를 노출하지 않고 순회 방법만 제공
+      }
+  }
+
+  NameRepository repository = new NameRepository();
+  repository.addName("Alice");
+
+  for (String name : repository) { // 향상된 for문이 내부적으로 Iterator를 사용
+      System.out.println(name);
+  }
+  ```
+- 이터레이터 패턴의 장점
+  - 컬렉션의 내부 구현(배열인지, 연결 리스트인지 등)을 몰라도 동일한 방식으로 순회할 수 있어, 클라이언트 코드와 컬렉션 구현을 분리할 수 있다.
+  - 하나의 컬렉션에 대해 여러 종류의 순회 방식(정방향, 역방향 등)을 별도의 Iterator로 구현해 제공할 수 있다.
+  - 여러 개의 이터레이터를 동시에 사용해, 하나의 컬렉션을 동시에 여러 지점에서 순회하는 것도 가능하다.
+- 이터레이터 패턴의 단점
+  - 단순한 컬렉션 순회를 위해 별도의 Iterator 클래스를 만들어야 하므로, 간단한 경우에는 오히려 불필요한 복잡도를 추가할 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 컴포지트 패턴
-- 정리필요
+- 컴포지트 패턴이란?
+  - 객체들을 트리 구조로 구성하여, 개별 객체(Leaf)와 여러 객체를 묶은 복합 객체(Composite)를 클라이언트가 동일한 방식으로 다룰 수 있게 하는 구조 패턴이다.
+  - 파일 시스템의 파일/디렉터리처럼, "부분-전체" 계층 구조를 표현할 때 유용하다.
+- 컴포지트 패턴의 구조
+  - Component
+    - Leaf와 Composite이 공통으로 구현할 인터페이스로, 공통 동작(예: `getSize()`)을 정의한다.
+  - Leaf
+    - 자식을 가지지 않는 개별 객체로, Component의 동작을 직접 구현한다.
+  - Composite
+    - 여러 Component(Leaf 또는 다른 Composite)를 자식으로 가지며, 자신에게 호출된 동작을 자식들에게 위임하고 결과를 합산/취합한다.
+- 예제코드
+  ``` java
+  public interface FileComponent {
+      int getSize();
+  }
+
+  public class File implements FileComponent { // Leaf
+      private final int size;
+
+      public File(int size) { this.size = size; }
+
+      @Override
+      public int getSize() { return size; }
+  }
+
+  public class Directory implements FileComponent { // Composite
+      private final List<FileComponent> children = new ArrayList<>();
+
+      public void add(FileComponent component) {
+          children.add(component);
+      }
+
+      @Override
+      public int getSize() {
+          return children.stream().mapToInt(FileComponent::getSize).sum(); // 자식에게 위임 후 합산
+      }
+  }
+  ```
+- 컴포지트 패턴의 장점
+  - 클라이언트는 개별 객체인지 복합 객체인지 구분하지 않고 동일한 인터페이스로 다룰 수 있어 코드가 단순해진다.
+  - 트리에 새로운 종류의 Leaf/Composite를 추가하기 쉽다(개방 폐쇄 원칙).
+- 컴포지트 패턴의 단점
+  - 모든 구성 요소가 공통 인터페이스를 따라야 하므로, Leaf에는 의미가 없는 메서드(자식 추가 등)까지 포함될 수 있어 설계가 다소 억지스러워질 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 프로토타입 패턴
-- 정리필요
+- 프로토타입 패턴이란?
+  - 기존 객체(원형, Prototype)를 복제(Clone)하여 새로운 객체를 생성하는 생성 패턴이다.
+  - 객체 생성 비용이 크거나(복잡한 초기화 과정이 필요한 경우), 특정 상태를 가진 객체를 기반으로 유사한 객체를 반복적으로 만들어야 할 때 `new`로 매번 생성하는 대신 기존 객체를 복제해서 재사용할 수 있다.
+- 자바에서의 구현
+  - `Cloneable` 인터페이스를 구현하고 `Object.clone()`을 재정의(오버라이딩)하여 프로토타입 패턴을 구현할 수 있다.
+  - ``` java
+    public class Sheep implements Cloneable {
+        private String name;
+
+        public Sheep(String name) { this.name = name; }
+
+        @Override
+        public Sheep clone() {
+            try {
+                return (Sheep) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError(e);
+            }
+        }
+    }
+
+    Sheep original = new Sheep("Dolly");
+    Sheep copy = original.clone(); // 원본을 복제하여 새 객체 생성
+    ```
+- 얕은 복사(Shallow Copy)와 깊은 복사(Deep Copy) 주의사항
+  - `Object.clone()`의 기본 동작은 얕은 복사이기 때문에, 객체가 참조 타입 필드를 가지고 있다면 원본과 복제본이 같은 참조를 공유하게 되어 한쪽을 수정하면 다른 쪽에도 영향을 줄 수 있다.
+  - 참조 타입 필드까지 독립적으로 복제해야 한다면, `clone()`을 재정의할 때 내부 필드도 함께 복제(깊은 복사)해주어야 한다.
+- 프로토타입 패턴의 장점
+  - 복잡한 초기화 과정을 반복하지 않고 기존 객체를 복제해 생성 비용을 절감할 수 있다.
+  - 런타임에 결정된 구체적인 객체를 기반으로 새로운 객체를 만들 수 있어, 서브클래스를 몰라도 객체를 생성할 수 있다.
+- 프로토타입 패턴의 단점
+  - 복잡한 객체 그래프(순환 참조 등)를 가진 객체를 깊은 복사로 복제하는 로직을 올바르게 구현하기가 까다로울 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 플라이웨이트 패턴
-- 정리필요
+- 플라이웨이트 패턴이란?
+  - 동일하거나 유사한 객체를 매번 새로 생성하는 대신, 공유 가능한 객체(Flyweight)를 캐싱해서 재사용함으로써 메모리 사용량을 줄이는 구조 패턴이다.
+  - 객체의 상태를 변하지 않는 공유 가능한 부분(Intrinsic State)과, 사용할 때마다 외부에서 전달받아야 하는 부분(Extrinsic State)으로 나누는 것이 핵심이다.
+- 플라이웨이트 패턴의 구조
+  - Flyweight
+    - 공유되는 객체로, 내부적으로 변하지 않는 상태(Intrinsic State)만 가진다.
+  - FlyweightFactory
+    - Flyweight 객체를 생성하고 캐싱하여, 동일한 요청이 들어오면 새로 생성하지 않고 기존 객체를 반환하는 팩토리.
+  - Client
+    - Flyweight를 사용할 때마다 외부 상태(Extrinsic State)를 전달한다.
+- 예제코드
+  ``` java
+  public class CharacterStyle { // Flyweight (폰트, 색상처럼 공유 가능한 불변 상태)
+      private final String font;
+      private final String color;
+
+      public CharacterStyle(String font, String color) {
+          this.font = font;
+          this.color = color;
+      }
+  }
+
+  public class CharacterStyleFactory {
+      private final Map<String, CharacterStyle> cache = new HashMap<>();
+
+      public CharacterStyle getStyle(String font, String color) {
+          String key = font + color;
+          return cache.computeIfAbsent(key, k -> new CharacterStyle(font, color)); // 이미 있으면 재사용
+      }
+  }
+  ```
+  - 문서 편집기에서 각 글자(Character)마다 폰트/색상 객체를 새로 만드는 대신, 동일한 폰트/색상 조합은 하나의 객체를 공유해서 사용하는 식으로 활용할 수 있다.
+- 플라이웨이트 패턴의 장점
+  - 동일한 데이터를 가진 객체를 반복 생성하지 않고 공유함으로써 메모리 사용량을 크게 줄일 수 있다.
+- 플라이웨이트 패턴의 단점
+  - 공유 객체와 외부 상태를 분리하는 과정에서 코드가 복잡해질 수 있고, 공유 객체는 반드시 불변(Immutable)이어야 하므로 설계에 제약이 생긴다.
+- 자바에서의 예시
+  - 래퍼 클래스의 캐싱(`Integer.valueOf()`의 -128~127 범위 캐싱), 문자열 리터럴을 재사용하는 String Pool이 플라이웨이트 패턴과 유사한 아이디어를 기반으로 한다.
+- Ref.
 <br><br><br>
 
 
 
 ## [GoF] 브리지 패턴
-- 정리필요
+- 브리지 패턴이란?
+  - 추상화(기능) 계층과 구현 계층을 분리하여, 두 계층이 서로 독립적으로 확장될 수 있도록 하는 구조 패턴이다.
+  - 상속만으로 기능과 구현의 조합을 표현하면, 기능의 종류와 구현의 종류가 늘어날수록 하위 클래스의 수가 기하급수적으로 늘어나는 "클래스 폭발" 문제가 발생하는데, 브리지 패턴은 상속 대신 합성(Composition)을 이용해 이 문제를 해결한다.
+- 브리지 패턴의 구조
+  - Abstraction
+    - 기능(추상화)을 정의하며, 내부에 Implementor에 대한 참조를 가진다.
+  - RefinedAbstraction
+    - Abstraction을 확장한 구체적인 기능.
+  - Implementor
+    - 구현부의 인터페이스를 정의한다.
+  - ConcreteImplementor
+    - Implementor를 구현한 구체적인 구현체.
+- 예제코드
+  ``` java
+  public interface Device { // Implementor
+      void turnOn();
+  }
+
+  public class TV implements Device { // ConcreteImplementor
+      @Override
+      public void turnOn() { System.out.println("TV를 켭니다."); }
+  }
+
+  public abstract class RemoteControl { // Abstraction
+      protected Device device; // 구현부를 합성으로 참조 (다리 역할)
+
+      protected RemoteControl(Device device) {
+          this.device = device;
+      }
+
+      public abstract void powerOn();
+  }
+
+  public class BasicRemoteControl extends RemoteControl { // RefinedAbstraction
+      public BasicRemoteControl(Device device) { super(device); }
+
+      @Override
+      public void powerOn() {
+          device.turnOn();
+      }
+  }
+  ```
+  - 리모컨(기능)의 종류와 전자기기(구현)의 종류가 각각 독립적으로 늘어나도, `RemoteControl`이 `Device`를 합성으로 참조하고 있기 때문에 서로 영향을 주지 않고 자유롭게 조합할 수 있다.
+- 브리지 패턴의 장점
+  - 추상화와 구현을 독립적으로 확장할 수 있어, 상속으로 인한 클래스 폭발 문제를 방지할 수 있다.
+  - 런타임에 구현체를 교체하는 것도 가능하다.
+- 브리지 패턴의 단점
+  - 추상화와 구현을 분리하는 과정에서 설계가 복잡해질 수 있고, 처음 구조를 파악하기 어려울 수 있다.
+- 어댑터 패턴과의 차이
+  - 어댑터 패턴은 이미 존재하는 서로 호환되지 않는 인터페이스를 사후적으로 맞춰주는 것이 목적인 반면, 브리지 패턴은 설계 단계에서부터 추상화와 구현이 독립적으로 확장될 수 있도록 미리 분리해두는 것이 목적이라는 차이가 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## MVC, MVP, MVVM 패턴
-- 정리필요
+- 공통 목적
+  - 세 패턴 모두 화면(View)과 데이터/비즈니스 로직(Model)을 분리하여, 유지보수성과 테스트 용이성을 높이기 위한 아키텍처 패턴이라는 공통점이 있다. 다만 View와 Model을 중개하는 방식에 차이가 있다.
+- MVC (Model-View-Controller)
+  - Model : 데이터와 비즈니스 로직을 담당한다.
+  - View : 사용자에게 보여지는 화면을 담당한다.
+  - Controller : 사용자의 입력을 받아 Model을 조작하고, 그 결과를 반영할 View를 선택한다.
+  - Controller가 View를 직접 선택하고, View가 Model을 직접 참조해서 데이터를 조회하기도 하는 등 View와 Model 사이에 어느 정도 의존 관계가 남아있을 수 있다. (스프링 MVC가 대표적인 예시이다.)
+- MVP (Model-View-Presenter)
+  - View와 Model이 서로 전혀 알지 못하고, 모든 상호작용이 Presenter를 통해서만 이루어진다는 점이 MVC와의 가장 큰 차이이다.
+  - Presenter는 View의 인터페이스만 알고 있어 View를 직접 조작(갱신)하며, View는 사용자의 입력을 Presenter에게 그대로 전달하는 수동적인 역할만 한다.
+  - View와 Presenter가 1:1로 강하게 결합되는 경향이 있어, View가 많아지면 Presenter도 함께 늘어나는 경향이 있다.
+- MVVM (Model-View-ViewModel)
+  - ViewModel이 View의 상태와 로직을 가지고 있으며, View는 ViewModel을 데이터 바인딩(Data Binding)을 통해 관찰하다가 ViewModel의 상태가 변하면 자동으로 갱신된다.
+  - MVP와 달리 ViewModel이 View를 직접 참조하지 않고, View가 양방향 데이터 바인딩을 통해 ViewModel의 변화를 구독하는 구조여서 View와 ViewModel 사이의 결합도가 더 낮다.
+  - 안드로이드의 Jetpack ViewModel, 프론트엔드의 Vue.js 등이 MVVM 패턴을 기반으로 한다.
+- 비교 요약
+  - MVC는 Controller가 View를 선택하는 구조, MVP는 Presenter가 View를 직접 조작하는 구조, MVVM은 View가 데이터 바인딩을 통해 ViewModel을 구독하는 구조라는 점에서 Model과 View 사이의 매개체가 점점 더 View로부터 독립적으로 분리되는 방향으로 발전해왔다고 볼 수 있다.
+- Ref.
 <br><br><br>
 
 
 
 ## 안티패턴(Anti-Pattern)
-- 정리필요
+- 안티패턴이란?
+  - 처음에는 문제를 해결하는 방법처럼 보이지만, 실제로는 비효율적이거나 유지보수를 어렵게 만드는 잘못된 설계/개발 관행을 의미한다. 디자인 패턴이 "검증된 좋은 해결책"이라면, 안티패턴은 "반복적으로 나타나는 나쁜 해결책"이라고 볼 수 있다.
+- God Object(God Class)
+  - 하나의 클래스가 너무 많은 책임과 로직을 떠안아, 비대하고 다른 모든 클래스와 강하게 결합되어 있는 상태이다.
+  - 단일 책임 원칙(SRP)을 위반하는 대표적인 사례로, 작은 수정 하나가 예상치 못한 다른 부분에 영향을 미칠 위험이 커진다.
+- Spaghetti Code(스파게티 코드)
+  - 코드의 흐름이 명확한 구조 없이 복잡하게 얽혀 있어, 코드를 읽고 이해하기 어려운 상태를 의미한다. 흔히 깊게 중첩된 조건문/반복문, 전역 변수의 남용 등으로 인해 발생한다.
+- Copy-Paste Programming(복사-붙여넣기 프로그래밍)
+  - 기존 코드를 이해하고 재사용 가능한 형태로 추출하는 대신, 비슷한 코드를 복사해서 여기저기 붙여넣는 방식이다.
+  - 동일한 로직이 여러 곳에 중복되어, 버그를 수정하거나 요구사항이 변경될 때 모든 중복 위치를 일일이 찾아 수정해야 하는 부담이 생긴다.
+- Golden Hammer(황금 망치)
+  - "모든 문제가 못처럼 보인다"는 속담처럼, 특정 기술/패턴/도구에 익숙하다는 이유만으로 적합하지 않은 상황에까지 무분별하게 적용하는 것을 의미한다. (예: 모든 문제를 디자인 패턴으로 해결하려 하거나, 간단한 데이터 처리에도 과도하게 마이크로서비스를 도입하는 경우)
+- Premature Optimization(섣부른 최적화)
+  - 실제로 성능에 문제가 되는지 측정하지 않은 상태에서, 가독성이나 단순함을 희생하면서까지 미리 최적화를 시도하는 것을 의미한다.
+  - "섣부른 최적화는 모든 악의 근원이다(Donald Knuth)"라는 말처럼, 실제 병목 지점을 프로파일링 등으로 먼저 확인한 뒤 최적화하는 것이 권장된다.
+- 안티패턴을 피하기 위한 접근
+  - 단일 책임 원칙(SRP) 등 SOLID 원칙을 지키려 노력하고, 코드 리뷰를 통해 문제를 조기에 발견하며, 리팩토링을 지속적으로 수행하는 것이 안티패턴을 예방하는 데 도움이 된다.
+- Ref.
 <br><br><br>
