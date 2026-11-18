@@ -1869,3 +1869,26 @@
   - 순차 컬렉션(Sequenced Collection) API가 추가되어, 순서가 있는 컬렉션에서 첫/마지막 원소 접근 및 역순 뷰를 일관된 방식으로 제공한다.
 - Ref.
 <br><br><br>
+
+
+
+## 자바 메모리 모델(JMM)과 happens-before
+- 자바 메모리 모델(Java Memory Model, JMM)이란?
+  - 멀티스레드 환경에서 여러 스레드가 변수(메모리)에 접근할 때, 그 결과가 어떻게 보일지에 대한 규칙을 정의한 명세이다. 스레드마다 CPU 캐시/레지스터를 사용하고 컴파일러/CPU가 성능을 위해 명령어 순서를 재배열(Reordering)할 수 있기 때문에, "어떤 스레드가 쓴 값을 다른 스레드가 언제, 어떤 순서로 보게 되는가"를 보장해주는 규칙이 필요하다.
+  - 기존에 정리한 `스레드 가시성`은 이 JMM이 다루는 문제 중 "최신 값을 보는가(가시성)"에 해당하고, JMM은 그 외에도 "연산들이 재배열되어도 괜찮은 범위(순서, Ordering)"까지 포함하는 더 넓은 개념이다.
+- happens-before 관계란?
+  - 두 작업(연산) A와 B 사이에 happens-before 관계가 성립하면, A의 실행 결과(메모리 변경)는 B가 실행되기 전에 반드시 보이도록 보장된다는 의미이다. 이 관계가 없으면 두 작업의 순서나 가시성은 전혀 보장되지 않는다.
+  - JMM이 정의하는 대표적인 happens-before 규칙
+    - 프로그램 순서 규칙(Program Order Rule) : 같은 스레드 내에서 앞선 코드는 뒤의 코드보다 happens-before 관계를 가진다.
+    - 모니터 락 규칙(Monitor Lock Rule) : `synchronized` 블록에서 락을 해제(unlock)하는 것은, 이후 같은 락을 획득(lock)하는 것보다 happens-before 관계를 가진다. (앞서 정리한 `synchronized 키워드와 모니터 락` 참고)
+    - volatile 변수 규칙(Volatile Variable Rule) : volatile 변수에 대한 쓰기는, 이후 같은 변수를 읽는 것보다 happens-before 관계를 가진다.
+    - 스레드 시작/종료 규칙 : `Thread.start()` 호출은 그 스레드 내부의 모든 작업보다 happens-before 관계를 가지며, 스레드 내부의 모든 작업은 다른 스레드의 `Thread.join()` 호출보다 happens-before 관계를 가진다.
+    - 전이성(Transitivity) : A가 B보다, B가 C보다 happens-before 관계라면, A는 C보다도 happens-before 관계를 가진다.
+- 재배열(Reordering)과의 관계
+  - 컴파일러나 CPU는 성능 최적화를 위해 프로그램의 실행 순서를 바꿀 수 있는데, 단일 스레드 관점에서는 결과가 바뀌지 않는 재배열만 허용된다. 하지만 멀티스레드 환경에서는 이 재배열이 다른 스레드에게 예상치 못한 순서로 보일 수 있다.
+  - synchronized나 volatile과 같은 동기화 도구는 특정 지점을 기준으로 재배열을 막는 메모리 배리어(Memory Barrier) 역할을 하여, happens-before 관계를 만들어낸다.
+- 실무적 함의
+  - 동기화(synchronized, volatile, java.util.concurrent의 락/원자 변수 등) 없이 여러 스레드가 공유 변수에 접근하면, 코드상으로는 순서가 정해져 있어도 실제 실행 결과는 그 순서를 보장받지 못한다.
+  - 따라서 멀티스레드 코드를 작성할 때는 "이 두 작업 사이에 happens-before 관계가 성립하는가?"를 기준으로 안전성을 판단해야 한다.
+- Ref.
+<br><br><br>
