@@ -107,6 +107,29 @@
       
       }
       ```
+    - 더블 체크드 락킹(Double-Checked Locking)을 이용하는 방법 (인스턴스가 생성되기 전까지만 동기화 블록을 거치게 하여, synchronized 방식보다 락 경합 비용을 줄인다)
+    - ``` java
+      public class Singleton {
+
+          private static volatile Singleton instance;
+
+          private Singleton() {}
+
+          public static Singleton getInstance() {
+              if (instance == null) {                      // 1차 체크 (synchronized 없이 대부분의 호출을 빠르게 통과)
+                  synchronized (Singleton.class) {
+                      if (instance == null) {               // 2차 체크 (synchronized 블록 안에서 한 번 더 null을 확인)
+                          instance = new Singleton();
+                      }
+                  }
+              }
+              return instance;
+          }
+
+      }
+      ```
+      - `instance` 필드에 `volatile`을 붙이지 않으면, 자바 메모리 모델상 명령어 재배열(Reordering)로 인해 다른 스레드가 아직 생성자 호출이 끝나지 않은(필드 초기화가 완료되지 않은) 덜 만들어진 인스턴스를 참조하게 되는 문제가 발생할 수 있다. `volatile`은 이러한 재배열을 막아 안전한 발행(Safe Publication)을 보장한다.
+      - 인스턴스가 생성된 이후에는 1차 체크에서 바로 `instance`를 반환하므로 synchronized 블록에 들어가지 않아, 매번 동기화하는 방식보다 성능이 좋다.
     - static inner class(Holder)를 이용하는 방법 (클래스 로딩 시점의 초기화 보장을 활용하여 동기화 비용 없이 스레드 세이프하면서도 지연 초기화가 가능하다)
     - ``` java
       public class Singleton {
