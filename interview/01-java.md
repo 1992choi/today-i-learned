@@ -501,6 +501,23 @@
 
 
 
+## Fail-Fast와 Fail-Safe 이터레이터
+- 문제 상황
+  - `ArrayList`를 for-each(또는 Iterator)로 순회하는 도중에 그 컬렉션 자체에 `remove()`나 `add()`를 호출하면, 런타임에 `ConcurrentModificationException`이 발생한다. 이는 컬렉션을 순회 중일 때 흔히 마주치는 대표적인 런타임 예외이다.
+- Fail-Fast(빠른 실패) 이터레이터
+  - `ArrayList`, `HashMap` 등 대부분의 일반 컬렉션이 채택하는 방식으로, 컬렉션 내부에 구조적 변경(추가/삭제) 횟수를 기록하는 `modCount`라는 값을 두고, 이터레이터 생성 시점의 `modCount`를 기억해둔다.
+  - 순회 중 `next()`를 호출할 때마다 현재 `modCount`가 이터레이터가 기억해둔 값과 일치하는지 검사하고, 그 사이에 컬렉션이 변경(`modCount` 증가)되었다면 문제가 더 깊어지기 전에 즉시(Fail-Fast) `ConcurrentModificationException`을 던져 알려준다.
+  - 다만 이 검사는 안전성을 100% 보장하기 위한 것이 아니라 버그를 조기에 발견하도록 돕는 장치(Best-Effort)일 뿐이며, 멀티스레드 환경에서는 타이밍에 따라 예외가 발생하지 않고 넘어갈 수도 있어 동시성 제어 수단으로 사용해서는 안 된다.
+  - 컬렉션을 순회하며 원소를 제거해야 한다면, 일반 `for`문으로 인덱스를 직접 다루거나(ArrayList), `Iterator`가 제공하는 `remove()` 메서드를 사용해야 한다. `Iterator.remove()`는 호출 시 내부적으로 이터레이터가 기억한 기대값(`expectedModCount`)도 함께 갱신해주기 때문에 예외 없이 안전하게 제거할 수 있다.
+- Fail-Safe(안전한 실패) 이터레이터
+  - `CopyOnWriteArrayList`, `ConcurrentHashMap` 등 `java.util.concurrent` 패키지의 동시성 컬렉션(앞서 정리한 `java.util.concurrent와 원자적 연산` 참고)이 채택하는 방식이다.
+  - 이터레이터를 생성하는 시점에 원본 컬렉션을 복사(Snapshot)하거나, 애초에 구조가 변경되어도 기존 노드를 그대로 두고 새 노드로 교체하는 방식으로 동작해, 순회 도중 원본 컬렉션이 변경되어도 `ConcurrentModificationException`이 발생하지 않는다.
+  - 예외는 발생하지 않지만, 순회 중인 이터레이터는 생성 시점의 스냅샷(또는 그 이전 상태)을 보고 있는 것이므로 순회 도중에 일어난 변경 사항이 그 순회 결과에는 반영되지 않을 수 있다는 한계가 있다.
+- Ref.
+<br><br><br>
+
+
+
 ## 람다식(Lambda Expression)
 - 람다식(Lambda Expressions) 이란?
   - 람다식이란 프로그래밍 언어에서 사용되는 개념으로 익명 함수를 지칭하는 용어이다.
